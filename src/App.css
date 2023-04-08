@@ -1,6 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-*{
-    box-sizing: border-box;
+@layer base {
+  html {
+    font-family: "Pretendard", "Noto Sans", sans-serif, system-ui, sans-serif;
+  }
+}
+
+* {
+  box-sizing: border-box;
 }
