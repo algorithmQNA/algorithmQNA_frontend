@@ -1,16 +1,21 @@
 import './App.css'
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import DashBoardPage from "./pages/DashBoard";
 
 function App(){
 
   return (
       <div className="App">
-          <Header/>
-          <div className={'h-[2000px]'}>
-
-          </div>
-          <Footer/>
+          <header className={'sticky bg-[#77A4E8] top-0 shadow-lg'}>
+              <Header/>
+          </header>
+          <main>
+              <DashBoardPage/>
+          </main>
+          <footer className={'flex justify-between items-center p-2 w-full border-t border-t-[#D9D9D9]'}>
+              <Footer/>
+          </footer>
       </div>
   );
 }
