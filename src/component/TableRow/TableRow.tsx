@@ -15,9 +15,7 @@ export default function TableRow({img=undefined,title,writer,date,view,comment}:
     return(
         <div className={`${img ? 'table-row-img' : 'table-row'} items-center p-1.5 gap-1.5 border border-[#D9D9D9] rounded-lg transition-all hover:scale-[101%]`}>
             {
-                img
-                    ? <img src={img} className={'w-[50px] h-[50px]'} alt={'thum'}/>
-                    : null
+                img && <img src={img} className={'w-[50px] h-[50px]'} alt={'thum'}/>
             }
             <div className={'flex flex-col justify-around h-full w-full'}>
                 <span className={'font-bold text-sm truncate max-w-[200px]'}>

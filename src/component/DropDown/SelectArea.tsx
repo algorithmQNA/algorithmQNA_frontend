@@ -42,35 +42,32 @@ export default function SelectArea({event,defaultText='선택',search=false,chil
                 <span>{state.displayText}</span>
             </label>
             {
-                state.displayOption
-                    ?
-                    <div className={'task-tooltip shadow'}>
-                        {
-                            search
-                                ?
-                                <div className={`${defaultClass.search} max-w-[250px]`}>
-                                    <input type={'text'} className={'text-sm border-none bg-none focus:outline-none w-full'} 
-                                           value={state.search} 
-                                           placeholder={'검색'}
-                                           onChange={(e)=>setState({...state,search:e.currentTarget.value})}/>
-                                </div>
-                                :null
-                        }
-                        {
-                            filter.map(({key,props})=>(
-                                <div>
-                                    <option key={key}
-                                            className={`${props.className ? props.className : defaultClass.options} `}
-                                            value={props.value}
-                                            onClick={selectOption}>
-                                        <div className={''}></div>
-                                        {props.children}
-                                    </option>
-                                </div>
-                            ))
-                        }
-                    </div>
-                    : null
+                state.displayOption &&
+                <div className={'task-tooltip shadow'}>
+                    {
+                        search &&
+                        <div className={`${defaultClass.search} max-w-[250px]`}>
+                            <input type={'text'} className={'text-sm border-none bg-none focus:outline-none w-full'}
+                                   value={state.search}
+                                   placeholder={'검색'}
+                                   onChange={(e)=>setState({...state,search:e.currentTarget.value})}
+                            />
+                        </div>
+                    }
+                    {
+                        filter.map(({key,props})=>(
+                            <div>
+                                <option key={key}
+                                        className={`${props.className ? props.className : defaultClass.options} `}
+                                        value={props.value}
+                                        onClick={selectOption}>
+                                    <div className={''}></div>
+                                    {props.children}
+                                </option>
+                            </div>
+                        ))
+                    }
+                </div>
             }
         </div>
     )

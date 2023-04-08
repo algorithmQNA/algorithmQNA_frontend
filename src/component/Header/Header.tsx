@@ -20,23 +20,21 @@ export default function Header(){
                     >
                         <BellIcon/>
                         {
-                            state.alamDisplay
-                                ?
-                                <ul className={'absolute top-[110%] right-0 min-w-[150px] bg-white border border-[#77A4E8] p-3 z-50 shadow-lg text-black'}>
-                                    <li className={'menu-li'}>
-                                        알람1
-                                    </li>
-                                    <li className={'menu-li'}>
-                                        알람2
-                                    </li>
-                                    <li className={'menu-li'}>
-                                        알람3
-                                    </li>
-                                    <li className={'menu-li'}>
-                                        알람4
-                                    </li>
-                                </ul>
-                                :null
+                            state.alamDisplay &&
+                            <ul className={'absolute top-[110%] right-0 min-w-[150px] bg-white border border-[#77A4E8] p-3 z-50 shadow-lg text-black'}>
+                                <li className={'menu-li'}>
+                                    알람1
+                                </li>
+                                <li className={'menu-li'}>
+                                    알람2
+                                </li>
+                                <li className={'menu-li'}>
+                                    알람3
+                                </li>
+                                <li className={'menu-li'}>
+                                    알람4
+                                </li>
+                            </ul>
                         }
                     </div>
                     <div onMouseOver={()=>setState((prev)=>({...prev,userMenuDisplay:true}))}
@@ -45,23 +43,21 @@ export default function Header(){
                     >
                         <span className={'text-white border border-white py-1 px-2 rounded text-sm'}>{'사용자명'} 님</span>
                         {
-                            state.userMenuDisplay
-                                ?
-                                <ul className={'absolute top-[110%] right-0 min-w-[150px] bg-white border border-[#77A4E8] p-3 z-50 shadow-lg'}>
-                                    <li className={'menu-li'}>
-                                        메뉴1
-                                    </li>
-                                    <li className={'menu-li'}>
-                                        메뉴1
-                                    </li>
-                                    <li className={'menu-li'}>
-                                        메뉴1
-                                    </li>
-                                    <li className={'menu-li'}>
-                                        메뉴1
-                                    </li>
-                                </ul>
-                                :null
+                            state.userMenuDisplay &&
+                            <ul className={'absolute top-[110%] right-0 min-w-[150px] bg-white border border-[#77A4E8] p-3 z-50 shadow-lg'}>
+                                <li className={'menu-li'}>
+                                    메뉴1
+                                </li>
+                                <li className={'menu-li'}>
+                                    메뉴1
+                                </li>
+                                <li className={'menu-li'}>
+                                    메뉴1
+                                </li>
+                                <li className={'menu-li'}>
+                                    메뉴1
+                                </li>
+                            </ul>
                         }
                     </div>
                 </div>

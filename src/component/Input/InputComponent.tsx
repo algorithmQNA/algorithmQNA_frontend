@@ -29,14 +29,12 @@ export default function InputComponent({input,button=undefined}:props){
                        onChange={(e)=>input.event ? input.event(e) : null}
                 />
                 {
-                    button
-                        ?
-                        <div className={'absolute transition-all duration-300 top-1/2 left-[95%] md:left-[97%] lg:left-[98%] w-fit'}>
-                            <ButtonComponent onClick={button.event} className={'input-c-btn-transform'}>
-                                {button.children}
-                            </ButtonComponent>
-                        </div>
-                        : null
+                    button &&
+                    <div className={'absolute transition-all duration-300 top-1/2 left-[95%] md:left-[97%] lg:left-[98%] w-fit'}>
+                        <ButtonComponent onClick={button.event} className={'input-c-btn-transform'}>
+                            {button.children}
+                        </ButtonComponent>
+                    </div>
                 }
             </div>
         </div>
