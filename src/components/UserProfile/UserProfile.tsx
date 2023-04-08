@@ -1,5 +1,5 @@
 import React from "react";
-import Rounded from "./RoundedImage";
+import Rounded from "../RoundedImage/RoundedImage";
 
 type UserProfileProps = {
   username: string;
