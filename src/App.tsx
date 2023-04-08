@@ -1,9 +1,16 @@
 import './App.css'
+import Header from "./component/Header/Header";
+import Footer from "./component/Footer/Footer";
 
-function App() {
+function App(){
+
   return (
       <div className="App">
+          <Header/>
+          <div className={'h-[2000px]'}>
 
+          </div>
+          <Footer/>
       </div>
   );
 }

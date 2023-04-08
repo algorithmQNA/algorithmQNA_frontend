@@ -1,0 +1,9 @@
+.table-row{
+    display:flex;
+    align-items: center;
+    min-height:75px;
+}
+.table-row-img{
+    display:grid;
+    grid-template-columns:50px 1fr;
+}
