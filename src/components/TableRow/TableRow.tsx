@@ -13,7 +13,7 @@ interface props{
 }
 export default function TableRow({img=undefined,title,writer,date,view,comment}:props){
     return(
-        <div className={`${img ? 'table-row-img' : 'table-row'} items-center p-1.5 gap-1.5 rounded transition-all hover:shadow-lg hover:scale-[103%] bg-white`}>
+        <div className={`${img ? 'table-row-img' : 'table-row'} items-center p-1.5 gap-1.5 transition-all hover:shadow-lg hover:scale-[103%] bg-white`}>
             {
                 img && <img src={img} className={'w-[50px] h-[50px]'} alt={'thum'}/>
             }
