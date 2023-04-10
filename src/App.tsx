@@ -10,7 +10,7 @@ function App(){
           <header className={'sticky bg-[#77A4E8] top-0 shadow-lg'}>
               <Header/>
           </header>
-          <main>
+          <main className={'bg-[#F5F5F5]'}>
               <DashBoardPage/>
           </main>
           <footer className={'flex justify-between items-center p-2 w-full border-t border-t-[#D9D9D9]'}>
