@@ -26,13 +26,13 @@ export default function DashBoardPage(){
 
                 </div>
             </div>
-            <div className={'container m-auto grid grid-cols-1 xl:grid-cols-3 h-full md:gap-5'}>
-                <section className={'col-span-1 py-4 md:mt-4 bg-white rounded-xl border-basic border'}>
-                    <div className={'flex items-center justify-between pb-4 px-6'}>
+            <div className={'container m-auto grid grid-cols-1 xl:grid-cols-3 h-full p-3 sm:p-0 gap-3 md:gap-5'}>
+                <section className={'col-span-1 md:mt-4 bg-white rounded-xl'}>
+                    <div className={'flex items-center justify-between py-4 px-6 dashboard-title rounded-t-xl'}>
                         <h2 className={'font-bold text-2xl'}>Q&N 게시판</h2>
                         <RightIcon/>
                     </div>
-                    <div className={'flex flex-col border-t border-t-basic px-4'}>
+                    <div className={'flex flex-col border-t border-t-basic px-4 mb-4'}>
                         <div className={'border-b border-b-basic py-1'}>
                             <TableRow img={'/logo512.png'} title={'포스트 제목'} writer={'작성자'} date={'2020-10-20 11:12:31'} view={1000} comment={1000}/>
                         </div>
@@ -50,12 +50,12 @@ export default function DashBoardPage(){
                         </div>
                     </div>
                 </section>
-                <section className={'col-span-1 py-4 md:mt-4 bg-white rounded-xl border-basic border'}>
-                    <div className={'flex items-center justify-between pb-4 px-6'}>
+                <section className={'col-span-1 md:mt-4 bg-white rounded-xl'}>
+                    <div className={'flex items-center justify-between py-4 px-6 dashboard-title rounded-t-xl'}>
                         <h2 className={'font-bold text-2xl'}>꿀팁 게시판</h2>
                         <RightIcon/>
                     </div>
-                    <div className={'flex flex-col border-t border-t-basic px-4'}>
+                    <div className={'flex flex-col border-t border-t-basic px-4 mb-4'}>
                         <div className={'border-b border-b-basic py-1'}>
                             <TableRow img={'/logo512.png'} title={'포스트 제목'} writer={'작성자'} date={'2020-10-20 11:12:31'} view={1000} comment={1000}/>
                         </div>
@@ -73,12 +73,12 @@ export default function DashBoardPage(){
                         </div>
                     </div>
                 </section>
-                <section className={'col-span-1 py-4 md:mt-4 bg-white rounded-xl border-basic border'}>
-                    <div className={'flex items-center justify-between pb-4 px-6'}>
+                <section className={'col-span-1 md:mt-4 bg-white rounded-xl'}>
+                    <div className={'flex items-center justify-between py-4 px-6 dashboard-title rounded-t-xl'}>
                         <h2 className={'font-bold text-2xl'}>미채택 글</h2>
                         <RightIcon/>
                     </div>
-                    <div className={'flex flex-col border-t border-t-basic px-4'}>
+                    <div className={'flex flex-col border-t border-t-basic px-4 mb-4'}>
                         <div className={'border-b border-b-basic py-1'}>
                             <TableRow img={'/logo512.png'} title={'포스트 제목'} writer={'작성자'} date={'2020-10-20 11:12:31'} view={1000} comment={1000}/>
                         </div>
