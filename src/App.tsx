@@ -4,7 +4,6 @@ import Footer from "./components/Footer/Footer";
 import DashBoardPage from "./pages/DashBoard";
 
 function App(){
-
   return (
       <div className="App">
           <header className={'sticky bg-[#77A4E8] top-0 shadow-lg'}>
