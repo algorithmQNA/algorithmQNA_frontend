@@ -1,15 +1,15 @@
 import React, { ReactNode, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 
 import { ReactComponent as Hamburger } from "../../assets/images/Hamburger.svg";
 
 type SidebarLayoutProps = {
-  children: ReactNode;
+  children?: ReactNode;
   pageTitle: string;
   links: { title: string; link: string }[];
 };
 
-function SidebarLayout({ children, pageTitle, links }: SidebarLayoutProps) {
+function SidebarLayout({ pageTitle, links }: SidebarLayoutProps) {
   const [openSidebar, setOpenSidebar] = useState(false);
 
   const toggleOpenSidebar = () => {
@@ -63,7 +63,7 @@ function SidebarLayout({ children, pageTitle, links }: SidebarLayoutProps) {
           className="min-h-full p-4 sm:ml-64 border-gray-100 border-y"
           onClick={handleClickMain}
         >
-          {children}
+          <Outlet />
         </main>
       </div>
     </div>
