@@ -4,14 +4,13 @@ import { NavLink, Outlet } from "react-router-dom";
 import { ReactComponent as Hamburger } from "../../assets/images/Hamburger.svg";
 
 type SidebarLayoutProps = {
-  pageTitle: string;
-
   links: { title: string; link: string }[];
   children?: ReactElement;
 };
 
-function SidebarLayout({ pageTitle, links }: SidebarLayoutProps) {
+function SidebarLayout({ links }: SidebarLayoutProps) {
   const [openSidebar, setOpenSidebar] = useState(false);
+  const [title, setTitle] = useState("");
 
   const toggleOpenSidebar = () => {
     setOpenSidebar((prev) => !prev);
@@ -32,7 +31,7 @@ function SidebarLayout({ pageTitle, links }: SidebarLayoutProps) {
         >
           <Hamburger className="w-6 h-6" />
         </button>
-        <h1 className="font-bold text-3xl">{pageTitle}</h1>
+        <h1 className="font-bold text-3xl">{title}</h1>
       </header>
 
       <div className="relative min-h-[1000px]">
@@ -47,11 +46,13 @@ function SidebarLayout({ pageTitle, links }: SidebarLayoutProps) {
                 <NavLink
                   to={link.link}
                   className={({ isActive }) => {
-                    return `block w-full h-full ps-3 py-2 border-l-8 ${
-                      isActive
-                        ? "border-primary bg-gray-100"
-                        : "border-transparent hover:bg-gray-100 transition-colors duration-200"
-                    }`;
+                    const defaultStyle =
+                      "block w-full h-full ps-3 py-2 border-l-8 hover:bg-gray-100 transition-colors duration-200 border-transparent";
+                    if (isActive) {
+                      setTitle(link.title);
+                      return `${defaultStyle} !border-primary bg-gray-100`;
+                    }
+                    return defaultStyle;
                   }}
                 >
                   {link.title}
