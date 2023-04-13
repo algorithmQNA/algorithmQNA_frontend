@@ -1,15 +1,16 @@
 import './App.css'
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import QNABoard from "./pages/Q&ABoard/Q&ABoard";
 
 function App(){
 
   return (
       <div className="App">
           <Header/>
-          <div className={'h-[2000px]'}>
-
-          </div>
+          <main className={'w-full bg-[#F5F5F5] h-fit'}>
+              <QNABoard/>
+          </main>
           <Footer/>
       </div>
   );
