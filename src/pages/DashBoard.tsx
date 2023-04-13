@@ -27,7 +27,7 @@ export default function DashBoardPage(){
             <div className={'container m-auto grid grid-cols-1 xl:grid-cols-3 h-full p-3 sm:p-0 gap-3 md:gap-5 mt-6'}>
                 <section className={'col-span-1 md:mt-4 bg-white rounded-xl'}>
                     <div className={'flex items-center justify-between py-4 px-6 dashboard-title rounded-t-xl'}>
-                        <h2 className={'font-bold text-2xl'}>Q&N 게시판</h2>
+                        <h2 className={'font-bold text-xl'}>Q&N 게시판</h2>
                         <RightIcon/>
                     </div>
                     <div className={'flex flex-col border-t border-t-basic px-4 mb-4'}>
@@ -50,7 +50,7 @@ export default function DashBoardPage(){
                 </section>
                 <section className={'col-span-1 md:mt-4 bg-white rounded-xl'}>
                     <div className={'flex items-center justify-between py-4 px-6 dashboard-title rounded-t-xl'}>
-                        <h2 className={'font-bold text-2xl'}>꿀팁 게시판</h2>
+                        <h2 className={'font-bold text-xl'}>꿀팁 게시판</h2>
                         <RightIcon/>
                     </div>
                     <div className={'flex flex-col border-t border-t-basic px-4 mb-4'}>
@@ -73,7 +73,7 @@ export default function DashBoardPage(){
                 </section>
                 <section className={'col-span-1 md:mt-4 bg-white rounded-xl'}>
                     <div className={'flex items-center justify-between py-4 px-6 dashboard-title rounded-t-xl'}>
-                        <h2 className={'font-bold text-2xl'}>미채택 글</h2>
+                        <h2 className={'font-bold text-xl'}>미채택 글</h2>
                         <RightIcon/>
                     </div>
                     <div className={'flex flex-col border-t border-t-basic px-4 mb-4'}>
