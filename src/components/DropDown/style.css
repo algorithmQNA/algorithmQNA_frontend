@@ -1,29 +1,6 @@
+
 .task-tooltip {
-    @apply relative rounded w-full h-auto max-h-[350px] border border-[#D9D9D9] mt-[10px] py-1 px-2 z-50;
+    @apply absolute rounded w-full h-auto max-h-[350px] border border-[#D9D9D9] mt-[10px] py-1 px-2 z-50
 }
 
-.task-tooltip::after {
-    border-color: #ffffff transparent;
-    border-style: solid;
-    border-width: 0 8px 8px 8px;
-    content: '';
-    display: block;
-    left: 25px;
-    position: absolute;
-    top: -7px;
-    width: 0;
-    z-index: 1;
-}
 
-.task-tooltip::before {
-    border-color: #D9D9D9 transparent;
-    border-style: solid;
-    border-width: 0 8px 8px 8px;
-    content: '';
-    display: block;
-    left: 25px;
-    position: absolute;
-    top: -8px;
-    width: 0;
-    z-index: 0;
-}

@@ -1,17 +1,15 @@
 import React, {ChangeEvent, MouseEventHandler, ReactElement, useMemo, useState} from "react";
 import './style.css'
+import CategoryIcon from "../Icon/category";
 interface props{
     event?:(value:string)=>void
     search?:boolean | undefined
     children:ReactElement | ReactElement[]
     defaultText?:string
+    align?:'right' | 'left'
+    location?:number
 }
-/**
- * children으로 option 태그 사용
- * event props 필수
- * event = 함수(value:string)=>void
- * */
-export default function SelectArea({event,defaultText='선택',search=false,children}:props){
+export default function DropDownRe({event,defaultText='선택',search=false,children,align='right',location=15}:props){
     const child = React.Children.map(children,child =>child)
     const [state,setState] = useState({
         displayOption:false,
@@ -35,14 +33,17 @@ export default function SelectArea({event,defaultText='선택',search=false,chil
         setState({...state,displayOption:false,displayText:e.currentTarget.innerText})
     }
     return(
-        <div className={'w-full relative'}>
-            <label className={`${defaultClass.area} ${state.displayOption ? 'border-[#77A4E8]' : ''}`}>
+        <div className={'w-fit relative'}>
+            <label className={'flex justify-end'}>
                 <input type={"checkbox"} className={'hidden'} checked={state.displayOption} onChange={selectStart}/>
-                <span>{state.displayText}</span>
+                <span className={'flex justify-center items-center bg-primary focus:outline-none px-2 py-1 border-2 border-white rounded-lg w-[50px]'}>
+                    <CategoryIcon/>
+                </span>
             </label>
             {
                 state.displayOption &&
-                <div className={'task-tooltip bg-white shadow'}>
+                <div className={`task-tooltip bg-white shadow p-2 min-w-[200px] ${align}-0 
+                after:right-[15px] before:right-[${location}px]`}>
                     {
                         search &&
                         <div className={`${defaultClass.search} max-w-[250px]`}>
