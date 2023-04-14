@@ -6,7 +6,9 @@
     font-family: "Pretendard", "Noto Sans", sans-serif, system-ui, sans-serif;
   }
 }
-
 * {
   box-sizing: border-box;
+}
+.dashboard-title{
+  background:rgba(119, 164, 232, 0.15);
 }
