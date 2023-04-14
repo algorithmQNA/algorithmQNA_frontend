@@ -12,8 +12,9 @@ type ModalProps = {
   onCancel: MouseEventHandler<HTMLButtonElement>;
   onConfirm: MouseEventHandler<HTMLButtonElement>;
 }>;
-/** onCancel과 onConfirm은 한 세트. 둘 다 props로 보내거나, 둘 다 아예 안 보내야 함*/
-/** onConfirm/onCancel이 props로 전달되면 Confirm Modal로 변경됨 */
+
+/** onCancel과 onConfirm은 한 세트. 둘 다 props로 보내거나, 둘 다 아예 안 보내야 함
+onConfirm/onCancel이 props로 전달되면 Confirm Modal로 변경됨*/
 
 function Modal({ children, title, onClose, onConfirm, onCancel }: ModalProps) {
   const parentElement = document.getElementById("modal");
