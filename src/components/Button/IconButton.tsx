@@ -7,7 +7,7 @@ type IconButtonProps = React.HTMLAttributes<HTMLButtonElement> & {
 function IconButton({ children, Icon, ...props }: IconButtonProps) {
   return (
     <button
-      className="rounded-full active:bg-slate-100 active:scale-110 p-0 m-0"
+      className="rounded-full w-2 h-2 active:bg-slate-100 active:scale-110 p-0 m-0"
       {...props}
     >
       {Icon}
