@@ -12,7 +12,7 @@ interface props extends React.HTMLAttributes<HTMLButtonElement>{
 export default function ButtonComponent({children,onClick,className}:props){
     return(
         <button
-            className={`input-c-btn ${className ? className : ''}`}
+            className={`${className ? className : 'input-c-btn'}`}
             onClick={onClick}
         >
             {children}
