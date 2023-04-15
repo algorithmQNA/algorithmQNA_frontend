@@ -1,6 +1,14 @@
 import React, {ChangeEvent, MouseEventHandler, ReactElement, useMemo, useState} from "react";
 import './style.css'
-interface props{
+interface optionProps extends React.OptionHTMLAttributes<HTMLOptionElement>{
+    children:ReactElement | ReactElement[] | string
+}
+export const SelectOption = ({children,className,value}:optionProps) =>{
+    return (
+        <option className={className} value={value}>{children}</option>
+    )
+}
+interface props extends React.HTMLAttributes<HTMLDivElement>{
     event?:(value:string)=>void
     search?:boolean | undefined
     children:ReactElement | ReactElement[]
@@ -11,7 +19,7 @@ interface props{
  * event props 필수
  * event = 함수(value:string)=>void
  * */
-export default function SelectArea({event,defaultText='선택',search=false,children}:props){
+export function SelectArea({event,defaultText='선택',search=false,children,className}:props){
     const child = React.Children.map(children,child =>child)
     const [state,setState] = useState({
         displayOption:false,
@@ -21,9 +29,10 @@ export default function SelectArea({event,defaultText='선택',search=false,chil
     const filter = child.filter((item)=>item.props.children.includes(state.search))
     const defaultClass = useMemo(()=>{
         return {
-            area:'w-full flex items-center justify-between text-sm px-2 py-2 border border-[#D9D9D9] rounded z-10 hover:cursor-pointer',
-            search:'w-full flex items-center justify-between text-sm px-2 py-2 rounded my-2 border border-[#D9D9D9]',
-            options:'border-l-8 border-l-[#77A4E8] w-full flex items-center justify-between text-sm px-2 py-2 my-1 shadow hover:cursor-pointer bg-white'
+            select:'select',
+            area:'select-area',
+            search:'option-search',
+            options:'select-option'
         }
     },[])
     /** 셀렉트 박스 클릭 */
@@ -36,16 +45,16 @@ export default function SelectArea({event,defaultText='선택',search=false,chil
     }
     return(
         <div className={'w-full relative'}>
-            <label className={`${defaultClass.area} ${state.displayOption ? 'border-[#77A4E8]' : ''}`}>
+            <label className={`${defaultClass.select} ${className} ${state.displayOption ? 'border-[#77A4E8]' : ''}`}>
                 <input type={"checkbox"} className={'hidden'} checked={state.displayOption} onChange={selectStart}/>
                 <span>{state.displayText}</span>
             </label>
             {
                 state.displayOption &&
-                <div className={'task-tooltip bg-white shadow'}>
+                <div className={defaultClass.area}>
                     {
                         search &&
-                        <div className={`${defaultClass.search} max-w-[250px]`}>
+                        <div className={`${defaultClass.search}`}>
                             <input type={'text'} className={'text-sm border-none bg-none focus:outline-none w-full'}
                                    value={state.search}
                                    placeholder={'검색'}
@@ -55,15 +64,12 @@ export default function SelectArea({event,defaultText='선택',search=false,chil
                     }
                     {
                         filter.map(({key,props})=>(
-                            <div>
-                                <option key={key}
-                                        className={`${props.className ? props.className : defaultClass.options} `}
-                                        value={props.value}
-                                        onClick={selectOption}>
-                                    <div className={''}></div>
-                                    {props.children}
-                                </option>
-                            </div>
+                            <option key={key}
+                                    className={`${props.className ? props.className : defaultClass.options} `}
+                                    value={props.value}
+                                    onClick={selectOption}>
+                                {props.children}
+                            </option>
                         ))
                     }
                 </div>
