@@ -1,10 +1,10 @@
-import PenIcon from "../../components/Icon/pen";
-import SortIcon from "../../components/Icon/Sort";
-import SearchIcon from "../../components/Icon/Search";
-import CategoryIcon from "../../components/Icon/category";
-import TableRow from "../../components/TableRow/TableRow";
-import {DropDown} from "../../components/DropDown/DropDown";
-import {SelectOption} from "../../components/DropDown/SelectBox";
+import PenIcon from "../components/Icon/pen";
+import SortIcon from "../components/Icon/Sort";
+import SearchIcon from "../components/Icon/Search";
+import CategoryIcon from "../components/Icon/category";
+import TableRow from "../components/TableRow/TableRow";
+import {DropDown} from "../components/DropDown/DropDown";
+import {SelectOption} from "../components/DropDown/SelectBox";
 
 export default function QNABoard(){
 
