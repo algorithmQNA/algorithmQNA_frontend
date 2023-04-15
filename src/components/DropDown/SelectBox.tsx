@@ -13,13 +13,14 @@ interface props extends React.HTMLAttributes<HTMLDivElement>{
     search?:boolean | undefined
     children:ReactElement | ReactElement[]
     defaultText?:string
+    location?:'right' | 'left'
 }
 /**
  * children으로 option 태그 사용
  * event props 필수
  * event = 함수(value:string)=>void
  * */
-export function SelectArea({event,defaultText='선택',search=false,children,className}:props){
+export function SelectBox({event,defaultText='선택',search=false,children,className,location='left'}:props){
     const child = React.Children.map(children,child =>child)
     const [state,setState] = useState({
         displayOption:false,
@@ -32,7 +33,8 @@ export function SelectArea({event,defaultText='선택',search=false,children,cla
             select:'select',
             area:'select-area',
             search:'option-search',
-            options:'select-option'
+            options:'select-option',
+            location:location === 'left' ? 'left-0' : 'right-0'
         }
     },[])
     /** 셀렉트 박스 클릭 */
@@ -51,7 +53,7 @@ export function SelectArea({event,defaultText='선택',search=false,children,cla
             </label>
             {
                 state.displayOption &&
-                <div className={defaultClass.area}>
+                <div className={`${defaultClass.area} ${defaultClass.location}`}>
                     {
                         search &&
                         <div className={`${defaultClass.search}`}>

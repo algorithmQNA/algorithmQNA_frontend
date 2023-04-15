@@ -7,12 +7,12 @@
     @apply w-full flex items-center justify-between text-sm px-2 py-2 border border-[#D9D9D9] rounded z-10 hover:cursor-pointer bg-white;
 }
 .select-area{
-    @apply absolute w-full h-auto rounded max-h-[350px] border border-[#D9D9D9] z-50 bg-white;
+    @apply absolute h-auto rounded max-h-[350px] border border-[#D9D9D9] z-50 bg-white w-fit;
 }
 .option-search{
     @apply w-full flex items-center justify-between text-sm px-2 py-2 max-w-[250px];
 }
 .select-option{
-    @apply border-b border-b-basic w-full flex items-center justify-between text-sm px-2 py-2 hover:cursor-pointer bg-white;
+    @apply border-b border-b-basic flex items-center justify-between text-sm px-2 py-2 hover:cursor-pointer bg-white;
 }
 
