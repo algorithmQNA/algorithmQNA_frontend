@@ -31,7 +31,7 @@ export function SelectBox({event,defaultText='선택',search=false,children,clas
     const defaultClass = useMemo(()=>{
         return {
             select:'select',
-            area:'select-area',
+            area:'select-area w-full',
             search:'option-search',
             options:'select-option',
             location:location === 'left' ? 'left-0' : 'right-0'
@@ -47,7 +47,7 @@ export function SelectBox({event,defaultText='선택',search=false,children,clas
     }
     return(
         <div className={'w-full relative'}>
-            <label className={`${defaultClass.select} ${className} ${state.displayOption ? 'border-[#77A4E8]' : ''}`}>
+            <label className={`${defaultClass.select} ${className} ${state.displayOption ? 'border-[#77A4E8]' : 'border-[#D9D9D9]'}`}>
                 <input type={"checkbox"} className={'hidden'} checked={state.displayOption} onChange={selectStart}/>
                 <span>{state.displayText}</span>
             </label>
@@ -67,7 +67,7 @@ export function SelectBox({event,defaultText='선택',search=false,children,clas
                     {
                         filter.map(({key,props})=>(
                             <option key={key}
-                                    className={`${props.className ? props.className : defaultClass.options} `}
+                                    className={`${props.className ? props.className : defaultClass.options}`}
                                     value={props.value}
                                     onClick={selectOption}>
                                 {props.children}

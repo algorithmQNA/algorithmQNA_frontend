@@ -19,7 +19,7 @@ export function DropDown({event,defaultText='선택',search=false,children,class
     const defaultClass = useMemo(()=>{
         return {
             select:'',
-            area:'select-area mt-1',
+            area:'select-area mt-1 w-fit',
             search:'option-search',
             options:'select-option',
             location:location === 'left' ? 'left-0' : 'right-0'
