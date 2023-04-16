@@ -1,5 +1,4 @@
 import {useEffect, useRef} from "react";
-import './style.css'
 interface win extends Window{
     google?:any
 }
