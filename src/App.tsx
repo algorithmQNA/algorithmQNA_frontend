@@ -2,7 +2,6 @@ import './App.css'
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import {Route, BrowserRouter as Router, Routes} from "react-router-dom";
-import PostViewPage from "./pages/PostView";
 import PostWritePage from "./pages/PostWrite";
 
 function App(){
