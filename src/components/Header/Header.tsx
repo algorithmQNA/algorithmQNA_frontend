@@ -13,14 +13,14 @@ export default function Header(){
 
             </nav>
             <div className={'flex items-center gap-6'}>
-                <div className={'text-white border border-white py-1 px-4 rounded relative'}
+                <div className={'text-white py-1 px-4 rounded relative'}
                      onMouseOver={()=>setState((prev)=>({...prev,alamDisplay:true}))}
                      onMouseOut={()=>setState((prev)=>({...prev,alamDisplay:false}))}
                 >
                     <BellIcon/>
                     {
                         state.alamDisplay &&
-                        <ul className={'absolute top-[110%] right-0 min-w-[150px] bg-white border border-[#77A4E8] p-3 z-50 shadow-lg text-black'}>
+                        <ul className={'absolute top-[110%] right-0 min-w-[150px] bg-white border border-basic p-3 z-50 shadow-lg text-black rounded'}>
                             <li className={'menu-li'}>
                                 알람1
                             </li>
@@ -40,10 +40,10 @@ export default function Header(){
                      onMouseOut={()=>setState((prev)=>({...prev,userMenuDisplay:false}))}
                      className={'relative'}
                 >
-                    <span className={'text-white border border-white py-1 px-2 rounded text-sm'}>{'사용자명'} 님</span>
+                    <span className={'text-white py-1 px-2 rounded text-sm'}>{'사용자명'} 님</span>
                     {
                         state.userMenuDisplay &&
-                        <ul className={'absolute top-[110%] right-0 min-w-[150px] bg-white border border-[#77A4E8] p-3 z-50 shadow-lg'}>
+                        <ul className={'absolute top-[110%] right-0 min-w-[150px] bg-white border border-basic p-3 z-50 shadow-lg rounded'}>
                             <li className={'menu-li'}>
                                 메뉴1
                             </li>

@@ -2,7 +2,7 @@ import './App.css'
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import {Route, BrowserRouter as Router, Routes} from "react-router-dom";
-import PostWritePage from "./pages/PostWrite";
+import DashBoardPage from "./pages/DashBoard";
 
 function App(){
   return (
@@ -13,7 +13,7 @@ function App(){
           <main className={'bg-[#F5F5F5]'}>
               <Router>
                   <Routes>
-                      <Route path="/" element={<PostWritePage/>} />
+        
                   </Routes>
               </Router>
           </main>
