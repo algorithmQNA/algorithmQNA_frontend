@@ -9,9 +9,6 @@
 * {
   box-sizing: border-box;
 }
-.dashboard-title{
-  background:rgba(119, 164, 232, 0.15);
-}
 .ck.ck-editor__editable:not(.ck-editor__nested-editable) {
   min-height: 400px;
   margin-bottom: 20px;

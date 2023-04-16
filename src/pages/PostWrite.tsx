@@ -1,9 +1,10 @@
-import React, {ChangeEvent, Component, useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {SelectBox, SelectOption} from "../components/DropDown/SelectBox";
 import InputComponent from "../components/Input/InputComponent";
 import ButtonComponent from "../components/Button/ButtonComponent";
+import Pagination from "../components/Pagination/Pagination";
 export default function PostWritePage(){
     const [title,setTitle] = useState('')
     const changeTitle = (e:ChangeEvent<HTMLInputElement>) =>{
@@ -11,6 +12,7 @@ export default function PostWritePage(){
     }
     return(
         <div className={'container m-auto'}>
+            <Pagination postLength={1000} listLength={10}/>
             <div className={'flex flex-col gap-4 bg-white p-4'}>
                 <div className={'w-full flex flex-col gap-1'}>
                     <p className={'font-bold text-sm'}>제목</p>
