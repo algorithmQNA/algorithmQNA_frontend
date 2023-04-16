@@ -12,22 +12,29 @@ export default function PostWritePage(){
     return(
         <div className={'container m-auto'}>
             <div className={'flex flex-col gap-4 bg-white p-4'}>
-                <div>
+                <div className={'w-full flex flex-col gap-1'}>
+                    <p className={'font-bold text-sm'}>제목</p>
                     <InputComponent
                         value={title}
                         placeholder={'제목'}
                         onChange={changeTitle}
                     />
                 </div>
-                <div className={'flex gap-4'}>
-                    <SelectBox defaultText={'게시판 선택'}>
-                        <SelectOption value={''}>Q&A</SelectOption>
-                        <SelectOption value={''}>꿀팁</SelectOption>
-                    </SelectBox>
-                    <SelectBox defaultText={'분류 선택'}>
-                        <SelectOption value={''}>카테고리1</SelectOption>
-                        <SelectOption value={''}>카테고리2</SelectOption>
-                    </SelectBox>
+                <div className={'flex gap-4 w-full'}>
+                    <div className={'w-full flex flex-col gap-1'}>
+                        <p className={'font-bold text-sm'}>게시판</p>
+                        <SelectBox defaultText={'게시판 선택'}>
+                            <SelectOption value={''}>Q&A</SelectOption>
+                            <SelectOption value={''}>꿀팁</SelectOption>
+                        </SelectBox>
+                    </div>
+                    <div className={'w-full flex flex-col gap-1'}>
+                        <p className={'font-bold text-sm'}>카테고리</p>
+                        <SelectBox defaultText={'분류 선택'}>
+                            <SelectOption value={''}>카테고리1</SelectOption>
+                            <SelectOption value={''}>카테고리2</SelectOption>
+                        </SelectBox>
+                    </div>
                 </div>
                 <div>
                     <CKEditor
