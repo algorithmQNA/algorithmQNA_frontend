@@ -26,7 +26,7 @@ export default function DashBoardPage(){
             </div>
             <div className={'container m-auto grid grid-cols-1 xl:grid-cols-3 h-full p-3 sm:p-0 gap-3 md:gap-5 mt-6'}>
                 <section className={'col-span-1 md:mt-4 bg-white rounded-xl'}>
-                    <div className={'flex items-center justify-between py-4 px-6 dashboard-title rounded-t-xl'}>
+                    <div className={'flex items-center justify-between py-4 px-6 dashboard-title rounded-t-xl hover:bg-gray-100 hover:cursor-pointer'}>
                         <h2 className={'font-bold text-xl'}>Q&N 게시판</h2>
                         <RightIcon/>
                     </div>
@@ -49,7 +49,7 @@ export default function DashBoardPage(){
                     </div>
                 </section>
                 <section className={'col-span-1 md:mt-4 bg-white rounded-xl'}>
-                    <div className={'flex items-center justify-between py-4 px-6 dashboard-title rounded-t-xl'}>
+                    <div className={'flex items-center justify-between py-4 px-6 dashboard-title rounded-t-xl hover:bg-gray-100 hover:cursor-pointer'}>
                         <h2 className={'font-bold text-xl'}>꿀팁 게시판</h2>
                         <RightIcon/>
                     </div>
@@ -72,7 +72,7 @@ export default function DashBoardPage(){
                     </div>
                 </section>
                 <section className={'col-span-1 md:mt-4 bg-white rounded-xl'}>
-                    <div className={'flex items-center justify-between py-4 px-6 dashboard-title rounded-t-xl'}>
+                    <div className={'flex items-center justify-between py-4 px-6 dashboard-title rounded-t-xl hover:bg-gray-100 hover:cursor-pointer'}>
                         <h2 className={'font-bold text-xl'}>미채택 글</h2>
                         <RightIcon/>
                     </div>
