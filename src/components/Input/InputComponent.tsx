@@ -16,20 +16,18 @@ interface props extends React.HTMLAttributes<HTMLInputElement>{
  **/
 export default function InputComponent({value,placeholder,onChange,button=undefined}:props){
     return(
-        <div className={'border border-[#D9D9D9] w-full py-1 px-2 relative rounded'}>
+        <div className={'flex gap-1 items-center'}>
             <input type={'text'}
-                   className={'border-none bg-none text-sm w-full p-0 focus:outline-none'}
+                   className={'border border-[#D9D9D9] w-full py-1 px-2 relative rounded text-sm p-0 focus:outline-none'}
                    value={value}
                    placeholder={placeholder}
                    onChange={onChange}
             />
             {
                 button &&
-                <div className={'absolute transition-all duration-300 top-1/2 left-[95%] md:left-[97%] lg:left-[98%] w-fit'}>
-                    <ButtonComponent onClick={button.event} className={'input-c-btn-transform'}>
-                        {button.children}
-                    </ButtonComponent>
-                </div>
+                <ButtonComponent onClick={button.event} className={'py-1 px-4 text-sm border border-[#77A4E8] text-[#FFFFFF] bg-[#77A4E8] rounded w-fit min-w-[75px] whitespace-nowrap h-full'}>
+                    {button.children}
+                </ButtonComponent>
             }
         </div>
     )
