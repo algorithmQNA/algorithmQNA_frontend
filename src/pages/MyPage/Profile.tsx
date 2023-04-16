@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import InputComponent from "../../components/Input/InputComponent";
 import Rounded from "../../components/RoundedImage/RoundedImage";
 import ButtonComponent from "../../components/Button/ButtonComponent";
-import CommentView from "../../components/CommentView/CommentList";
 import Modal from "../../components/Modal/Modal";
 import useModal from "../../hooks/useModal";
 
@@ -93,7 +92,6 @@ function Profile() {
             탈퇴 모달
           </Modal>
         )}
-        <CommentView />
       </div>
     </>
   );
