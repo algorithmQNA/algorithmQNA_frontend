@@ -1,8 +1,8 @@
 import './App.css'
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-import Pagination from "./components/Pagination/Pagination";
 import {Route, BrowserRouter as Router, Routes} from "react-router-dom";
+import PostViewPage from "./pages/PostView";
 
 function App(){
   return (
@@ -13,7 +13,7 @@ function App(){
           <main className={'bg-[#F5F5F5]'}>
               <Router>
                   <Routes>
-                      <Route path="/" element={<Pagination postLength={1000} listLength={10}/>} />
+                      <Route path="/" element={<PostViewPage/>} />
                   </Routes>
               </Router>
           </main>
