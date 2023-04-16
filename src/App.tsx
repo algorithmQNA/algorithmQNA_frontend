@@ -1,8 +1,7 @@
 import './App.css'
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-import {Route, BrowserRouter as Router, Routes} from "react-router-dom";
-import DashBoardPage from "./pages/DashBoard";
+import {BrowserRouter as Router, Routes} from "react-router-dom";
 
 function App(){
   return (
@@ -13,7 +12,6 @@ function App(){
           <main className={'bg-[#F5F5F5]'}>
               <Router>
                   <Routes>
-        
                   </Routes>
               </Router>
           </main>
