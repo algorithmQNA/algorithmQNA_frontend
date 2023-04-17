@@ -13,12 +13,12 @@ interface props{
 }
 export default function TableRow({img=undefined,title,writer,date,view,comment}:props){
     return(
-        <div className={`${img ? 'table-row-img' : 'table-row'} items-center p-1.5 gap-1.5 border border-[#D9D9D9] rounded-lg transition-all hover:scale-[101%]`}>
+        <div className={`${img ? 'table-row-img' : 'table-row'} items-center p-1.5 gap-1.5`}>
             {
                 img && <img src={img} className={'w-[50px] h-[50px]'} alt={'thum'}/>
             }
             <div className={'flex flex-col justify-around h-full w-full'}>
-                <span className={'font-bold text-sm truncate max-w-[200px]'}>
+                <span className={'font-bold text-sm truncate max-w-[200px] text-left'}>
                     {title}
                 </span>
                 <div className={'flex items-center justify-between w-full'}>
