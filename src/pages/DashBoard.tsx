@@ -6,6 +6,8 @@ import {Scrollbar} from "swiper";
 
 import "swiper/swiper.css";
 import "swiper/css/scrollbar";
+import {SelectBox, SelectOption} from "../components/DropDown/SelectBox";
+import {DropDown} from "../components/DropDown/DropDown";
 
 export default function DashBoardPage(){
     return(
