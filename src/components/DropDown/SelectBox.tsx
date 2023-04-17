@@ -1,4 +1,4 @@
-import React, {ChangeEvent, MouseEventHandler, ReactElement, useMemo, useState} from "react";
+import React, {ChangeEvent, MouseEventHandler, ReactElement, useEffect, useMemo, useRef, useState} from "react";
 import './style.css'
 interface optionProps extends React.OptionHTMLAttributes<HTMLOptionElement>{
     children:ReactElement | ReactElement[] | string
@@ -21,6 +21,7 @@ interface props extends React.HTMLAttributes<HTMLDivElement>{
  * event = 함수(value:string)=>void
  * */
 export function SelectBox({event,defaultText='선택',search=false,children,className,location='left'}:props){
+    const box = useRef<HTMLDivElement>(null)
     const child = React.Children.map(children,child =>child)
     const [state,setState] = useState({
         displayOption:false,
@@ -45,8 +46,20 @@ export function SelectBox({event,defaultText='선택',search=false,children,clas
     const selectOption:MouseEventHandler<HTMLOptionElement> = (e) =>{
         setState({...state,displayOption:false,displayText:e.currentTarget.innerText})
     }
+    useEffect(()=>{
+        const setCheck = (e:globalThis.MouseEvent) =>{
+            const target = e.target as Element
+            if(state.displayOption && !box.current?.contains(target)){
+                setState((prev)=>({
+                    ...prev,displayOption:false
+                }))
+            }
+        }
+        document.addEventListener('click',setCheck);
+        return () => document.removeEventListener('click', setCheck);
+    },[state.displayOption])
     return(
-        <div className={'w-full relative'}>
+        <div className={'w-full relative'} ref={box}>
             <label className={`${defaultClass.select} ${className} ${state.displayOption ? 'border-[#77A4E8]' : 'border-[#D9D9D9]'}`}>
                 <input type={"checkbox"} className={'hidden'} checked={state.displayOption} onChange={selectStart}/>
                 <span>{state.displayText}</span>
