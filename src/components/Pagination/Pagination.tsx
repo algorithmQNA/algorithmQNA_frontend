@@ -21,7 +21,7 @@ export default function Pagination({postLength,listLength,displayPages=5}:props)
     /** 페이지 쿼리값이 없으면 1로 할당 */
     const query = params ? parseInt(params) : 1;
     /** 총 페이지 수 계산 */
-    const totalPage = postLength / listLength;
+    const totalPage = Math.floor(postLength / listLength);
     /** 페이지 배열 */
     const page = useMemo(()=>{
         /** 빈 배열 변수 생성 */
@@ -37,10 +37,14 @@ export default function Pagination({postLength,listLength,displayPages=5}:props)
             start += displayPages
         }
         /**
+         * 페이지 최대값 설정
+         * */
+        const max = start > totalPage ? totalPage : start
+        /**
          * 페이지 버튼 생성을 위해 배열 푸시
          * 시작은 while문에서 최종적으로 합한 값에 표시 페이지수를 빼고 1를 더함
          *  */
-        for(let i=start-displayPages+1;i<=start;i++){
+        for(let i=start-displayPages+1;i<=max;i++){
             pageArr.push(i)
         }
         /** 배열 리턴 */

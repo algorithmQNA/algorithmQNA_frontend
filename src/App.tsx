@@ -1,7 +1,8 @@
 import './App.css'
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-import {BrowserRouter as Router, Routes} from "react-router-dom";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import Pagination from "./components/Pagination/Pagination";
 
 function App(){
   return (
@@ -12,6 +13,7 @@ function App(){
           <main className={'bg-[#F5F5F5]'}>
               <Router>
                   <Routes>
+                      <Route path={'/'} element={<Pagination postLength={256} listLength={10} displayPages={5}/>}/>
                   </Routes>
               </Router>
           </main>
