@@ -45,6 +45,9 @@ export function SelectBox({event,defaultText='선택',search=false,children,clas
     /** 옵션 선택 */
     const selectOption:MouseEventHandler<HTMLOptionElement> = (e) =>{
         setState({...state,displayOption:false,displayText:e.currentTarget.innerText})
+        if(event){
+            event(e.currentTarget.value)
+        }
     }
     useEffect(()=>{
         const setCheck = (e:globalThis.MouseEvent) =>{
