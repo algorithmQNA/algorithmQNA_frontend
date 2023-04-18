@@ -34,7 +34,7 @@ function SidebarLayout({ links }: SidebarLayoutProps) {
         <h1 className="font-bold text-3xl">{title}</h1>
       </header>
 
-      <div className="relative min-h-[1000px]">
+      <div className="relative min-h-[1000px] bg-white">
         <aside
           className={`absolute top-0 left-0 w-64 h-full transition-transform sm:translate-x-0 ${
             !openSidebar && "-translate-x-full"

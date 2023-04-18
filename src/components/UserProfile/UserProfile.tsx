@@ -1,7 +1,7 @@
 import React from "react";
 import Rounded from "../RoundedImage/RoundedImage";
 
-type UserProfileProps = {
+export type UserProfileProps = {
   username: string;
   profileImgSrc: string;
   badges: { name: string; src: string }[];
@@ -12,7 +12,12 @@ function UserProfile({ username, profileImgSrc, badges }: UserProfileProps) {
   return (
     <div className="grid grid-rows-2 auto-cols-max grid-flow-col items-center gap-x-4	">
       <div className="row-span-2 col-span-1">
-        <Rounded alt={`${username}s profile image`} src={profileImgSrc} />
+        <Rounded
+          alt={`${username}s profile image`}
+          src={profileImgSrc}
+          width="32px"
+          height="32px"
+        />
       </div>
       <div className="col-span-2">
         <p className="text-sm">{username}</p>
