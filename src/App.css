@@ -7,7 +7,13 @@
     font-family: "Pretendard", "Noto Sans", sans-serif, system-ui, sans-serif;
   }
 }
-
 * {
   box-sizing: border-box;
+}
+.ck.ck-editor__editable:not(.ck-editor__nested-editable) {
+  min-height: 400px;
+  margin-bottom: 20px;
+}
+.test-div *{
+
 }
