@@ -72,11 +72,25 @@ const completeFlatten = dummyComments.reduce((prev, comment) => {
   return result;
 }, []);
 
-console.log(completeFlatten);
+/** 대댓글의 최대 depth 2 - 협의 */
+const marginLeft: { [key: string]: string } = {
+  0: "ml-0",
+  1: "ml-6",
+  2: "ml-12",
+};
 
 function CommentList() {
   const datas = completeFlatten as never as CommentViewProps[];
-  return <section></section>;
+
+  return (
+    <section>
+      {datas.map((data, idx) => (
+        <div className={marginLeft[data.depth]} key={idx}>
+          <CommentView {...data} />
+        </div>
+      ))}
+    </section>
+  );
 }
 
 export default CommentList;
