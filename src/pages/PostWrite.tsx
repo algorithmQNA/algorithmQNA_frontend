@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useState} from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import CustomEditor from 'ckeditor5-custom-build';
 import {SelectBox, SelectOption} from "../components/DropDown/SelectBox";
 import InputComponent from "../components/Input/InputComponent";
 import ButtonComponent from "../components/Button/ButtonComponent";
@@ -40,7 +40,7 @@ export default function PostWritePage(){
                 </div>
                 <div>
                     <CKEditor
-                        editor={ ClassicEditor }
+                        editor={ CustomEditor }
                         data="<p>Hello from CKEditor 5!</p>"
                         onReady={ editor => {
                             // You can store the "editor" and use when it is needed.
