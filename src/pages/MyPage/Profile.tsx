@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import InputComponent from "../../components/Input/InputComponent";
 import Rounded from "../../components/RoundedImage/RoundedImage";
 import ButtonComponent from "../../components/Button/ButtonComponent";
 import Modal from "../../components/Modal/Modal";
 import useModal from "../../hooks/useModal";
+import CommentList from "../../components/CommentView/CommentList";
 
 function Profile() {
   const [state, setState] = useState("");
@@ -22,39 +23,27 @@ function Profile() {
             <label htmlFor="nickname">닉네임</label>
             <InputComponent
               id="nickname"
-              input={{
-                value: state,
-                event: (e) => {
-                  setState(e.target.value);
-                },
-                placeholder: "hihi",
-              }}
+              value="test1234"
+              onChange={() => {}}
+              placeholder="nickname"
             />
           </div>
           <div>
             <label htmlFor="id">아이디</label>
             <InputComponent
               id="id"
-              disabled
-              input={{
-                value: state,
-                event: (e) => {
-                  setState(e.target.value);
-                },
-                placeholder: "id",
-              }}
+              value=""
+              onChange={() => {}}
+              placeholder="id"
             />
           </div>
           <div>
             <label htmlFor="email">이메일</label>
             <InputComponent
               id="email"
-              disabled
-              input={{
-                value: "",
-                event: (e) => {},
-                placeholder: "email",
-              }}
+              value=""
+              onChange={() => {}}
+              placeholder="email"
             />
           </div>
         </div>
@@ -93,6 +82,7 @@ function Profile() {
           </Modal>
         )}
       </div>
+      <CommentList />
     </>
   );
 }
