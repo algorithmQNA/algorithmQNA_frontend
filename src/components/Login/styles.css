@@ -1,0 +1,4 @@
+.login-btn{
+    @apply py-2 px-3 flex gap-3 font-semibold text-base bg-white transition-all duration-300 items-center w-fit rounded
+    hover:bg-neutral-100;
+}
