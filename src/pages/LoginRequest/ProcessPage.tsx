@@ -1,6 +1,5 @@
 import {useLocation} from "react-router-dom";
 import useSetLogin from "../../components/Login/UseSetLogin";
-import useSetToken from "../../components/Login/UseSetToken";
 
 export default function LoginProcessPage(){
     const {search} = useLocation()

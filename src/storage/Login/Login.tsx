@@ -1,7 +1,7 @@
 import {atom} from "recoil";
-import {user} from "../../types/Login";
+import {User} from "../../types/Login";
 
-export const isLogin = atom<user>({
+export const isLogin = atom<User>({
     key:'loginInfo',
     default:{
         id:null,
