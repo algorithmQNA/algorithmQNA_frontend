@@ -1,10 +1,10 @@
 import React from 'react';
 import Rounded from '../../components/RoundedImage/RoundedImage';
-// import { isLogin } from '../../storage/Login/Login';
-// import { useRecoilValue } from 'recoil';
+import { isLogin } from '../../storage/Login/Login';
+import { useRecoilValue } from 'recoil';
 
 function Profile() {
-  // const { id, profile, name } = useRecoilValue(isLogin);
+  const { id, profile, name } = useRecoilValue(isLogin);
 
   return (
     <div className="flex p-8 flex-wrap-reverse justify-center sm:justify-between gap-4 sm:gap-32">
@@ -13,7 +13,7 @@ function Profile() {
           <label htmlFor="name">이름</label>
           <input
             id="name"
-            defaultValue={'test'}
+            defaultValue={name || 'test'}
             placeholder="nickname"
             className="border border-[#D9D9D9] w-full py-1 px-2 relative rounded text-sm p-0 focus:outline-none"
             disabled
@@ -23,7 +23,7 @@ function Profile() {
           <label htmlFor="email ">이메일</label>
           <input
             id="email"
-            defaultValue={'test@test.com'}
+            defaultValue={id || 'test@test.com'}
             placeholder="email"
             className="border border-[#D9D9D9] w-full py-1 px-2 relative rounded text-sm p-0 focus:outline-none"
             disabled
@@ -34,6 +34,7 @@ function Profile() {
         <Rounded
           alt="user profile image"
           src={
+            profile ||
             'https://lh3.googleusercontent.com/ogw/AOLn63HADtscguumy1K7WcYQFGzKCnZLaQa2_f4YwqM66Q=s32-c-mo'
           }
           width="160px"
