@@ -1,7 +1,7 @@
-import React, { ReactElement, useState } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import React, { ReactElement, useState } from 'react';
+import { NavLink, Outlet } from 'react-router-dom';
 
-import { ReactComponent as Hamburger } from "../../assets/images/Hamburger.svg";
+import { ReactComponent as Hamburger } from '../../assets/images/Hamburger.svg';
 
 type SidebarLayoutProps = {
   links: { title: string; link: string }[];
@@ -10,7 +10,7 @@ type SidebarLayoutProps = {
 
 function SidebarLayout({ links }: SidebarLayoutProps) {
   const [openSidebar, setOpenSidebar] = useState(false);
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState('');
 
   const toggleOpenSidebar = () => {
     setOpenSidebar((prev) => !prev);
@@ -22,47 +22,36 @@ function SidebarLayout({ links }: SidebarLayoutProps) {
   };
 
   return (
-    <div className="max-w-screen-xl mx-auto h-full">
-      <header className="p-5">
-        <button
-          aria-controls="sidebar-multi-level-sidebar"
-          className="inline-flex items-center p-0 md:hidden"
-          onClick={toggleOpenSidebar}
-        >
-          <Hamburger className="w-6 h-6" />
-        </button>
-        <h1 className="font-bold text-3xl">{title}</h1>
-      </header>
-
-      <div className="relative min-h-[1000px] bg-white">
-        <aside
-          className={`absolute top-0 left-0 w-64 h-full transition-transform sm:translate-x-0 ${
-            !openSidebar && "-translate-x-full"
-          }`}
-        >
-          <menu className="h-full p-0 overflow-y-auto bg-white border-gray-100 border-y border-r">
-            {links.map((link) => (
-              <li key={link.title}>
-                <NavLink
-                  to={link.link}
-                  className={({ isActive }) => {
-                    const defaultStyle =
-                      "block w-full h-full ps-3 py-2 border-l-8 hover:bg-gray-100 transition-colors duration-200 border-transparent";
-                    if (isActive) {
-                      setTitle(link.title);
-                      return `${defaultStyle} !border-primary bg-gray-100`;
-                    }
-                    return defaultStyle;
-                  }}
-                >
-                  {link.title}
-                </NavLink>
-              </li>
-            ))}
+    <div className="mx-auto my-0 max-w-[1200px]">
+      <div className="min-h-[1000px] bg-white flex flex-wrap md:flex-nowrap">
+        <aside className="w-full sm:w-48 transition-transform">
+          <menu className="h-full p-2 overflow-y-auto bg-white border-gray-100 border-y border-r">
+            <p className="text-sm font-semibold">메뉴</p>
+            <ul className="before:content-normal before:block before:bg-orange-400 before:w-7 before:h-px before:my-1">
+              {links.map((link) => (
+                <li key={link.title}>
+                  <NavLink
+                    to={link.link}
+                    className={({ isActive }) => {
+                      const defaultStyle =
+                        'block w-full h-full ps-3 py-2 hover:text-gray-800 transition-colors duration-200 text-xs';
+                      if (isActive) {
+                        // setTitle(link.title);
+                        console.log('IS ACTIVE,', link.link, isActive);
+                        return `${defaultStyle} text-gray-800`;
+                      }
+                      return `${defaultStyle} text-gray-500`;
+                    }}
+                  >
+                    {link.title}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
           </menu>
         </aside>
         <main
-          className="p-4 sm:ml-64 border-gray-100 border-y"
+          className="p-4 border-gray-100 border-y flex-grow"
           onClick={handleClickMain}
         >
           <Outlet />
