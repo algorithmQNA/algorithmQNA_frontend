@@ -9,8 +9,8 @@ type SidebarLayoutProps = {
 function SidebarLayout({ links }: SidebarLayoutProps) {
   /** 모바일 환경에서 헤더/사이드바 제외한 부분 클릭 시 사이드바 닫히도록 */
   return (
-    <div className="mx-auto my-4 max-w-[1200px]">
-      <div className="min-h-[1000px] bg-white flex flex-wrap md:flex-nowrap gap-4">
+    <div className="mx-auto my-4 max-w-[1200px] min-h-[600px]">
+      <div className="bg-white flex flex-wrap md:flex-nowrap gap-4">
         <aside className="w-full sm:w-48 transition-transform">
           <menu className="p-2 overflow-y-auto bg-white border-border border">
             <p aria-label="메뉴 이름" className="text-sm font-semibold">
