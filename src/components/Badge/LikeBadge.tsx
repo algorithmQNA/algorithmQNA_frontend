@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react';
 
 type LikeBadgeProps = {
   level: 0 | 1 | 2 | 3 | 4 | 5;
