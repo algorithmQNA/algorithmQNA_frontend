@@ -1,42 +1,32 @@
-import TableRow from "../../components/TableRow/TableRow";
-import IconButton from "../../components/Button/IconButton";
-import Write from "../../components/Icon/Write";
-import Filter from "../../components/Icon/Filter";
-import Search from "../../components/Icon/Search";
+import React from 'react';
+import { NavLink, Outlet } from 'react-router-dom';
 
 function Post() {
   return (
     <div>
       <div>
-        <div className="flex justify-between gap-2 py-3">
-          <IconButton Icon={<Write />} />
-          <div className="flex justify-between gap-2 py-3 ">
-            <IconButton Icon={<Filter />} />
-            <IconButton Icon={<Search />} />
-          </div>
-        </div>
+        <NavLink
+          to="post"
+          className={({ isActive }) =>
+            isActive
+              ? 'text-sm mr-3 border-b p-2 border-secondary'
+              : 'text-sm mr-3 p-2'
+          }
+        >
+          내가 쓴 글
+        </NavLink>
+        <NavLink
+          to="comment"
+          className={({ isActive }) =>
+            isActive ? 'text-sm border-b p-2 border-secondary' : 'text-sm  p-2'
+          }
+        >
+          내가 쓴 댓글
+        </NavLink>
       </div>
-      <TableRow
-        comment={10}
-        date="2020-03"
-        title="테스트포스트"
-        view={10}
-        writer="빵송"
-      ></TableRow>
-      <TableRow
-        comment={10}
-        date="2020-03"
-        title="테스트포스트"
-        view={10}
-        writer="빵송"
-      ></TableRow>
-      <TableRow
-        comment={10}
-        date="2020-03"
-        title="테스트포스트"
-        view={10}
-        writer="빵송"
-      ></TableRow>
+      <div className="p-4">
+        <Outlet />
+      </div>
     </div>
   );
 }
