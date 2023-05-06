@@ -24,3 +24,13 @@
   max-width:1024px;
   @apply w-full m-auto
 }
+.post-kind-label input[type=radio] + div{
+  @apply bg-transparent text-white
+}
+.post-kind-label input[type=radio]:checked + div{
+  @apply bg-white text-[#FA7D39]
+}
+.dash-post-li{
+  @apply grid gap-4;
+  grid-template-columns:1fr 1fr;
+}

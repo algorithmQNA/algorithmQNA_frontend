@@ -1,7 +1,6 @@
 import './style.css'
 import BoardTableRow from "../../components/TableRow/BoardTableRow";
 import Pagination from "../../components/Pagination/Pagination";
-import Select, {Option} from "../../components/DropDown/re/Select";
 import {SelectBox, SelectOption} from "../../components/DropDown/SelectBox";
 
 export default function QNABoardPage(){
