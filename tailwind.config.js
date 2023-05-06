@@ -6,7 +6,7 @@ module.exports = {
       colors: {
         "hover-rgba": "rgba(0,0,0,0.10)",
         "basic": "#D9D9D9",
-        primary: "#77A4E8",
+        primary: "#77A4E8"
       },
       animation: {
         grow: "grow 0.2s",
