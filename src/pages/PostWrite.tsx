@@ -5,6 +5,7 @@ import {SelectBox, SelectOption} from "../components/DropDown/SelectBox";
 import InputComponent from "../components/Input/InputComponent";
 import ButtonComponent from "../components/Button/ButtonComponent";
 import Pagination from "../components/Pagination/Pagination";
+import InputText from "../components/Input/InputText";
 export default function PostWritePage(){
     const [title,setTitle] = useState('')
     const changeTitle = (e:ChangeEvent<HTMLInputElement>) =>{
@@ -12,26 +13,21 @@ export default function PostWritePage(){
     }
     return(
         <div className={'container m-auto'}>
-            <Pagination postLength={1000} listLength={10}/>
             <div className={'flex flex-col gap-4 bg-white p-4'}>
-                <div className={'w-full flex flex-col gap-1'}>
-                    <p className={'font-bold text-sm'}>제목</p>
-                    <InputComponent
-                        value={title}
-                        placeholder={'제목'}
-                        onChange={changeTitle}
-                    />
+                <div className={'w-full flex flex-col gap-1 max-w-[450px]'}>
+                    <p className={'font-bold text-sm text-[#3c4f74]'}>제목</p>
+                    <InputText/>
                 </div>
                 <div className={'flex gap-4 w-full'}>
                     <div className={'w-full flex flex-col gap-1'}>
-                        <p className={'font-bold text-sm'}>게시판</p>
+                        <p className={'font-bold text-sm text-[#3c4f74]'}>게시판</p>
                         <SelectBox defaultText={'게시판 선택'}>
                             <SelectOption value={''}>Q&A</SelectOption>
                             <SelectOption value={''}>꿀팁</SelectOption>
                         </SelectBox>
                     </div>
                     <div className={'w-full flex flex-col gap-1'}>
-                        <p className={'font-bold text-sm'}>카테고리</p>
+                        <p className={'font-bold text-sm text-[#3c4f74]'}>카테고리</p>
                         <SelectBox defaultText={'분류 선택'}>
                             <SelectOption value={''}>카테고리1</SelectOption>
                             <SelectOption value={''}>카테고리2</SelectOption>

@@ -1,0 +1,9 @@
+.rec-btn input[type=radio]:checked + div{
+    @apply bg-blue-500 text-white
+}
+.unrec-btn input[type=radio]:checked + div{
+    @apply bg-red-500 text-white
+}
+.rec-btn,.unrec-btn{
+    @apply hover:cursor-pointer select-none;
+}

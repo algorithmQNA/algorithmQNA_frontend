@@ -1,9 +1,7 @@
 import TableRow from "./Row";
 import {setDateWritten, setOverValue} from "../../utils/TextProcessing";
-import {ReactComponent as View} from "../../assets/images/Eye.svg";
-import {ReactComponent as BookMark} from "../../assets/images/BookMarks.svg";
-import {ReactComponent as Up} from "../../assets/images/HandUpFill.svg";
-import {ReactComponent as Down} from "../../assets/images/HandDownFill.svg";
+import {FiThumbsDown, FiThumbsUp, FiEye, FiBookmark, FiBook} from "react-icons/fi";
+import '../../pages/Board/style.css'
 interface Props{
     title:string
 }
@@ -23,23 +21,31 @@ export default function BoardTableRow(){
                 </div>
                 <div className={'flex justify-between items-center'}>
                     <div className={'flex gap-1 items-center text-xs text-[#739093]'}>
-                        <p className={'flex gap-1 items-center'}>
-                            <span><View/></span>
+                        <p className={'flex gap-1 items-center text-primary'}>
+                            <span>
+                                <FiEye size={14}/>
+                            </span>
                             <span>{setOverValue(999,99)}</span>
                         </p>
                         <div className={'text-xl pb-0.5 font-normal'}>·</div>
-                        <p className={'flex gap-1 items-center'}>
-                            <span><BookMark/></span>
+                        <p className={'flex gap-1 items-center text-primary'}>
+                            <span>
+                                <FiBookmark size={14}/>
+                            </span>
                             <span>{setOverValue(999,99)}</span>
                         </p>
                     </div>
                     <div className={'flex gap-1 items-center text-xs text-[#739093]'}>
                         <p className={'flex gap-1 items-center text-blue-500'}>
-                            <span className={'text-blue-500'}><Up/></span>
+                            <span className={'text-blue-500'}>
+                                <FiThumbsUp size={14}/>
+                            </span>
                             <span>{setOverValue(999,99)}</span>
                         </p>
                         <p className={'flex gap-1 items-center text-red-500'}>
-                            <span className={'text-red-500'}><Down/></span>
+                            <span className={'text-red-500'}>
+                                <FiThumbsDown size={14}/>
+                            </span>
                             <span>{setOverValue(999,99)}</span>
                         </p>
                     </div>
