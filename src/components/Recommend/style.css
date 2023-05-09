@@ -1,7 +1,7 @@
-.rec-btn input[type=radio]:checked + div{
+.rec-btn input[type=checkbox]:checked + div{
     @apply bg-blue-500 text-white
 }
-.unrec-btn input[type=radio]:checked + div{
+.unrec-btn input[type=checkbox]:checked + div{
     @apply bg-red-500 text-white
 }
 .rec-btn,.unrec-btn{
