@@ -3,9 +3,6 @@ import * as Admin from "./pages/Admin";
 import * as MyPage from "./pages/MyPage";
 import SidebarLayout from "./components/layouts/SidebarLayout";
 import QNABoardPage from "./pages/Board/Q&ABoard";
-import PostWritePage from "./pages/PostWrite";
-import PostViewPage from "./pages/PostView";
-import DashBoardPage from "./pages/DashBoard";
 
 const adminPages = [
   { link: "notice", title: "공지사항" },
@@ -21,7 +18,6 @@ function Router() {
   return (
     <Routes>
       <Route index element={<div>메인</div>} />
-        <Route path={'/board/q&a'} element={<DashBoardPage/>}/>
       <Route path="admin" element={<SidebarLayout links={adminPages} />}>
         <Route index element={<Navigate to="post" />} />
         <Route path="post" element={<Admin.Post />} />

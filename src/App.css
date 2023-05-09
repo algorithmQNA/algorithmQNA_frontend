@@ -17,20 +17,10 @@
   min-height: 400px;
   margin-bottom: 20px;
 }
-.test-div *{
-
-}
 .main-content{
   max-width:1024px;
-  @apply w-full m-auto
+  @apply w-full m-auto py-12
 }
-.post-kind-label input[type=radio] + div{
-  @apply bg-transparent text-white
-}
-.post-kind-label input[type=radio]:checked + div{
-  @apply bg-white text-[#FA7D39]
-}
-.dash-post-li{
-  @apply grid gap-4;
-  grid-template-columns:1fr 1fr;
+.set-max-width{
+  max-width:1024px;
 }
