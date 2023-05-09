@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import * as Admin from "./pages/Admin";
 import * as MyPage from "./pages/MyPage";
 import SidebarLayout from "./components/layouts/SidebarLayout";
+import QNABoardPage from "./pages/Board/Q&ABoard";
 
 const adminPages = [
   { link: "notice", title: "공지사항" },
