@@ -1,0 +1,6 @@
+.select-filter label{
+    @apply cursor-pointer
+}
+.select-filter label input[type=checkbox]:checked + p{
+    @apply text-primary
+}
