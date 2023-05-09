@@ -1,14 +1,13 @@
-import TableRow from "./Row";
 import {setDateWritten, setOverValue} from "../../utils/TextProcessing";
-import {FiThumbsDown, FiThumbsUp, FiEye, FiBookmark, FiBook} from "react-icons/fi";
-import '../../pages/Board/style.css'
-interface Props{
-    title:string
-}
-export default function BoardTableRow(){
+import {FiBookmark, FiEye, FiThumbsDown, FiThumbsUp} from "react-icons/fi";
+import TableRow from "./Row";
+import './style.css'
+
+
+export default function PostTableRow(){
     return(
         <TableRow>
-            <div className={'border border-black h-[75px]'}></div>
+            <div className={'post-thumbnail'}></div>
             <div>
                 <div className={'flex items-center justify-between'}>
                     <h1 className={'row-post-title'}>Google Inc</h1>
