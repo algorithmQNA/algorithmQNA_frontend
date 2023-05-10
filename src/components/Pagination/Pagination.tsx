@@ -1,7 +1,5 @@
 import {useMemo} from "react";
 import {createSearchParams, Link, useLocation} from "react-router-dom";
-import PnLeft from "./left";
-import PnRight from "./right";
 import {ReactComponent as Left} from "../../assets/images/left.svg";
 import {ReactComponent as Right} from "../../assets/images/right.svg";
 
