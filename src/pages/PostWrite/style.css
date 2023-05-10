@@ -1,5 +1,5 @@
 .post-write-page{
-    @apply flex flex-col gap-4 bg-white p-4 w-full;
+    @apply flex flex-col gap-4 bg-white py-4 w-full;
 }
 .post-write-page .title-block{
     @apply w-full flex flex-col gap-1 max-w-[450px];
