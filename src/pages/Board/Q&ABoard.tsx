@@ -4,8 +4,21 @@ import {SelectBox, SelectOption} from "../../components/DropDown/SelectBox";
 import PostTableRow from "../../components/TableRow/PostTableRow";
 import AnnouncementTableRow from "../../components/TableRow/Announcement";
 import PageTitle from "../../components/PageTitle/PageTitle";
+import CategoryBar from "../../components/Board/CategoryBar";
+import {useState} from "react";
 
 export default function QNABoardPage(){
+    const list = [
+        {name:'Brute Force',id:'1'},
+        {name:'TWO_POINTER',id:'2'},
+        {name:'DP',id:'3'},
+        {name:'Queue / Hash / Stack',id:'4'},
+        {name:'Graph',id:'5'},
+        {name:'Greedy',id:'6'},
+        {name:'BINARY_SEARCH',id:'7'},
+        {name:'Sort',id:'8'},
+        {name:'BFS / DFS',id:'9'},
+    ]
     return(
         <div>
             <PageTitle>
@@ -14,32 +27,7 @@ export default function QNABoardPage(){
             <div className={'main-content'}>
                 <div className={'grid grid-cols-7 gap-6'}>
                     <div className={'col-span-2 flex flex-col gap-6'}>
-                        <div className={'p-4 rounded-t border border-[#D9D9D9] border-b-2 border-b-primary'}>
-                            <div className={'text-[#3c4f74] font-semibold text-lg mb-4'}>
-                                Category
-                                <span className={'block border-b-2 border-b-primary w-[45px] mt-2'}></span>
-                            </div>
-                            <div className={'flex flex-col gap-4 text-[#739093] text-sm select-filter'}>
-                                <label className={'cursor-pointer'}>
-                                    <input type={'checkbox'} className={'hidden'}/>
-                                    <p className={''}>
-                                        <span>Design and Art</span>
-                                    </p>
-                                </label>
-                                <label className={'cursor-pointer'}>
-                                    <input type={'checkbox'} className={'hidden'}/>
-                                    <p className={''}>
-                                        <span>Engineer</span>
-                                    </p>
-                                </label>
-                                <label className={'cursor-pointer'}>
-                                    <input type={'checkbox'} className={'hidden'}/>
-                                    <p className={''}>
-                                        <span>Health Care</span>
-                                    </p>
-                                </label>
-                            </div>
-                        </div>
+                        <CategoryBar name={'알고리즘'} list={list}/>
                     </div>
                     <div className={'col-span-5 flex flex-col gap-6'}>
                         <div className={'border border-[#D9D9D9] bg-transparent py-4 px-6 rounded flex items-center justify-between'}>
