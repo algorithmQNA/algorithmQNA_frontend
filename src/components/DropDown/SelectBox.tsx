@@ -67,7 +67,7 @@ export function SelectBox({event,defaultText='선택',search=false,children,clas
             <label className={`${defaultClass.select} ${className}`}>
                 <input type={"checkbox"} className={'hidden'} checked={state.displayOption} onChange={selectStart}/>
                 <p className={'w-full flex justify-between items-center text-[#739093]'}>
-                    <span className={'w-full'}>{state.displayText}</span>
+                    <span className={'w-full whitespace-nowrap text-ellipsis overflow-hidden'}>{state.displayText}</span>
                     <span className={'whitespace-nowrap'}>
                         <FiChevronDown/>
                     </span>

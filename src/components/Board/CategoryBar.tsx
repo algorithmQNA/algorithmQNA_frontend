@@ -10,9 +10,7 @@ interface Props{
 }
 export default function CategoryBar({name,list,checkChange=()=>{}}:Props){
     const [checked,setChecked] = useState<string[]>([])
-    
     useEffect(()=>checkChange(checked),[checkChange, checked])
-
     const changeStart = (e:ChangeEvent<HTMLInputElement>) =>{
         e.target.checked
             ? setChecked((prev)=>([...prev,e.target.value]))
