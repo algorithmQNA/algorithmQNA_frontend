@@ -1,5 +1,5 @@
 .post-view-page{
-    @apply m-auto bg-white p-4 flex flex-col gap-4
+    @apply m-auto bg-white py-4 flex flex-col gap-4
 }
 .post-view-page .content-set{
     @apply flex flex-col gap-6
