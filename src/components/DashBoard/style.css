@@ -1,3 +1,12 @@
+.page-shortcut{
+    @apply flex justify-around mb-[75px];
+}
+.dash-post-tab{
+    @apply w-fit m-auto bg-title flex p-2.5 rounded-full gap-2 mb-6;
+}
+.post-kind-label{
+    @apply cursor-pointer
+}
 .post-kind-label input[type=radio] + p{
     @apply bg-transparent text-white
 }

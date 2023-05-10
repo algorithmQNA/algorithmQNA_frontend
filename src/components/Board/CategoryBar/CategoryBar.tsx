@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useEffect, useState} from "react";
-
+import './style.css'
 interface Props{
     name:string
     list:{
@@ -19,15 +19,15 @@ export default function CategoryBar({name,list,checkChange=()=>{}}:Props){
 
 
     return(
-        <div className={'p-4 rounded-t border border-[#D9D9D9] border-b-2 border-b-primary'}>
-            <div className={'text-[#3c4f74] font-semibold text-lg mb-4'}>
+        <div className={'board-category-bar'}>
+            <div className={'category-title'}>
                 {name}
-                <span className={'block border-b-2 border-b-primary w-[45px] mt-2'}></span>
+                <span className={'under-border'}></span>
             </div>
-            <div className={'flex flex-col gap-4 text-[#739093] text-sm select-filter'}>
+            <ul className={'select-filter category-ul'}>
                 {
                     list.map((li,index)=>(
-                        <label key={index} className={'cursor-pointer select-none'}>
+                        <label key={index} className={'category-li'}>
                             <input type={'checkbox'} value={li.id} className={'hidden'} checked={checked.includes(li.id)} onChange={changeStart}/>
                             <p>
                                 <span>{li.name}</span>
@@ -35,7 +35,7 @@ export default function CategoryBar({name,list,checkChange=()=>{}}:Props){
                         </label>
                     ))
                 }
-            </div>
+            </ul>
         </div>
     )
 }
