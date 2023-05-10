@@ -8,7 +8,6 @@ interface Props{
     text:string
 }
 export default function SelectKind({kind,text}:Props){
-
     const [state,setState] = useRecoilState(DashBoardState)
     const selectKind = (e:ChangeEvent<HTMLInputElement>) =>{
         setState((prev)=>({

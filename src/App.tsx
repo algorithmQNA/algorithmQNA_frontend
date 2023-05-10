@@ -10,7 +10,7 @@ function App() {
       <header className={"sticky bg-[#77A4E8] top-0 shadow-lg z-50"}>
         <Header />
       </header>
-      <main className={"bg-white py-12"}>
+      <main className={"bg-white"}>
         <Router>
           <DefaultRouter />
         </Router>
