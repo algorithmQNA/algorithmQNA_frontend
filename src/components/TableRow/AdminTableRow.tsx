@@ -1,16 +1,19 @@
 import "./style.css";
+import { useNavigate } from "react-router-dom";
 
 import { setDateWritten } from "../../utils/TextProcessing";
+
+import IconButton from "../Button/IconButton";
 import { BiTimeFive } from "react-icons/bi";
 import { HiPencilSquare } from "react-icons/hi2";
 import { AiFillDelete } from "react-icons/ai";
-import IconButton from "../Button/IconButton";
+
 import useModal from "../../hooks/useModal";
-import { useNavigate } from "react-router-dom";
 import Modal from "../Modal/Modal";
-import { QueryClient, useMutation } from "react-query";
-import { deleteNotification } from "../../apis/adminApi";
+
 import { queryClient } from "../..";
+import { useMutation } from "react-query";
+import { deleteNotification } from "../../apis/adminApi";
 
 interface AdminPageTableRowProps {
   title?: string;
