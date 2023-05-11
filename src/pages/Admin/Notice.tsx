@@ -1,17 +1,10 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import AdminTableRow from "../../components/TableRow/AdminTableRow";
 
 import IconButton from "../../components/Button/IconButton";
 import { AiFillNotification } from "react-icons/ai";
 import { useQuery } from "react-query";
 import { getNotificationList } from "../../apis/adminApi";
-
-// /**임시 데이터입니다 */
-// const dummyData = [
-//   { id: 1, title: "공지사항입니다", date: "2023-03-10" },
-//   { id: 2, title: "공지사항2입니다.", date: "2023-03-10" },
-//   { id: 3, title: "공지사항3입니다.", date: "2023-04-12" },
-// ];
 
 function Notice() {
   const location = useLocation();
