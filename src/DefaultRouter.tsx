@@ -8,6 +8,7 @@ import QNABoard from './pages/Q&ABoard';
 import SidebarLayout from './components/layouts/SidebarLayout';
 import ReportPost from './components/Report/ReportPost';
 import Post from './components/MyPage/Post/Post';
+import CommentTest from './pages/CommentTest';
 
 const adminPages = [
   { link: 'notice', title: '공지사항' },
@@ -24,6 +25,7 @@ function Router() {
   return (
     <Routes>
       <Route index element={<div>메인</div>} />
+      <Route path="comment/:postId" element={<CommentTest />} />
       <Route path="admin" element={<SidebarLayout links={adminPages} />}>
         <Route index element={<Navigate to="report/post" />} />
         <Route path="report" element={<Admin.Post />}>
