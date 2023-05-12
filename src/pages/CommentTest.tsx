@@ -1,20 +1,26 @@
-import React, { MouseEventHandler } from 'react';
-import CommentList from '../components/CommentView/CommentList';
+import React, { MouseEventHandler, useState } from 'react';
 import CommentView from '../components/CommentView/Comment';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { getPostRequest } from '../apis/postApi';
 
 function CommentTest() {
+  //const [selectedComment, setSelectedComment] = useState(-1);
   const { postId } = useParams();
-  const selectedComment = -1;
+  const [isScrolling, setIsScrolling] = useState(false);
   const { data } = useQuery({
     queryKey: ['post', postId],
     queryFn: () => {
       if (postId) return getPostRequest(+postId);
       return getPostRequest(2000);
     },
-    onSuccess: (t) => console.log(t),
+    onSuccess: (t) => {
+      console.log(t);
+      //   setSelectedComment(
+      //     t.data.comments.find((comment) => comment.isPinned)?.commentId || -1
+      //   );
+      // },
+    },
   });
 
   const marginLeft: { [key: string]: string } = {
@@ -23,33 +29,37 @@ function CommentTest() {
     2: 'ml-12',
   };
 
-  const handleClick: MouseEventHandler<HTMLButtonElement> = () => {
-    window.history.replaceState(
-      null,
-      '',
-      'http://localhost:3000/comment/2000?3000'
-    );
-  };
-
   if (data?.data.comments) {
+    const selectedComment =
+      data.data.comments.find((comment) => comment.isPinned)?.commentId || -1;
+    const handleClick: MouseEventHandler<HTMLButtonElement> = () => {
+      if (selectedComment === -1) {
+        window.alert('채택된 답변이 없습니다');
+        return;
+      }
+      setIsScrolling(true);
+      const pinnedElement = document.getElementById(`${selectedComment}`);
+      pinnedElement?.scrollIntoView({ behavior: 'smooth' });
+    };
+    console.log(selectedComment);
     return (
       <>
         <button onClick={handleClick}>채택된 답변으로</button>
         <div className="w-full p-4 flex flex-col">
-          {data.data.comments.map((t) => {
-            return t.isPinned ? (
-              <div className="order-first mb-4 ">
-                <div className="border-b-2 border-secondary text-secondary text-sm">
-                  질문자 채택
-                </div>
-                <CommentView {...t} key={t.commentId} />
-              </div>
-            ) : (
-              <div className={`${marginLeft[t.depth]}`}>
-                <CommentView {...t} key={t.commentId} />
-              </div>
-            );
-          })}
+          {data.data.comments.map((t) => (
+            <div
+              className={`${marginLeft[t.depth]} ${
+                isScrolling &&
+                t.commentId === selectedComment &&
+                'bg-orange-200'
+              }`}
+              id={`${t.commentId}`}
+              key={`${t.commentId}`}
+              tabIndex={-1}
+            >
+              <CommentView {...t} key={t.commentId} />
+            </div>
+          ))}
         </div>
       </>
     );

@@ -9,6 +9,8 @@ import SidebarLayout from './components/layouts/SidebarLayout';
 import ReportPost from './components/Report/ReportPost';
 import Post from './components/MyPage/Post/Post';
 import CommentTest from './pages/CommentTest';
+import OAuth2GoogleRedirect from './pages/OAuth2GoogleRedirect';
+import Login from './pages/Login';
 
 const adminPages = [
   { link: 'notice', title: '공지사항' },
@@ -24,7 +26,8 @@ const mypagePages = [
 function Router() {
   return (
     <Routes>
-      <Route index element={<div>메인</div>} />
+      <Route index element={<Login />} />
+      <Route path="google/callback " element={<OAuth2GoogleRedirect />} />
       <Route path="comment/:postId" element={<CommentTest />} />
       <Route path="admin" element={<SidebarLayout links={adminPages} />}>
         <Route index element={<Navigate to="report/post" />} />
