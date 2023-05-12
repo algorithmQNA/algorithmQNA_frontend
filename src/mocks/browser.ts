@@ -1,6 +1,12 @@
-import { setupWorker } from "msw";
-import handlers from "./handlers";
-import mockAuth from "./mockAuth";
-import mockAdmin from "./mockAdmin";
+import { setupWorker } from 'msw';
+import handlers from './handlers';
+import mockAuth from './mockAuth';
+import mockAdmin from './mockAdmin';
+import mockPost from './mockPost';
 // Service worker에서 mock handler 실행
-export const worker = setupWorker(...handlers, ...mockAuth, ...mockAdmin);
+export const worker = setupWorker(
+  ...handlers,
+  ...mockAuth,
+  ...mockAdmin,
+  ...mockPost
+);

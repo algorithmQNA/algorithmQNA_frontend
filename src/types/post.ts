@@ -1,3 +1,5 @@
+import { Comment } from './comment';
+
 export type SortOption = 'ID' | 'VOTE_COUNT';
 
 export type BriefPost = {
@@ -18,10 +20,14 @@ export type Post = {
   memberLikeBadge: number;
   postTitle: string;
   postContent: string;
-  createAt: string;
+  CreatedAt: string;
   postLikeCount: number;
   postDislikeCount: number;
-  commentCount: number;
+  commentTotalCount: number;
+  commentCurrentPage: number;
+  commentTotalPageCount: number;
+  commentNext: boolean;
+  commentPrev: boolean;
   comments: Comment[];
 };
 
