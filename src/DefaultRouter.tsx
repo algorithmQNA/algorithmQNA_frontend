@@ -25,7 +25,7 @@ function Router() {
     <Routes>
       <Route index element={<div>메인</div>} />
       <Route path="admin" element={<SidebarLayout links={adminPages} />}>
-        <Route index element={<Navigate to="post" />} />
+        <Route index element={<Navigate to="report/post" />} />
         <Route path="report" element={<Admin.Post />}>
           <Route index element={<Navigate to="post" />} />
           <Route path="post" element={<ReportPost />} />

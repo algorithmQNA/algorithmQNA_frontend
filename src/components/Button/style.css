@@ -1,6 +1,6 @@
 .input-c-btn {
     @apply py-1.5 px-4 text-sm border border-[#77A4E8] text-[#FFFFFF] bg-[#77A4E8] rounded w-fit min-w-[75px] whitespace-nowrap h-full;
 }
-.input-c-btn:active{
+.input-c-btn:active {
     box-shadow: inset 0 0 10px 0 rgb(0 0 0 / 0.2);
 }
