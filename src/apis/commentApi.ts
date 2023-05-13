@@ -1,11 +1,37 @@
 import { privateRequest } from './instance';
 import type {
+  GetCommentByPostIdReponse,
+  GetSpreadCommentByCommentIdResponse,
   CreateCommentResponse,
   UpdateCommentResponse,
   RecommendCommentResponse,
   AcceptCommentResponse,
   ReportCommentResponse,
 } from '../types/apis/commentResponseType';
+
+// 포스트에 달린 댓글 조회 API
+export const getCommentByPostid = ({
+  postId,
+  page = 0,
+}: {
+  postId: number;
+  page: number;
+}) =>
+  privateRequest.get<GetCommentByPostIdReponse>(
+    `comment/${postId}?page=${page}`
+  );
+
+//댓글 펼쳐보기 API
+export const getSpreadCommentByCommentId = ({
+  commentId,
+  page = 0,
+}: {
+  commentId: number;
+  page?: number;
+}) =>
+  privateRequest.get<GetSpreadCommentByCommentIdResponse>(
+    `comment/${commentId}/spread?page=${page}`
+  );
 
 // 댓글 작성 API
 export const createCommentRequest = (
