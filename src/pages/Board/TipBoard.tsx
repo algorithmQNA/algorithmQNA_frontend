@@ -46,11 +46,11 @@ export default function TipBoardPage(){
                         <RowListTo page={1}/>
                     </div>
                     <NoticeBlock/>
-                    <PostTableRow/>
-                    <PostTableRow/>
-                    <PostTableRow/>
-                    <PostTableRow/>
-                    <PostTableRow/>
+                    {/*<PostTableRow/>*/}
+                    {/*<PostTableRow/>*/}
+                    {/*<PostTableRow/>*/}
+                    {/*<PostTableRow/>*/}
+                    {/*<PostTableRow/>*/}
                     <Pagination postLength={100} listLength={10}/>
                 </div>
             </div>

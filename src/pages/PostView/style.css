@@ -1,11 +1,11 @@
 .post-view-page{
-    @apply m-auto bg-white py-4 flex flex-col gap-4
+    @apply m-auto py-4 flex flex-col gap-4 relative -top-[125px]
 }
 .post-view-page .content-set{
     @apply flex flex-col gap-6
 }
 .post-view-page .page-section{
-    @apply border border-basic p-4 xl:px-8 xl:py-6 flex flex-col gap-3;
+    @apply border border-basic p-4 xl:px-8 xl:py-6 flex flex-col gap-3 bg-white;
 }
 .post-view-page .post-title{
     @apply text-3xl text-title font-bold;
@@ -38,7 +38,7 @@
     @apply flex gap-3 text-sm
 }
 .post-view-page .post-content{
-    @apply border border-basic p-4 xl:px-8 xl:py-6 text-content flex flex-col gap-4;
+    @apply border border-basic p-4 xl:px-8 xl:py-6 text-content flex flex-col gap-4 bg-white;
 }
 .post-view-page .recommend-btn-block{
     @apply flex justify-center gap-4
