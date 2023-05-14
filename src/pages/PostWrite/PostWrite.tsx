@@ -5,11 +5,16 @@ import PageTitle from "../../components/PageTitle/PageTitle";
 import './style.css'
 import PostWriteCKEditor from "../../components/PostWrite/CKEditor";
 import PostWriteSelectBlock from "../../components/PostWrite/SelectBlock";
+import {useRecoilState} from "recoil";
+import {PostWriteState} from "../../storage/PostWrite/PostWrite";
+import PostWriteBtn from "../../components/PostWrite/WriteBtn";
 
 export default function PostWritePage(){
-    const [title,setTitle] = useState('')
+    const [state,setState] = useRecoilState(PostWriteState)
     const changeTitle = (e:ChangeEvent<HTMLInputElement>) =>{
-        setTitle(e.target.value)
+        setState((prev)=>({
+            ...prev,title:e.target.value
+        }))
     }
     return(
         <div>
@@ -19,15 +24,11 @@ export default function PostWritePage(){
             <div className={'main-content post-write-page'}>
                 <div className={'title-block'}>
                     <p className={'name-tag'}>제목</p>
-                    <InputText/>
+                    <InputText defaultValue={state.title} onChange={changeTitle}/>
                 </div>
                 <PostWriteSelectBlock/>
                 <PostWriteCKEditor/>
-                <div className={'text-right'}>
-                    <ButtonComponent>
-                        등록
-                    </ButtonComponent>
-                </div>
+                <PostWriteBtn/>
             </div>
         </div>
     )

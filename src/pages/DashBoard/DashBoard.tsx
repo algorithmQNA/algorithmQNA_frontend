@@ -5,9 +5,19 @@ import MainPageMove from "../../components/DashBoard/PageMove";
 import PostTableRow from "../../components/TableRow/PostTableRow";
 import SelectKind from "../../components/DashBoard/SelectKind";
 import PageTitle from "../../components/PageTitle/PageTitle";
+import {useQuery} from "react-query";
+import axios from "axios";
+import {PostRow} from "../../types/Post/Post";
+import {useRecoilValue} from "recoil";
+import {DashBoardState} from "../../storage/Dash/DashBoard";
 
 export default function DashBoardPage(){
-
+    const select = useRecoilValue(DashBoardState)
+    const {data,isLoading} = useQuery('dashboard-post',async ()=>{
+        const result = await axios.get('/post')
+        return result.data
+    })
+    console.log(data)
     return(
         <div>
             <PageTitle>
@@ -23,17 +33,14 @@ export default function DashBoardPage(){
                     <div className={'dash-post-tab'}>
                         <SelectKind text={'질문&답변'} kind={'q&a'}/>
                         <SelectKind text={'팁'} kind={'tip'}/>
-                        <SelectKind text={'글 작성'} kind={'write'}/>
                     </div>
                     <div className={'dash-post-li'}>
-                        <PostTableRow/>
-                        <PostTableRow/>
-                        <PostTableRow/>
-                        <PostTableRow/>
-                        <PostTableRow/>
-                        <PostTableRow/>
-                        <PostTableRow/>
-                        <PostTableRow/>
+                        {
+                            !isLoading &&
+                            data.posts.map((li:PostRow)=>(
+                                <PostTableRow data={li}/>
+                            ))
+                        }
                     </div>
                 </div>
             </div>
