@@ -5,8 +5,7 @@ export const postWriteHandler = [
         '/post',
         async (req,res,ctx)=>{
             return res(
-                ctx.status(201),
-                ctx.json({})
+                ctx.status(201)
             )
         }
     )
