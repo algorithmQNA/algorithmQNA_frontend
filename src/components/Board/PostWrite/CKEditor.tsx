@@ -2,7 +2,7 @@ import {CKEditor} from "@ckeditor/ckeditor5-react";
 import CustomEditor from "ckeditor5-custom-build";
 import React from "react";
 import {useSetRecoilState} from "recoil";
-import {PostWriteState} from "../../storage/PostWrite/PostWrite";
+import {PostWriteState} from "../../../storage/PostWrite/PostWrite";
 
 export default function PostWriteCKEditor(){
     const setState = useSetRecoilState(PostWriteState)

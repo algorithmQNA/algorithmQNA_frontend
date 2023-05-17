@@ -3,11 +3,11 @@ import ButtonComponent from "../../components/Button/ButtonComponent";
 import InputText from "../../components/Input/InputText";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import './style.css'
-import PostWriteCKEditor from "../../components/PostWrite/CKEditor";
-import PostWriteSelectBlock from "../../components/PostWrite/SelectBlock";
+import PostWriteCKEditor from "../../components/Board/PostWrite/CKEditor";
+import PostWriteSelectBlock from "../../components/Board/PostWrite/SelectBlock";
 import {useRecoilState} from "recoil";
 import {PostWriteState} from "../../storage/PostWrite/PostWrite";
-import PostWriteBtn from "../../components/PostWrite/WriteBtn";
+import PostWriteBtn from "../../components/Board/PostWrite/WriteBtn";
 
 export default function PostWritePage(){
     const [state,setState] = useRecoilState(PostWriteState)

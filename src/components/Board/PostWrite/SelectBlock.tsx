@@ -1,7 +1,7 @@
-import {SelectBox, SelectOption} from "../DropDown/SelectBox";
+import {SelectBox, SelectOption} from "../../DropDown/SelectBox";
 import React from "react";
 import {useSetRecoilState} from "recoil";
-import {PostWriteState} from "../../storage/PostWrite/PostWrite";
+import {PostWriteState} from "../../../storage/PostWrite/PostWrite";
 
 export default function PostWriteSelectBlock(){
     const setState = useSetRecoilState(PostWriteState)

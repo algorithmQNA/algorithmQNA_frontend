@@ -1,20 +1,24 @@
-import ButtonComponent from "../Button/ButtonComponent";
+import ButtonComponent from "../../Button/ButtonComponent";
 import React from "react";
 import {useMutation} from "react-query";
-import {createPostRequest} from "../../apis/postApi";
+import {createPostRequest} from "../../../apis/postApi";
 import {useRecoilValue} from "recoil";
-import {PostWriteState} from "../../storage/PostWrite/PostWrite";
-import {PostWrite} from "../../types/Post/Post";
+import {PostWriteState} from "../../../storage/PostWrite/PostWrite";
+import {PostWrite} from "../../../types/Post/Post";
+import {AxiosError} from "axios";
+import {ErrorType} from "../../../types/Error";
 
 export default function PostWriteBtn(){
     const state = useRecoilValue(PostWriteState)
-
     const {mutate} =  useMutation(({title,content,category,kind}:PostWrite)=>createPostRequest(title,content,category as number,kind as number),{
         onSuccess:()=>{
             alert('작성 완료 됐습니다. \n 게시판 목록으로 돌아갑니다.')
         },
-        onError:(err)=>{
-            console.log(err)
+        onError:(error:AxiosError)=>{
+            if(!error.response) return
+            const {data} = error.response
+            const result = data as ErrorType
+            alert(result.status.message)
         }
     })
     const writeEnd = () =>{
