@@ -3,14 +3,12 @@ import * as Admin from './pages/Admin';
 import * as MyPage from './pages/MyPage';
 import DashBoardPage from './pages/DashBoard';
 import PostViewPage from './pages/PostView';
-import PostWritePage from './pages/PostWrite';
+// import PostWritePage from './pages/PostWrite';
 import QNABoard from './pages/Q&ABoard';
 import SidebarLayout from './components/layouts/SidebarLayout';
 import ReportPost from './components/Report/ReportPost';
 import Post from './components/MyPage/Post/Post';
 import CommentTest from './pages/CommentTest';
-import OAuth2GoogleRedirect from './pages/OAuth2GoogleRedirect';
-import Login from './pages/Login';
 
 const adminPages = [
   { link: 'notice', title: '공지사항' },
@@ -26,8 +24,7 @@ const mypagePages = [
 function Router() {
   return (
     <Routes>
-      <Route index element={<Login />} />
-      <Route path="google/callback " element={<OAuth2GoogleRedirect />} />
+      <Route index element={<div>홈</div>} />
       <Route path="comment/:postId" element={<CommentTest />} />
       <Route path="admin" element={<SidebarLayout links={adminPages} />}>
         <Route index element={<Navigate to="report/post" />} />
@@ -50,7 +47,7 @@ function Router() {
       </Route>
       <Route path="dashboard" element={<DashBoardPage />} />
       <Route path="post" element={<PostViewPage />} />
-      <Route path="write" element={<PostWritePage />} />
+      {/* <Route path="write" element={<PostWritePage />} /> */}
       <Route path="q&a" element={<QNABoard />} />
       <Route path="*" element={<div>404 잘못된 접근입니다</div>} />
     </Routes>
