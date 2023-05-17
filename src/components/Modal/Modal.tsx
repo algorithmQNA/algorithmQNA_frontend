@@ -30,13 +30,13 @@ function Modal({ children, title, onClose, onConfirm, onCancel }: ModalProps) {
         />
         <section
           role="dialog"
-          className="absolute pb-4 top-1/2 left-1/2 w-3/5 rounded-lg shadow-md bg-white animate-grow flex flex-col gap-4"
+          className="absolute pb-4 top-1/2 left-1/2 min-w-[300px] md:min-w-[60vw] rounded-lg shadow-md bg-white animate-grow flex flex-col gap-4"
           style={{ translate: '-50% -50%' }}
           autoFocus
         >
           <div className="border-border border-b p-2 flex flex-row-reverse justify-between">
             <IconButton onClick={(e) => onClose(e)} Icon={<AiOutlineClose />} />
-            {title && <div className="border-b-gray-300 border-b">타이틀</div>}
+            {title && <div>{title}</div>}
           </div>
 
           <div className="text-center max-h-[32rem] overflow-auto">
