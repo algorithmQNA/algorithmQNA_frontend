@@ -1,78 +1,55 @@
-import { useState } from "react";
-import InputComponent from "../../components/Input/InputComponent";
-import Rounded from "../../components/RoundedImage/RoundedImage";
-import ButtonComponent from "../../components/Button/ButtonComponent";
-import Modal from "../../components/Modal/Modal";
-import useModal from "../../hooks/useModal";
-import CommentList from "../../components/CommentView/CommentList";
+import React from 'react';
+import Rounded from '../../components/RoundedImage/RoundedImage';
+import { isLogin } from '../../storage/Login/Login';
+import { useRecoilValue } from 'recoil';
 
 function Profile() {
-  const [state, setState] = useState("");
-  const { open: changePwdModalOpen, openModal, closeModal } = useModal();
-  const {
-    open: secessionModalOpen,
-    openModal: openSeccesionModal,
-    closeModal: closeSecessionModal,
-  } = useModal();
+  const { id, profile, name } = useRecoilValue(isLogin);
 
   return (
-    <>
-      <div className="flex flex-auto gap-9 md:gap-36">
-        <div className="grow">
-          <div>
-            <label htmlFor="nickname">닉네임</label>
-            <InputComponent
-              id="nickname"
-              value="test1234"
-              onChange={() => {}}
-              placeholder="nickname"
-            />
-          </div>
-          <div>
-            <label htmlFor="id">아이디</label>
-            <InputComponent
-              id="id"
-              value=""
-              onChange={() => {}}
-              placeholder="id"
-            />
-          </div>
-          <div>
-            <label htmlFor="email">이메일</label>
-            <InputComponent
-              id="email"
-              value=""
-              onChange={() => {}}
-              placeholder="email"
-            />
-          </div>
+    <div className="flex p-8 flex-wrap-reverse justify-center sm:justify-between gap-4 sm:gap-32">
+      <div className="grow flex flex-col gap-4">
+        <div>
+          <label htmlFor="name">이름</label>
+          <input
+            id="name"
+            defaultValue={name || 'test'}
+            placeholder="nickname"
+            className="border border-[#D9D9D9] w-full py-1 px-2 relative rounded text-sm p-0 focus:outline-none"
+            disabled
+          />
         </div>
         <div>
-          <Rounded
-            alt="hi"
-            src="https://lh3.googleusercontent.com/ogw/AOLn63HADtscguumy1K7WcYQFGzKCnZLaQa2_f4YwqM66Q=s32-c-mo"
-            width="216px"
-            height="216px"
-          ></Rounded>
+          <label htmlFor="email ">이메일</label>
+          <input
+            id="email"
+            defaultValue={id || 'test@test.com'}
+            placeholder="email"
+            className="border border-[#D9D9D9] w-full py-1 px-2 relative rounded text-sm p-0 focus:outline-none"
+            disabled
+          />
         </div>
       </div>
-      <div className="mt-10">
-        <ButtonComponent
-          onClick={openModal}
-          className="!bg-slate-300 border-none mr-3"
-        >
-          비밀번호 변경
-        </ButtonComponent>
-        <ButtonComponent
+      <div>
+        <Rounded
+          alt="user profile image"
+          src={
+            profile ||
+            'https://lh3.googleusercontent.com/ogw/AOLn63HADtscguumy1K7WcYQFGzKCnZLaQa2_f4YwqM66Q=s32-c-mo'
+          }
+          width="160px"
+          height="160px"
+        />
+      </div>
+      {/* <div className="mt-10">
+        {/* <ButtonComponent
           onClick={openSeccesionModal}
           className="!bg-red-400 border-none"
         >
           탈퇴
-        </ButtonComponent>
-        {changePwdModalOpen && (
-          <Modal onClose={closeModal}>비밀번호 변경 모달</Modal>
-        )}
-        {secessionModalOpen && (
+        </ButtonComponent> */}
+
+      {/* {secessionModalOpen && (
           <Modal
             onClose={closeSecessionModal}
             onCancel={() => {}}
@@ -80,10 +57,10 @@ function Profile() {
           >
             탈퇴 모달
           </Modal>
-        )}
-      </div>
-      <CommentList />
-    </>
+        )} }
+      </div> */}
+      {/* <CommentList /> */}
+    </div>
   );
 }
 
