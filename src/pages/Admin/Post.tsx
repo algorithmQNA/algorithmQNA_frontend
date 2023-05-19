@@ -1,9 +1,10 @@
-import React from "react";
-import AdminPostTableRow from "../../components/TableRow/AdminTableRow";
-import Filter from "../../components/Icon/Filter";
-import Search from "../../components/Icon/Search";
-import IconButton from "../../components/Button/IconButton";
-import { NavLink, Outlet } from "react-router-dom";
+import React, { Suspense } from 'react';
+import AdminPostTableRow from '../../components/TableRow/AdminTableRow';
+import Filter from '../../components/Icon/Filter';
+import Search from '../../components/Icon/Search';
+import IconButton from '../../components/Button/IconButton';
+import { NavLink, Outlet } from 'react-router-dom';
+import AdminTableRowSkeleton from '../../components/TableRow/AdminTableRowSkeleton';
 
 function Post() {
   return (
@@ -28,8 +29,8 @@ function Post() {
           to="post"
           className={({ isActive }) =>
             isActive
-              ? "text-sm mr-3 border-b p-2 border-secondary"
-              : "text-sm mr-3 p-2"
+              ? 'text-sm mr-3 border-b p-2 border-secondary'
+              : 'text-sm mr-3 p-2'
           }
         >
           게시글 신고내역
@@ -37,14 +38,26 @@ function Post() {
         <NavLink
           to="comment"
           className={({ isActive }) =>
-            isActive ? "text-sm border-b p-2 border-secondary" : "text-sm  p-2"
+            isActive ? 'text-sm border-b p-2 border-secondary' : 'text-sm  p-2'
           }
         >
           댓글 신고내역
         </NavLink>
       </div>
       <div className="p-4">
-        <Outlet />
+        <Suspense
+          fallback={
+            <>
+              {Array(10)
+                .fill(1)
+                .map((_, idx) => (
+                  <AdminTableRowSkeleton key={idx} />
+                ))}
+            </>
+          }
+        >
+          <Outlet />
+        </Suspense>
       </div>
     </>
   );
