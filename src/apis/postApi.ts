@@ -33,8 +33,7 @@ export const updatePostRequest = (
   });
 
 // 게시물 삭제 API
-export const deletePostRequest = (postId: string) =>
-  privateRequest.delete(`post/${postId}`);
+export const deletePostRequest = (postId: string) => privateRequest.delete(`post/${postId}`)
 
 // 카테고리별 게시물 조회 API
 export const getCategoryPostsRequest = (

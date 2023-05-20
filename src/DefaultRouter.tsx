@@ -7,6 +7,7 @@ import DashBoardPage from "./pages/DashBoard/DashBoard";
 import TipBoardPage from "./pages/Board/TipBoard";
 import PostViewPage from "./pages/PostView/PostView";
 import PostWritePage from "./pages/PostWrite/PostWrite";
+import LandingPage from "./pages/Landing/Landing";
 
 const adminPages = [
   { link: "notice", title: "공지사항" },
@@ -21,7 +22,8 @@ const mypagePages = [
 function Router() {
   return (
     <Routes>
-      <Route path={'/'} element={<DashBoardPage/>}/>
+        <Route path={'/'} element={<DashBoardPage/>}/>
+        <Route path={'/access'} element={<LandingPage/>}/>
         <Route path="board">
             <Route path="q&a" element={<QNABoardPage/>} />
             <Route path="tip" element={<TipBoardPage/>} />
@@ -30,16 +32,16 @@ function Router() {
             <Route path="view" element={<PostViewPage/>} />
             <Route path="write" element={<PostWritePage/>} />
         </Route>
-      <Route path="admin" element={<SidebarLayout links={adminPages} />}>
-        <Route index element={<Navigate to="post" />} />
-        <Route path="post" element={<Admin.Post />} />
-        <Route path="notice" element={<Admin.Notice />} />
-      </Route>
-      <Route path="mypage" element={<SidebarLayout links={mypagePages} />}>
-        <Route index element={<Navigate to="profile" />} />
-        <Route path="profile" element={<MyPage.Profile />} />
-        <Route path="post" element={<MyPage.Post />} />
-      </Route>
+        <Route path="admin" element={<SidebarLayout links={adminPages} />}>
+            <Route index element={<Navigate to="post" />} />
+            <Route path="post" element={<Admin.Post />} />
+            <Route path="notice" element={<Admin.Notice />} />
+        </Route>
+        <Route path="mypage" element={<SidebarLayout links={mypagePages} />}>
+            <Route index element={<Navigate to="profile" />} />
+            <Route path="profile" element={<MyPage.Profile />} />
+            <Route path="post" element={<MyPage.Post />} />
+        </Route>
     </Routes>
   );
 }

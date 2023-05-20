@@ -17,7 +17,6 @@ export default function DashBoardPage(){
         const result = await axios.get('/post')
         return result.data
     })
-    console.log(data)
     return(
         <div>
             <PageTitle>
