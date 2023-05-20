@@ -1,11 +1,11 @@
 import './style.css'
 import Pagination from "../../components/Pagination/Pagination";
 import {SelectBox, SelectOption} from "../../components/DropDown/SelectBox";
-import PostTableRow from "../../components/TableRow/PostTableRow";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import CategoryBar from "../../components/Board/CategoryBar/CategoryBar";
 import RowListTo from "../../components/Board/ListTo";
 import NoticeBlock from "../../components/Board/Notice";
+import PostTableRow from "../../components/TableRow/PostTableRow";
 
 export default function QNABoardPage(){
     const list = [
@@ -47,11 +47,6 @@ export default function QNABoardPage(){
                         <RowListTo page={1}/>
                     </div>
                     <NoticeBlock/>
-                    {/*<PostTableRow/>*/}
-                    {/*<PostTableRow/>*/}
-                    {/*<PostTableRow/>*/}
-                    {/*<PostTableRow/>*/}
-                    {/*<PostTableRow/>*/}
                     <Pagination postLength={100} listLength={10}/>
                 </div>
             </div>
