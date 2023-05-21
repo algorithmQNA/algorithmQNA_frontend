@@ -1,13 +1,18 @@
 import React, { MouseEventHandler, useState } from 'react';
 import CommentView from '../components/CommentView/Comment';
 import { useQuery } from 'react-query';
-import { useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { getPostRequest } from '../apis/postApi';
+import IconButton from '../components/Button/IconButton';
+import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
+import ButtonComponent from '../components/Button/ButtonComponent';
 
 function CommentTest() {
   //const [selectedComment, setSelectedComment] = useState(-1);
   const { postId } = useParams();
   const [isScrolling, setIsScrolling] = useState(false);
+  const location = useLocation();
+  const page = new URLSearchParams(location.search).get('page') || 0;
   const { data } = useQuery({
     queryKey: ['post', postId],
     queryFn: () => {
@@ -38,20 +43,35 @@ function CommentTest() {
         return;
       }
       setIsScrolling(true);
+      setTimeout(() => {
+        setIsScrolling(false);
+      }, 1000);
       const pinnedElement = document.getElementById(`${selectedComment}`);
       pinnedElement?.scrollIntoView({ behavior: 'smooth' });
     };
-    console.log(selectedComment);
+    const Controller = () => (
+      <div className=" flex flex-row items-center fixed bottom-10 right-10 bg-box-bg border border-border rounded-md p-4 shadow-sm">
+        <Link to={`${location.pathname}?page=${+page - 1}`}>
+          <IconButton Icon={<BiChevronLeft />}></IconButton>
+        </Link>
+        <div>{page}/10</div>
+        <Link to={`${location.pathname}?page=${+page + 1}`}>
+          <IconButton Icon={<BiChevronRight />}></IconButton>
+        </Link>
+        <ButtonComponent onClick={handleClick}>채택된 답변보기</ButtonComponent>
+      </div>
+    );
+
     return (
       <>
-        <button onClick={handleClick}>채택된 답변으로</button>
+        <Controller />
         <div className="w-full p-4 flex flex-col">
           {data.data.comments.map((t) => (
             <div
               className={`${marginLeft[t.depth]} ${
                 isScrolling &&
                 t.commentId === selectedComment &&
-                'bg-orange-200'
+                'bg-yellow-50 animate-pulse'
               }`}
               id={`${t.commentId}`}
               key={`${t.commentId}`}
