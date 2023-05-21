@@ -39,13 +39,3 @@ export type ReportedComment = {
   memberName: string;
   createdAt: string;
 };
-
-export type ReportedPostDetail = {
-  postId: number;
-  title: string;
-  postContent: string;
-  memberName: string;
-  reportMemberName: string;
-  createdAt: string;
-  otherReason?: string;
-};
