@@ -17,6 +17,7 @@ import { setDateWritten } from '../../utils/TextProcessing';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import CustomEditor from 'ckeditor5-custom-build';
 import ButtonComponent from '../Button/ButtonComponent';
+import { MyCustomUploadAdapterPlugin } from './CustomImageUpload';
 
 export type CommentViewProps = Comment & UserProfileProps;
 
@@ -39,7 +40,6 @@ function CommentView({
     setMode(mode);
   };
 
-  console.log('MODE', mode);
   return (
     <>
       <div className="my-5">
@@ -110,6 +110,7 @@ function CommentView({
       </div>
       {openReplyEditor && (
         <CKEditor
+          config={{ extraPlugins: [MyCustomUploadAdapterPlugin] }}
           editor={CustomEditor}
           data=""
           onChange={(t, editor) => console.log(editor.getData())}
