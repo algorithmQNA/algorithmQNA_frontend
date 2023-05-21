@@ -1,61 +1,36 @@
-import React, { useState } from "react";
-import Pagination from "../Pagination/Pagination";
-import { useQuery } from "react-query";
-import { getReportedPostListRequest } from "../../apis/adminApi";
-import TableRowS from "../TableRow/TableRowSkeleton";
-import { useParams } from "react-router-dom";
-import ReportPostTableRow from "../TableRow/ReportPostTableRow";
-import useModal from "../../hooks/useModal";
+import React, { useState } from 'react';
+import Pagination from '../Pagination/Pagination';
+import { useQuery } from 'react-query';
+import { getReportedPostListRequest } from '../../apis/adminApi';
+
+import ReportPostTableRow from '../TableRow/ReportPostTableRow';
 
 function ReportPost() {
   const [page, setPage] = useState(1);
-  const { open, openModal, closeModal } = useModal();
-  const hi = useParams();
-  const { data, isLoading } = useQuery({
-    queryKey: ["reportedPost", page],
+
+  const { data } = useQuery({
+    queryKey: ['reportedPost', page],
     queryFn: ({ queryKey }) => {
       const [_, page] = queryKey;
-      console.log(queryKey);
       return getReportedPostListRequest(+page);
     },
-    onSuccess: (value) => {
-      console.log("SUCCESS", value);
-    },
+    suspense: true,
   });
   const reportedList = data?.data.reportedPostList;
   return (
-    <div>
-      {isLoading && (
-        <>
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((t) => (
-            <TableRowS key={t}></TableRowS>
-          ))}
-        </>
-      )}
+    <div className="table-row-layout">
       {reportedList?.map((post, idx) => {
-        const {
-          commentCount,
-          memberId,
-          memberName,
-          createdAt,
-          dislikeCount,
-          likeCount,
-          postId,
-          title,
-          updatedAt,
-        } = post;
+        const { member, createdAt, postId, postTitle } = post;
         return (
-          <div className="flex flex-col gap-3">
-            <ReportPostTableRow
-              id={postId}
-              date={createdAt}
-              title={title}
-              key={`comment${idx}`}
-            />
-          </div>
+          <ReportPostTableRow
+            id={postId}
+            date={createdAt}
+            title={postTitle}
+            member={member}
+            key={`comment${idx}`}
+          />
         );
       })}
-
       <Pagination postLength={30} listLength={5} />
     </div>
   );

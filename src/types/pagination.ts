@@ -1,5 +1,5 @@
 export type Pagination = {
-  totalPageCount: number;
+  totalPageCount?: number;
   page: number;
   next: boolean;
   prev: boolean;
