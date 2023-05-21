@@ -7,7 +7,6 @@ const handlers = [
     const page = req.url.searchParams.get('page') || 0;
     return res(ctx.status(200), ctx.json(PostInitData));
   }),
-  
 ];
 
 const PostInitData: GetCommentByPostIdReponse = {
