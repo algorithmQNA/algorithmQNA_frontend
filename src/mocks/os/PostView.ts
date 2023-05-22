@@ -1,50 +1,72 @@
 import {rest} from "msw";
-import {PostDetail} from "../../types/Post/Post";
+import {PostView} from "../../types/Post/Post";
 
 export const postViewHandler = [
     rest.get(
         '/post/:post_id',
         async (req,res,ctx)=>{
-            const json:PostDetail = {
-                "postId": 1,
-                "memberId": 43,
-                "memberName": "최진아",
-                "memberCommentBadge": 3,
-                "memberPostBadge": 3,
-                "memberLikeBadge": 3,
-                "title": "게시물 제목",
-                "content": "게시물 내용입니다.",
-                "createdSt": "2020-02-02",
-                "likeCount": 5,
-                "dislikeCount": 2,
-                "commentTotalCount": 2,
-                "commentCurrentPage": 1,
-                "commentTotalPageCount": 10,
-                "commentNext": true,
-                "commentPrev": false,
-                "commentSize": 20,
-                "comments":[
+            const json:PostView = {
+                "postId": 3,
+                "postTitle": "게시물 제목",
+                "postContent": "게시물 내용입니다",
+                "createdAt": "2023-05-21T22:49:21.783535",
+                "postLikeCnt": 0,
+                "postDislikeCnt": 0,
+                "isLiked": false,
+                "totalCommentCnt": 5,
+                "totalPageSize": 1,
+                "member" : {
+                    "memberId": 47,
+                    "memberName": "장윤희",
+                    "memberRole": "ROLE_USER",
+                    "memberCommentBadge": 0,
+                    "memberPostBadge": 0,
+                    "memberLikeBadge": 0,
+                    "memberProfileUrl": "https://image3"
+                },
+                "commentList":[
                     {
-                        "commentId": 2,
-                        "parentId": 1,
-                        "memberId": 21,
-                        "memberName": "김지민",
-                        "memberProfile": "/",
-                        "memberCommentBadge": 1,
-                        "memberPostBadge": 4,
-                        "memberLikeBadge": 0,
-                        "content": "댓글 내용2",
-                        "likeCount": 5,
-                        "dislikeCount": 2,
-                        "createdAt": "2023-03-03",
-                        "depth": 1,
-                        "isPinned": false,
-                        "isLiked": true,
-                    }
-                ]
+                        "commentId": 6,
+                        "member": {
+                            "memberId": 47,
+                            "memberName": "장윤희",
+                            "memberRole": "ROLE_USER",
+                            "memberCommentBadge": 0,
+                            "memberPostBadge": 0,
+                            "memberLikeBadge": 0,
+                            "memberProfileUrl": "https://image3"
+                        },
+                        "content": "<p>감사합니다!</p>",
+                        "createdAt": "2023-05-15 12:18:31",
+                        "updatedAt": "2023-05-15 12:18:31",
+                        "likeCnt": 2,
+                        "dislikeCnt": 0,
+                        "depth" : 0,
+                        "hasChild" : true,
+                        "childCommentList":[
+                            {
+                                "commentId": 6,
+                                "memberId": 1,
+                                "memberName": "김솔민",
+                                "content": "<p>감사합니다!</p>",
+                                "createdAt": "2023-05-15 12:18:31",
+                                "updatedAt": "2023-05-15 12:18:31",
+                                "likeCnt": 2,
+                                "dislikeCnt": 0,
+                                "depth" : 1,
+                                "hasChild" : true
+                            },
+                        ],
+                        "childSize":3
+                    },
+                ],
+                "page": 3,
+                "next": true,
+                "prev": true,
+                "size": 10
             }
             return res(
-                ctx.status(200),
+                ctx.status(201),
                 ctx.json(json)
             )
         }

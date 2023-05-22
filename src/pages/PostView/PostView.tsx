@@ -4,6 +4,7 @@ import PostViewDetailBlock from "../../components/Board/PostView/PostDetail";
 import PostViewContent from "../../components/Board/PostView/PostContent";
 
 export default function PostViewPage(){
+
     return(
         <div>
             <PageTitle>{''}</PageTitle>
