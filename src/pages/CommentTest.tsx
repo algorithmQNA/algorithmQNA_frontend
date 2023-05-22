@@ -34,9 +34,10 @@ function CommentTest() {
     2: 'ml-12',
   };
 
-  if (data?.data.comments) {
+  if (data?.data.commentList) {
     const selectedComment =
-      data.data.comments.find((comment) => comment.isPinned)?.commentId || -1;
+      data.data.commentList.find((comment) => comment.isPinned)?.commentId ||
+      -1;
     const handleClick: MouseEventHandler<HTMLButtonElement> = () => {
       if (selectedComment === -1) {
         window.alert('채택된 답변이 없습니다');
@@ -66,7 +67,7 @@ function CommentTest() {
       <>
         <Controller />
         <div className="w-full p-4 flex flex-col">
-          {data.data.comments.map((t) => (
+          {data.data.commentList.map((t) => (
             <div
               className={`${marginLeft[t.depth]} ${
                 isScrolling &&

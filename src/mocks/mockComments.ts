@@ -1,5 +1,6 @@
 import { rest } from 'msw';
 import { GetCommentByPostIdReponse } from '../types/apis/commentResponseType';
+import { generateMockMember } from './utils/generateMockData';
 const MOCK_BASED_URL = process.env.REACT_APP_API_BASE_URL;
 
 const handlers = [
@@ -13,9 +14,9 @@ const PostInitData: GetCommentByPostIdReponse = {
   postId: 3,
   commentList: [
     {
+      parentId: null,
       commentId: 6,
-      memberId: 1,
-      memberName: '김솔민',
+      member: generateMockMember(1),
       content: '<p>감사합니다!</p>',
       createdAt: '2023-05-15 12:18:31',
       updatedAt: '2023-05-15 12:18:31',
@@ -24,11 +25,12 @@ const PostInitData: GetCommentByPostIdReponse = {
       depth: 1,
       hasChild: true,
       isPinned: false,
+      isLiked: false,
     },
     {
-      commentId: 8,
-      memberId: 2,
-      memberName: '김솔민',
+      parentId: null,
+      commentId: 6,
+      member: generateMockMember(3),
       content: '<p>감사합니다!</p>',
       createdAt: '2023-05-15 12:18:31',
       updatedAt: '2023-05-15 12:18:31',
@@ -37,6 +39,7 @@ const PostInitData: GetCommentByPostIdReponse = {
       depth: 1,
       hasChild: true,
       isPinned: false,
+      isLiked: false,
     },
   ],
   page: 3,
