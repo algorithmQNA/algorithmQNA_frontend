@@ -1,19 +1,13 @@
 import { rest } from 'msw';
 import { Report } from '../constants/Report';
+import {
+  generateRandomDate,
+  generateRandomString,
+  getRandomInt,
+} from '../utils/random';
 const MOCK_BASED_URL = process.env.REACT_APP_API_BASE_URL;
 
-function generateRandomDate() {
-  const start = new Date(2023, 1, 1);
-  const end = new Date();
-  const generatedDate = new Date(
-    start.getTime() + Math.random() * (end.getTime() - start.getTime())
-  );
-  return generatedDate.toISOString();
-}
-function getRandomInt(max: number) {
-  return Math.floor(Math.random() * max);
-}
-
+/**공지사항 mock 데이터 생성기 */
 const mockData: { id: number; title: string; date: string }[] = new Array(20)
   .fill(0)
   .map((_, idx) => ({
@@ -21,9 +15,6 @@ const mockData: { id: number; title: string; date: string }[] = new Array(20)
     title: `${idx + 1}번째 공지사항`,
     date: generateRandomDate(),
   }));
-
-/**랜덤 스트링 */
-const generateRandomString = () => Math.random().toString(36).substring(2, 11);
 
 /**신고 게시내역 리스트 mockData */
 const generateReportPostMockData = () => {

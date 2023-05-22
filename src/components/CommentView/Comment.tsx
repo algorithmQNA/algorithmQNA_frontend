@@ -25,8 +25,8 @@ function CommentView({
   createdAt = '2023-03-31',
   commentId,
   content,
-  dislikeCount,
-  likeCount,
+  dislikeCnt,
+  likeCnt,
   isLiked,
   depth,
   ...props
@@ -34,7 +34,6 @@ function CommentView({
   const [mode, setMode] = useState<'read' | 'modify'>('read');
   const [openReplyEditor, setModify] = useState(false);
   const [hasMoreComments, setHasMoreComments] = useState(depth === 0);
-  const [openMenu, setOpenMenu] = useState(true);
   const toggleReplyEditor = () => setModify((prev) => !prev);
   const changeMode = (mode: 'read' | 'modify') => {
     setMode(mode);
@@ -87,9 +86,9 @@ function CommentView({
                 <IconButton Icon={<AiOutlineLike width="14" />} />
               )}
 
-              <span className="text-xs text-gray-700 p-1">{likeCount}</span>
+              <span className="text-xs text-gray-700 p-1">{likeCnt}</span>
               <IconButton Icon={<ThumbsDown width="14" />} />
-              <span className="text-xs text-gray-700 p-1">{dislikeCount}</span>
+              <span className="text-xs text-gray-700 p-1">{dislikeCnt}</span>
               <IconButton Icon={<></>} onClick={toggleReplyEditor}>
                 답글달기
               </IconButton>
@@ -98,7 +97,7 @@ function CommentView({
         )}
         {mode === 'modify' && (
           <div>
-            <CKEditor editor={CustomEditor} data={content}></CKEditor>
+            <CKEditor editor={CustomEditor} data={content} />
             <ButtonComponent onClick={() => setMode('read')}>
               취소
             </ButtonComponent>
