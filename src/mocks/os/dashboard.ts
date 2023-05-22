@@ -1,5 +1,5 @@
 import {rest} from "msw";
-import {PostDetail, PostList, PostRow} from "../../types/Post/Post";
+import {PostList, PostRow} from "../../types/Post/Post";
 
 export const dashboardHandler = [
     rest.get(

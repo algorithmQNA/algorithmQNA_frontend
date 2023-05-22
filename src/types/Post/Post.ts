@@ -16,42 +16,56 @@ export interface PostList{
     prev:boolean
     size:number
 }
-export interface  PostDetail{
-    "postId": number
-    "memberId": number
-    "memberName":string
-    "memberCommentBadge": number
-    "memberPostBadge": number
-    "memberLikeBadge": number
-    "title":string
-    "content":string
-    "createdSt":string
-    "likeCount": number
-    "dislikeCount": number
-    "commentTotalCount": number
-    "commentCurrentPage": number
-    "commentTotalPageCount": number
-    "commentNext": boolean
-    "commentPrev": boolean
-    "commentSize": number
-    comments:PostComment[]
+export interface PostViewMember{
+    "memberId": number,
+    "memberName": string,
+    "memberRole": string,
+    "memberCommentBadge": number,
+    "memberPostBadge": number,
+    "memberLikeBadge": number,
+    "memberProfileUrl": string
 }
-export interface PostComment{
-    "commentId": number
-    "parentId": number
-    "memberId": number
-    "memberName": string
-    "memberProfile": string
-    "memberCommentBadge": number
-    "memberPostBadge": number
-    "memberLikeBadge": number
-    "content":string
-    "likeCount": number
-    "dislikeCount": number
+export interface PostViewChildComment{
+    "commentId": number,
+    "memberId": number,
+    "memberName": string,
+    "content": string,
+    "createdAt": string,
+    "updatedAt": string,
+    "likeCnt": number,
+    "dislikeCnt": number,
+    "depth" : number,
+    "hasChild" : boolean
+}
+export interface PostViewComment{
+    "commentId": number,
+    "member": PostViewMember,
+    "content": string,
+    "createdAt": string,
+    "updatedAt": string,
+    "likeCnt": number,
+    "dislikeCnt": number,
+    "depth" : number,
+    "hasChild" : boolean,
+    "childCommentList":PostViewChildComment[]
+    "childSize":number
+}
+export interface PostView{
+    "postId": number
+    "postTitle":string,
+    "postContent": string
     "createdAt": string
-    "depth": number
-    "isPinned": boolean
-    "isLiked": boolean
+    "postLikeCnt": number,
+    "postDislikeCnt": number,
+    "isLiked": boolean,
+    "totalCommentCnt": number
+    "totalPageSize": number,
+    "member":PostViewMember
+    "commentList":PostViewComment[]
+    "page": number,
+    "next": boolean,
+    "prev": boolean,
+    "size": number
 }
 export interface PostWrite{
     title:string

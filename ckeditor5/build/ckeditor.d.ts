@@ -65,6 +65,7 @@ export default class CustomEditor extends ClassicEditorBase {
     toolbar: {
       items: string[];
     };
+
     image: {
       toolbar: string[];
     };
