@@ -1,12 +1,23 @@
 import { rest } from 'msw';
 import { GetCommentByPostIdReponse } from '../types/apis/commentResponseType';
 import { generateMockMember } from './utils/generateMockData';
+import { createRandomInt } from '../utils/random';
 const MOCK_BASED_URL = process.env.REACT_APP_API_BASE_URL;
 
 const handlers = [
   rest.get(`${MOCK_BASED_URL}/comment/:postId`, async (req, res, ctx) => {
     const page = req.url.searchParams.get('page') || 0;
     return res(ctx.status(200), ctx.json(PostInitData));
+  }),
+  rest.post(`${MOCK_BASED_URL}/comment/:postId`, async (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        commentId: createRandomInt(10000),
+        createdAt: Date.now().toLocaleString(),
+        depth: 1,
+      })
+    );
   }),
 ];
 

@@ -34,15 +34,21 @@ export const getSpreadCommentByCommentId = ({
   );
 
 // 댓글 작성 API
-export const createCommentRequest = (
-  postId: number,
-  content: string,
-  parentCommentId?: number
-) =>
-  privateRequest.post<CreateCommentResponse>(`comment/${postId}`, {
+export const createCommentRequest = ({
+  postId,
+  content,
+  parentCommentId,
+}: {
+  postId: number;
+  content: string;
+  parentCommentId?: number;
+}) => {
+  console.log('하이', content);
+  return privateRequest.post<CreateCommentResponse>(`comment/${postId}`, {
     content,
     parentCommentId,
   });
+};
 
 // 댓글 수정 API
 export const updateCommentRequest = (commentId: number, content: string) =>
