@@ -10,7 +10,7 @@
 .board-post-row{
     @apply bg-[#f5f5f5]
     border border-[#D9D9D9]
-    rounded p-4 grid transition duration-300 gap-4
+    rounded p-4 grid transition duration-300 gap-4 col-span-1
     hover:bg-transparent hover:shadow-lg hover:border-transparent hover:cursor-pointer;
     grid-template-columns:75px 5fr;
 }

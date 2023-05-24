@@ -10,9 +10,7 @@ function App() {
     <div className="App">
       <HeaderTest/>
       <main className={"bg-white"}>
-        <Router>
           <DefaultRouter />
-        </Router>
       </main>
       <footer
         className={

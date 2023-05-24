@@ -1,5 +1,5 @@
 .page-shortcut{
-    @apply flex justify-around mb-[75px];
+    @apply grid grid-cols-1 md:grid-cols-3 gap-2 justify-around mb-[75px];
 }
 .dash-post-tab{
     @apply w-fit m-auto bg-title flex p-2.5 rounded-full gap-2 mb-6;
@@ -14,6 +14,5 @@
     @apply bg-white text-[#FA7D39]
 }
 .dash-post-li{
-    @apply grid gap-4;
-    grid-template-columns:1fr 1fr;
+    @apply grid grid-cols-1 md:grid-cols-2 p-4 gap-4;
 }

@@ -7,6 +7,7 @@ import PostWriteSelectBlock from "../../components/Board/PostWrite/SelectBlock";
 import {useRecoilState} from "recoil";
 import {PostWriteState} from "../../storage/PostWrite/PostWrite";
 import PostWriteBtn from "../../components/Board/PostWrite/WriteBtn";
+import ButtonComponent from "../../components/Button/ButtonComponent";
 
 export default function PostWritePage(){
     const [state,setState] = useRecoilState(PostWriteState)

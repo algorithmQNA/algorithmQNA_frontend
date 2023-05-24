@@ -13,14 +13,14 @@ interface props{
 export default function ButtonComponent({type=null,onClick=()=>{},children='Button'}:props){
     if(type === 'outline'){
         return(
-            <button className={'bg-white border border-primary text-primary py-6 font-semibold text-base'} onClick={onClick}>
+            <button className={'bg-white border border-primary text-primary py-6 font-semibold text-base rounded-full'} onClick={onClick}>
                 {children}
             </button>
         )
     }
     else{
         return(
-            <button className={'bg-primary border border-primary text-white py-6 font-semibold text-base'} onClick={onClick}>
+            <button className={'bg-primary border border-primary text-white py-6 font-semibold text-base rounded-full'} onClick={onClick}>
                 {children}
             </button>
         )
