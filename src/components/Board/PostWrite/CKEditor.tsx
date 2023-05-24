@@ -1,25 +1,44 @@
 import {CKEditor} from "@ckeditor/ckeditor5-react";
 import CustomEditor from "ckeditor5-custom-build";
-import React from "react";
+import React, {useState} from "react";
 import {useSetRecoilState} from "recoil";
 import {PostWriteState} from "../../../storage/PostWrite/PostWrite";
-import {imagePostRequest} from "../../../apis/postApi";
+import axios from "axios";
 
 export default function PostWriteCKEditor(){
     const setState = useSetRecoilState(PostWriteState)
-    function uploadAdapter(loader:any) {
-        console.log(loader)
+    const [flag, setFlag] = useState(false);
+    const link = ''
+
+    const customUploadAdapter = (loader:any) => { // (2)
         return {
-            upload: () => {
+            upload(){
+                return new Promise ((resolve, reject) => {
+                    const data = new FormData();
+                    loader.file.then( (file:any) => {
+                        data.append("name", file.name);
+                        data.append("file", file);
+
+                        axios.post('/image', data)
+                            .then((res) => {
+                                if(!flag){
+                                    setFlag(true);
+                                    console.log(res)
+                                }
+                                resolve({
+                                    default: `${link}/question.png`
+                                });
+                            })
+                            .catch((err)=>reject(err));
+                    })
+                })
             }
-        };
+        }
     }
-
-
-    function uploadPlugin(editor:any) {
-        editor.plugins.get("FileRepository").createUploadAdapter = (loader:any) => {
-            return uploadAdapter(loader);
-        };
+    function uploadPlugin (editor:any){ // (3)
+        editor.plugins.get('FileRepository').createUploadAdapter = (loader:any) => {
+            return customUploadAdapter(loader);
+        }
     }
     return(
         <div>

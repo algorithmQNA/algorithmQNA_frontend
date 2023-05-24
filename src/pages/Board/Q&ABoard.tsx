@@ -5,7 +5,7 @@ import PageTitle from "../../components/PageTitle/PageTitle";
 import CategoryBar from "../../components/Board/CategoryBar/CategoryBar";
 import RowListTo from "../../components/Board/ListTo";
 import NoticeBlock from "../../components/Board/Notice";
-import PostTableRow from "../../components/TableRow/PostTableRow";
+import {useQuery} from "react-query";
 
 export default function QNABoardPage(){
     const list = [
@@ -19,6 +19,7 @@ export default function QNABoardPage(){
         {name:'Sort',id:'8'},
         {name:'BFS / DFS',id:'9'},
     ]
+
 
     return(
         <div>
@@ -47,6 +48,9 @@ export default function QNABoardPage(){
                         <RowListTo page={1}/>
                     </div>
                     <NoticeBlock/>
+                    {
+
+                    }
                     <Pagination postLength={100} listLength={10}/>
                 </div>
             </div>

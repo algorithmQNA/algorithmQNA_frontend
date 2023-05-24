@@ -1,8 +1,8 @@
 import {setDateWritten, setOverValue} from "../../utils/TextProcessing";
-import {FiBookmark, FiCommand, FiEye, FiMessageSquare, FiThumbsDown, FiThumbsUp} from "react-icons/fi";
+import {FiEye, FiMessageSquare, FiThumbsDown, FiThumbsUp} from "react-icons/fi";
 import TableRow from "./Row";
 import './style.css'
-import {PostList, PostRow} from "../../types/Post/Post";
+import {PostRow} from "../../types/Post/Post";
 
 interface Props{
     data:PostRow
