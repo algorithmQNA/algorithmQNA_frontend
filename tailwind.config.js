@@ -5,10 +5,15 @@ module.exports = {
     extend: {
       colors: {
         "hover-rgba": "rgba(0,0,0,0.10)",
-        "basic": "#D9D9D9",
-        primary: "#77A4E8",
         title:'#3c4f74',
-        content:'#739093'
+        content:'#739093',
+        basic: "#D9D9D9",
+        primary: "#A377ED",
+        secondary: "#FA7D39",
+        border: "#EEEEEE",
+        "box-bg": "#F8F8F8",
+        "gradient-bg":
+          "linear-gradient(270.12deg, #A377ED 4.16%, #7791ED 95.69%)",
       },
       animation: {
         grow: "grow 0.2s",

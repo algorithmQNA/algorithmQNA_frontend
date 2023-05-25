@@ -1,3 +1,4 @@
+
 import { Routes, Route, Navigate } from "react-router-dom";
 import * as Admin from "./pages/Admin";
 import * as MyPage from "./pages/MyPage";
@@ -10,13 +11,14 @@ import PostWritePage from "./pages/PostWrite/PostWrite";
 import LandingPage from "./pages/Landing/Landing";
 
 const adminPages = [
-  { link: "notice", title: "공지사항" },
-  { link: "post", title: "게시판 글 관리" },
+  { link: 'notice', title: '공지사항' },
+  { link: 'report', title: '신고내역 관리' },
 ];
 
 const mypagePages = [
-  { link: "profile", title: "내 정보" },
-  { link: "post", title: "내가 쓴 글" },
+  { link: 'profile', title: '내 정보' },
+  { link: 'history', title: '활동 내역' },
+  { link: 'badge', title: '획득 뱃지' },
 ];
 
 function Router() {
