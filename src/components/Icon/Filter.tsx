@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react';
 
 function Filter(props: SVGProps<SVGSVGElement>) {
   return (

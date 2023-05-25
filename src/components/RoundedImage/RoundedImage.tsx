@@ -1,5 +1,5 @@
-import React from "react";
-import type { ImgHTMLAttributes } from "react";
+import React from 'react';
+import type { ImgHTMLAttributes } from 'react';
 
 type RoundedImageProps = ImgHTMLAttributes<HTMLImageElement> & {
   alt: string;
