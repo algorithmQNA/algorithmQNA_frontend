@@ -2,7 +2,7 @@ import {useQuery} from "react-query";
 import {useLocation, useNavigate} from "react-router-dom";
 import {setYMD} from "../../../utils/TextProcessing";
 import {getPostRequest} from "../../../apis/postApi";
-import {useEffect} from "react";
+import {useEffect, useRef} from "react";
 
 export default function PostViewDetailBlock(){
     const nav = useNavigate()
@@ -10,6 +10,7 @@ export default function PostViewDetailBlock(){
     const params = new URLSearchParams(location.search).get('pid')
     const query = params ? parseInt(params) : 'a'
     const is = parseInt(query as string)
+
     useEffect(()=>{
         if(isNaN(is)){
             nav(-1)
@@ -28,8 +29,8 @@ export default function PostViewDetailBlock(){
             }
         }
     })
-
     const data = get.data?.data;
+
     return(
         <div>
             {
