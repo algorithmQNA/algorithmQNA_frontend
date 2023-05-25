@@ -1,0 +1,101 @@
+import { rest } from 'msw';
+import { GetPostResponse } from '../types/apis/postResponseType';
+const MOCK_BASED_URL = process.env.REACT_APP_API_BASE_URL;
+
+const handlers = [
+  rest.get(`${MOCK_BASED_URL}/post/:postId`, async (_, req, ctx) => {
+    return req(ctx.status(200), ctx.json(PostInitData));
+  }),
+];
+
+const PostInitData: GetPostResponse = {
+  postId: 1,
+  memberId: 43,
+  memberName: '최진아',
+  memberCommentBadge: 3,
+  memberPostBadge: 3,
+  memberLikeBadge: 3,
+  postTitle: '게시물 제목',
+  postContent: '게시물 내용입니다.',
+  CreatedAt: '2020-02-02',
+  postLikeCount: 5,
+  postDislikeCount: 2,
+  commentTotalCount: 2,
+  commentCurrentPage: 1,
+  commentTotalPageCount: 10,
+  commentNext: true,
+  commentPrev: false,
+  comments: [
+    {
+      commentId: 1,
+      parentId: null,
+      memberId: 43,
+      memberName: '권수빈',
+      memberProfile: 'https://picsum.photos/200',
+      memberCommentBadge: 1,
+      memberPostBadge: 2,
+      memberLikeBadge: 0,
+      content:
+        '<h2>테스트용 내용</h2><h4>하이하이</h4><pre><code class="language-javascript">123434444\nlet hi = 100;\nconst tt = 10;</code></pre><p>&nbsp;</p><p><code>breif</code></p>',
+      likeCount: 2,
+      dislikeCount: 1,
+      createdAt: '2023-03-03',
+      depth: 0,
+      isPinned: false,
+      isLiked: true,
+    },
+    {
+      commentId: 2,
+      parentId: 1,
+      memberId: 21,
+      memberName: '김지민',
+      memberProfile: 'https://picsum.photos/32',
+      memberCommentBadge: 1,
+      memberPostBadge: 0,
+      memberLikeBadge: 0,
+      content: '댓글 내용2',
+      likeCount: 5,
+      dislikeCount: 2,
+      createdAt: '2023-03-03',
+      depth: 1,
+      isPinned: false,
+      isLiked: true,
+    },
+    {
+      commentId: 3,
+      parentId: null,
+      memberId: 18,
+      memberName: '채택러',
+      memberProfile: 'https://picsum.photos/32',
+      memberCommentBadge: 1,
+      memberPostBadge: 44,
+      memberLikeBadge: 5,
+      content: '<h1>최고의 답안~</h1>',
+      likeCount: 10,
+      dislikeCount: 20,
+      createdAt: '2023-03-03',
+      depth: 1,
+      isPinned: true,
+      isLiked: false,
+    },
+    {
+      commentId: 4,
+      parentId: null,
+      memberId: 18,
+      memberName: '채택러',
+      memberProfile: 'https://picsum.photos/32',
+      memberCommentBadge: 1,
+      memberPostBadge: 44,
+      memberLikeBadge: 5,
+      content: '<h1>채택된 답변~</h1>',
+      likeCount: 10,
+      dislikeCount: 20,
+      createdAt: '2023-03-03',
+      depth: 1,
+      isPinned: true,
+      isLiked: false,
+    },
+  ],
+};
+
+export default handlers;

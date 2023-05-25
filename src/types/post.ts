@@ -1,3 +1,8 @@
+import { Report } from '../constants/Report';
+import { Comment } from './comment';
+import { Member } from './member';
+import { Pagination } from './pagination';
+
 export type SortOption = 'ID' | 'VOTE_COUNT';
 
 export type BriefPost = {
@@ -18,10 +23,14 @@ export type Post = {
   memberLikeBadge: number;
   postTitle: string;
   postContent: string;
-  createAt: string;
+  CreatedAt: string;
   postLikeCount: number;
   postDislikeCount: number;
-  commentCount: number;
+  commentTotalCount: number;
+  commentCurrentPage: number;
+  commentTotalPageCount: number;
+  commentNext: boolean;
+  commentPrev: boolean;
   comments: Comment[];
 };
 
@@ -34,10 +43,16 @@ export type PostCRUDBody = {
 
 export type ReportedPostDetail = {
   postId: number;
-  title: string;
-  postContent: string;
-  memberName: string;
-  reportMemberName: string;
-  createdAt: string;
-  otherReason?: string;
+  content: string;
+  member: Member;
+  PostReports: ReportReason[];
+  totalReportedCnt: number;
+} & Pagination;
+
+export type ReportReason = {
+  reportPostId: number;
+  member: Member;
+  category: Report;
+  detail?: string;
+  updatedAt: string;
 };

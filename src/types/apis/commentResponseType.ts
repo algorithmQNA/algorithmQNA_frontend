@@ -1,3 +1,16 @@
+import { EachComment } from '../comment';
+import { Pagination } from '../pagination';
+
+export type GetCommentByPostIdReponse = {
+  postId: number;
+  commentList: EachComment[];
+} & Pagination;
+
+export type GetSpreadCommentByCommentIdResponse = {
+  parentId: number;
+  childCommentList: EachComment[];
+} & Pagination;
+
 export type CreateCommentResponse = {
   commentId: number;
   createdAt: string;
