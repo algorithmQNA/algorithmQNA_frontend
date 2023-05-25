@@ -15,7 +15,7 @@ export default function PostWriteCKEditor(){
             upload(){
                 return new Promise ((resolve, reject) => {
                     const data = new FormData();
-                    loader.file.then( (file:any) => {
+                    loader.file.then( (file:File) => {
                         data.append("name", file.name);
                         data.append("file", file);
 
@@ -35,7 +35,7 @@ export default function PostWriteCKEditor(){
             }
         }
     }
-    function uploadPlugin (editor:any){ // (3)
+    function uploadPlugin (editor: { plugins: { get: (arg0: string) => { (): any; new(): any; createUploadAdapter: (loader: any) => { upload(): Promise<unknown>; }; }; }; }){ // (3)
         editor.plugins.get('FileRepository').createUploadAdapter = (loader:any) => {
             return customUploadAdapter(loader);
         }
