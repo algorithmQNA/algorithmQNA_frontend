@@ -8,6 +8,8 @@ import TipBoardPage from './pages/Board/TipBoard';
 import PostViewPage from './pages/PostView/PostView';
 import PostWritePage from './pages/PostWrite/PostWrite';
 import LandingPage from './pages/Landing/Landing';
+import Post from './components/MyPage/Post/Post';
+import ReportPost from './components/Report/ReportPost';
 
 const adminPages = [
   { link: 'notice', title: '공지사항' },
@@ -34,14 +36,23 @@ function Router() {
         <Route path="write" element={<PostWritePage />} />
       </Route>
       <Route path="admin" element={<SidebarLayout links={adminPages} />}>
-        <Route index element={<Navigate to="post" />} />
-        <Route path="post" element={<Admin.Post />} />
+        <Route index element={<Navigate to="report/post" />} />
+        <Route path="report" element={<Admin.Post />}>
+          <Route index element={<Navigate to="post" />} />
+          <Route path="post" element={<ReportPost />} />
+          <Route path="comment" element={<div>내가 쓴 댓글</div>} />
+        </Route>
         <Route path="notice" element={<Admin.Notice />} />
       </Route>
       <Route path="mypage" element={<SidebarLayout links={mypagePages} />}>
         <Route index element={<Navigate to="profile" />} />
         <Route path="profile" element={<MyPage.Profile />} />
-        <Route path="post" element={<MyPage.Post />} />
+        <Route path="history" element={<MyPage.Post />}>
+          <Route index element={<Navigate to="post" />} />
+          <Route path="post" element={<Post />} />
+          <Route path="comment" element={<div>내가 쓴 댓글</div>} />
+        </Route>
+        <Route path="badge" element={<MyPage.Badge />} />
       </Route>
     </Routes>
   );

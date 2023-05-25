@@ -29,9 +29,8 @@ function CommentTest() {
     2: 'ml-12',
   };
 
-  if (data?.data.comments) {
-    const selectedComment =
-      data.data.comments.find((comment) => comment.isPinned)?.commentId || -1;
+  if (data?.data.commentList) {
+    const selectedComment = data.data.commentList.find((comment) => -1) || -1;
     const handleClick: MouseEventHandler<HTMLButtonElement> = () => {
       if (selectedComment === -1) {
         window.alert('채택된 답변이 없습니다');
@@ -46,7 +45,7 @@ function CommentTest() {
       <>
         <button onClick={handleClick}>채택된 답변으로</button>
         <div className="w-full p-4 flex flex-col">
-          {data.data.comments.map((t) => (
+          {data.data.commentList.map((t) => (
             <div
               className={`${marginLeft[t.depth]} ${
                 isScrolling &&
@@ -57,7 +56,7 @@ function CommentTest() {
               key={`${t.commentId}`}
               tabIndex={-1}
             >
-              <CommentView {...t} key={t.commentId} />
+              {/* <CommentView {...t} key={t.commentId} /> */}
             </div>
           ))}
         </div>
