@@ -3,17 +3,14 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import { BrowserRouter as Router } from 'react-router-dom';
 import DefaultRouter from './DefaultRouter';
+import HeaderTest from './components/Header/re/Header';
 
 function App() {
   return (
     <div className="App">
-      <header className={'sticky bg-[#77A4E8] top-0 shadow-lg z-50'}>
-        <Header />
-      </header>
-      <main>
-        <Router>
-          <DefaultRouter />
-        </Router>
+      <HeaderTest />
+      <main className={'bg-white'}>
+        <DefaultRouter />
       </main>
       <footer
         className={

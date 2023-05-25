@@ -1,7 +1,7 @@
 import {useMemo} from "react";
 import {createSearchParams, Link, useLocation} from "react-router-dom";
-import PnLeft from "./left";
-import PnRight from "./right";
+import {ReactComponent as Left} from "../../assets/images/left.svg";
+import {ReactComponent as Right} from "../../assets/images/right.svg";
 
 interface props{
     postLength:number
@@ -68,32 +68,32 @@ export default function Pagination({postLength,listLength,displayPages=5}:props)
         }
     }
     return(
-        <nav className={'m-auto flex gap-2 w-fit items-center'}>
+        <nav className={'m-auto flex gap-1 w-fit items-center'}>
             {
                 query === 1 || page.length === 0
                     ?
-                    <span className={'stroke-[#ABABAB]'}>
-                        <PnLeft/>
-                    </span>
+                    <label className={'w-[40px] h-[35px] flex items-center justify-center rounded stroke-[#ABABAB] bg-[#f5f5f5]'}>
+                        <Left/>
+                    </label>
                     :
-                    <Link to={setParams(query-1)} className={'stroke-primary'}>
-                        <PnLeft/>
+                    <Link to={setParams(query-1)} className={'w-[40px] h-[35px] flex rounded items-center justify-center stroke-[#3c4f74] bg-[#f5f5f5]'}>
+                        <Left/>
                     </Link>
             }
             {
                 page.map((li)=>(
-                    <Link key={li} className={`p-2 font-bold ${query === li ? 'text-primary' : ''}`} to={setParams(li)}>{li}</Link>
+                    <Link key={li} className={`w-[40px] h-[35px] flex items-center justify-center rounded font-bold ${query === li ? 'text-white bg-primary' : 'bg-[#f5f5f5] text-[#3c4f74]'}`} to={setParams(li)}>{li}</Link>
                 ))
             }
             {
                 query >= totalPage || page.length === 0
                     ?
-                    <span className={'stroke-[#ABABAB]'}>
-                        <PnRight/>
+                    <span className={'w-[40px] h-[35px] flex items-center justify-center stroke-[#ABABAB] bg-[#f5f5f5]'}>
+                        <Right/>
                     </span>
                     :
-                    <Link to={setParams(query+1)} className={'stroke-primary'}>
-                        <PnRight/>
+                    <Link to={setParams(query+1)} className={'w-[40px] h-[35px] rounded flex items-center justify-center stroke-[#3c4f74] bg-[#f5f5f5]'}>
+                        <Right/>
                     </Link>
             }
         </nav>

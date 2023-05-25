@@ -4,10 +4,14 @@ import {
 } from '../types/apis/postResponseType';
 import { SortOption } from '../types/post';
 import { privateRequest } from './instance';
+import {PostView} from "../types/Post/Post";
+
+
+
 
 // 게시물 조회 API
 export const getPostRequest = (postId: number) =>
-  privateRequest.get<GetPostResponse>(`/post/${postId}`);
+  privateRequest.get<PostView>(`/post/${postId}`);
 
 // 게시물 생성 API
 export const createPostRequest = (
@@ -15,7 +19,7 @@ export const createPostRequest = (
   content: string,
   categoryId: number,
   contentTypeId: number
-) => privateRequest.post('post', { title, content, categoryId, contentTypeId });
+) => privateRequest.post('/post', { title, content, categoryId, contentTypeId });
 
 // 게시물 수정 API
 export const updatePostRequest = (
@@ -33,8 +37,7 @@ export const updatePostRequest = (
   });
 
 // 게시물 삭제 API
-export const deletePostRequest = (postId: string) =>
-  privateRequest.delete(`post/${postId}`);
+export const deletePostRequest = (postId: string) => privateRequest.delete(`post/${postId}`)
 
 // 카테고리별 게시물 조회 API
 export const getCategoryPostsRequest = (
@@ -57,3 +60,7 @@ export const recommendPostRequest = (postId: string) =>
 // 게시물 신고 API
 export const reportPostRequest = (postId: string) =>
   privateRequest.post(`post/${postId}/report`);
+
+//게시물 이미지 업로드 API
+export const imagePostRequest = (form:FormData)=>
+    privateRequest.post<{status:{code:number,message:string},data:{image_url:string}}>('/image',form)
