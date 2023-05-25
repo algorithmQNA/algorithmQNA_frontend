@@ -1,6 +1,6 @@
-import Like from "./LikeBadge";
-import WriteBadge from "./WriteBadge";
-import CommentBadge from "./CommentBadge";
+import Like from './LikeBadge';
+import WriteBadge from './WriteBadge';
+import CommentBadge from './CommentBadge';
 
 const LikeBadge = () => {
   return (

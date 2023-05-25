@@ -23,7 +23,7 @@ export function DropDown({
   search = false,
   children,
   className,
-  component, 
+  component,
   location = 'left',
 }: props) {
   const box = useRef<HTMLDivElement>(null);
