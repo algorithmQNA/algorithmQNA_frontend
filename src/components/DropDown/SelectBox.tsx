@@ -1,4 +1,5 @@
 import React, {ChangeEvent, MouseEventHandler, ReactElement, useEffect, useMemo, useRef, useState} from "react";
+import {FiChevronDown} from "react-icons/fi";
 import './style.css'
 interface optionProps extends React.OptionHTMLAttributes<HTMLOptionElement>{
     children:ReactElement | ReactElement[] | string
@@ -62,10 +63,15 @@ export function SelectBox({event,defaultText='선택',search=false,children,clas
         return () => document.removeEventListener('click', setCheck);
     },[state.displayOption])
     return(
-        <div className={'w-full relative'} ref={box}>
-            <label className={`${defaultClass.select} ${className} ${state.displayOption ? 'border-[#77A4E8]' : 'border-[#D9D9D9]'}`}>
+        <div className={'w-full relative select-label'} ref={box}>
+            <label className={`${defaultClass.select} ${className}`}>
                 <input type={"checkbox"} className={'hidden'} checked={state.displayOption} onChange={selectStart}/>
-                <span>{state.displayText}</span>
+                <p className={'w-full flex justify-between items-center text-[#739093]'}>
+                    <span className={'w-full whitespace-nowrap text-ellipsis overflow-hidden'}>{state.displayText}</span>
+                    <span className={'whitespace-nowrap'}>
+                        <FiChevronDown/>
+                    </span>
+                </p>
             </label>
             {
                 state.displayOption &&

@@ -1,3 +1,11 @@
+
 .menu-li{
     @apply py-1 px-1.5 text-sm border-y border-[#ffffff] hover:border-y-[#77A4E8] hover:text-[#77A4E8] transition-all duration-150;
+}
+.header-main{
+    background:rgba(0,0,0,0.4);
+}
+header{
+    @apply fixed z-50 p-3;
+    background:rgba(0,0,0,0.5);
 }
