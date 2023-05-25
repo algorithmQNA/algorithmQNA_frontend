@@ -1,19 +1,18 @@
-import "./style.css";
-import { useNavigate } from "react-router-dom";
+import './style.css';
+import { useNavigate } from 'react-router-dom';
 
-import { setDateWritten } from "../../utils/TextProcessing";
+import { setDateWritten } from '../../utils/TextProcessing';
 
-import IconButton from "../Button/IconButton";
-import { BiTimeFive } from "react-icons/bi";
-import { HiPencilSquare } from "react-icons/hi2";
-import { AiFillDelete } from "react-icons/ai";
+import IconButton from '../Button/IconButton';
+import { BiTimeFive } from 'react-icons/bi';
+import { HiPencilSquare } from 'react-icons/hi2';
+import { AiFillDelete } from 'react-icons/ai';
 
-import useModal from "../../hooks/useModal";
-import Modal from "../Modal/Modal";
+import useModal from '../../hooks/useModal';
+import Modal from '../Modal/Modal';
 
-import { queryClient } from "../..";
-import { useMutation } from "react-query";
-import { deleteNotification } from "../../apis/adminApi";
+import { useMutation, useQueryClient } from 'react-query';
+import { deleteNotification } from '../../apis/adminApi';
 
 interface AdminPageTableRowProps {
   title?: string;
@@ -21,17 +20,18 @@ interface AdminPageTableRowProps {
   id?: number;
 }
 export default function AdminPageTableRow({
-  title = "이거 어케 푸나요?",
-  date = "2023-05-07 23:04:11",
+  title = '이거 어케 푸나요?',
+  date = '2023-05-07 23:04:11',
   id = 2001,
 }: AdminPageTableRowProps) {
   const navigate = useNavigate();
   const { open, closeModal, openModal } = useModal();
+  const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationFn: deleteNotification,
     onSuccess: () => {
       // TODO : notice query auto refetch
-      queryClient.invalidateQueries(["notification"]);
+      queryClient.invalidateQueries(['notification']);
     },
   });
 
@@ -47,7 +47,7 @@ export default function AdminPageTableRow({
   };
 
   const handleModifyBtnClick = () => {
-    navigate("/write");
+    navigate('/write');
   };
 
   return (
@@ -62,15 +62,15 @@ export default function AdminPageTableRow({
         </Modal>
       )}
       <div className={`p-4 gap-1.5 bg-box-bg border-border relative`}>
-        <div className={"flex flex-row justify-between h-full w-full"}>
+        <div className={'flex flex-row justify-between h-full w-full'}>
           <div>
-            <span className={"font-bold text-sm truncate max-w-[200px]"}>
+            <span className={'font-bold text-sm truncate max-w-[200px]'}>
               {title}
             </span>
-            <div className={"flex items-center justify-between w-full text-xs"}>
+            <div className={'flex items-center justify-between w-full text-xs'}>
               <div>
-                <BiTimeFive style={{ display: "inline" }} />
-                <span className={"text-[#9ca3af] text-xs text-right"}>
+                <BiTimeFive style={{ display: 'inline' }} />
+                <span className={'text-[#9ca3af] text-xs text-right'}>
                   {setDateWritten(date)}
                 </span>
               </div>
@@ -79,13 +79,13 @@ export default function AdminPageTableRow({
           <div className="text-right absolute bottom-4 right-4">
             <IconButton
               onClick={handleModifyBtnClick}
-              Icon={<HiPencilSquare style={{ display: "inline" }} />}
+              Icon={<HiPencilSquare style={{ display: 'inline' }} />}
             >
               수정
             </IconButton>
             <IconButton
               onClick={handleDeleteBtnClick}
-              Icon={<AiFillDelete style={{ display: "inline" }} />}
+              Icon={<AiFillDelete style={{ display: 'inline' }} />}
             >
               삭제
             </IconButton>

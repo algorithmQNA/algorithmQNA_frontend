@@ -1,5 +1,5 @@
-import React from "react";
-import type { ReactNode } from "react";
+import React from 'react';
+import type { ReactNode } from 'react';
 
 type PaperProps = {
   width?: string;
@@ -7,7 +7,7 @@ type PaperProps = {
   children: ReactNode;
 };
 
-function Paper({ width = "300px", height = "300px", children }: PaperProps) {
+function Paper({ width = '300px', height = '300px', children }: PaperProps) {
   return (
     <div
       className="shadow-md rounded text-center p-3"

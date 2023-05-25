@@ -1,7 +1,7 @@
-import React from "react";
-import ButtonComponent from "../Button/ButtonComponent";
-import Modal from "./Modal";
-import useModal from "../../hooks/useModal";
+import React from 'react';
+import ButtonComponent from '../Button/ButtonComponent';
+import Modal from './Modal';
+import useModal from '../../hooks/useModal';
 
 function ModalButton() {
   const { open, openModal, closeModal } = useModal();

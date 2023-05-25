@@ -35,9 +35,7 @@ function CommentTest() {
   };
 
   if (data?.data.commentList) {
-    const selectedComment =
-      data.data.commentList.find((comment) => comment.isPinned)?.commentId ||
-      -1;
+    const selectedComment = data.data.commentList.find((comment) => -1) || -1;
     const handleClick: MouseEventHandler<HTMLButtonElement> = () => {
       if (selectedComment === -1) {
         window.alert('채택된 답변이 없습니다');
@@ -78,7 +76,7 @@ function CommentTest() {
               key={`${t.commentId}`}
               tabIndex={-1}
             >
-              <CommentView {...t} key={t.commentId} />
+              {/* <CommentView {...t} key={t.commentId} /> */}
             </div>
           ))}
         </div>
