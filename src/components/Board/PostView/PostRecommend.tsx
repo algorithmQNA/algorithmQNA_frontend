@@ -1,10 +1,13 @@
-import {RecommendBtn, UnRecommendBtn} from "../PostWrite/Recommend/RecoomendButton";
+import {
+  RecommendBtn,
+  UnRecommendBtn,
+} from '../PostWrite/Recommend/RecoomendButton';
 
-export default function PostRecommend(){
-    return(
-        <div className={'recommend-btn-block'}>
-            <RecommendBtn/>
-            <UnRecommendBtn/>
-        </div>
-    )
+export default function PostRecommend() {
+  return (
+    <div className={'recommend-btn-block'}>
+      <RecommendBtn />
+      <UnRecommendBtn />
+    </div>
+  );
 }

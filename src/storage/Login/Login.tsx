@@ -1,11 +1,11 @@
-import {atom} from "recoil";
-import {User} from "../../types/Login";
+import { atom } from 'recoil';
+import { User } from '../../types/Login';
 
 export const isLogin = atom<User>({
-    key:'loginInfo',
-    default:{
-        id:null,
-        name:null,
-        profile:null
-    }
-})
+  key: 'loginInfo',
+  default: {
+    id: null,
+    name: null,
+    profile: null,
+  },
+});
