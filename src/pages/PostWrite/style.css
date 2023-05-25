@@ -1,0 +1,18 @@
+.post-write-page{
+    @apply flex flex-col gap-4 bg-white py-4 w-full;
+}
+.post-write-page .title-block{
+    @apply w-full flex flex-col gap-1 max-w-[450px];
+}
+.post-write-page .name-tag{
+    @apply font-bold text-sm text-[#3c4f74]
+}
+.post-write-page .select-block{
+    @apply w-full flex gap-4;
+}
+.post-write-page .board-select-block{
+    @apply w-full flex flex-col gap-1;
+}
+.post-write-page .category-select-block{
+    @apply w-full flex flex-col gap-1;
+}
