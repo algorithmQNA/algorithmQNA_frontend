@@ -1,3 +1,5 @@
+import { Member } from './member';
+
 export enum Report {
   SLANG,
   POLITICAL,
@@ -17,16 +19,14 @@ export type ReportPost = {
   updatedAt: string;
 };
 
+//PostBriefDto
 export type ReportedPost = {
   postId: number;
-  memberId: number;
-  memberName: string;
-  title: string;
-  content: string;
+  member: Member;
+  postTitle: string;
   createdAt: string;
-  updatedAt: string;
-  likeCount: number;
-  dislikeCount: number;
-  commentCount: number;
-  reportPostInfos: ReportPost[];
+  postLikeCnt: number;
+  postDislikeCnt: number;
+  views: number;
+  totalCommentCnt: number;
 };

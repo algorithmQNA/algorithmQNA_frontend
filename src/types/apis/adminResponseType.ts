@@ -4,7 +4,7 @@ import { ReportedPostDetail } from '../post';
 import { ReportedPost } from '../report';
 
 export type GetReportedPostListResponse = {
-  reportPosts: ReportedPost[];
+  reportedPostList: ReportedPost[];
 } & Pagination;
 
 export type GetReportedCommentListResponse = {
