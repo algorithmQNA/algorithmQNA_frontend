@@ -5,6 +5,8 @@ module.exports = {
     extend: {
       colors: {
         "hover-rgba": "rgba(0,0,0,0.10)",
+        title:'#3c4f74',
+        content:'#739093',
         basic: "#D9D9D9",
         primary: "#A377ED",
         secondary: "#FA7D39",

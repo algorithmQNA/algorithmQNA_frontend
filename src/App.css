@@ -10,10 +10,17 @@
 * {
   box-sizing: border-box;
 }
+*:focus{
+  outline:none;
+}
 .ck.ck-editor__editable:not(.ck-editor__nested-editable) {
   min-height: 400px;
   margin-bottom: 20px;
 }
-.test-div *{
-
+.main-content{
+  max-width:1024px;
+  @apply w-full m-auto py-12
+}
+.set-max-width{
+  max-width:1024px;
 }

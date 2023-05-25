@@ -1,0 +1,7 @@
+.page-title{
+    @apply w-full h-[350px] relative;
+    background: linear-gradient(270.12deg, #A377ED 4.16%, #7791ED 95.69%);
+}
+.page-title .title-block{
+    @apply absolute top-[70%] left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-3xl font-bold
+}

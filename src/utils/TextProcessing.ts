@@ -32,3 +32,7 @@ export const setDateWritten= (value:string)=>{
 
     return `~ 전`
 }
+export const setYMD = (date:string) =>{
+    const [y,m,d] = date.split('-')
+    return `${y}년 ${m}월 ${d}일`
+}
