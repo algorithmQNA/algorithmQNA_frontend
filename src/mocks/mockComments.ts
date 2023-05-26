@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 import { GetCommentByPostIdReponse } from '../types/apis/commentResponseType';
 import { generateMockMember } from './utils/generateMockData';
-import { createRandomInt } from '../utils/random';
+import { generateRandomInt } from '../utils/random';
 const MOCK_BASED_URL = process.env.REACT_APP_API_BASE_URL;
 
 const handlers = [
@@ -13,7 +13,7 @@ const handlers = [
     return res(
       ctx.status(200),
       ctx.json({
-        commentId: createRandomInt(10000),
+        commentId: generateRandomInt(10000),
         createdAt: Date.now().toLocaleString(),
         depth: 1,
       })
