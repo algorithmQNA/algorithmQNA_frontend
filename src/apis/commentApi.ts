@@ -37,11 +37,11 @@ export const getSpreadCommentByCommentId = ({
 export const createCommentRequest = ({
   postId,
   content,
-  parentCommentId,
+  parentCommentId = null,
 }: {
   postId: number;
   content: string;
-  parentCommentId?: number;
+  parentCommentId?: number | null;
 }) => {
   console.log('하이', content);
   return privateRequest.post<CreateCommentResponse>(`comment/${postId}`, {
