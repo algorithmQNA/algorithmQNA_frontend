@@ -12,7 +12,7 @@ export type Comment = {
   createdAt: string;
   depth: 0 | 1 | 2 | 3;
   isPinned: boolean;
-  isLiked: boolean;
+  isLiked: boolean | null;
   childCommentList?: Comment[];
   childSize?: number;
 };

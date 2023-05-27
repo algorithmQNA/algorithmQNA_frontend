@@ -61,11 +61,15 @@ export const deleteCommentRequest = (commentId: number) =>
   privateRequest.delete(`comment/${commentId}`);
 
 // 댓글 추천 API
-export const recommendCommentRequest = (
-  commentId: number,
-  isLike: boolean,
-  cancel: boolean = false
-) =>
+export const recommendCommentRequest = async ({
+  commentId,
+  isLike,
+  cancel = false,
+}: {
+  commentId: number;
+  isLike: boolean;
+  cancel: boolean;
+}) =>
   privateRequest.post<RecommendCommentResponse>(`comment/${commentId}/like`, {
     isLike,
     cancel,
@@ -73,7 +77,7 @@ export const recommendCommentRequest = (
 
 // 좋아요상태 초기화 API
 export const resetCommentRecommendStatusRequest = (commentId: number) =>
-  recommendCommentRequest(commentId, false, true);
+  recommendCommentRequest({ commentId, isLike: false, cancel: true });
 
 // 댓글 채택 API
 export const acceptCommentRequest = (commentId: number) =>
