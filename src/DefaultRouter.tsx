@@ -10,6 +10,7 @@ import PostWritePage from './pages/PostWrite/PostWrite';
 import LandingPage from './pages/Landing/Landing';
 import Post from './components/MyPage/Post/Post';
 import ReportPost from './components/Report/ReportPost';
+import CommentTest from './pages/CommentTest';
 
 const adminPages = [
   { link: 'notice', title: '공지사항' },
@@ -35,6 +36,7 @@ function Router() {
         <Route path="view" element={<PostViewPage />} />
         <Route path="write" element={<PostWritePage />} />
       </Route>
+      <Route path="/comment/:postId" element={<CommentTest />}></Route>
       <Route path="admin" element={<SidebarLayout links={adminPages} />}>
         <Route index element={<Navigate to="report/post" />} />
         <Route path="report" element={<Admin.Post />}>

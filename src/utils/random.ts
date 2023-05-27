@@ -7,7 +7,7 @@ export function generateRandomDate() {
   return generatedDate.toISOString();
 }
 
-export function getRandomInt(max: number) {
+export function generateRandomInt(max: number) {
   return Math.floor(Math.random() * max);
 }
 
