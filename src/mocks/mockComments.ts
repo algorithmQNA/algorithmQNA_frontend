@@ -19,6 +19,18 @@ const handlers = [
       })
     );
   }),
+  // 댓글 추천 API
+  rest.post(
+    `${MOCK_BASED_URL}/comment/:commentId/like`,
+    async (req, res, ctx) => {
+      const { isLike, cancel } = await req.json();
+      const { commentId } = req.params;
+
+      console.log('댓글 추천', isLike, cancel, commentId);
+
+      return res(ctx.status(200));
+    }
+  ),
 ];
 
 const PostInitData: GetCommentByPostIdReponse = {
