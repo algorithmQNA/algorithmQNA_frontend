@@ -96,25 +96,25 @@ function CommentView({
             </div>
           </div>
         )}
-        {mode === 'modify' && (
-          <div>
-            <CKEditor editor={CustomEditor} data={content}></CKEditor>
-            <ButtonComponent onClick={() => setMode('read')}>
-              취소
-            </ButtonComponent>
-            <ButtonComponent onClick={() => setMode('read')}>
-              수정완료
-            </ButtonComponent>
-          </div>
-        )}
+        {/*{mode === 'modify' && (*/}
+        {/*  <div>*/}
+        {/*    <CKEditor editor={CustomEditor} data={content}></CKEditor>*/}
+        {/*    <ButtonComponent onClick={() => setMode('read')}>*/}
+        {/*      취소*/}
+        {/*    </ButtonComponent>*/}
+        {/*    <ButtonComponent onClick={() => setMode('read')}>*/}
+        {/*      수정완료*/}
+        {/*    </ButtonComponent>*/}
+        {/*  </div>*/}
+        {/*)}*/}
       </div>
-      {openReplyEditor && (
-        <CKEditor
-          editor={CustomEditor}
-          data=""
-          onChange={(t, editor) => console.log(editor.getData())}
-        />
-      )}
+      {/*{openReplyEditor && (*/}
+      {/*  <CKEditor*/}
+      {/*    editor={CustomEditor}*/}
+      {/*    data=""*/}
+      {/*    onChange={(t, editor) => console.log(editor.getData())}*/}
+      {/*  />*/}
+      {/*)}*/}
       {hasMoreComments && (
         <IconButton
           Icon={<BsChevronCompactDown style={{ display: 'inline' }} />}
