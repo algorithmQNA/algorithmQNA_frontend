@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 import { Comment } from '../../types/comment';
 import UserProfile, { UserProfileProps } from '../UserProfile/UserProfile';
 
@@ -12,7 +12,6 @@ import {
   updateCommentRequest,
 } from '../../apis/commentApi';
 
-import { DropDown } from '../DropDown/DropDown';
 import { SelectBox, SelectOption } from '../DropDown/SelectBox';
 
 import IconButton from '../Button/IconButton';
@@ -60,10 +59,11 @@ function CommentView({
   const [mode, setMode] = useState<'read' | 'modify'>('read');
   const [openReplyEditor, setOpenReplyEditor] = useState(false);
   const [reportType, setReportType] = useState<Report | null>(null);
+  const [reportContent, setReportContent] = useState('');
   const { open, openModal, closeModal } = useModal();
 
   const handleReportMenuChange = (value: string) => {
-    console.log(value);
+    setReportType(value as Report);
   };
 
   const queryClient = useQueryClient();
@@ -128,12 +128,21 @@ function CommentView({
     <>
       {open && (
         <Modal
+          title={`${commentId}번 댓글 신고`}
           size="lg"
           onClose={closeModal}
-          onConfirm={() => {}}
+          onConfirm={() => {
+            if (reportType)
+              reportComment({
+                commentId,
+                category: reportType,
+                detail: reportContent,
+              });
+            closeModal();
+          }}
           onCancel={closeModal}
         >
-          <div className="h-[32rem]">
+          <div className="h-[20rem]">
             <SelectBox defaultText="신고 유형" event={handleReportMenuChange}>
               {Object.entries(REPORT_MAP).map(([key, value]) => (
                 <SelectOption key={key} value={key}>
@@ -141,7 +150,15 @@ function CommentView({
                 </SelectOption>
               ))}
             </SelectBox>
-            <InputText aria-disabled></InputText>
+            {reportType === 'ETC' && (
+              <InputText
+                aria-disabled
+                defaultValue={reportContent}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setReportContent(e.target?.value)
+                }
+              />
+            )}
           </div>
         </Modal>
       )}
