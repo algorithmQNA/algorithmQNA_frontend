@@ -11,7 +11,6 @@ export default function PostWriteCKEditor() {
   const link = '';
 
   const customUploadAdapter = (loader: any) => {
-    // (2)
     return {
       upload() {
         return new Promise((resolve, reject) => {
@@ -19,7 +18,6 @@ export default function PostWriteCKEditor() {
           loader.file.then((file: File) => {
             data.append('name', file.name);
             data.append('file', file);
-
             axios
               .post('/image', data)
               .then((res) => {
@@ -55,25 +53,25 @@ export default function PostWriteCKEditor() {
   }
   return (
     <div>
-      <CKEditor
-        editor={CustomEditor}
-        config={{
-          extraPlugins: [uploadPlugin],
-        }}
-        data="<p>Hello from CKEditor 5!</p>"
-        onReady={(editor) => {
-          // You can store the "editor" and use when it is needed.
-        }}
-        onChange={(event, editor) => {
-          const data = editor.getData();
-          setState((prev) => ({
-            ...prev,
-            content: data,
-          }));
-        }}
-        onBlur={(event, editor) => {}}
-        onFocus={(event, editor) => {}}
-      />
+      {/*<CKEditor*/}
+      {/*  editor={CustomEditor}*/}
+      {/*  config={{*/}
+      {/*    extraPlugins: [uploadPlugin],*/}
+      {/*  }}*/}
+      {/*  data="<p>Hello from CKEditor 5!</p>"*/}
+      {/*  onReady={(editor) => {*/}
+      {/*    // You can store the "editor" and use when it is needed.*/}
+      {/*  }}*/}
+      {/*  onChange={(event, editor) => {*/}
+      {/*    const data = editor.getData();*/}
+      {/*    setState((prev) => ({*/}
+      {/*      ...prev,*/}
+      {/*      content: data,*/}
+      {/*    }));*/}
+      {/*  }}*/}
+      {/*  onBlur={(event, editor) => {}}*/}
+      {/*  onFocus={(event, editor) => {}}*/}
+      {/*/>*/}
     </div>
   );
 }
