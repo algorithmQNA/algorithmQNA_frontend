@@ -8,6 +8,7 @@ import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
 import { BsArrowReturnRight } from 'react-icons/bs';
 import ButtonComponent from '../components/Button/ButtonComponent';
 import PageTitle from '../components/PageTitle/PageTitle';
+import CommentWrite from '../components/CommentView/CommentWrite';
 
 function CommentTest() {
   //const [selectedComment, setSelectedComment] = useState(-1);
@@ -62,9 +63,9 @@ function CommentTest() {
     return (
       <>
         <PageTitle>댓글테스트</PageTitle>
-
         <div className="main-content">
           <Controller />
+          <CommentWrite />
           <div className="w-full flex flex-col">
             {data.commentList.map((t) => (
               <div
