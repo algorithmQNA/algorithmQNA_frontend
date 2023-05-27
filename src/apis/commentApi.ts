@@ -51,7 +51,13 @@ export const createCommentRequest = ({
 };
 
 // 댓글 수정 API
-export const updateCommentRequest = (commentId: number, content: string) =>
+export const updateCommentRequest = ({
+  commentId,
+  content,
+}: {
+  commentId: number;
+  content: string;
+}) =>
   privateRequest.patch<UpdateCommentResponse>(`comment/${commentId}`, {
     content,
   });
@@ -80,7 +86,7 @@ export const resetCommentRecommendStatusRequest = (commentId: number) =>
   recommendCommentRequest({ commentId, isLike: false, cancel: true });
 
 // 댓글 채택 API
-export const acceptCommentRequest = (commentId: number) =>
+export const pinCommentRequest = (commentId: number) =>
   privateRequest.patch<AcceptCommentResponse>(`comment/pin/${commentId}`);
 
 // 댓글 신고 API
