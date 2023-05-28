@@ -70,6 +70,7 @@ export interface PostView{
 export interface PostWrite{
     title:string
     content:string
-    kind:null | number
-    category:null | number
+    postType:null | number
+    postCategory:null | number
+    keyWord:string[]
 }

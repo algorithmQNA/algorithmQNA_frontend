@@ -5,6 +5,7 @@ import PostWriteCKEditor from '../../components/Board/PostWrite/CKEditor';
 import PostWriteSelectBlock from '../../components/Board/PostWrite/SelectBlock';
 import PostWriteBtn from '../../components/Board/PostWrite/WriteBtn';
 import PostWriteTitleBlock from "../../components/Board/PostWrite/TitleBlock";
+import PostWriteKeywordBlock from "../../components/Board/PostWrite/KeywordBlock";
 
 export default function PostWritePage() {
 
@@ -15,6 +16,7 @@ export default function PostWritePage() {
         <PostWriteTitleBlock/>
         <PostWriteSelectBlock />
         <PostWriteCKEditor />
+        <PostWriteKeywordBlock/>
         <PostWriteBtn />
       </div>
     </div>
