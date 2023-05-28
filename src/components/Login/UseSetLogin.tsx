@@ -16,6 +16,8 @@ export default function useSetLogin({ code, state }: Props) {
   const setUser = useSetRecoilState(isLogin);
   const request = async () => {
     try {
+      console.log(code)
+      console.log(state)
       const { data } = await axios.get(`/login?code=${code}&state=${state}`);
       const { id, name, profile }: User = data;
       setUser((prev) => ({

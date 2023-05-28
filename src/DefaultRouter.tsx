@@ -10,6 +10,7 @@ import PostWritePage from './pages/PostWrite/PostWrite';
 import LandingPage from './pages/Landing/Landing';
 import Post from './components/MyPage/Post/Post';
 import ReportPost from './components/Report/ReportPost';
+import LoginProcessPage from "./pages/LoginRequest/ProcessPage";
 
 const adminPages = [
   { link: 'notice', title: '공지사항' },
@@ -27,6 +28,7 @@ function Router() {
     <Routes>
       <Route path={'/'} element={<DashBoardPage />} />
       <Route path={'/access'} element={<LandingPage />} />
+      <Route path={'/google/callback'} element={<LoginProcessPage />} />
       <Route path="board">
         <Route path="q&a" element={<QNABoardPage />} />
         <Route path="tip" element={<TipBoardPage />} />
