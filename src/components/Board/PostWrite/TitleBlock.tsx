@@ -11,7 +11,6 @@ export default function PostWriteTitleBlock(){
             title: e.target.value,
         }));
     };
-    console.log(state)
     return(
         <div className={'title-block'}>
             <p className={'name-tag'}>제목</p>

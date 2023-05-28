@@ -8,13 +8,13 @@ export default function PostWriteSelectBlock() {
   const selectBoard = (value: string) => {
     setState((prev) => ({
       ...prev,
-      kind: parseInt(value),
+      postType: parseInt(value),
     }));
   };
   const selectCategory = (value: string) => {
     setState((prev) => ({
       ...prev,
-      category: parseInt(value),
+      postCategory: parseInt(value),
     }));
   };
   return (
