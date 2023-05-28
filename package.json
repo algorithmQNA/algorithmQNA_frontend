@@ -1,7 +1,6 @@
 {
   "name": "algorithmqna-front",
   "version": "0.1.0",
-  "proxy": "http://13.54.50.218:8080",
   "private": true,
   "dependencies": {
     "@ckeditor/ckeditor5-react": "^6.0.0",
