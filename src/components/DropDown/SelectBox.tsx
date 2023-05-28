@@ -25,6 +25,7 @@ interface props extends React.HTMLAttributes<HTMLDivElement> {
   children: ReactElement | ReactElement[];
   defaultText?: string;
   location?: 'right' | 'left';
+  onLoadEvent?:()=>void
 }
 /**
  * children으로 option 태그 사용
@@ -38,6 +39,7 @@ export function SelectBox({
   children,
   className,
   location = 'left',
+  onLoadEvent = ()=>{}  
 }: props) {
   const box = useRef<HTMLDivElement>(null);
   const child = React.Children.map(children, (child) => child);
@@ -58,6 +60,9 @@ export function SelectBox({
       location: location === 'left' ? 'left-0' : 'right-0',
     };
   }, []);
+  useEffect(()=>{
+    onLoadEvent()
+  },[onLoadEvent])
   /** 셀렉트 박스 클릭 */
   const selectStart = (e: ChangeEvent<HTMLInputElement>) => {
     setState({ ...state, displayOption: e.currentTarget.checked });
