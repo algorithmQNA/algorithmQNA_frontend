@@ -5,7 +5,9 @@ export default function LoginButton() {
   return (
     <Link to={'/path'} className={'login-btn'}>
       <GoogleIcon />
-      <span>구글 로그인</span>
+        <p className={'w-full text-center'}>
+            <span>구글 로그인</span>
+        </p>
     </Link>
   );
 }

@@ -60,7 +60,7 @@ export default function HeaderUserBlock(){
     return (
         <div
             className={
-                'flex items-center w-full col-span-1 justify-end gap-3 md:gap-6'
+                'flex items-center w-full col-span-1 justify-end gap-3 md:gap-6 hover:text-primary'
             }
         >
             <label className={'relative'}>
