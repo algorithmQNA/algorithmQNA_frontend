@@ -23,7 +23,6 @@ const queryClient = new QueryClient({
 });
 
 root.render(
-  <React.StrictMode>
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <RecoilRoot>
@@ -31,5 +30,4 @@ root.render(
         </RecoilRoot>
       </QueryClientProvider>
     </BrowserRouter>
-  </React.StrictMode>
 );
