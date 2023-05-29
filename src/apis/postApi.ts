@@ -19,7 +19,7 @@ export const createPostRequest = (
   content: string,
   categoryId: number,
   contentTypeId: number
-) => privateRequest.post('/post', { title, content, categoryId, contentTypeId });
+) => privateRequest.post('post', { title, content, categoryId, contentTypeId });
 
 // 게시물 수정 API
 export const updatePostRequest = (

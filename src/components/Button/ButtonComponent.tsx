@@ -19,7 +19,7 @@ export default function ButtonComponent({
     return (
       <button
         className={
-          'bg-white border border-primary text-primary py-6 font-semibold text-base rounded-full'
+          'bg-white border border-primary text-primary px-6 py-2 font-semibold text-base rounded-full w-fit'
         }
         onClick={onClick}
       >
@@ -30,7 +30,7 @@ export default function ButtonComponent({
     return (
       <button
         className={
-          'bg-primary border border-primary text-white py-6 font-semibold text-base rounded-full'
+          'bg-primary border border-primary text-white px-6 py-2 font-semibold text-base rounded-full w-fit'
         }
         onClick={onClick}
       >
