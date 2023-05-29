@@ -8,6 +8,7 @@ import type {
   AcceptCommentResponse,
   ReportCommentResponse,
 } from '../types/apis/commentResponseType';
+import { Report } from '../types/report';
 
 // 포스트에 달린 댓글 조회 API
 export const getCommentByPostid = ({
@@ -34,18 +35,30 @@ export const getSpreadCommentByCommentId = ({
   );
 
 // 댓글 작성 API
-export const createCommentRequest = (
-  postId: number,
-  content: string,
-  parentCommentId?: number
-) =>
-  privateRequest.post<CreateCommentResponse>(`comment/${postId}`, {
+export const createCommentRequest = ({
+  postId,
+  content,
+  parentCommentId = null,
+}: {
+  postId: number;
+  content: string;
+  parentCommentId?: number | null;
+}) => {
+  console.log('하이', content);
+  return privateRequest.post<CreateCommentResponse>(`comment/${postId}`, {
     content,
     parentCommentId,
   });
+};
 
 // 댓글 수정 API
-export const updateCommentRequest = (commentId: number, content: string) =>
+export const updateCommentRequest = ({
+  commentId,
+  content,
+}: {
+  commentId: number;
+  content: string;
+}) =>
   privateRequest.patch<UpdateCommentResponse>(`comment/${commentId}`, {
     content,
   });
@@ -55,11 +68,15 @@ export const deleteCommentRequest = (commentId: number) =>
   privateRequest.delete(`comment/${commentId}`);
 
 // 댓글 추천 API
-export const recommendCommentRequest = (
-  commentId: number,
-  isLike: boolean,
-  cancel: boolean = false
-) =>
+export const recommendCommentRequest = async ({
+  commentId,
+  isLike,
+  cancel = false,
+}: {
+  commentId: number;
+  isLike: boolean;
+  cancel: boolean;
+}) =>
   privateRequest.post<RecommendCommentResponse>(`comment/${commentId}/like`, {
     isLike,
     cancel,
@@ -67,18 +84,22 @@ export const recommendCommentRequest = (
 
 // 좋아요상태 초기화 API
 export const resetCommentRecommendStatusRequest = (commentId: number) =>
-  recommendCommentRequest(commentId, false, true);
+  recommendCommentRequest({ commentId, isLike: false, cancel: true });
 
 // 댓글 채택 API
-export const acceptCommentRequest = (commentId: number) =>
+export const pinCommentRequest = (commentId: number) =>
   privateRequest.patch<AcceptCommentResponse>(`comment/pin/${commentId}`);
 
 // 댓글 신고 API
-export const reportCommentRequest = (
-  commentId: number,
-  category: number,
-  detail: string
-) =>
+export const reportCommentRequest = ({
+  commentId,
+  category,
+  detail,
+}: {
+  commentId: number;
+  category: Report;
+  detail: string;
+}) =>
   privateRequest.post<ReportCommentResponse>(`comment/report/${commentId}`, {
     category,
     detail,
