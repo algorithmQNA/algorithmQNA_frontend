@@ -9,7 +9,7 @@ export enum Report {
   ETC,
 }
 
-export const ReportConst = {
+export const REPORT_MAP = {
   SLANG: '비속어',
   POLITICAL: '정치적 발언',
   AD: '광고 등 상업적인 목적',

@@ -10,6 +10,7 @@ type ModalProps = {
   children: ReactElement | ReactElement[] | string;
   title?: string;
   onClose: MouseEventHandler<HTMLDivElement | HTMLButtonElement>;
+  size?: 'sm' | 'md' | 'lg';
 } & AllOrNone<{
   onCancel: MouseEventHandler<HTMLButtonElement>;
   onConfirm: MouseEventHandler<HTMLButtonElement>;
@@ -18,7 +19,20 @@ type ModalProps = {
 /** onCancel과 onConfirm은 한 세트. 둘 다 props로 보내거나, 둘 다 아예 안 보내야 함
 onConfirm/onCancel이 props로 전달되면 Confirm Modal로 변경됨*/
 
-function Modal({ children, title, onClose, onConfirm, onCancel }: ModalProps) {
+const MODAL_SIZE = {
+  sm: 'md:min-w-[250px]',
+  md: 'md:min-w-[600px]',
+  lg: 'md:min-w-[900px]',
+};
+
+function Modal({
+  children,
+  title,
+  onClose,
+  onConfirm,
+  onCancel,
+  size = 'md',
+}: ModalProps) {
   const parentElement = document.getElementById('modal');
 
   if (parentElement)
@@ -30,7 +44,7 @@ function Modal({ children, title, onClose, onConfirm, onCancel }: ModalProps) {
         />
         <section
           role="dialog"
-          className="absolute pb-4 top-1/2 left-1/2 min-w-[300px] md:min-w-[60vw] rounded-lg shadow-md bg-white animate-grow flex flex-col gap-4"
+          className={`absolute pb-4 top-1/2 left-1/2 min-w-[60vw] ${MODAL_SIZE[size]}  rounded-lg shadow-md bg-white animate-grow flex flex-col gap-4`}
           style={{ translate: '-50% -50%' }}
           autoFocus
         >
