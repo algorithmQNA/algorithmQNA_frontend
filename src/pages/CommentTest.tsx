@@ -1,7 +1,12 @@
 import React, { MouseEventHandler, useState } from 'react';
 import CommentView from '../components/CommentView/Comment';
 import { useQuery } from 'react-query';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import {
+  Link,
+  useLocation,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom';
 import { getPostRequest } from '../apis/postApi';
 import IconButton from '../components/Button/IconButton';
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
@@ -12,10 +17,12 @@ import CommentWrite from '../components/CommentView/CommentWrite';
 
 function CommentTest() {
   //const [selectedComment, setSelectedComment] = useState(-1);
+  //TODO: 페이지 바뀌면
   const { postId } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [isScrolling, setIsScrolling] = useState(false);
   const location = useLocation();
-  const page = new URLSearchParams(location.search).get('page') || 0;
+  const page = new URLSearchParams(location.search).get('page') || 1;
   const { data: res } = useQuery({
     queryKey: ['post', postId],
     queryFn: () => {
@@ -47,12 +54,15 @@ function CommentTest() {
       const pinnedElement = document.getElementById(`${selectedComment}`);
       pinnedElement?.scrollIntoView({ behavior: 'smooth' });
     };
+
     const Controller = () => (
-      <div className="flex flex-row items-center fixed bottom-10 right-10 bg-box-bg border border-border rounded-md p-4 shadow-sm">
+      <div className="grow-0 w-fit translate-x-[50vw] flex flex-row items-center sticky bottom-10 right-10 bg-box-bg border border-border rounded-md p-4 shadow-sm z-50">
         <Link to={`${location.pathname}?page=${+page - 1}`}>
           <IconButton Icon={<BiChevronLeft />}></IconButton>
         </Link>
-        <div>{page}/10</div>
+        <div>
+          {page}/{data.totalPageCount}
+        </div>
         <Link to={`${location.pathname}?page=${+page + 1}`}>
           <IconButton Icon={<BiChevronRight />}></IconButton>
         </Link>
@@ -63,8 +73,7 @@ function CommentTest() {
     return (
       <>
         <PageTitle>댓글테스트</PageTitle>
-        <div className="main-content">
-          <Controller />
+        <div className="main-content relative">
           <CommentWrite />
           <div className="w-full flex flex-col">
             {data.commentList.map((t) => (
@@ -83,6 +92,7 @@ function CommentTest() {
               </div>
             ))}
           </div>
+          <Controller />
         </div>
       </>
     );
