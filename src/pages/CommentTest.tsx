@@ -33,8 +33,10 @@ function CommentTest() {
   };
 
   if (data?.commentList) {
-    const selectedComment =
-      data.commentList.find((comment) => comment.isPinned)?.commentId || -1;
+    // TODO :: 브랜치 합치고 주석 풀어주기
+    // const selectedComment =
+    //   data.commentList.find((comment) => comment.isPinned)?.commentId || -1;
+    const selectedComment = -1;
     const handleClick: MouseEventHandler<HTMLButtonElement> = () => {
       if (selectedComment === -1) {
         window.alert('채택된 답변이 없습니다');
@@ -79,7 +81,7 @@ function CommentTest() {
                 tabIndex={-1}
               >
                 {!!t.depth && <BsArrowReturnRight className="text-gray-500" />}
-                <CommentView {...t} key={t.commentId} />
+                {/* <CommentView {...t} key={t.commentId} /> */}
               </div>
             ))}
           </div>
