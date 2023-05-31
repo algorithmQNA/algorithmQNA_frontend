@@ -23,7 +23,7 @@ export type Post = {
   postLikeCnt: number;
   postDislikeCnt: number;
   totalCommentCnt: number;
-  isLiked: boolean;
+  isLiked: null | boolean;
   commentList: Comment[];
 };
 

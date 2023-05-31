@@ -36,7 +36,7 @@ const PostInitData: GetPostResponse = {
       createdAt: '2023-03-03',
       depth: 0,
       isPinned: false,
-      isLiked: true,
+      isLiked: null,
       hasChild: false,
       updatedAt: '2023-03-03',
     },
