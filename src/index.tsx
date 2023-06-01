@@ -7,7 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 if (process.env.NODE_ENV === 'development' && process.env.REACT_APP_MOCK) {
   const { worker } = require('./mocks/browser');
-  worker.start({ quiet: true });
+  worker.start({ quiet: true, onUnhandledRequest: 'bypass' });
 }
 
 const root = ReactDOM.createRoot(

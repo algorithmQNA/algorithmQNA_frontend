@@ -10,8 +10,9 @@ import AdminTableRowSkeleton from '../../components/TableRow/AdminTableRowSkelet
 import { SelectBox, SelectOption } from '../../components/DropDown/SelectBox';
 import { POST_CATEGORY } from '../../constants/PostCategory';
 import Pagination from '../../components/Pagination/Pagination';
+import PageTitle from '../../components/PageTitle/PageTitle';
 
-const TmpRow = () => {
+const NotificationRow = () => {
   /** url에서 쿼리파라미터를 가져와서 api 요청할 때 같이 보냄 */
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -42,7 +43,7 @@ function Notice() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const handleCreateNoticeButtonClick = () => {
-    navigate('/post/write');
+    navigate('write');
   };
 
   const handleSelectOptionChange = (tag: string) => {
@@ -91,7 +92,7 @@ function Notice() {
           </div>
         }
       >
-        <TmpRow />
+        <NotificationRow />
       </Suspense>
     </div>
   );

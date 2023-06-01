@@ -11,6 +11,7 @@ import LandingPage from './pages/Landing/Landing';
 import Post from './components/MyPage/Post/Post';
 import ReportPost from './components/Report/ReportPost';
 import CommentTest from './pages/CommentTest';
+import NoticeEditor from './pages/Admin/NoticeEditor';
 
 const adminPages = [
   { link: 'notice', title: '공지사항' },
@@ -45,6 +46,11 @@ function Router() {
           <Route path="comment" element={<div>내가 쓴 댓글</div>} />
         </Route>
         <Route path="notice" element={<Admin.Notice />} />
+        <Route path="notice/write" element={<NoticeEditor />} />
+        <Route
+          path="notice/modify/:notificationId"
+          element={<NoticeEditor />}
+        />
       </Route>
       <Route path="mypage" element={<SidebarLayout links={mypagePages} />}>
         <Route index element={<Navigate to="profile" />} />
