@@ -39,9 +39,9 @@ function Router() {
       </Route>
       <Route path="/comment/:postId" element={<CommentTest />}></Route>
       <Route path="admin" element={<SidebarLayout links={adminPages} />}>
-        <Route index element={<Navigate to="report/post" />} />
+        <Route index element={<Navigate replace to="report/post" />} />
         <Route path="report" element={<Admin.Post />}>
-          <Route index element={<Navigate to="post" />} />
+          <Route index element={<Navigate replace to="post" />} />
           <Route path="post" element={<ReportPost />} />
           <Route path="comment" element={<div>내가 쓴 댓글</div>} />
         </Route>
@@ -53,10 +53,10 @@ function Router() {
         />
       </Route>
       <Route path="mypage" element={<SidebarLayout links={mypagePages} />}>
-        <Route index element={<Navigate to="profile" />} />
+        <Route index element={<Navigate replace to="profile" />} />
         <Route path="profile" element={<MyPage.Profile />} />
         <Route path="history" element={<MyPage.Post />}>
-          <Route index element={<Navigate to="post" />} />
+          <Route index element={<Navigate replace to="post" />} />
           <Route path="post" element={<Post />} />
           <Route path="comment" element={<div>내가 쓴 댓글</div>} />
         </Route>
