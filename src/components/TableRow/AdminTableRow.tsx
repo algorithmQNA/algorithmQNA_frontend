@@ -13,6 +13,7 @@ import Modal from '../Modal/Modal';
 
 import { useMutation, useQueryClient } from 'react-query';
 import { deleteNotification } from '../../apis/adminApi';
+import { useRecoilState } from 'recoil';
 
 interface AdminPageTableRowProps {
   title?: string;
@@ -27,6 +28,7 @@ export default function AdminPageTableRow({
   const navigate = useNavigate();
   const { open, closeModal, openModal } = useModal();
   const queryClient = useQueryClient();
+
   const { mutate: deleteMutate } = useMutation({
     mutationFn: deleteNotification,
     onSuccess: () => {
@@ -47,7 +49,7 @@ export default function AdminPageTableRow({
   };
 
   const handleModifyBtnClick = () => {
-    navigate('/post/write');
+    navigate(`modify/${id}`);
   };
 
   return (
