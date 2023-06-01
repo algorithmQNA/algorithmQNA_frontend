@@ -1,3 +1,4 @@
+
 export interface PostRow{
     title:string
     memberId:number
@@ -16,6 +17,9 @@ export interface PostList{
     prev:boolean
     size:number
 }
+export type PostType = 'QNA' | 'TIP' | 'NOTICE'
+export type PostCategory = 'BRUTE_FORCE' | 'TWO_POINTER' | 'DP' | 'QUEUE_STACK_HASH' | 'GRAPH' | 'GREEDY' | 'BINARY_SEARCH' | 'SORT' | 'DFS_BFS'
+export type PostSort = 'latestDesc' | 'latestAsc' | 'commentCntAsc' | 'commentCntDesc' | 'likeAsc' | 'likeCntAsc' | 'viewCntAsc' | 'viewCntDesc' | 'popular'
 export interface PostViewMember{
     "memberId": number,
     "memberName": string,
