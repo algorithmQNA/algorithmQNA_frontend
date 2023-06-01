@@ -1,5 +1,5 @@
 import {useNavigate} from "react-router-dom";
-import React, {ChangeEvent, useRef, useState} from "react";
+import React, {ChangeEvent, useMemo, useRef, useState} from "react";
 import {FiBell} from "react-icons/fi";
 import {AlarmType} from "../../../../types/Alarm";
 
@@ -57,10 +57,16 @@ const data:AlarmType[] = [
 ]
 
 export default function HeaderUserBlock(){
+
+    useMemo(()=>{
+
+    },[])
+
     const navigate = useNavigate();
     const [state, setState] = useState({
         alarm: false
     });
+
     const setDisplayAlarm = (e: ChangeEvent<HTMLInputElement>) => {
         setState((prev) => ({
             ...prev,
