@@ -1,44 +1,38 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent } from 'react';
 import './style.css';
-interface Props {
-  name: string;
-  list: {
-    id: string;
-    name: string;
-  }[];
-  checkChange?: (checkedList: string[]) => void;
-}
-export default function CategoryBar({
-  name,
-  list,
-  checkChange = () => {},
-}: Props) {
-  const [checked, setChecked] = useState<string[]>([]);
-  useEffect(() => checkChange(checked), [checkChange, checked]);
+import {PostFilterState} from "../../../storage/Post/Post";
+import {useRecoilState} from "recoil";
+import {PostCategory} from "../../../types/Post/Post";
+
+export default function CategoryBar() {
+  const [state,setState] = useRecoilState(PostFilterState)
+  const list = ['Brute Force','TWO_POINTER','DP','Queue / Hash / Stack','Graph','Greedy','BINARY_SEARCH','Sort','BFS / DFS'];
+
   const changeStart = (e: ChangeEvent<HTMLInputElement>) => {
-    e.target.checked
-      ? setChecked((prev) => [...prev, e.target.value])
-      : setChecked(checked.filter((li) => li !== e.target.value));
+    const value = e.target.value as PostCategory;
+    setState((prev)=>({
+      ...prev,postCategory:value
+    }))
   };
 
   return (
     <div className={'board-side-bar'}>
       <div className={'side-block-title'}>
-        {name}
+        알고리즘
         <span className={'under-border'}></span>
       </div>
       <ul className={'select-filter side-block-ul'}>
-        {list.map((li, index) => (
-          <label key={index} className={'side-block-li'}>
+        {list.map((li) => (
+          <label key={li} className={'side-block-li'}>
             <input
               type={'checkbox'}
-              value={li.id}
+              value={li}
               className={'hidden'}
-              checked={checked.includes(li.id)}
+              checked={state.postCategory === li}
               onChange={changeStart}
             />
             <p>
-              <span>{li.name}</span>
+              <span>{li}</span>
             </p>
           </label>
         ))}
