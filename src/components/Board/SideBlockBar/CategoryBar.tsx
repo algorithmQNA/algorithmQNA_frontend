@@ -22,14 +22,14 @@ export default function CategoryBar({
   };
 
   return (
-    <div className={'board-category-bar'}>
-      <div className={'category-title'}>
+    <div className={'board-side-bar'}>
+      <div className={'side-block-title'}>
         {name}
         <span className={'under-border'}></span>
       </div>
-      <ul className={'select-filter category-ul'}>
+      <ul className={'select-filter side-block-ul'}>
         {list.map((li, index) => (
-          <label key={index} className={'category-li'}>
+          <label key={index} className={'side-block-li'}>
             <input
               type={'checkbox'}
               value={li.id}

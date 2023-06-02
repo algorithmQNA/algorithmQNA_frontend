@@ -4,7 +4,7 @@ import {
 } from '../types/apis/postResponseType';
 import { SortOption } from '../types/post';
 import { privateRequest } from './instance';
-import {PostView} from "../types/Post/Post";
+import {PostCategory, PostType, PostView} from "../types/Post/Post";
 
 
 
@@ -17,8 +17,8 @@ export const getPostRequest = (postId: number) =>
 export const createPostRequest = (
   title: string,
   content: string,
-  categoryId: number,
-  contentTypeId: number
+  categoryId: PostCategory | "",
+  contentTypeId: PostType | ""
 ) => privateRequest.post('post', { title, content, categoryId, contentTypeId });
 
 // 게시물 수정 API

@@ -1,5 +1,5 @@
 import PageTitle from '../../components/PageTitle/PageTitle';
-import CategoryBar from '../../components/Board/CategoryBar/CategoryBar';
+import CategoryBar from '../../components/Board/SideBlockBar/CategoryBar';
 import { SelectBox, SelectOption } from '../../components/DropDown/SelectBox';
 import PostTableRow from '../../components/TableRow/PostTableRow';
 import Pagination from '../../components/Pagination/Pagination';

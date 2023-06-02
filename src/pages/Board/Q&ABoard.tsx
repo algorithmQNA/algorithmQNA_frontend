@@ -2,7 +2,7 @@ import './style.css';
 import Pagination from '../../components/Pagination/Pagination';
 import { SelectBox, SelectOption } from '../../components/DropDown/SelectBox';
 import PageTitle from '../../components/PageTitle/PageTitle';
-import CategoryBar from '../../components/Board/CategoryBar/CategoryBar';
+import CategoryBar from '../../components/Board/SideBlockBar/CategoryBar';
 import RowListTo from '../../components/Board/ListTo';
 import NoticeBlock from '../../components/Board/Notice';
 import { useQuery } from 'react-query';
@@ -10,6 +10,7 @@ import axios from "axios";
 import {PostCategory, PostList, PostRow, PostSort, PostType} from "../../types/Post/Post";
 import PostTableRow from "../../components/TableRow/PostTableRow";
 import {useLocation} from "react-router-dom";
+import FilterBar from "../../components/Board/SideBlockBar/FilterBar";
 
 export default function QNABoardPage() {
   const list = [
@@ -40,7 +41,8 @@ export default function QNABoardPage() {
     <div>
       <PageTitle>질문 & 답변 게시판</PageTitle>
       <div className={'main-content board-background-block'}>
-        <div className={'category-bar-block'}>
+        <div className={'option-bar-block'}>
+          <FilterBar/>
           <CategoryBar name={'알고리즘'} list={list} />
         </div>
         <div className={'board-content-block'}>
