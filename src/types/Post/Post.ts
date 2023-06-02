@@ -1,3 +1,4 @@
+import {b} from "msw/lib/glossary-de6278a9";
 
 export interface PostRow{
     title:string
@@ -77,4 +78,13 @@ export interface PostWrite{
     postType:PostType | ""
     postCategory:PostCategory | ""
     keyWord:string[]
+}
+export interface PostFilter{
+    sort:PostSort | '',
+    postCategory:PostCategory | '',
+    hasCommentCond:boolean | undefined,
+    keyWordCond:string,
+    titleCond:string,
+    memberNameCond:string,
+    isAcceptedCommentCond:boolean | undefined
 }
