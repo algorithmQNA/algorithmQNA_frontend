@@ -1,16 +1,16 @@
-.board-category-bar{
+.board-side-bar{
     @apply p-4 rounded-t border border-[#D9D9D9] border-b-2 border-b-primary;
 }
-.board-category-bar .category-title{
+.board-side-bar .side-block-title{
     @apply text-[#3c4f74] font-semibold text-lg mb-4;
 }
-.board-category-bar .under-border{
+.board-side-bar .under-border{
     @apply block border-b-2 border-b-primary w-[45px] mt-2;
 }
-.board-category-bar .category-ul{
+.board-side-bar .side-block-ul{
     @apply flex flex-col gap-1 text-[#739093] text-sm;
 }
-.board-category-bar .category-li{
+.board-side-bar .side-block-li{
     @apply cursor-pointer select-none;
 }
 .select-filter label{

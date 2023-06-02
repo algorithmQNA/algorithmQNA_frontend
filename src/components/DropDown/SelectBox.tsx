@@ -20,7 +20,7 @@ export const SelectOption = ({ children, className, value }: optionProps) => {
   );
 };
 interface props extends React.HTMLAttributes<HTMLDivElement> {
-  event?: (value: string) => void;
+  event?: (value:any) => void;
   search?: boolean | undefined;
   children: ReactElement | ReactElement[]
   defaultText?: string;

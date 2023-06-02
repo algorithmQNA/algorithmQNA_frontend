@@ -2,7 +2,7 @@
 .board-menu-bar .select-block{
     @apply w-full max-w-[125px] sm:max-w-[175px];
 }
-.category-bar-block{
+.option-bar-block{
     @apply col-span-2 flex flex-col gap-6
 }
 .board-menu-bar{
