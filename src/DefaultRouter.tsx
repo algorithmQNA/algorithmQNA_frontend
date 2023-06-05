@@ -11,9 +11,10 @@ import LandingPage from './pages/Landing/Landing';
 import Post from './components/MyPage/Post/Post';
 import ReportPost from './components/Report/ReportPost';
 import CommentTest from './pages/CommentTest';
-import NoticeEditor from './pages/Admin/NoticeEditor';
+import NoticeEditor from './components/Notice/NoticeEditor';
 import ReportComment from './components/Report/ReportComment';
 import Comment from './components/MyPage/Comment';
+import NoticeModifyEditor from './components/Notice/NoticeModifyEditor';
 
 const adminPages = {
   base: 'admin',
@@ -57,7 +58,7 @@ function Router() {
         <Route path="notice/write" element={<NoticeEditor />} />
         <Route
           path="notice/modify/:notificationId"
-          element={<NoticeEditor />}
+          element={<NoticeModifyEditor />}
         />
       </Route>
       <Route path="mypage" element={<SidebarLayout links={mypagePages} />}>
