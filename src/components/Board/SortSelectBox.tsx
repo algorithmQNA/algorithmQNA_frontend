@@ -28,7 +28,7 @@ export default function SortSelectBox(){
             <SelectBox selected={state.sort} event={change}>
                 {
                     sort.map((li)=>(
-                        <SelectOption value={li.value}>{li.text}</SelectOption>
+                        <SelectOption key={li.value} value={li.value}>{li.text}</SelectOption>
                     ))
                 }
             </SelectBox>

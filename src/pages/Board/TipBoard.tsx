@@ -11,6 +11,11 @@ import axios from "axios";
 import {useLocation} from "react-router-dom";
 import FilterBar from "../../components/Board/SideBlockBar/FilterBar";
 import SortSelectBox from "../../components/Board/SortSelectBox";
+import {useSetRecoilState} from "recoil";
+import {boardSideModalState} from "../../components/Board/SideBlockBar/storage";
+import BoardSideModal from "../../components/Board/SideBlockBar/Modal";
+import ModalButton from "../../components/Board/SideBlockBar/ModalButton";
+import BoardModalContent from "../../components/Board/SideBlockBar/ModalContent";
 
 export default function TipBoardPage() {
 
@@ -30,7 +35,7 @@ export default function TipBoardPage() {
   return (
     <div>
       <PageTitle>꿀팁 게시판</PageTitle>
-      <div className={'main-content board-background-block'}>
+      <div className={'main-content board-grid'}>
         <div className={'option-bar-block'}>
           <FilterBar/>
           <CategoryBar/>
@@ -38,17 +43,23 @@ export default function TipBoardPage() {
         <div className={'board-content-block'}>
           <div className={'board-menu-bar'}>
             <SortSelectBox/>
-            <RowListTo page={1} />
+            <div className={'hidden lg:block'}>
+              <RowListTo page={1} />
+            </div>
+            <div className={'block lg:hidden text-title'}>
+              <ModalButton/>
+            </div>
           </div>
           <NoticeBlock />
           {
-            data?.posts.map((li:PostRow)=>(
-                <PostTableRow data={li}/>
+            data?.posts.map((li:PostRow,index)=>(
+                <PostTableRow key={index} data={li}/>
             ))
           }
           <Pagination postLength={100} listLength={10} />
         </div>
       </div>
+      <BoardModalContent/>
     </div>
   );
 }

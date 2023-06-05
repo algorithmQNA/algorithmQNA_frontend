@@ -10,16 +10,25 @@ export default function CategoryBar() {
 
   const changeStart = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value as PostCategory;
-    setState((prev)=>({
-      ...prev,postCategory:value
-    }))
+    if(e.target.checked){
+        setState((prev)=>({
+            ...prev,postCategory:value
+        }))
+    }
+    else{
+        setState((prev)=>({
+            ...prev,postCategory:''
+        }))
+    }
   };
 
   return (
     <div className={'board-side-bar'}>
       <div className={'side-block-title'}>
-        알고리즘
-        <span className={'under-border'}></span>
+        <p>
+            알고리즘
+            <span className={'under-border'}></span>
+        </p>
       </div>
       <ul className={'select-filter side-block-ul'}>
         {list.map((li) => (

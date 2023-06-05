@@ -1,6 +1,5 @@
 import './style.css';
 import Pagination from '../../components/Pagination/Pagination';
-import { SelectBox, SelectOption } from '../../components/DropDown/SelectBox';
 import PageTitle from '../../components/PageTitle/PageTitle';
 import CategoryBar from '../../components/Board/SideBlockBar/CategoryBar';
 import RowListTo from '../../components/Board/ListTo';
@@ -12,6 +11,11 @@ import PostTableRow from "../../components/TableRow/PostTableRow";
 import {useLocation} from "react-router-dom";
 import FilterBar from "../../components/Board/SideBlockBar/FilterBar";
 import SortSelectBox from "../../components/Board/SortSelectBox";
+import BoardSideModal from "../../components/Board/SideBlockBar/Modal";
+import {useResetRecoilState, useSetRecoilState} from "recoil";
+import {boardSideModalState} from "../../components/Board/SideBlockBar/storage";
+import ModalButton from "../../components/Board/SideBlockBar/ModalButton";
+import BoardModalContent from "../../components/Board/SideBlockBar/ModalContent";
 
 export default function QNABoardPage() {
 
@@ -29,9 +33,9 @@ export default function QNABoardPage() {
   })
 
   return (
-    <div>
+    <div className={'relative'}>
       <PageTitle>질문 & 답변 게시판</PageTitle>
-      <div className={'main-content board-background-block'}>
+      <div className={'main-content board-grid'}>
         <div className={'option-bar-block'}>
           <FilterBar/>
           <CategoryBar/>
@@ -39,7 +43,12 @@ export default function QNABoardPage() {
         <div className={'board-content-block'}>
           <div className={'board-menu-bar'}>
             <SortSelectBox/>
-            <RowListTo page={1} />
+            <div className={'hidden lg:block'}>
+              <RowListTo page={1} />
+            </div>
+            <div className={'block lg:hidden text-title'}>
+              <ModalButton/>
+            </div>
           </div>
           <NoticeBlock />
           {
@@ -50,6 +59,7 @@ export default function QNABoardPage() {
           <Pagination postLength={100} listLength={10} />
         </div>
       </div>
+      <BoardModalContent/>
     </div>
   );
 }
