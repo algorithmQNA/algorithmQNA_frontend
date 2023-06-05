@@ -1,5 +1,5 @@
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import AdminTableRow from '../../components/TableRow/AdminTableRow';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import AdminTableRow from '../../components/TableRow/NoticeTableRow';
 
 import IconButton from '../../components/Button/IconButton';
 import { AiFillNotification } from 'react-icons/ai';
@@ -10,65 +10,80 @@ import AdminTableRowSkeleton from '../../components/TableRow/AdminTableRowSkelet
 import { SelectBox, SelectOption } from '../../components/DropDown/SelectBox';
 import { POST_CATEGORY } from '../../constants/PostCategory';
 import Pagination from '../../components/Pagination/Pagination';
-import PageTitle from '../../components/PageTitle/PageTitle';
+import { PostCategoryKey } from '../../types/post';
+
+const INITIAL_POST_CATEGORY = 'BRUTE_FORCE';
 
 const NotificationRow = () => {
   /** url에서 쿼리파라미터를 가져와서 api 요청할 때 같이 보냄 */
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const page = queryParams.get('page') || 1;
-  const tags = queryParams.getAll('tags') || 1;
+  const [searchParams] = useSearchParams();
+  const page = searchParams.get('page') || 1;
+  const tag = searchParams.get('tag') || INITIAL_POST_CATEGORY;
 
   const notificationQuery = useQuery({
-    queryKey: ['notification', page, tags],
-    queryFn: () => getNotificationList({ type: 'ALL', page: +page }),
+    queryKey: ['notification', page, tag],
+    queryFn: () =>
+      getNotificationList({
+        postCategory: tag as PostCategoryKey,
+        page: +page,
+      }),
     suspense: true,
   });
 
   const data = notificationQuery.data?.data;
-  if (!!data?.list.length)
+  const isEmptyData = !data?.posts?.length;
+
+  if (!isEmptyData)
     return (
       <div className="flex flex-col gap-3">
-        {data.list.map((t: any) => (
-          <AdminTableRow title={t.title} key={t.id} id={t.id} date={t.date} />
+        {data.posts.map(({ postTitle, postId, createdAt }) => (
+          <AdminTableRow
+            title={postTitle}
+            key={postId}
+            id={postId}
+            date={createdAt}
+          />
         ))}
-        <Pagination listLength={10} postLength={20} />
+        <Pagination
+          displayPages={+page}
+          listLength={data.size}
+          postLength={data.totalPageSize}
+        />
       </div>
     );
   //검색은 성공했으나 등록된 공지사항 개수가 0개일 떄
-  return <div>등록된 글이 없습니다</div>;
+  return <div className="font-thin">등록된 공지사항이 없습니다</div>;
 };
 
 function Notice() {
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [_, setSearchParams] = useSearchParams();
   const handleCreateNoticeButtonClick = () => {
     navigate('write');
   };
 
   const handleSelectOptionChange = (tag: string) => {
     setSearchParams((prev) => {
-      const tags = prev.getAll('tags');
-      const setOfTags = new Set(tags);
-      if (setOfTags.has(tag)) setOfTags.delete(tag);
-      else setOfTags.add(tag);
-
       //for immutability
-      const newQuery = new URLSearchParams(searchParams);
-      newQuery.delete('tags');
-      setOfTags.forEach((tag) => newQuery.append('tags', tag));
+      const newQuery = new URLSearchParams(prev);
+      newQuery.delete('tag');
+      newQuery.append('tag', tag);
+
       return newQuery;
     });
   };
 
   return (
-    <div>
+    <div className="flex flex-col gap-2">
       <div className="flex justify-between p-2 gap-2 border border-border">
         <div className="w-1/3">
-          <SelectBox defaultText="전체" event={handleSelectOptionChange}>
-            {Object.entries(POST_CATEGORY).map((t) => (
-              <SelectOption value={t[0]} key={t[0]}>
-                {t[1]}
+          <SelectBox
+            defaultText={POST_CATEGORY.BRUTE_FORCE}
+            event={handleSelectOptionChange}
+          >
+            {Object.entries(POST_CATEGORY).map((categoryType) => (
+              <SelectOption value={categoryType[0]} key={categoryType[0]}>
+                {categoryType[1]}
               </SelectOption>
             ))}
           </SelectBox>

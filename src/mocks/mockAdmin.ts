@@ -1,14 +1,15 @@
 import { rest } from 'msw';
-import { Report } from '../constants/Report';
+import { REPORT_MAP } from '../constants/Report';
 import {
   generateRandomDate,
   generateRandomString,
   generateRandomInt,
 } from '../utils/random';
+import { generateMockMember } from './utils/generateMockData';
 const MOCK_BASED_URL = process.env.REACT_APP_API_BASE_URL;
 
 /**공지사항 mock 데이터 생성기 */
-const mockData: { id: number; title: string; date: string }[] = new Array(20)
+const mockData: { id: number; title: string; date: string }[] = new Array(37)
   .fill(0)
   .map((_, idx) => ({
     id: 2000 + idx,
@@ -41,16 +42,7 @@ const generateReportPostMockData = () => {
 
 const handlers = [
   /**공지사항 게시판 mock */
-  rest.delete(
-    `${MOCK_BASED_URL}/admin/notification/:notificationId`,
-    async (req, res, ctx) => {
-      const { notificationId } = req.params;
-      if (!notificationId) return res(ctx.status(501));
-      const deleteIdx = mockData.findIndex((t) => t.id === +notificationId);
-      mockData.splice(deleteIdx, 1);
-      return res(ctx.status(200));
-    }
-  ),
+
   rest.get(`${MOCK_BASED_URL}/admin/notification`, async (req, res, ctx) => {
     const type = req.url.searchParams.get('type') as unknown as number;
     const page = req.url.searchParams.get('page') as unknown as number;
@@ -91,7 +83,7 @@ const handlers = [
               memberProfileUrl: 'https://picsum.photos/200',
             },
 
-            category: Report.SLANG,
+            category: REPORT_MAP['SLANG'],
             detail: null,
             updatedAt: generateRandomDate(),
           })),
@@ -115,6 +107,29 @@ const handlers = [
         next: true,
         prev: false,
         size: 20,
+      })
+    );
+  }),
+  rest.get(`${MOCK_BASED_URL}/admin/comment`, async (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        reportComments: new Array(50).fill(0).map((idx) => ({
+          postId: generateRandomInt(100),
+          commentId: generateRandomInt(200),
+          member: generateMockMember(idx),
+          content: generateRandomString(),
+          createdAt: generateRandomDate(),
+          updatedAt: generateRandomDate(),
+          likeCnt: generateRandomInt(10),
+          dislikeCnt: generateRandomInt(20),
+        })),
+
+        page: 1,
+        totalPageSizes: 10,
+        next: true,
+        prev: false,
+        size: 10,
       })
     );
   }),
