@@ -3,14 +3,14 @@
     @apply w-full max-w-[125px] sm:max-w-[175px];
 }
 .option-bar-block{
-    @apply col-span-2 flex flex-col gap-6
+    @apply w-full col-span-1 lg:col-span-2 hidden lg:flex flex-col gap-3 lg:gap-6;
 }
 .board-menu-bar{
-    @apply border border-[#D9D9D9] bg-transparent py-4 px-6 rounded flex items-center justify-between
+    @apply lg:border border-[#D9D9D9] bg-transparent lg:py-4 lg:px-6 rounded flex items-center justify-between
 }
 .board-content-block{
-    @apply col-span-5 flex flex-col gap-6
+    @apply col-span-1 lg:col-span-5 flex flex-col gap-3 lg:gap-6
 }
-.board-background-block{
-    @apply p-4 grid lg:grid-cols-7 gap-6;
+.board-grid{
+    @apply p-4 grid grid-cols-1 lg:grid-cols-7  gap-3 lg:gap-6;
 }

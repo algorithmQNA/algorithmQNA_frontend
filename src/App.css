@@ -24,3 +24,6 @@
 .set-max-width{
   max-width:1024px;
 }
+.modal-outline{
+  background:rgba(0,0,0,0.5);
+}

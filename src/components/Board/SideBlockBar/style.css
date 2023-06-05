@@ -1,8 +1,8 @@
 .board-side-bar{
-    @apply p-4 rounded-t border border-[#D9D9D9] border-b-2 border-b-primary;
+    @apply  p-4 rounded-t lg:border border-[#D9D9D9] lg:border-b-2 border-b-primary;
 }
 .board-side-bar .side-block-title{
-    @apply text-[#3c4f74] font-semibold text-lg mb-4;
+    @apply text-[#3c4f74] font-semibold text-lg mb-4 flex justify-between items-center;
 }
 .board-side-bar .under-border{
     @apply block border-b-2 border-b-primary w-[45px] mt-2;
@@ -20,5 +20,5 @@
     @apply py-2
 }
 .select-filter label input[type=checkbox]:checked + p{
-    @apply text-primary
+    @apply text-primary font-bold
 }
