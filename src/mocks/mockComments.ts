@@ -25,9 +25,7 @@ const handlers = [
     async (req, res, ctx) => {
       const { isLike, cancel } = await req.json();
       const { commentId } = req.params;
-
       console.log('댓글 추천', isLike, cancel, commentId);
-
       return res(ctx.status(200));
     }
   ),
@@ -37,7 +35,6 @@ const PostInitData: GetCommentByPostIdReponse = {
   postId: 3,
   commentList: [
     {
-      parentId: null,
       commentId: 6,
       member: generateMockMember(1),
       content: '<p>감사합니다!</p>',
@@ -51,7 +48,6 @@ const PostInitData: GetCommentByPostIdReponse = {
       isLiked: false,
     },
     {
-      parentId: null,
       commentId: 6,
       member: generateMockMember(3),
       content: '<p>감사합니다!</p>',

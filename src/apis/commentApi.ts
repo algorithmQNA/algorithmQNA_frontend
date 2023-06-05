@@ -8,7 +8,7 @@ import type {
   AcceptCommentResponse,
   ReportCommentResponse,
 } from '../types/apis/commentResponseType';
-import { Report } from '../types/report';
+import { REPORT_MAP } from '../constants/Report';
 
 // 포스트에 달린 댓글 조회 API
 export const getCommentByPostid = ({
@@ -97,7 +97,7 @@ export const reportCommentRequest = ({
   detail,
 }: {
   commentId: number;
-  category: Report;
+  category: keyof typeof REPORT_MAP;
   detail: string;
 }) =>
   privateRequest.post<ReportCommentResponse>(`comment/report/${commentId}`, {

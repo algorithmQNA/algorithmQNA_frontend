@@ -1,31 +1,34 @@
-import { Member } from './member';
+import { REPORT_MAP } from '../constants/Report';
+import { MemberBrief } from './member';
 
-export type Report =
-  | 'SLANG'
-  | 'POLITICAL'
-  | 'AD'
-  | 'INSULT'
-  | 'LUSTFUL'
-  | 'OUT_OF_TOPIC'
-  | 'OUT_OF_FORMAT'
-  | 'ETC';
+export type ReportType = keyof typeof REPORT_MAP;
 
 export type ReportPost = {
-  commentId: number;
-  memberId: string;
-  category: number;
+  reportPostId: number;
+  member: MemberBrief;
+  category: ReportType;
   detail: string;
   updatedAt: string;
 };
 
-//PostBriefDto
+/**
+ * @deprecated type 정리에 따라 해당 타입은 ReportPost로 바뀌게 되었음
+ */
 export type ReportedPost = {
   postId: number;
-  member: Member;
+  member: MemberBrief;
   postTitle: string;
   createdAt: string;
   postLikeCnt: number;
   postDislikeCnt: number;
   views: number;
   totalCommentCnt: number;
+};
+
+export type ReportComment = {
+  reportCommentId: number;
+  member: MemberBrief;
+  category: ReportType;
+  detail: string;
+  updatedAt: string;
 };

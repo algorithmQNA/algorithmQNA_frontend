@@ -1,6 +1,20 @@
-export type Member = {
+export type MemberBrief = {
   memberId: number;
   memberName: string;
+  memberRole: string;
+  memberCommentBadge: number;
+  memberPostBadge: number;
+  memberLikeBadge: number;
+  memberProfileUrl: string;
+};
+
+export type MemberDetail = {
+  memberId: number;
+  memberName: string;
+  memberEmail: string;
+  createdAt: string;
+  updatedAt: string;
+  memberRole: string;
   memberCommentBadge: number;
   memberPostBadge: number;
   memberLikeBadge: number;
