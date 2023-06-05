@@ -65,6 +65,7 @@ const PostInitData: GetCommentByPostIdReponse = {
   next: true,
   prev: true,
   size: 10,
+  totalPageSize: 10,
 };
 
 export default handlers;
