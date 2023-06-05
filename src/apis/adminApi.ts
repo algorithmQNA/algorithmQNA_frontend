@@ -5,6 +5,8 @@ import type {
   GetReportedPostDetailResponse,
   GetReportedPostListResponse,
 } from '../types/apis/adminResponseType';
+import { PostBrief, PostCategoryKey } from '../types/post';
+import { Pagination } from '../types/pagination';
 
 //신고된 게시물 리스트 목록 조회 API
 export const getReportedPostListRequest = (page: number) =>
@@ -47,20 +49,17 @@ export const deleteReportedPostRequest = (reportedPostId: number) =>
 export const deleteReportedCommentRequest = (reportedCommentId: number) =>
   privateRequest.delete(`admin/comment/${reportedCommentId}`);
 
-/**API 스펙 없음 임시 스펙 */
-
 //공지사항 조회 API
-export const getNotificationList = (props: { type: string; page: number }) => {
-  return privateRequest.get<{
-    list: { id: number; title: string; date: string }[];
-  }>(`admin/notification`, {
-    params: props,
+export const getNotificationList = (props: {
+  postCategory: PostCategoryKey;
+  page: number;
+}) => {
+  return privateRequest.get<{ posts: PostBrief[] } & Pagination>(`post`, {
+    params: { postType: 'NOTICE', sort: 'latestDesc', ...props },
   });
 };
 //공지사항 삭제 API
 export const deleteNotification = (notificationId: number) => {
   console.log(notificationId);
-  return privateRequest.delete(`admin/notification/${notificationId}`);
+  return privateRequest.delete(`post/${notificationId}`);
 };
-
-// const a = new Array(20).fill(0).map((t,idx)=>({id:2000+idx, title:`공지사항${idx}입니다.`, date:''})

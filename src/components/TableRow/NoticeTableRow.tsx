@@ -13,14 +13,13 @@ import Modal from '../Modal/Modal';
 
 import { useMutation, useQueryClient } from 'react-query';
 import { deleteNotification } from '../../apis/adminApi';
-import { useRecoilState } from 'recoil';
 
 interface AdminPageTableRowProps {
   title?: string;
   date?: string;
   id?: number;
 }
-export default function AdminPageTableRow({
+export default function NoticePageTableRow({
   title = '이거 어케 푸나요?',
   date = '2023-05-07 23:04:11',
   id = 2001,
@@ -64,7 +63,9 @@ export default function AdminPageTableRow({
           정말 삭제하시겠습니까?
         </Modal>
       )}
-      <div className={`p-4 gap-1.5 bg-box-bg border-border relative`}>
+      <div
+        className={`p-4 gap-1.5 bg-box-bg border backdrop:border-border relative`}
+      >
         <div className={'flex flex-row justify-between h-full w-full'}>
           <div>
             <span className={'font-bold text-sm truncate max-w-[200px]'}>
