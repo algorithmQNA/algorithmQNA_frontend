@@ -1,5 +1,5 @@
 import './style.css';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { setDateWritten } from '../../utils/TextProcessing';
 
@@ -68,9 +68,11 @@ export default function NoticePageTableRow({
       >
         <div className={'flex flex-row justify-between h-full w-full'}>
           <div>
-            <span className={'font-bold text-sm truncate max-w-[200px]'}>
-              {title}
-            </span>
+            <Link to={`/post/view/${id}`}>
+              <span className={'font-bold text-sm truncate max-w-[200px]'}>
+                {title}
+              </span>
+            </Link>
             <div className={'flex items-center justify-between w-full text-xs'}>
               <div>
                 <BiTimeFive style={{ display: 'inline' }} />
