@@ -8,11 +8,13 @@ import mockAuth from './mockAuth';
 import mockAdmin from './mockAdmin';
 import mockPost from './mockPost';
 import mockComments from './mockComments';
+import {alarmHandler} from "./os/Alarm";
 
 const set = [
   ...dashboardHandler,
   ...postWriteHandler,
   ...postViewHandler,
+    ...alarmHandler
 ];
 
 // Service worker에서 mock handler 실행
