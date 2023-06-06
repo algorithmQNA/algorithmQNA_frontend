@@ -1,7 +1,9 @@
 import {useNavigate} from "react-router-dom";
-import React, {ChangeEvent, useMemo, useRef, useState} from "react";
+import React, {ChangeEvent, useRef, useState} from "react";
 import {FiBell} from "react-icons/fi";
 import {AlarmType} from "../../../../types/Alarm";
+import {useInfiniteQuery} from "react-query";
+import {getNewAlarm, getOldAlarm} from "./test";
 
 const data:AlarmType[] = [
     {
@@ -56,17 +58,38 @@ const data:AlarmType[] = [
     },
 ]
 
+interface props{
+
+}
+
 export default function HeaderUserBlock(){
-
-    useMemo(()=>{
-
-    },[])
 
     const navigate = useNavigate();
     const [state, setState] = useState({
-        alarm: false
-    });
+        alarm: false,
+        test:false
+    })
+    const newData = useInfiniteQuery(['new-alarm'],getNewAlarm,{
+        getNextPageParam:(lastPage, allPages)=>{
+            return true
+        },
+        select:(prev)=>{
+            console.log(prev.pages.reverse())
+            const copy = {...prev}
+            copy.pages = prev.pages.reverse();
+            return {...copy}
+        }
+    })
 
+    const oldData = useInfiniteQuery(['old-alarm'],getOldAlarm,{
+        getNextPageParam:(lastPage, allPages)=>{
+            return allPages[0].length >= 10
+        },
+        getPreviousPageParam:()=>{
+            return true
+        }
+    })
+    console.log(oldData)
     const setDisplayAlarm = (e: ChangeEvent<HTMLInputElement>) => {
         setState((prev) => ({
             ...prev,
@@ -80,17 +103,7 @@ export default function HeaderUserBlock(){
             },
         });
     };
-    const comment = (post_id: number, comment_id: number) => {
-        navigate(`/post/view?pid=${post_id}`, {
-            state: {
-                targetComment: comment_id,
-            },
-        });
-    };
 
-    const target = () =>{
-
-    }
     const [result,setResult] = useState<AlarmType[]>(data)
     const button = useRef<HTMLButtonElement>(null)
     const childHeight = 50
@@ -99,9 +112,13 @@ export default function HeaderUserBlock(){
         if(!button.current) return
         if(e.currentTarget.scrollTop === 0){
             console.log('스크롤이 맨 위로 이동')
+            oldData.fetchPreviousPage({pageParam:{page:1,direction:'prev'}})
         }
         else if(e.currentTarget.scrollTop + (e.currentTarget.clientHeight-childHeight) >= button.current?.offsetTop){
-            console.log('스크롤이 맨 아래로 이동')
+            if(oldData.hasNextPage){
+                const page = oldData.data?.pages[oldData.data?.pages.length-1][oldData.data?.pages[oldData.data?.pages.length-1].length-1].alarmId;
+                oldData.fetchNextPage({pageParam:{page,direction:'next'}})
+            }
             setResult([...result,{
                 "alarmId": result[result.length-1].alarmId+1,
                 "subjectMemberName": "testMember5",
@@ -114,9 +131,6 @@ export default function HeaderUserBlock(){
             }])
         }
     }
-
-
-
 
 
     return (
@@ -143,17 +157,36 @@ export default function HeaderUserBlock(){
                         onScroll={getNewData}
                     >
                         {
-                            result.map((li)=>(
-                                <li
-                                    key={li.alarmId}
-                                    className={`text-content hover:text-primary text-sm h-[${childHeight}px] flex items-center`}
-                                    onClick={() => post(1)}
-                                >
-                                    <span>{li.msg}</span>
-                                </li>
+                            newData.data?.pages[0] !== undefined &&
+                            newData.data?.pages.map((li)=>(
+                                li.map((i:AlarmType)=>(
+                                    <li
+                                        key={i.alarmId}
+                                        className={`text-content hover:text-primary text-sm h-[${childHeight}px] flex items-center`}
+                                        onClick={() => post(1)}
+                                    >
+                                        <span>{i.msg}</span>
+                                    </li>
+                                ))
                             ))
                         }
-                        <button className={`h-[${childHeight}px] flex items-center text-sm text-primary`} ref={button}><span>더보기</span></button>
+                        {
+                            oldData.data?.pages.map((li)=>(
+                                li.map((i:AlarmType)=>(
+                                    <li
+                                        key={i.alarmId}
+                                        className={`text-content hover:text-primary text-sm h-[${childHeight}px] flex items-center`}
+                                        onClick={() => post(1)}
+                                    >
+                                        <span>{i.msg}</span>
+                                    </li>
+                                ))
+                            ))
+                        }
+                        {
+                            oldData.hasNextPage &&
+                            <button className={`h-[${childHeight}px] flex items-center text-sm text-primary`} ref={button}><span>더보기</span></button>
+                        }
                     </ul>
                 )}
             </label>
