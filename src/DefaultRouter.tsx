@@ -5,11 +5,13 @@ import SidebarLayout from './components/layouts/SidebarLayout';
 import QNABoardPage from './pages/Board/Q&ABoard';
 import DashBoardPage from './pages/DashBoard/DashBoard';
 import TipBoardPage from './pages/Board/TipBoard';
-import PostViewPage from './pages/PostView/PostView';
-import PostWritePage from './pages/PostWrite/PostWrite';
+import PostViewPage from './pages/Post/PostView/PostView';
+import PostWritePage from './pages/Post/PostWrite/PostWrite';
 import LandingPage from './pages/Landing/Landing';
 import Post from './components/MyPage/Post/Post';
 import ReportPost from './components/Report/ReportPost';
+import LoginProcessPage from './pages/LoginRequest/ProcessPage';
+import PostUpdatePage from './pages/Post/PostWrite/PostUpdate';
 import CommentTest from './pages/CommentTest';
 import NoticeEditor from './components/Notice/NoticeEditor';
 import ReportComment from './components/Report/ReportComment';
@@ -38,6 +40,7 @@ function Router() {
     <Routes>
       <Route path={'/'} element={<DashBoardPage />} />
       <Route path={'/access'} element={<LandingPage />} />
+      <Route path={'/google/callback'} element={<LoginProcessPage />} />
       <Route path="board">
         <Route path="q&a" element={<QNABoardPage />} />
         <Route path="tip" element={<TipBoardPage />} />
@@ -45,6 +48,7 @@ function Router() {
       <Route path="post">
         <Route path="view" element={<PostViewPage />} />
         <Route path="write" element={<PostWritePage />} />
+        <Route path="update" element={<PostUpdatePage />} />
       </Route>
       <Route path="comment/:postId" element={<CommentTest />}></Route>
       <Route path="admin" element={<SidebarLayout links={adminPages} />}>

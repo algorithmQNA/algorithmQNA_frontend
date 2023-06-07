@@ -108,7 +108,7 @@ function CommentView({
   //댓글 신고
   const { mutate: reportComment } = useMutation(reportCommentRequest);
 
-  const editorRef = useRef<CKEditor<CustomEditor>>(null);
+  const editorRef = useRef<CKEditor<any>>(null);
   const toggleReplyEditor = () => setOpenReplyEditor((prev) => !prev);
 
   const isSameBtnClicked = (like: boolean) => {
@@ -228,7 +228,7 @@ function CommentView({
         )}
         {mode === 'modify' && (
           <div>
-            <CKEditor editor={CustomEditor} data={content} />
+            <CKEditor editor={CustomEditor as any} data={content} />
             <div className="flex flex-row justify-end gap-2">
               <ButtonComponent onClick={() => setMode('read')}>
                 취소
@@ -250,9 +250,9 @@ function CommentView({
         <>
           <CKEditor
             config={{ extraPlugins: [MyCustomUploadAdapterPlugin] }}
-            editor={CustomEditor}
+            editor={CustomEditor as any}
             data=""
-            ref={editorRef}
+            ref={editorRef as any}
           />
           <ButtonComponent onClick={toggleReplyEditor}>취소</ButtonComponent>
           <ButtonComponent

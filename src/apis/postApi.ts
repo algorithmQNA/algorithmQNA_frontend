@@ -4,41 +4,60 @@ import {
 } from '../types/apis/postResponseType';
 import { PostCategoryKey, PostTypeKey, SortOption } from '../types/post';
 import { privateRequest } from './instance';
-import { PostView } from '../types/Post/Post';
+import {
+  PostCategory,
+  PostListParams,
+  PostType,
+  PostView,
+} from '../types/Post/Post';
 
 // 게시물 조회 API
 export const getPostRequest = (postId: number) =>
   privateRequest.get<PostView>(`/post/${postId}`);
 
 // 게시물 생성 API
-export const createPostRequest = (
-  title: string,
-  content: string,
-  postCategory: PostCategoryKey,
-  postType: PostTypeKey,
-  keyWords: string[] = []
-) =>
+// TODO:: 테스트를 위해서 다 정해진 값으로 보내놓게 해둠. 사용할 때 원상복구
+export const createPostRequest = ({
+  title = `테스트 ${Date.now().toLocaleString()}`,
+  content = `테스트 내용입니다`,
+  category,
+  keyWords,
+  contentType,
+  imageIds,
+}: {
+  title?: string;
+  content?: string;
+  category?: string;
+  contentType?: string;
+  keyWords: string[];
+  imageIds: number[];
+}) =>
   privateRequest.post('post', {
-    title,
-    content,
-    postCategory,
-    postType,
-    keyWords,
+    title: '찐막테스트',
+    content: '마지막테스트입니다.',
+    postCategory: 'DP',
+    postType: 'QNA',
+    keyWords: ['abc'],
+    imageIds,
   });
 
 // 게시물 수정 API
 export const updatePostRequest = (
   postId: number,
-  title?: string,
-  content?: string,
-  categoryId?: number,
-  contentTypeId?: number
+  title: string,
+  content: string,
+  categoryId: PostCategory | '',
+  contentTypeId: PostType | '',
+  keyWords: string[],
+  imageIds: number[]
 ) =>
   privateRequest.patch(`post/${postId}`, {
     title,
     content,
     categoryId,
     contentTypeId,
+    keyWords,
+    imageIds,
   });
 
 // 게시물 삭제 API
