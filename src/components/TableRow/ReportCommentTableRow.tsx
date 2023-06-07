@@ -11,7 +11,7 @@ import {
   deleteReportedPostRequest,
   getReportedPostDetailRequest,
 } from '../../apis/adminApi';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { REPORT_MAP } from '../../constants/Report';
 import UserProfile from '../UserProfile/UserProfile';
 import { useSearchParams } from 'react-router-dom';
@@ -35,11 +35,13 @@ export default function ReportCommentTableRow({
   const reportManageModal = useModal();
   const deletePostModal = useModal();
   const [searchParams] = useSearchParams();
-  const page = searchParams.get('page') || 1;
+  const page = 1;
+
+  const queryClient = useQueryClient();
 
   //TODO: useInfiniteQuery로 변경
   const { data } = useQuery(['reportList', page], () =>
-    getReportedPostDetailRequest(10, 1)
+    getReportedPostDetailRequest(id, page)
   );
   const { mutate: deleteReportedMutate } = useMutation(
     deleteReportedPostRequest,
@@ -47,6 +49,7 @@ export default function ReportCommentTableRow({
       onSettled: () => {
         deletePostModal.closeModal();
         reportManageModal.closeModal();
+        queryClient.invalidateQueries(['reportedComment']);
       },
     }
   );
