@@ -26,8 +26,8 @@ export const updatePostRequest = (
   postId: number,
   title?: string,
   content?: string,
-  categoryId?: number,
-  contentTypeId?: number
+  categoryId?: PostCategory | "",
+  contentTypeId?: PostType | ""
 ) =>
   privateRequest.patch(`post/${postId}`, {
     title,

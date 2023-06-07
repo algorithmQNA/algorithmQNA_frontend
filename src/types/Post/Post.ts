@@ -73,6 +73,7 @@ export interface PostView{
     "createdAt": string
     "postLikeCnt": number,
     "postDislikeCnt": number,
+    "postKeyWords":string[],
     "isLiked": boolean,
     "totalCommentCnt": number
     "totalPageSize": number,
