@@ -33,6 +33,7 @@ export type PostWithContent = PostBrief & {
   postType: PostTypeKey;
   postLikeCnt: number;
   postDisLikeCnt: number;
+  postContent: string;
 };
 
 export type Post = {
@@ -57,7 +58,6 @@ export type PostCRUDBody = {
 
 export type ReportedPostDetail = {
   postId: number;
-  content: string;
   member: MemberBrief;
   PostReports: ReportReason[];
   totalReportedCnt: number;
