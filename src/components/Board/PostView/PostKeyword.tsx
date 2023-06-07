@@ -8,8 +8,8 @@ export default function PostViewKeywordBlock(){
         <div className={'post-content'}>
             <div className={'flex flex-wrap gap-3'}>
                 {
-                    keyword.map((li)=>(
-                        <p className={'p-1.5 rounded bg-basic text-sm flex gap-0.5 text-gray-600 w-fit'}>
+                    keyword.map((li,index)=>(
+                        <p key={index} className={'p-1.5 rounded bg-basic text-sm flex gap-0.5 text-gray-600 w-fit'}>
                             <span>#</span>
                             <span className={'whitespace-nowrap'}>{li}</span>
                         </p>
