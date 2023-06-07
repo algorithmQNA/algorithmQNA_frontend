@@ -46,6 +46,7 @@ export const postHandler = [
                 "postLikeCnt": 0,
                 "postDislikeCnt": 0,
                 "isLiked": false,
+                "postKeyWords": ['안녕','하세요','인사'],
                 "totalCommentCnt": 5,
                 "totalPageSize": 1,
                 "member" : {
