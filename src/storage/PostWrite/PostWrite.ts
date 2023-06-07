@@ -8,6 +8,7 @@ export const PostWriteState = atom<PostWrite>({
         content:'',
         postType:'',
         postCategory:'',
-        keyWord:[]
+        keyWord:[],
+        imageIds:[]
     }
 })

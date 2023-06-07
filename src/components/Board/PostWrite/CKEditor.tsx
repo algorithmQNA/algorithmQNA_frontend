@@ -8,7 +8,7 @@ import axios from 'axios';
 export default function PostWriteCKEditor() {
   const [state,setState] = useRecoilState(PostWriteState);
   const [flag, setFlag] = useState(false);
-  const link = '';
+  const link = 'http://13.54.50.218:8080';
 
   const customUploadAdapter = (loader: any) => {
     console.log(loader)
@@ -20,13 +20,16 @@ export default function PostWriteCKEditor() {
             data.append('name', file.name);
             data.append('file', file);
             axios
-              .post('/image', data)
+              .post('/upload', data)
               .then((res) => {
                 if (!flag) {
                   setFlag(true);
                 }
+                setState((prev)=>({
+                  ...prev,imageIds:[...prev.imageIds,res.data.ImageUploadRes.id]
+                }))
                 resolve({
-                  default: `${link}/question.png`,
+                  default: `${link+res.data.ImageUploadRes.url}`,
                 });
               })
               .catch((err) => reject(err));

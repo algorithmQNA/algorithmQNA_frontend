@@ -10,6 +10,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {getPostRequest} from "../../../apis/postApi";
 import {useSetRecoilState} from "recoil";
 import {PostWriteState} from "../../../storage/PostWrite/PostWrite";
+import PostUpdateBtn from "../../../components/Board/PostWrite/UpdateBtn";
 
 export default function PostUpdatePage() {
     const nav = useNavigate();
@@ -52,7 +53,10 @@ export default function PostUpdatePage() {
                 <PostWriteSelectBlock />
                 <PostWriteCKEditor />
                 <PostWriteKeywordBlock/>
-                <PostWriteBtn />
+                {
+                    !isLoading && data !== undefined &&
+                    <PostUpdateBtn id={data.data.postId}/>
+                }
             </div>
         </div>
     );

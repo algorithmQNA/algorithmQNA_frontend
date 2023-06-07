@@ -18,22 +18,28 @@ export const createPostRequest = (
   title: string,
   content: string,
   categoryId: PostCategory | "",
-  contentTypeId: PostType | ""
-) => privateRequest.post('post', { title, content, categoryId, contentTypeId });
+  contentTypeId: PostType | "",
+  keyWords:string[],
+  imageIds:number[]
+) => privateRequest.post('post', { title, content, categoryId, contentTypeId,keyWords,imageIds });
 
 // 게시물 수정 API
 export const updatePostRequest = (
   postId: number,
-  title?: string,
-  content?: string,
-  categoryId?: PostCategory | "",
-  contentTypeId?: PostType | ""
+  title: string,
+  content: string,
+  categoryId: PostCategory | "",
+  contentTypeId: PostType | "",
+  keyWords:string[],
+  imageIds:number[]
 ) =>
   privateRequest.patch(`post/${postId}`, {
     title,
     content,
     categoryId,
     contentTypeId,
+    keyWords,
+    imageIds
   });
 
 // 게시물 삭제 API

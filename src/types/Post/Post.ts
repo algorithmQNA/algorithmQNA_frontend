@@ -90,6 +90,7 @@ export interface PostWrite{
     postType:PostType | ""
     postCategory:PostCategory | ""
     keyWord:string[]
+    imageIds:number[]
 }
 export interface PostFilter{
     sort:PostSort | '',
