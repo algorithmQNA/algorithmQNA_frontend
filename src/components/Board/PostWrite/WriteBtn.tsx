@@ -11,8 +11,8 @@ import { ErrorType } from '../../../types/Error';
 export default function PostWriteBtn() {
   const state = useRecoilValue(PostWriteState);
   const { mutate } = useMutation(
-    ({ title, content, postCategory, postType }: PostWrite) =>
-      createPostRequest(title, content, postCategory, postType as PostType),
+    ({ title, content, postCategory, postType, keyWord, imageIds }: PostWrite) =>
+      createPostRequest(title, content, postCategory, postType as PostType,keyWord,imageIds),
     {
       onSuccess: () => {
         alert('작성 완료 됐습니다. \n 게시판 목록으로 돌아갑니다.');

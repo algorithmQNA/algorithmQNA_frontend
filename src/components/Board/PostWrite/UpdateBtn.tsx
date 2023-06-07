@@ -9,14 +9,14 @@ import { AxiosError } from 'axios';
 import { ErrorType } from '../../../types/Error';
 
 interface Props{
-    id?:number
+    id:number
 }
 
-export default function PostWriteBtn({id=1}:Props) {
+export default function PostUpdateBtn({id}:Props) {
     const state = useRecoilValue(PostWriteState);
     const { mutate } = useMutation(
-        ({ title, content, postCategory, postType }: PostWrite) =>
-            updatePostRequest(id,title, content, postCategory, postType as PostType),
+        ({ title, content, postCategory, postType, keyWord, imageIds }: PostWrite) =>
+            updatePostRequest(id,title, content, postCategory, postType as PostType, keyWord, imageIds),
         {
             onSuccess: () => {
                 alert('작성 완료 됐습니다. \n 게시판 목록으로 돌아갑니다.');
