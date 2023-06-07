@@ -5,17 +5,22 @@ import MainPageMove from '../../components/DashBoard/PageMove';
 import PostTableRow from '../../components/TableRow/PostTableRow';
 import SelectKind from '../../components/DashBoard/SelectKind';
 import PageTitle from '../../components/PageTitle/PageTitle';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import axios from 'axios';
 import { PostRow } from '../../types/Post/Post';
 import { useRecoilValue } from 'recoil';
 import { DashBoardState } from '../../storage/Dash/DashBoard';
+import { createPostRequest } from '../../apis/postApi';
 
 export default function DashBoardPage() {
   const select = useRecoilValue(DashBoardState);
-  const { data, isLoading } = useQuery('dashboard-post', async () => {
-    const result = await axios.get('/post');
-    return result.data;
+  // const { data, isLoading } = useQuery('dashboard-post', async () => {
+  //   const result = await axios.get('/post');
+  //   return result.data;
+  // });
+  const { mutate } = useMutation(createPostRequest, {
+    onSuccess: (t) => console.log('통신 성공', t),
+    onError: (p) => console.log('error'),
   });
   return (
     <div>
@@ -47,8 +52,9 @@ export default function DashBoardPage() {
             <SelectKind text={'팁'} kind={'tip'} />
           </div>
           <div className={'dash-post-li'}>
-            {!isLoading &&
-              data.posts.map((li: PostRow) => <PostTableRow data={li} />)}
+            {/* {!isLoading &&
+              data.posts.map((li: PostRow) => <PostTableRow data={li} />)} */}
+            <div>임시데이터</div>
           </div>
         </div>
       </div>

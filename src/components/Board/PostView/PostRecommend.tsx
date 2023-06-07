@@ -1,7 +1,7 @@
 import {
   RecommendBtn,
   UnRecommendBtn,
-} from '../PostWrite/Recommend/RecoomendButton';
+} from './Recommend/RecoomendButton';
 
 export default function PostRecommend() {
   return (

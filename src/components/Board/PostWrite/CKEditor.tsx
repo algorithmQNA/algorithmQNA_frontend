@@ -1,16 +1,17 @@
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import CustomEditor from 'ckeditor5-custom-build';
 import React, { useState } from 'react';
-import { useSetRecoilState } from 'recoil';
+import {useRecoilState} from 'recoil';
 import { PostWriteState } from '../../../storage/PostWrite/PostWrite';
 import axios from 'axios';
 
 export default function PostWriteCKEditor() {
-  const setState = useSetRecoilState(PostWriteState);
+  const [state,setState] = useRecoilState(PostWriteState);
   const [flag, setFlag] = useState(false);
-  const link = '';
+  const link = 'http://13.54.50.218:8080';
 
   const customUploadAdapter = (loader: any) => {
+    console.log(loader)
     return {
       upload() {
         return new Promise((resolve, reject) => {
@@ -19,14 +20,16 @@ export default function PostWriteCKEditor() {
             data.append('name', file.name);
             data.append('file', file);
             axios
-              .post('/image', data)
+              .post('/upload', data)
               .then((res) => {
                 if (!flag) {
                   setFlag(true);
-                  console.log(res);
                 }
+                setState((prev)=>({
+                  ...prev,imageIds:[...prev.imageIds,res.data.ImageUploadRes.id]
+                }))
                 resolve({
-                  default: `${link}/question.png`,
+                  default: `${link+res.data.ImageUploadRes.url}`,
                 });
               })
               .catch((err) => reject(err));
@@ -53,25 +56,25 @@ export default function PostWriteCKEditor() {
   }
   return (
     <div>
-      {/*<CKEditor*/}
-      {/*  editor={CustomEditor}*/}
-      {/*  config={{*/}
-      {/*    extraPlugins: [uploadPlugin],*/}
-      {/*  }}*/}
-      {/*  data="<p>Hello from CKEditor 5!</p>"*/}
-      {/*  onReady={(editor) => {*/}
-      {/*    // You can store the "editor" and use when it is needed.*/}
-      {/*  }}*/}
-      {/*  onChange={(event, editor) => {*/}
-      {/*    const data = editor.getData();*/}
-      {/*    setState((prev) => ({*/}
-      {/*      ...prev,*/}
-      {/*      content: data,*/}
-      {/*    }));*/}
-      {/*  }}*/}
-      {/*  onBlur={(event, editor) => {}}*/}
-      {/*  onFocus={(event, editor) => {}}*/}
-      {/*/>*/}
+      <CKEditor
+        editor={CustomEditor as {create:any}}
+        config={{
+          extraPlugins: [uploadPlugin],
+        }}
+        data={state.content}
+        onReady={(editor) => {
+          // You can store the "editor" and use when it is needed.
+        }}
+        onChange={(event, editor:any) => {
+          const data = editor.getData();
+          setState((prev) => ({
+            ...prev,
+            content: data,
+          }));
+        }}
+        onBlur={(event, editor) => {}}
+        onFocus={(event, editor) => {}}
+      />
     </div>
   );
 }
