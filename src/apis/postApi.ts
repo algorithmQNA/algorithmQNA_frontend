@@ -2,12 +2,9 @@ import {
   GetCategoryPostsResponse,
   GetPostResponse,
 } from '../types/apis/postResponseType';
-import { SortOption } from '../types/post';
+import { PostCategoryKey, PostTypeKey, SortOption } from '../types/post';
 import { privateRequest } from './instance';
-import {PostView} from "../types/Post/Post";
-
-
-
+import { PostView } from '../types/Post/Post';
 
 // 게시물 조회 API
 export const getPostRequest = (postId: number) =>
@@ -17,9 +14,17 @@ export const getPostRequest = (postId: number) =>
 export const createPostRequest = (
   title: string,
   content: string,
-  categoryId: number,
-  contentTypeId: number
-) => privateRequest.post('post', { title, content, categoryId, contentTypeId });
+  postCategory: PostCategoryKey,
+  postType: PostTypeKey,
+  keyWords: string[] = []
+) =>
+  privateRequest.post('post', {
+    title,
+    content,
+    postCategory,
+    postType,
+    keyWords,
+  });
 
 // 게시물 수정 API
 export const updatePostRequest = (
@@ -37,7 +42,8 @@ export const updatePostRequest = (
   });
 
 // 게시물 삭제 API
-export const deletePostRequest = (postId: string) => privateRequest.delete(`post/${postId}`)
+export const deletePostRequest = (postId: string) =>
+  privateRequest.delete(`post/${postId}`);
 
 // 카테고리별 게시물 조회 API
 export const getCategoryPostsRequest = (
@@ -62,5 +68,8 @@ export const reportPostRequest = (postId: string) =>
   privateRequest.post(`post/${postId}/report`);
 
 //게시물 이미지 업로드 API
-export const imagePostRequest = (form:FormData)=>
-    privateRequest.post<{status:{code:number,message:string},data:{image_url:string}}>('/image',form)
+export const imagePostRequest = (form: FormData) =>
+  privateRequest.post<{
+    status: { code: number; message: string };
+    data: { image_url: string };
+  }>('/image', form);
