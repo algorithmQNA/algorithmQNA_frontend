@@ -11,7 +11,7 @@ import {
   deleteReportedPostRequest,
   getReportedPostDetailRequest,
 } from '../../apis/adminApi';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import UserProfile from '../UserProfile/UserProfile';
 import IconButton from '../Button/IconButton';
 import { AiOutlineClose } from 'react-icons/ai';
@@ -34,6 +34,8 @@ export default function ReportPostTableRow({
   const deletePostModal = useModal();
   const page = 1;
 
+  const queryClient = useQueryClient();
+
   //TODO: useInfiniteQuery로 변경
   const { data } = useQuery(['reportPostList', page], () =>
     getReportedPostDetailRequest(id, 1)
@@ -42,6 +44,7 @@ export default function ReportPostTableRow({
     deleteReportedPostRequest,
     {
       onSettled: () => {
+        queryClient.invalidateQueries(['reportedPost']);
         deletePostModal.closeModal();
         reportManageModal.closeModal();
       },
