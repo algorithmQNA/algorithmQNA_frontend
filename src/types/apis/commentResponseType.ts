@@ -1,14 +1,14 @@
-import { EachComment } from '../comment';
+import { Comment } from '../comment';
 import { Pagination } from '../pagination';
 
 export type GetCommentByPostIdReponse = {
   postId: number;
-  commentList: EachComment[];
+  commentList: Comment[];
 } & Pagination;
 
 export type GetSpreadCommentByCommentIdResponse = {
   parentId: number;
-  childCommentList: EachComment[];
+  childCommentList: Comment[];
 } & Pagination;
 
 export type CreateCommentResponse = {

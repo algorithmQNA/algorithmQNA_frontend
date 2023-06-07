@@ -1,25 +1,36 @@
-@import "ckeditor-tailwind-reset/ckeditor-tailwind-reset";
+@import 'ckeditor-tailwind-reset/ckeditor-tailwind-reset';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 @layer base {
   html {
-    font-family: "Pretendard", "Noto Sans", sans-serif, system-ui, sans-serif;
+    font-family: 'Pretendard', 'Noto Sans', sans-serif, system-ui, sans-serif;
   }
 }
 * {
   box-sizing: border-box;
 }
-*:focus{
-  outline:none;
+*:focus {
+  outline: none;
 }
 .ck.ck-editor__editable:not(.ck-editor__nested-editable) {
   min-height: 400px;
   margin-bottom: 20px;
 }
-.main-content{
-  max-width:1024px;
-  @apply w-full m-auto py-12
+.main-content {
+  max-width: 1024px;
+  @apply w-full m-auto py-12;
+}
+.set-max-width {
+  max-width: 1024px;
+}
+
+.comment-editor .ck.ck-editor__editable:not(.ck-editor__nested-editable) {
+  border: none;
+}
+
+.comment-editor .ck.ck-toolbar {
+  border: 1px solid #eeeeee;
 }
 .set-max-width{
   max-width:1024px;

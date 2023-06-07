@@ -15,7 +15,7 @@ import CommentView from '../CommentView/Comment';
 import { Member } from '../../types/member';
 import { getReportedPostDetailRequest } from '../../apis/adminApi';
 import { useQuery } from 'react-query';
-import { Report, ReportConst } from '../../constants/Report';
+import { Report, REPORT_MAP } from '../../constants/Report';
 import UserProfile from '../UserProfile/UserProfile';
 
 interface AdminPageTableRowProps {

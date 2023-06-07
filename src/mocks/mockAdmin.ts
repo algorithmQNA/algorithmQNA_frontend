@@ -1,19 +1,13 @@
 import { rest } from 'msw';
 import { Report } from '../constants/Report';
+import {
+  generateRandomDate,
+  generateRandomString,
+  generateRandomInt,
+} from '../utils/random';
 const MOCK_BASED_URL = process.env.REACT_APP_API_BASE_URL;
 
-function generateRandomDate() {
-  const start = new Date(2023, 1, 1);
-  const end = new Date();
-  const generatedDate = new Date(
-    start.getTime() + Math.random() * (end.getTime() - start.getTime())
-  );
-  return generatedDate.toISOString();
-}
-function getRandomInt(max: number) {
-  return Math.floor(Math.random() * max);
-}
-
+/**공지사항 mock 데이터 생성기 */
 const mockData: { id: number; title: string; date: string }[] = new Array(20)
   .fill(0)
   .map((_, idx) => ({
@@ -22,29 +16,26 @@ const mockData: { id: number; title: string; date: string }[] = new Array(20)
     date: generateRandomDate(),
   }));
 
-/**랜덤 스트링 */
-const generateRandomString = () => Math.random().toString(36).substring(2, 11);
-
 /**신고 게시내역 리스트 mockData */
 const generateReportPostMockData = () => {
   return Array(20)
     .fill(0)
     .map((_, idx) => ({
-      postId: getRandomInt(100),
+      postId: generateRandomInt(100),
       member: {
-        memberId: getRandomInt(50),
+        memberId: generateRandomInt(50),
         memberName: generateRandomString(),
-        memberCommentBadge: getRandomInt(5),
-        memeberPostBadge: getRandomInt(5),
-        memberLikeBadge: getRandomInt(5),
+        memberCommentBadge: generateRandomInt(5),
+        memeberPostBadge: generateRandomInt(5),
+        memberLikeBadge: generateRandomInt(5),
         memberProfileUrl: 'https://picsum.photos/200',
       },
       postTitle: generateRandomString(),
       createdAt: generateRandomDate(),
-      postLikeCnt: getRandomInt(50),
-      postDisikeCnt: getRandomInt(50),
-      totalCommentCnt: getRandomInt(50),
-      views: getRandomInt(300),
+      postLikeCnt: generateRandomInt(50),
+      postDisikeCnt: generateRandomInt(50),
+      totalCommentCnt: generateRandomInt(50),
+      views: generateRandomInt(300),
     }));
 };
 
@@ -54,12 +45,8 @@ const handlers = [
     `${MOCK_BASED_URL}/admin/notification/:notificationId`,
     async (req, res, ctx) => {
       const { notificationId } = req.params;
-      console.log(notificationId, mockData);
-      const deleteIdx = mockData.findIndex(
-        (t) => t.id == (notificationId as unknown as number)
-      );
-      console.log('IDX :: ', deleteIdx);
-
+      if (!notificationId) return res(ctx.status(501));
+      const deleteIdx = mockData.findIndex((t) => t.id === +notificationId);
       mockData.splice(deleteIdx, 1);
       return res(ctx.status(200));
     }
@@ -69,7 +56,6 @@ const handlers = [
     const page = req.url.searchParams.get('page') as unknown as number;
     const start = (page - 1) * 10;
     return res(
-      ctx.delay(1000),
       ctx.status(200),
       ctx.json({ list: mockData.slice(start, start + 10) })
     );
@@ -78,7 +64,6 @@ const handlers = [
   rest.get(`${MOCK_BASED_URL}/admin/post/:postId`, async (req, res, ctx) => {
     const { postId } = req.params;
     const page = req.url.searchParams.get('page') || 0;
-    console.log('CONSOLELOG:::', postId, page);
     return res(
       ctx.status(200),
       ctx.json({
@@ -100,9 +85,9 @@ const handlers = [
             member: {
               memberId: 17 + idx,
               memberName: `신고한 사람${idx + 1}`,
-              memberCommentBadge: getRandomInt(5),
-              memeberPostBadge: getRandomInt(5),
-              memberLikeBadge: getRandomInt(5),
+              memberCommentBadge: generateRandomInt(5),
+              memeberPostBadge: generateRandomInt(5),
+              memberLikeBadge: generateRandomInt(5),
               memberProfileUrl: 'https://picsum.photos/200',
             },
 

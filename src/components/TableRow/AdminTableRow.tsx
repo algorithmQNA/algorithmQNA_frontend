@@ -27,7 +27,7 @@ export default function AdminPageTableRow({
   const navigate = useNavigate();
   const { open, closeModal, openModal } = useModal();
   const queryClient = useQueryClient();
-  const { mutate } = useMutation({
+  const { mutate: deleteMutate } = useMutation({
     mutationFn: deleteNotification,
     onSuccess: () => {
       // TODO : notice query auto refetch
@@ -42,12 +42,12 @@ export default function AdminPageTableRow({
 
   const handleConfirm = () => {
     // 삭제 API 요청.
-    mutate(id);
+    deleteMutate(id);
     closeModal();
   };
 
   const handleModifyBtnClick = () => {
-    navigate('/write');
+    navigate('/post/write');
   };
 
   return (
@@ -57,6 +57,7 @@ export default function AdminPageTableRow({
           onClose={closeModal}
           onCancel={closeModal}
           onConfirm={handleConfirm}
+          size="sm"
         >
           정말 삭제하시겠습니까?
         </Modal>
