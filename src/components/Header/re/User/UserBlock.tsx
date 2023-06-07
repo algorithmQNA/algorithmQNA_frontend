@@ -58,9 +58,6 @@ const data:AlarmType[] = [
     },
 ]
 
-interface props{
-
-}
 
 export default function HeaderUserBlock(){
 
@@ -74,7 +71,6 @@ export default function HeaderUserBlock(){
             return true
         },
         select:(prev)=>{
-            console.log(prev.pages.reverse())
             const copy = {...prev}
             copy.pages = prev.pages.reverse();
             return {...copy}
@@ -89,7 +85,6 @@ export default function HeaderUserBlock(){
             return true
         }
     })
-    console.log(oldData)
     const setDisplayAlarm = (e: ChangeEvent<HTMLInputElement>) => {
         setState((prev) => ({
             ...prev,
@@ -108,10 +103,9 @@ export default function HeaderUserBlock(){
     const button = useRef<HTMLButtonElement>(null)
     const childHeight = 50
     const getNewData = (e:React.UIEvent<HTMLUListElement>) =>{
-        console.log(e.currentTarget.clientHeight)
         if(!button.current) return
         if(e.currentTarget.scrollTop === 0){
-            console.log('스크롤이 맨 위로 이동')
+
             oldData.fetchPreviousPage({pageParam:{page:1,direction:'prev'}})
         }
         else if(e.currentTarget.scrollTop + (e.currentTarget.clientHeight-childHeight) >= button.current?.offsetTop){

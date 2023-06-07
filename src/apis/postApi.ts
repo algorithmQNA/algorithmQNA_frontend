@@ -4,7 +4,7 @@ import {
 } from '../types/apis/postResponseType';
 import { SortOption } from '../types/post';
 import { privateRequest } from './instance';
-import {PostCategory, PostType, PostView} from "../types/Post/Post";
+import {PostCategory, PostListParams, PostType, PostView} from "../types/Post/Post";
 
 
 
@@ -56,6 +56,8 @@ export const getCategoryPostsRequest = (
 // 게시물 추천 API
 export const recommendPostRequest = (postId: string) =>
   privateRequest.post(`post/${postId}/like`);
+
+
 
 // 게시물 신고 API
 export const reportPostRequest = (postId: string) =>

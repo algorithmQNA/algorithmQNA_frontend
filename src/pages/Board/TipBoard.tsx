@@ -1,34 +1,41 @@
 import PageTitle from '../../components/PageTitle/PageTitle';
 import CategoryBar from '../../components/Board/SideBlockBar/CategoryBar';
-import { SelectBox, SelectOption } from '../../components/DropDown/SelectBox';
 import PostTableRow from '../../components/TableRow/PostTableRow';
 import Pagination from '../../components/Pagination/Pagination';
 import RowListTo from '../../components/Board/ListTo';
 import NoticeBlock from '../../components/Board/Notice';
 import {useQuery} from "react-query";
-import {PostCategory, PostList, PostRow, PostSort, PostType} from "../../types/Post/Post";
+import {PostListParams, PostRow, PostType} from "../../types/Post/Post";
 import axios from "axios";
 import {useLocation} from "react-router-dom";
 import FilterBar from "../../components/Board/SideBlockBar/FilterBar";
 import SortSelectBox from "../../components/Board/SortSelectBox";
-import {useSetRecoilState} from "recoil";
-import {boardSideModalState} from "../../components/Board/SideBlockBar/storage";
-import BoardSideModal from "../../components/Board/SideBlockBar/Modal";
 import ModalButton from "../../components/Board/SideBlockBar/ModalButton";
 import BoardModalContent from "../../components/Board/SideBlockBar/ModalContent";
+import {useRecoilValue} from "recoil";
+import {PostFilterState} from "../../storage/Post/Post";
 
 export default function TipBoardPage() {
-
   const location = useLocation()
   const params = new URLSearchParams(location.search).get('page');
   const query = params ? parseInt(params) : 1;
+  const state = useRecoilValue(PostFilterState)
 
-  const {data} = useQuery<PostList>('qa-list',async ()=>{
+  const {data,isLoading} = useQuery('tip-list',async ()=>{
+    const page = query;
     const postType:PostType = 'TIP'
-    const postCategory:PostCategory = 'DP'
-    const sort:PostSort = 'latestDesc'
-    const page = query
-    const result = await axios.get('/post',{data:{postType,postCategory,sort,page}})
+    const {postCategory,isAcceptedCommentCond,titleCond,sort,hasCommentCond,memberNameCond} = state
+    let params:PostListParams = {
+      postCategory,
+      sort,
+      postType,
+      page
+    }
+    isAcceptedCommentCond !== undefined && (params = {...params,isAcceptedCommentCond});
+    titleCond !== "" && (params = {...params,titleCond });
+    hasCommentCond !== undefined && (params = {...params,hasCommentCond });
+    memberNameCond !== "" && (params = {...params,memberNameCond });
+    const result = await axios.get('/post',{params})
     return result.data
   })
 
@@ -52,9 +59,10 @@ export default function TipBoardPage() {
           </div>
           <NoticeBlock />
           {
-            data?.posts.map((li:PostRow,index)=>(
-                <PostTableRow key={index} data={li}/>
-            ))
+              !isLoading &&
+              data.data?.posts.map((li:PostRow)=>(
+                  <PostTableRow key={li.postId} data={li}/>
+              ))
           }
           <Pagination postLength={100} listLength={10} />
         </div>
