@@ -12,5 +12,8 @@ export function generateRandomInt(max: number) {
 }
 
 /**랜덤 스트링 생성기*/
-export const generateRandomString = () =>
-  Math.random().toString(36).substring(2, 11);
+export const generateRandomString = (max = 11) =>
+  Math.random()
+    .toString(36)
+    .substring(2, 11)
+    .repeat(max / 11);

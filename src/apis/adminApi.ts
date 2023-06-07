@@ -21,8 +21,10 @@ export const getReportedCommentListRequest = (page: number) =>
   });
 
 //신고된 게시물 상세내용 조회 API
-export const getReportedPostDetailRequest = (postId: number) =>
-  privateRequest.get<GetReportedPostDetailResponse>(`admin/post/${postId}`);
+export const getReportedPostDetailRequest = (postId: number, page: number) =>
+  privateRequest.get<GetReportedPostDetailResponse>(`admin/post/${postId}`, {
+    params: { page },
+  });
 
 //신고된 댓글 상세내용 조회 API
 export const getReportedCommentDetailRequest = (

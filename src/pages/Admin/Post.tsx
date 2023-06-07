@@ -1,29 +1,10 @@
 import React, { Suspense } from 'react';
-import AdminPostTableRow from '../../components/TableRow/AdminTableRow';
-import Filter from '../../components/Icon/Filter';
-import Search from '../../components/Icon/Search';
-import IconButton from '../../components/Button/IconButton';
 import { NavLink, Outlet } from 'react-router-dom';
 import AdminTableRowSkeleton from '../../components/TableRow/AdminTableRowSkeleton';
 
 function Post() {
   return (
     <>
-      {/* <div className="flex justify-end gap-2 py-3">
-        <IconButton Icon={<Filter />} />
-        <IconButton Icon={<Search />} />
-      </div>
-      <div className="flex flex-col gap-3">
-        {dummyData.map((data) => (
-          <Link to={`${data.id}`} key={`${data.title}-${data.date}`}>
-            <AdminPostTableRow
-              title={data.title}
-              writer={data.writer}
-              date={data.date}
-            />
-          </Link>
-        ))}
-      </div> */}
       <div>
         <NavLink
           to="post"
