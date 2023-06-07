@@ -1,9 +1,8 @@
 import axios from 'axios';
-
+axios.defaults.withCredentials = true;
 const publicRequest = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
 });
-
 export const privateRequest = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
   withCredentials: true,

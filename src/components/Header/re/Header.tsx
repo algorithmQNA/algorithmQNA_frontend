@@ -1,7 +1,7 @@
 import '../style.css';
-import HeaderLeft from './Left';
-import HeaderCenter from './Center';
-import HeaderRight from './Right';
+import HeaderLinkBlock from "./Link/LinkBlock";
+import HeaderSearchBlock from "./Search/SearchBlock";
+import HeaderUserBlock from "./User/UserBlock";
 
 export default function HeaderTest() {
   return (
@@ -11,9 +11,9 @@ export default function HeaderTest() {
           'grid grid-cols-2 md:grid-cols-4 max-w-[1024px] w-full m-auto text-white gap-4 items-center'
         }
       >
-        <HeaderLeft />
-        <HeaderCenter />
-        <HeaderRight />
+          <HeaderLinkBlock/>
+          <HeaderSearchBlock/>
+          <HeaderUserBlock/>
       </div>
     </header>
   );

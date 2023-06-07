@@ -17,13 +17,12 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 5 * 60 * 1000,
-      retry: false,
+      retry: false
     },
   },
 });
 
 root.render(
-  <React.StrictMode>
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <RecoilRoot>
@@ -31,5 +30,4 @@ root.render(
         </RecoilRoot>
       </QueryClientProvider>
     </BrowserRouter>
-  </React.StrictMode>
 );

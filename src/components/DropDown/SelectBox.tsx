@@ -7,10 +7,10 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { FiChevronDown } from 'react-icons/fi';
+import {FiChevronDown, FiChevronUp} from 'react-icons/fi';
 import './style.css';
 interface optionProps extends React.OptionHTMLAttributes<HTMLOptionElement> {
-  children: ReactElement | ReactElement[] | string;
+  children:string;
 }
 export const SelectOption = ({ children, className, value }: optionProps) => {
   return (
@@ -20,11 +20,12 @@ export const SelectOption = ({ children, className, value }: optionProps) => {
   );
 };
 interface props extends React.HTMLAttributes<HTMLDivElement> {
-  event?: (value: string) => void;
+  event?: (value:any) => void;
   search?: boolean | undefined;
-  children: ReactElement | ReactElement[];
+  children: ReactElement | ReactElement[]
   defaultText?: string;
   location?: 'right' | 'left';
+  selected?:string
 }
 /**
  * children으로 option 태그 사용
@@ -33,17 +34,17 @@ interface props extends React.HTMLAttributes<HTMLDivElement> {
  * */
 export function SelectBox({
   event,
-  defaultText = '선택',
   search = false,
   children,
   className,
   location = 'left',
+  selected=''
 }: props) {
   const box = useRef<HTMLDivElement>(null);
   const child = React.Children.map(children, (child) => child);
   const [state, setState] = useState({
     displayOption: false,
-    displayText: defaultText,
+    displayText: child[0].props.children,
     search: '',
   });
   const filter = child.filter((item) =>
@@ -58,6 +59,17 @@ export function SelectBox({
       location: location === 'left' ? 'left-0' : 'right-0',
     };
   }, []);
+  useEffect(()=>{
+    if(selected !== ''){
+      child.map((li)=>{
+        if(li.props.value === selected){
+          setState((prev)=>({
+            ...prev,displayText:li.props.children
+          }))
+        }
+      })
+    }
+  },[])
   /** 셀렉트 박스 클릭 */
   const selectStart = (e: ChangeEvent<HTMLInputElement>) => {
     setState({ ...state, displayOption: e.currentTarget.checked });
@@ -88,7 +100,7 @@ export function SelectBox({
     return () => document.removeEventListener('click', setCheck);
   }, [state.displayOption]);
   return (
-    <div className={'w-full relative select-label'} ref={box}>
+    <div className={'w-full relative select-label select-none'} ref={box}>
       <label className={`${defaultClass.select} ${className}`}>
         <input
           type={'checkbox'}
@@ -105,14 +117,18 @@ export function SelectBox({
             {state.displayText}
           </span>
           <span className={'whitespace-nowrap'}>
-            <FiChevronDown />
+            {
+              state.displayOption
+                  ? <FiChevronUp/>
+                  : <FiChevronDown />
+            }
           </span>
         </p>
       </label>
       {state.displayOption && (
-        <div className={`${defaultClass.area} ${defaultClass.location}`}>
+        <ul className={`${defaultClass.area} ${defaultClass.location}`}>
           {search && (
-            <div className={`${defaultClass.search}`}>
+            <li className={`${defaultClass.search}`}>
               <input
                 type={'text'}
                 className={
@@ -124,7 +140,7 @@ export function SelectBox({
                   setState({ ...state, search: e.currentTarget.value })
                 }
               />
-            </div>
+            </li>
           )}
           {filter.map(({ key, props }) => (
             <option
@@ -138,7 +154,7 @@ export function SelectBox({
               {props.children}
             </option>
           ))}
-        </div>
+        </ul>
       )}
     </div>
   );
