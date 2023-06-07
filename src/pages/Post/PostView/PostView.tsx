@@ -1,8 +1,8 @@
 import './style.css';
-import PageTitle from '../../components/PageTitle/PageTitle';
-import PostViewDetailBlock from '../../components/Board/PostView/PostDetail';
-import PostViewContent from '../../components/Board/PostView/PostContent';
-import PostViewKeywordBlock from "../../components/Board/PostView/PostKeyword";
+import PageTitle from '../../../components/PageTitle/PageTitle';
+import PostViewDetailBlock from '../../../components/Board/PostView/PostDetail';
+import PostViewContent from '../../../components/Board/PostView/PostContent';
+import PostViewKeywordBlock from "../../../components/Board/PostView/PostKeyword";
 
 export default function PostViewPage() {
   return (

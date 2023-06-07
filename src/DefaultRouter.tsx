@@ -5,12 +5,13 @@ import SidebarLayout from './components/layouts/SidebarLayout';
 import QNABoardPage from './pages/Board/Q&ABoard';
 import DashBoardPage from './pages/DashBoard/DashBoard';
 import TipBoardPage from './pages/Board/TipBoard';
-import PostViewPage from './pages/PostView/PostView';
-import PostWritePage from './pages/PostWrite/PostWrite';
+import PostViewPage from './pages/Post/PostView/PostView';
+import PostWritePage from './pages/Post/PostWrite/PostWrite';
 import LandingPage from './pages/Landing/Landing';
 import Post from './components/MyPage/Post/Post';
 import ReportPost from './components/Report/ReportPost';
 import LoginProcessPage from "./pages/LoginRequest/ProcessPage";
+import PostUpdatePage from "./pages/Post/PostWrite/PostUpdate";
 
 const adminPages = [
   { link: 'notice', title: '공지사항' },
@@ -36,6 +37,7 @@ function Router() {
       <Route path="post">
         <Route path="view" element={<PostViewPage />} />
         <Route path="write" element={<PostWritePage />} />
+        <Route path="update" element={<PostUpdatePage />} />
       </Route>
       <Route path="admin" element={<SidebarLayout links={adminPages} />}>
         <Route index element={<Navigate to="report/post" />} />
