@@ -13,7 +13,6 @@ import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
 import { BsArrowReturnRight } from 'react-icons/bs';
 import ButtonComponent from '../components/Button/ButtonComponent';
 import PageTitle from '../components/PageTitle/PageTitle';
-import CommentWrite from '../components/CommentView/CommentWrite';
 
 function CommentTest() {
   //const [selectedComment, setSelectedComment] = useState(-1);
@@ -73,8 +72,9 @@ function CommentTest() {
     return (
       <>
         <PageTitle>댓글테스트</PageTitle>
-        <div className="main-content relative">
-          <CommentWrite />
+        <div className="main-content">
+          <Controller />
+          {/*<CommentWrite />*/}
           <div className="w-full flex flex-col">
             {data.commentList.map((t) => (
               <div
@@ -88,7 +88,7 @@ function CommentTest() {
                 tabIndex={-1}
               >
                 {!!t.depth && <BsArrowReturnRight className="text-gray-500" />}
-                <CommentView {...t} key={t.commentId} />
+                {/*<CommentView {...t} key={t.commentId} />*/}
               </div>
             ))}
           </div>

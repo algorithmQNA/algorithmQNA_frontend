@@ -1,12 +1,12 @@
 export interface PostRow {
-  title: string;
-  memberId: number;
-  memberName: string;
-  memberProfileUrl: string;
-  memberRole: string;
+  postId: number;
+  postTitle: string;
+  member: any;
   createdAt: string;
-  viewCount: number;
-  commentCount: number;
+  postLikeCnt: number;
+  postDislikeCnt: number;
+  views: number;
+  totalCommentCnt: number;
 }
 export interface PostList {
   posts: PostRow[];

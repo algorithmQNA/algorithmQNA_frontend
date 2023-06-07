@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 
 function CommentWrite() {
   const queryClient = useQueryClient();
-  const editorRef = useRef<CKEditor<CustomEditor>>(null);
+  const editorRef = useRef<CKEditor<any>>(null);
   const { mutate: writeComment } = useMutation(createCommentRequest, {
     onSuccess: () => {
       queryClient.invalidateQueries(['post', postId]);
@@ -22,7 +22,7 @@ function CommentWrite() {
     if (postId)
       writeComment({ postId: +postId, content: data, parentCommentId: null });
   };
-  const handleEditorChange: (event: Object, editor: CustomEditor) => void = (
+  const handleEditorChange: (event: Object, editor: any) => void = (
     _,
     editor
   ) => {
@@ -34,7 +34,7 @@ function CommentWrite() {
       <div className="comment-editor">
         <CKEditor
           ref={editorRef}
-          editor={CustomEditor}
+          editor={CustomEditor as any}
           onChange={handleEditorChange}
         />
       </div>

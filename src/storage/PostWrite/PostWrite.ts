@@ -6,7 +6,9 @@ export const PostWriteState = atom<PostWrite>({
     default:{
         title:'',
         content:'',
-        kind:null,
-        category:null
+        postType:'',
+        postCategory:'',
+        keyWord:[],
+        imageIds:[]
     }
 })

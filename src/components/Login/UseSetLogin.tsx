@@ -14,9 +14,16 @@ interface Props {
 export default function useSetLogin({ code, state }: Props) {
   const nav = useNavigate();
   const setUser = useSetRecoilState(isLogin);
+  console.log(`CODE: ${code} STATE: ${state}`);
+
   const request = async () => {
     try {
-      const { data } = await axios.get(`/login?code=${code}&state=${state}`);
+      const { data } = await axios.get(
+        `/oauth/login?code=${code}&state=${state}&redirectUri=https://localhost:3000/google/callback`,
+        {
+          withCredentials: true,
+        }
+      );
       const { id, name, profile }: User = data;
       setUser((prev) => ({
         ...prev,
@@ -25,8 +32,8 @@ export default function useSetLogin({ code, state }: Props) {
         profile,
       }));
       nav('/');
+      alert('로그인에 성공했습니다.');
     } catch (err) {
-      alert('에러?');
       nav('/error');
     }
   };

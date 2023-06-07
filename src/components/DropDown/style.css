@@ -7,12 +7,12 @@
     @apply w-full flex items-center justify-between text-sm px-2 py-2 border rounded z-10 hover:cursor-pointer bg-[#F5F5F5] transition duration-150 hover:bg-white;
 }
 .select-area{
-    @apply absolute h-auto rounded max-h-[350px] border border-[#D9D9D9] z-50 bg-white;
+    @apply absolute h-auto rounded max-h-[350px] border border-[#D9D9D9] z-50 bg-white overflow-auto;
 }
 .option-search{
     @apply w-full flex items-center justify-between text-sm px-2 py-2 max-w-[250px];
 }
 .select-option{
-    @apply border-b border-b-basic flex items-center justify-between text-sm px-2 py-2 hover:cursor-pointer bg-white transition duration-150 hover:bg-[#F5F5F5] text-[#739093];
+    @apply border-b border-b-basic flex items-center justify-between text-sm px-2 py-2 hover:cursor-pointer bg-white transition duration-150 hover:bg-[#F5F5F5] text-[#739093] last:border-none;
 }
 
