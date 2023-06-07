@@ -6,32 +6,39 @@ import RowListTo from '../../components/Board/ListTo';
 import NoticeBlock from '../../components/Board/Notice';
 import { useQuery } from 'react-query';
 import axios from "axios";
-import {PostCategory, PostList, PostRow, PostSort, PostType} from "../../types/Post/Post";
+import {PostListParams, PostRow, PostType} from "../../types/Post/Post";
 import PostTableRow from "../../components/TableRow/PostTableRow";
 import {useLocation} from "react-router-dom";
 import FilterBar from "../../components/Board/SideBlockBar/FilterBar";
 import SortSelectBox from "../../components/Board/SortSelectBox";
-import BoardSideModal from "../../components/Board/SideBlockBar/Modal";
-import {useResetRecoilState, useSetRecoilState} from "recoil";
-import {boardSideModalState} from "../../components/Board/SideBlockBar/storage";
 import ModalButton from "../../components/Board/SideBlockBar/ModalButton";
 import BoardModalContent from "../../components/Board/SideBlockBar/ModalContent";
+import {useRecoilValue} from "recoil";
+import {PostFilterState} from "../../storage/Post/Post";
 
 export default function QNABoardPage() {
-
   const location = useLocation()
   const params = new URLSearchParams(location.search).get('page');
   const query = params ? parseInt(params) : 1;
+  const state = useRecoilValue(PostFilterState)
 
-  const {data} = useQuery<PostList>('qa-list',async ()=>{
+  const {data,isLoading} = useQuery('tip-list',async ()=>{
+    const page = query;
     const postType:PostType = 'QNA'
-    const postCategory:PostCategory = 'DP'
-    const sort:PostSort = 'latestDesc'
-    const page = query
-    const result = await axios.get('/post',{data:{postType,postCategory,sort,page}})
-    return result.data.data
+    const {postCategory,isAcceptedCommentCond,titleCond,sort,hasCommentCond,memberNameCond} = state
+    let params:PostListParams = {
+      postCategory,
+      sort,
+      postType,
+      page
+    }
+    isAcceptedCommentCond !== undefined && (params = {...params,isAcceptedCommentCond});
+    titleCond !== "" && (params = {...params,titleCond });
+    hasCommentCond !== undefined && (params = {...params,hasCommentCond });
+    memberNameCond !== "" && (params = {...params,memberNameCond });
+    const result = await axios.get('/post',{params})
+    return result.data
   })
-
   return (
     <div className={'relative'}>
       <PageTitle>질문 & 답변 게시판</PageTitle>
@@ -52,9 +59,10 @@ export default function QNABoardPage() {
           </div>
           <NoticeBlock />
           {
-            data?.posts.map((li:PostRow)=>(
-                <PostTableRow data={li}/>
-            ))
+            !isLoading &&
+              data.data?.posts.map((li:PostRow)=>(
+                  <PostTableRow key={li.postId} data={li}/>
+              ))
           }
           <Pagination postLength={100} listLength={10} />
         </div>

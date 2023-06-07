@@ -1,14 +1,14 @@
 import {b} from "msw/lib/glossary-de6278a9";
 
 export interface PostRow{
-    title:string
-    memberId:number
-    memberName:string
-    memberProfileUrl:string
-    memberRole:string
+    postId:number
+    postTitle:string
+    member:any
     createdAt:string
-    viewCount:number
-    commentCount:number
+    postLikeCnt:number
+    postDislikeCnt:number
+    views:number
+    totalCommentCnt:number
 }
 export interface PostList{
     posts:PostRow[]
@@ -17,6 +17,17 @@ export interface PostList{
     next:boolean
     prev:boolean
     size:number
+}
+export interface PostListParams{
+    postCategory:PostCategory | ""
+    postType:PostType
+    sort:PostSort | ""
+    page:number
+    hasCommentCond?:boolean
+    keyWordCond?:string
+    titleCond?:string
+    memberNameCond?:string
+    isAcceptedCommentCond?:boolean
 }
 export type PostType = 'QNA' | 'TIP' | 'NOTICE'
 export type PostCategory = 'BRUTE_FORCE' | 'TWO_POINTER' | 'DP' | 'QUEUE_STACK_HASH' | 'GRAPH' | 'GREEDY' | 'BINARY_SEARCH' | 'SORT' | 'DFS_BFS'
