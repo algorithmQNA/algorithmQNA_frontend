@@ -16,22 +16,15 @@ export type BriefPost = {
 
 export type Post = {
   postId: number;
-  memberId: number;
-  memberName: string;
-  memberCommentBadge: number;
-  memberPostBadge: number;
-  memberLikeBadge: number;
+  member: Member;
   postTitle: string;
   postContent: string;
-  CreatedAt: string;
-  postLikeCount: number;
-  postDislikeCount: number;
-  commentTotalCount: number;
-  commentCurrentPage: number;
-  commentTotalPageCount: number;
-  commentNext: boolean;
-  commentPrev: boolean;
-  comments: Comment[];
+  createdAt: string;
+  postLikeCnt: number;
+  postDislikeCnt: number;
+  totalCommentCnt: number;
+  isLiked: boolean;
+  commentList: Comment[];
 };
 
 export type PostCRUDBody = {
