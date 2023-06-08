@@ -48,7 +48,7 @@ export default function PostUpdatePage() {
     return (
         <div>
             <PageTitle>글 작성</PageTitle>
-            <div className={'main-content post-write-page'}>
+            <div className={'main-content post-write-page p-4'}>
                 <PostWriteTitleBlock/>
                 <PostWriteSelectBlock />
                 <PostWriteCKEditor />
