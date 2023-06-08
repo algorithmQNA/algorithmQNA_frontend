@@ -4,7 +4,7 @@ import {
 } from '../types/apis/postResponseType';
 import { SortOption } from '../types/post';
 import { privateRequest } from './instance';
-import {PostView} from "../types/Post/Post";
+import {PostCategory, PostListParams, PostType, PostView} from "../types/Post/Post";
 
 
 
@@ -17,23 +17,29 @@ export const getPostRequest = (postId: number) =>
 export const createPostRequest = (
   title: string,
   content: string,
-  categoryId: number,
-  contentTypeId: number
-) => privateRequest.post('post', { title, content, categoryId, contentTypeId });
+  categoryId: PostCategory | "",
+  contentTypeId: PostType | "",
+  keyWords:string[],
+  imageIds:number[]
+) => privateRequest.post('post', { title, content, categoryId, contentTypeId,keyWords,imageIds });
 
 // 게시물 수정 API
 export const updatePostRequest = (
   postId: number,
-  title?: string,
-  content?: string,
-  categoryId?: number,
-  contentTypeId?: number
+  title: string,
+  content: string,
+  categoryId: PostCategory | "",
+  contentTypeId: PostType | "",
+  keyWords:string[],
+  imageIds:number[]
 ) =>
   privateRequest.patch(`post/${postId}`, {
     title,
     content,
     categoryId,
     contentTypeId,
+    keyWords,
+    imageIds
   });
 
 // 게시물 삭제 API
@@ -56,6 +62,8 @@ export const getCategoryPostsRequest = (
 // 게시물 추천 API
 export const recommendPostRequest = (postId: string) =>
   privateRequest.post(`post/${postId}/like`);
+
+
 
 // 게시물 신고 API
 export const reportPostRequest = (postId: string) =>

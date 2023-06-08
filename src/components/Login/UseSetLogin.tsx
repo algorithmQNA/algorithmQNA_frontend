@@ -12,22 +12,23 @@ interface Props {
 
 /** 리다이렉트로 페이지 이동 시 */
 export default function useSetLogin({ code, state }: Props) {
-  const nav = useNavigate();
-  const setUser = useSetRecoilState(isLogin);
+  const nav = useNavigate()
+  const setUser = useSetRecoilState(isLogin)
   const request = async () => {
     try {
-      const { data } = await axios.get(`/login?code=${code}&state=${state}`);
-      const { id, name, profile }: User = data;
-      setUser((prev) => ({
-        ...prev,
-        id,
-        name,
-        profile,
-      }));
-      nav('/');
+      const url = `/oauth/login?code=${code}&state=${state}`
+      const result = await axios.get(url);
+      // const { id, name, profile }: User = data;
+      // setUser((prev) => ({
+      //   ...prev,
+      //   id,
+      //   name,
+      //   profile,
+      // }));
+      // nav('/');
     } catch (err) {
-      alert('에러?');
-      nav('/error');
+      // alert('에러?');
+      // nav('/error');
     }
   };
   useEffect(() => {

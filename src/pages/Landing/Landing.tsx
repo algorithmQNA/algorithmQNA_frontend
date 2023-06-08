@@ -6,7 +6,7 @@ export default function LandingPage() {
   const { search } = useLocation();
   const url = new URLSearchParams(search).get('redirect');
   const nav = useNavigate();
-  const to = '/'
+  const to = 'http://13.54.50.218:8080/oauth/google'
 
   return (
       <div className={'fixed z-[1000] top-0 left-0 w-full h-screen bg-white flex justify-center items-center select-none'}>
