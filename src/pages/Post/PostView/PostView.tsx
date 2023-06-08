@@ -8,7 +8,7 @@ export default function PostViewPage() {
   return (
     <div>
       <PageTitle>{''}</PageTitle>
-      <div className={'main-content post-view-page'}>
+      <div className={'main-content post-view-page p-4'}>
         <div className={'content-set'}>
           <PostViewDetailBlock />
           <PostViewContent />

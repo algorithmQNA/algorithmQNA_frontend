@@ -54,6 +54,7 @@ export interface PostViewChildComment{
     "hasChild" : boolean
 }
 export interface PostViewComment{
+    isPinned: unknown;
     "commentId": number,
     "member": PostViewMember,
     "content": string,
