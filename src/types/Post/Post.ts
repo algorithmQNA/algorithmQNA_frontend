@@ -1,12 +1,14 @@
+import {b} from "msw/lib/glossary-de6278a9";
+
 export interface PostRow{
-    title:string
-    memberId:number
-    memberName:string
-    memberProfileUrl:string
-    memberRole:string
+    postId:number
+    postTitle:string
+    member:any
     createdAt:string
-    viewCount:number
-    commentCount:number
+    postLikeCnt:number
+    postDislikeCnt:number
+    views:number
+    totalCommentCnt:number
 }
 export interface PostList{
     posts:PostRow[]
@@ -16,6 +18,20 @@ export interface PostList{
     prev:boolean
     size:number
 }
+export interface PostListParams{
+    postCategory:PostCategory | ""
+    postType:PostType
+    sort:PostSort | ""
+    page:number
+    hasCommentCond?:boolean
+    keyWordCond?:string
+    titleCond?:string
+    memberNameCond?:string
+    isAcceptedCommentCond?:boolean
+}
+export type PostType = 'QNA' | 'TIP' | 'NOTICE'
+export type PostCategory = 'BRUTE_FORCE' | 'TWO_POINTER' | 'DP' | 'QUEUE_STACK_HASH' | 'GRAPH' | 'GREEDY' | 'BINARY_SEARCH' | 'SORT' | 'DFS_BFS'
+export type PostSort = 'latestDesc' | 'latestAsc' | 'commentCntAsc' | 'commentCntDesc' | 'likeAsc' | 'likeCntAsc' | 'viewCntAsc' | 'viewCntDesc' | 'popular'
 export interface PostViewMember{
     "memberId": number,
     "memberName": string,
@@ -38,6 +54,7 @@ export interface PostViewChildComment{
     "hasChild" : boolean
 }
 export interface PostViewComment{
+    isPinned: unknown;
     "commentId": number,
     "member": PostViewMember,
     "content": string,
@@ -57,6 +74,7 @@ export interface PostView{
     "createdAt": string
     "postLikeCnt": number,
     "postDislikeCnt": number,
+    "postKeyWords":string[],
     "isLiked": boolean,
     "totalCommentCnt": number
     "totalPageSize": number,
@@ -70,6 +88,17 @@ export interface PostView{
 export interface PostWrite{
     title:string
     content:string
-    kind:null | number
-    category:null | number
+    postType:PostType | ""
+    postCategory:PostCategory | ""
+    keyWord:string[]
+    imageIds:number[]
+}
+export interface PostFilter{
+    sort:PostSort | '',
+    postCategory:PostCategory | '',
+    hasCommentCond:boolean | undefined,
+    keyWordCond:string,
+    titleCond:string,
+    memberNameCond:string,
+    isAcceptedCommentCond:boolean | undefined
 }

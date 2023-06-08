@@ -48,7 +48,7 @@ export default function DashBoardPage() {
           </div>
           <div className={'dash-post-li'}>
             {!isLoading &&
-              data.posts.map((li: PostRow) => <PostTableRow data={li} />)}
+              data.data.posts.map((li:PostRow,index:number) => <PostTableRow key={index} data={li} />)}
           </div>
         </div>
       </div>
