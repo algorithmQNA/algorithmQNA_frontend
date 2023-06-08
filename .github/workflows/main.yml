@@ -1,0 +1,53 @@
+name: buildAndDeploy
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name : check PWD
+      run : |
+        echo "current : $PWD"
+        ls
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        
+        
+    - name: set environment
+      run: |
+        touch .env.production
+        echo "REACT_APP_API_BASE_URL=${{ secrets.REACT_APP_BASE_URL }}" >> .env.production
+			  cat .env.production
+
+    - name: build
+      run: |
+        npm install --legacy-peer-deps
+        npm run build
+        echo "산출물"
+        ls dist
+        
+    - name: push build file to server
+      uses: appleboy/scp-action@v0.1.3
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USERNAME }}
+        password: ${{ secrets.EC2_PASSWORD }}
+        port: ${{ secrets.EC2_PORT }}
+				key: ${{ secrets.EC2_PRIVATE_KEY }}
+        source: "build/*"
+        target: "/home/ubuntu/static/build"
+    
