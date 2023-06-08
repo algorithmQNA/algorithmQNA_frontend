@@ -12,23 +12,29 @@ interface Props {
 
 /** 리다이렉트로 페이지 이동 시 */
 export default function useSetLogin({ code, state }: Props) {
-  const nav = useNavigate()
-  const setUser = useSetRecoilState(isLogin)
+  const nav = useNavigate();
+  const setUser = useSetRecoilState(isLogin);
+  console.log(`CODE: ${code} STATE: ${state}`);
+
   const request = async () => {
     try {
-      const url = `/oauth/login?code=${code}&state=${state}`
-      const result = await axios.get(url);
-      // const { id, name, profile }: User = data;
-      // setUser((prev) => ({
-      //   ...prev,
-      //   id,
-      //   name,
-      //   profile,
-      // }));
-      // nav('/');
+      const { data } = await axios.get(
+        `/oauth/login?code=${code}&state=${state}`,
+        {
+          withCredentials: true,
+        }
+      );
+      const { id, name, profile }: User = data;
+      setUser((prev) => ({
+        ...prev,
+        id,
+        name,
+        profile,
+      }));
+      nav('/');
+      alert('로그인에 성공했습니다.');
     } catch (err) {
-      // alert('에러?');
-      // nav('/error');
+      nav('/error');
     }
   };
   useEffect(() => {
