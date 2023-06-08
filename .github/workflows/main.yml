@@ -2,8 +2,8 @@ name: buildAndDeploy
 
 on:
   push:
-  	branches: [ "main" ]
-	pull_request:
+    branches: [ "main" ]
+  pull_request:
     branches: [ "main" ]
 
 jobs:
@@ -25,13 +25,12 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
-			  
+
     - name: set environment
       run: |
         touch .env.production
         echo "REACT_APP_API_BASE_URL=${{ secrets.REACT_APP_BASE_URL }}" >> .env.production
-				cat .env.production
-
+        cat .env.production
     - name: build
       run: |
         npm install --legacy-peer-deps
@@ -45,7 +44,6 @@ jobs:
         host: ${{ secrets.EC2_HOST }}
         username: ${{ secrets.EC2_USERNAME }}
         port: ${{ secrets.EC2_PORT }}
-				key: ${{ secrets.EC2_PRIVATE_KEY }}
+        key: ${{ secrets.EC2_PRIVATE_KEY }}
         source: "build/*"
         target: "/home/ubuntu/static/build"
-    
