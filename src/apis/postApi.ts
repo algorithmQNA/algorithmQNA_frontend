@@ -4,10 +4,12 @@ import {
 } from '../types/apis/postResponseType';
 import { SortOption } from '../types/post';
 import { privateRequest } from './instance';
-import {PostCategory, PostListParams, PostType, PostView} from "../types/Post/Post";
-
-
-
+import {
+  PostCategory,
+  PostListParams,
+  PostType,
+  PostView,
+} from '../types/Post/Post';
 
 // 게시물 조회 API
 export const getPostRequest = (postId: number) =>
@@ -19,12 +21,16 @@ export const createPostRequest = ({
   title = `테스트 ${Date.now().toLocaleString()}`,
   content = `테스트 내용입니다`,
   category,
+  keyWords,
   contentType,
+  imageIds,
 }: {
   title?: string;
   content?: string;
   category?: string;
   contentType?: string;
+  keyWords: string[];
+  imageIds: number[];
 }) =>
   privateRequest.post('post', {
     title: '찐막테스트',
@@ -32,6 +38,7 @@ export const createPostRequest = ({
     postCategory: 'DP',
     postType: 'QNA',
     keyWords: ['abc'],
+    imageIds,
   });
 
 // 게시물 수정 API
@@ -39,10 +46,10 @@ export const updatePostRequest = (
   postId: number,
   title: string,
   content: string,
-  categoryId: PostCategory | "",
-  contentTypeId: PostType | "",
-  keyWords:string[],
-  imageIds:number[]
+  categoryId: PostCategory | '',
+  contentTypeId: PostType | '',
+  keyWords: string[],
+  imageIds: number[]
 ) =>
   privateRequest.patch(`post/${postId}`, {
     title,
@@ -50,11 +57,12 @@ export const updatePostRequest = (
     categoryId,
     contentTypeId,
     keyWords,
-    imageIds
+    imageIds,
   });
 
 // 게시물 삭제 API
-export const deletePostRequest = (postId: string) => privateRequest.delete(`post/${postId}`)
+export const deletePostRequest = (postId: string) =>
+  privateRequest.delete(`post/${postId}`);
 
 // 카테고리별 게시물 조회 API
 export const getCategoryPostsRequest = (
@@ -74,12 +82,13 @@ export const getCategoryPostsRequest = (
 export const recommendPostRequest = (postId: string) =>
   privateRequest.post(`post/${postId}/like`);
 
-
-
 // 게시물 신고 API
 export const reportPostRequest = (postId: string) =>
   privateRequest.post(`post/${postId}/report`);
 
 //게시물 이미지 업로드 API
-export const imagePostRequest = (form:FormData)=>
-    privateRequest.post<{status:{code:number,message:string},data:{image_url:string}}>('/image',form)
+export const imagePostRequest = (form: FormData) =>
+  privateRequest.post<{
+    status: { code: number; message: string };
+    data: { image_url: string };
+  }>('/image', form);
