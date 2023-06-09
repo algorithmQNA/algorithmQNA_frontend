@@ -19,7 +19,7 @@ export default function useSetLogin({ code, state }: Props) {
   const request = async () => {
     try {
       const { data } = await axios.get(
-        `/oauth/login?code=${code}&state=${state}`,
+        `/oauth/login?code=${code}&state=${state}&redirectUri=https://localhost:3000/google/callback`,
         {
           withCredentials: true,
         }

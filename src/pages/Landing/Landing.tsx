@@ -21,7 +21,7 @@ export default function LandingPage() {
           페이지 이용을 위해서 로그인이 필요합니다!
         </p>
         <a
-          href="https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&approval_prompt=force&scope=https://www.googleapis.com/auth/userinfo.email%20https://www.googleapis.com/auth/userinfo.profile&response_type=code&redirect_uri=https://localhost:3000/google/callback&state=59b3918f-4f2e-490e-823a-83b34d789e84&client_id=278486893735-rh0o2b4dinlpi78aff0d871nbff0c9co.apps.googleusercontent.com"
+          href="http://algoqna.ddns.net/oauth/google?redirectUri=https://localhost:3000/google/callback"
           className={
             'h-full border border-basic p-4 rounded-lg text-basic hover:text-black hover:border-primary transition duration-300'
           }
