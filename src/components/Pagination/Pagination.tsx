@@ -25,7 +25,7 @@ export default function Pagination({
   /** 페이지 쿼리값이 없으면 1로 할당 */
   const query = params ? parseInt(params) : 1;
   /** 총 페이지 수 계산 */
-  const totalPage = Math.floor(postLength / listLength);
+  const totalPage = Math.ceil(postLength / listLength);
   /** 페이지 배열 */
   const page = useMemo(() => {
     /** 빈 배열 변수 생성 */
