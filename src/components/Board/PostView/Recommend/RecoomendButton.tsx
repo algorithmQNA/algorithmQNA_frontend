@@ -3,8 +3,6 @@ import { FiThumbsUp, FiThumbsDown } from 'react-icons/fi';
 import './style.css';
 import {useLocation} from "react-router-dom";
 import {QueryClient, useMutation, useQuery} from "react-query";
-import axios from "axios";
-import useGetParams from "../../../GetParams/GetParams";
 import {getPostRequest} from "../../../../apis/postApi";
 import {privateRequest} from "../../../../apis/instance";
 

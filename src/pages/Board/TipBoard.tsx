@@ -12,12 +12,13 @@ import ModalButton from "../../components/Board/SideBlockBar/ModalButton";
 import BoardModalContent from "../../components/Board/SideBlockBar/ModalContent";
 import {useRecoilValue} from "recoil";
 import {PostFilterState} from "../../storage/Post/Post";
-import useGetParams from "../../components/GetParams/GetParams";
+
 import {privateRequest} from "../../apis/instance";
 import {useEffect} from "react";
+import useGetParams from "../../hooks/useGetParams";
 
 export default function TipBoardPage() {
-  const params = useGetParams({key:'page'})
+  const params = useGetParams('page')
   const query = params ? parseInt(params) : 1;
   const state = useRecoilValue(PostFilterState)
   const {data,isLoading,refetch} = useQuery('tip-list',async ()=>{
