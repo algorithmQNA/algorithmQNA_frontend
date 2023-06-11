@@ -4,8 +4,9 @@ import {SelectBox, SelectOption} from "../../../DropDown/SelectBox";
 import {ChangeEvent, useState} from "react";
 import ButtonComponent from "../../../Button/ButtonComponent";
 import {useMutation} from "react-query";
-import axios, {AxiosError} from "axios";
-import {useLocation, useNavigate} from "react-router-dom";
+import {AxiosError} from "axios";
+import {useLocation} from "react-router-dom";
+import {privateRequest} from "../../../../apis/instance";
 
 export default function PostReportButton(){
     const location = useLocation();
@@ -42,7 +43,7 @@ export default function PostReportButton(){
             ...prev,category: value
         }))
     }
-    const report = useMutation(({pid}:{pid:number})=>axios.post(`/post/${pid}/report`),{
+    const report = useMutation(({pid}:{pid:number})=>privateRequest.post(`/post/${pid}/report`),{
         onError:(error:AxiosError)=>{
             alert('에러')
         },
@@ -65,7 +66,7 @@ export default function PostReportButton(){
                         <SelectBox event={changeCategory}>
                             {
                                 categorys.map((li)=>(
-                                    <SelectOption value={li.value}>{li.text}</SelectOption>
+                                    <SelectOption key={li.value} value={li.value}>{li.text}</SelectOption>
                                 ))
                             }
                         </SelectBox>

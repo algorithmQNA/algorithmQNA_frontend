@@ -6,22 +6,21 @@ import RowListTo from '../../components/Board/ListTo';
 import NoticeBlock from '../../components/Board/Notice';
 import {useQuery} from "react-query";
 import {PostListParams, PostRow, PostType} from "../../types/Post/Post";
-import axios from "axios";
-import {useLocation} from "react-router-dom";
 import FilterBar from "../../components/Board/SideBlockBar/FilterBar";
 import SortSelectBox from "../../components/Board/SortSelectBox";
 import ModalButton from "../../components/Board/SideBlockBar/ModalButton";
 import BoardModalContent from "../../components/Board/SideBlockBar/ModalContent";
 import {useRecoilValue} from "recoil";
 import {PostFilterState} from "../../storage/Post/Post";
+import useGetParams from "../../components/GetParams/GetParams";
+import {privateRequest} from "../../apis/instance";
+import {useEffect} from "react";
 
 export default function TipBoardPage() {
-  const location = useLocation()
-  const params = new URLSearchParams(location.search).get('page');
+  const params = useGetParams({key:'page'})
   const query = params ? parseInt(params) : 1;
   const state = useRecoilValue(PostFilterState)
-
-  const {data,isLoading} = useQuery('tip-list',async ()=>{
+  const {data,isLoading,refetch} = useQuery('tip-list',async ()=>{
     const page = query;
     const postType:PostType = 'TIP'
     const {postCategory,isAcceptedCommentCond,titleCond,sort,hasCommentCond,memberNameCond} = state
@@ -35,10 +34,14 @@ export default function TipBoardPage() {
     titleCond !== "" && (params = {...params,titleCond });
     hasCommentCond !== undefined && (params = {...params,hasCommentCond });
     memberNameCond !== "" && (params = {...params,memberNameCond });
-    const result = await axios.get('/post',{params})
+    const result = await privateRequest.get('/post',{params})
     return result.data
   })
-
+  useEffect(()=>{
+    if(!isLoading){
+      refetch()
+    }
+  },[params])
   return (
     <div>
       <PageTitle>꿀팁 게시판</PageTitle>
@@ -60,11 +63,14 @@ export default function TipBoardPage() {
           <NoticeBlock />
           {
               !isLoading &&
-              data.data?.posts.map((li:PostRow)=>(
+              data.posts.map((li:PostRow)=>(
                   <PostTableRow key={li.postId} data={li}/>
               ))
           }
-          <Pagination postLength={100} listLength={10} />
+          {
+              !isLoading &&
+              <Pagination postLength={data.totalPageSize} listLength={20} />
+          }
         </div>
       </div>
       <BoardModalContent/>

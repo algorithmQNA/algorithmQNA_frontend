@@ -11,7 +11,6 @@ export default function PostWriteCKEditor() {
   const link = 'http://13.54.50.218:8080';
 
   const customUploadAdapter = (loader: any) => {
-    console.log(loader)
     return {
       upload() {
         return new Promise((resolve, reject) => {

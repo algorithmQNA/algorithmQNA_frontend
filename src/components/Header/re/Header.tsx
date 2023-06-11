@@ -12,8 +12,7 @@ export default function HeaderTest() {
         }
       >
           <HeaderLinkBlock/>
-          <HeaderSearchBlock/>
-          <HeaderUserBlock/>
+          {/*<HeaderUserBlock/>*/}
       </div>
     </header>
   );

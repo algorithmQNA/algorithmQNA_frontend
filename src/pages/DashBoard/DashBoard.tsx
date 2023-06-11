@@ -3,21 +3,21 @@ import tip from '../../assets/images/tip.png';
 import write from '../../assets/images/write.png';
 import MainPageMove from '../../components/DashBoard/PageMove';
 import PostTableRow from '../../components/TableRow/PostTableRow';
-import SelectKind from '../../components/DashBoard/SelectTab/SelectKind';
 import PageTitle from '../../components/PageTitle/PageTitle';
 import { useMutation, useQuery } from 'react-query';
-import axios from 'axios';
 import { PostRow } from '../../types/Post/Post';
-import { useRecoilValue } from 'recoil';
-import { DashBoardState } from '../../storage/Dash/DashBoard';
 import { createPostRequest } from '../../apis/postApi';
 import SelectTabBlock from "../../components/DashBoard/SelectTab/SelectTabBlock";
+import {privateRequest} from "../../apis/instance";
+import {useRecoilState, useRecoilValue} from "recoil";
+import {DashBoardState} from "../../storage/Dash/DashBoard";
+import {useEffect} from "react";
 
 export default function DashBoardPage() {
-  const select = useRecoilValue(DashBoardState);
-  const { data, isLoading } = useQuery('dashboard-post', async () => {
-    const result = await axios.get(
-      '/api/post?postType=QNA&page=1&sort=latestDesc&postCategory=DP'
+  const state = useRecoilValue(DashBoardState)
+  const { data, isLoading,refetch } = useQuery('dashboard-post', async () => {
+    const result = await privateRequest.get(
+      `/post?postType=${state.select}&page=1&sort=latestDesc&postCategory=DP`
     );
     return result.data;
   });
@@ -25,6 +25,12 @@ export default function DashBoardPage() {
     onSuccess: (t) => console.log('통신 성공', t),
     onError: (p) => console.log('error'),
   });
+  console.log(data)
+  useEffect(()=>{
+    if(!isLoading){
+      refetch()
+    }
+  },[state.select])
   return (
     <div>
       <PageTitle>대시보드</PageTitle>
@@ -53,7 +59,7 @@ export default function DashBoardPage() {
           <SelectTabBlock/>
           <div className={'dash-post-li'}>
             {!isLoading &&
-              data.posts.map((li: PostRow) => <PostTableRow data={li} />)}
+              data.posts.map((li: PostRow) => <PostTableRow key={li.postId} data={li} />)}
           </div>
         </div>
       </div>
