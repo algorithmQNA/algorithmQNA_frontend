@@ -1,6 +1,6 @@
 import { ChangeEvent, useRef, useState } from 'react';
-import { Comment } from '../../types/comment';
-import UserProfile, { UserProfileProps } from '../UserProfile/UserProfile';
+import { TopComment } from '../../types/comment';
+import UserProfile from '../UserProfile/UserProfile';
 
 import { useMutation, useQueryClient } from 'react-query';
 import {
@@ -35,20 +35,24 @@ import useModal from '../../hooks/useModal';
 import Modal from '../Modal/Modal';
 import InputText from '../Input/InputText';
 import { REPORT_MAP } from '../../constants/Report';
-import { Report } from '../../types/report';
+import { PostViewComment } from '../../types/Post/Post';
+import { Post } from '../../types/post';
 
-export type CommentViewProps = Comment & UserProfileProps;
+export type CommentViewProps = TopComment & {
+  isLiked: boolean;
+  isPinned: boolean;
+};
 
 /**리팩토링 시급!!!! */
 function CommentView({
   createdAt = '2023-03-31',
-  commentId,
   content,
   dislikeCnt,
   hasChild,
   likeCnt,
-  isLiked,
   depth,
+  isLiked,
+  commentId,
   ...props
 }: CommentViewProps) {
   const { id } = useRecoilValue(isLogin);
@@ -58,12 +62,14 @@ function CommentView({
   const [openMenu, setOpenMenu] = useState(false);
   const [mode, setMode] = useState<'read' | 'modify'>('read');
   const [openReplyEditor, setOpenReplyEditor] = useState(false);
-  const [reportType, setReportType] = useState<Report | null>(null);
+  const [reportType, setReportType] = useState<keyof typeof REPORT_MAP | null>(
+    null
+  );
   const [reportContent, setReportContent] = useState('');
   const { open, openModal, closeModal } = useModal();
 
   const handleReportMenuChange = (value: string) => {
-    setReportType(value as Report);
+    setReportType(value as keyof typeof REPORT_MAP);
   };
 
   const queryClient = useQueryClient();
@@ -94,6 +100,10 @@ function CommentView({
         return old;
       });
       return { previous };
+    },
+    onSuccess: (T) => console.log(T),
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['post', postId] });
     },
   });
   //댓글 수정
@@ -164,7 +174,7 @@ function CommentView({
       )}
       <div className="grow">
         <div className="flex justify-between bg-box-bg p-2 border border-border">
-          <UserProfile {...props} />
+          <UserProfile {...props.member} />
           <div className="flex flex-row items-end">
             <span className={'text-[#9ca3af] text-xs text-right'}>
               {setDateWritten(createdAt)}
@@ -228,14 +238,15 @@ function CommentView({
         )}
         {mode === 'modify' && (
           <div>
-            <CKEditor editor={CustomEditor as any} data={content} />
+            <CKEditor editor={CustomEditor as unknown as any} data={content} />
             <div className="flex flex-row justify-end gap-2">
               <ButtonComponent onClick={() => setMode('read')}>
                 취소
               </ButtonComponent>
               <ButtonComponent
                 onClick={() => {
-                  const data = editorRef.current?.editor?.data.get();
+                  // const data = editorRef.current?.editor?.data.get();
+                  const data = '<p>수정된 파일입니다.</p>';
                   if (data) modifyComment({ commentId, content: data });
                   setMode('read');
                 }}
@@ -252,15 +263,16 @@ function CommentView({
             config={{ extraPlugins: [MyCustomUploadAdapterPlugin] }}
             editor={CustomEditor as any}
             data=""
-            ref={editorRef as any}
+            ref={editorRef}
           />
           <ButtonComponent onClick={toggleReplyEditor}>취소</ButtonComponent>
           <ButtonComponent
             onClick={() => {
-              const data = editorRef.current?.editor?.data.get();
-              if (data)
+              //const data = editorRef.current?.editor?.data.get();
+              // if (data)
+              if (true)
                 writeComment({
-                  content: data,
+                  content: '<p>테스트내용입니다.</p>',
                   parentCommentId: 1000,
                   postId: 2000,
                 });

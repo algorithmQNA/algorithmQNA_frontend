@@ -1,6 +1,6 @@
 import { POST_CATEGORY } from '../constants/PostCategory';
 import { POST_TYPE } from '../constants/PostType';
-import { Comment } from './comment';
+import { Comment, TopComment } from './comment';
 import { MemberBrief } from './member';
 import { Pagination } from './pagination';
 import { ReportType } from './report';
@@ -44,9 +44,10 @@ export type Post = {
   createdAt: string;
   postLikeCnt: number;
   postDislikeCnt: number;
+  postKeyWords: string[];
   totalCommentCnt: number;
-  isLiked: boolean;
-  commentList: Comment[];
+  isLiked: null | boolean;
+  commentList: TopComment[];
 };
 
 export type PostCRUDBody = {
