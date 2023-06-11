@@ -1,6 +1,7 @@
 import {useMutation} from "react-query";
-import axios, {AxiosError} from "axios";
+import {AxiosError} from "axios";
 import {useLocation, useNavigate} from "react-router-dom";
+import {privateRequest} from "../../../../apis/instance";
 
 export default function PostDeleteButton(){
     const nav = useNavigate()
@@ -8,7 +9,7 @@ export default function PostDeleteButton(){
     const params = new URLSearchParams(location.search).get('pid');
     const pid = parseInt(params as string);
 
-    const {mutate} = useMutation(({id}:{id:number})=>axios.delete(`/post/${id}`),{
+    const {mutate} = useMutation(({id}:{id:number})=>privateRequest.delete(`/post/${id}`),{
         onError:(error:AxiosError)=>{
             if(error.status === 401){
                 alert('게시물을 삭제할 권한이 없습니다')

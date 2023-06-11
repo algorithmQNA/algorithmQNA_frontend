@@ -2,9 +2,9 @@ import {FiCircle, FiX} from "react-icons/fi";
 import {useRecoilState} from "recoil";
 import {PostFilterState} from "../../../storage/Post/Post";
 
+
 export default function FilterBar() {
     const [state,setState] = useRecoilState(PostFilterState)
-
     return(
         <div className={'board-side-bar w-full'}>
             <div className={'side-block-title'}>
@@ -42,12 +42,11 @@ export default function FilterBar() {
                             className={'p-1 text-sm border border-baisc focus:border-primary rounded w-full'}
                             placeholder={'검색'}
                             onChange={(e)=>{
-                                let timer = setTimeout(()=>{
+                                setTimeout(()=>{
                                     setState((prev)=>({
                                         ...prev,titleCond:e.target.value
                                     }))
                                 },1000)
-                                clearTimeout(timer)
                             }}
                         />
                     </label>

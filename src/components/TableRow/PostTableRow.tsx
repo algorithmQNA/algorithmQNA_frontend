@@ -52,13 +52,13 @@ export default function PostTableRow({ data }: Props) {
                 <span className={'text-blue-500'}>
                   <FiThumbsUp size={14} />
                 </span>
-                  <span>{setOverValue(999, 99)}</span>
+                  <span>{setOverValue(data.postLikeCnt, 99)}</span>
                 </p>
                 <p className={'flex gap-1 items-center text-red-500'}>
                 <span className={'text-red-500'}>
                   <FiThumbsDown size={14} />
                 </span>
-                  <span>{setOverValue(999, 99)}</span>
+                  <span>{setOverValue(data.postDislikeCnt, 99)}</span>
                 </p>
               </div>
             </div>

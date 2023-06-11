@@ -22,7 +22,6 @@ export default function PostWriteKeywordBlock(){
             ...prev,keyWord:copy
         }))
     }
-    console.log(state)
     return(
         <div className={'keyword-block'}>
             <p className={'name-tag'}>키워드</p>

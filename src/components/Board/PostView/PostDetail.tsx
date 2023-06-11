@@ -16,7 +16,6 @@ export default function PostViewDetailBlock() {
       nav(-1);
     }
   }, []);
-
   const get = useQuery('post-view', () => getPostRequest(is), {
     onError: (err: any) => {
       const { status } = err.response.data;
@@ -29,7 +28,7 @@ export default function PostViewDetailBlock() {
     },
   });
   const data = get.data?.data;
-
+  console.log(data)
   return (
     <div>
       {data !== undefined && (

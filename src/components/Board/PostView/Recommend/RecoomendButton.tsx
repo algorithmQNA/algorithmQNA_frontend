@@ -1,17 +1,21 @@
-import {ChangeEvent, ReactElement} from 'react';
+import {ChangeEvent, ReactElement, useEffect} from 'react';
 import { FiThumbsUp, FiThumbsDown } from 'react-icons/fi';
 import './style.css';
 import {useLocation} from "react-router-dom";
-import {QueryClient, useMutation} from "react-query";
+import {QueryClient, useMutation, useQuery} from "react-query";
 import axios from "axios";
+import useGetParams from "../../../GetParams/GetParams";
+import {getPostRequest} from "../../../../apis/postApi";
+import {privateRequest} from "../../../../apis/instance";
 
 export function RecommendBtn() {
     const location = useLocation();
     const params = new URLSearchParams(location.search).get('pid');
     const query = params ? parseInt(params) : 'a';
     const is = parseInt(query as string);
+    const get = useQuery('post-view', () => getPostRequest(is));
 
-    const mutationLike = useMutation(({isLike,cancel}:{isLike:boolean,cancel:boolean})=>axios.post(`/post/${is}/like`,{isLike,cancel}),{
+    const mutationLike = useMutation(({isLike,cancel}:{isLike:boolean,cancel:boolean})=>privateRequest.post(`/post/${is}/like`,{isLike,cancel}),{
         onError:(error, variables, context)=>{
 
         },
@@ -25,7 +29,7 @@ export function RecommendBtn() {
     }
   return (
     <label className={'rec-btn'}>
-      <input type={'checkbox'} className={'hidden'} name={'rec'} onChange={likeChange}/>
+      <input type={'checkbox'} className={'hidden'} name={'rec'}  onChange={likeChange}/>
       <div
         className={
           'flex flex-col border-blue-500 border-2 py-1 px-6 rounded-lg text-blue-500'
@@ -43,7 +47,7 @@ export function UnRecommendBtn() {
     const query = params ? parseInt(params) : 'a';
     const is = parseInt(query as string);
 
-    const mutationLike = useMutation(({isLike,cancel}:{isLike:boolean,cancel:boolean})=>axios.post(`/post/${is}/like`,{isLike,cancel}),{
+    const mutationLike = useMutation(({isLike,cancel}:{isLike:boolean,cancel:boolean})=>privateRequest.post(`/post/${is}/like`,{isLike,cancel}),{
         onError:(error, variables, context)=>{
 
         },

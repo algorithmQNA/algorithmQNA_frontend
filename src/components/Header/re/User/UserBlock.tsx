@@ -74,7 +74,6 @@ export default function HeaderUserBlock(){
             return true
         }
     })
-    console.log(oldData)
     const setDisplayAlarm = (e: ChangeEvent<HTMLInputElement>) => {
         setState((prev) => ({
             ...prev,

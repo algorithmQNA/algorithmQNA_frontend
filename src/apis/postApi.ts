@@ -92,3 +92,6 @@ export const imagePostRequest = (form: FormData) =>
     status: { code: number; message: string };
     data: { image_url: string };
   }>('/image', form);
+
+
+//대시보드

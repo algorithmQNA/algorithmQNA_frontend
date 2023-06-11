@@ -5,7 +5,6 @@ import CategoryBar from '../../components/Board/SideBlockBar/CategoryBar';
 import RowListTo from '../../components/Board/ListTo';
 import NoticeBlock from '../../components/Board/Notice';
 import { useQuery } from 'react-query';
-import axios from "axios";
 import {PostListParams, PostRow, PostType} from "../../types/Post/Post";
 import PostTableRow from "../../components/TableRow/PostTableRow";
 import {useLocation} from "react-router-dom";
@@ -15,14 +14,15 @@ import ModalButton from "../../components/Board/SideBlockBar/ModalButton";
 import BoardModalContent from "../../components/Board/SideBlockBar/ModalContent";
 import {useRecoilValue} from "recoil";
 import {PostFilterState} from "../../storage/Post/Post";
+import {privateRequest} from "../../apis/instance";
+import {useEffect} from "react";
+import useGetParams from "../../components/GetParams/GetParams";
 
 export default function QNABoardPage() {
-  const location = useLocation()
-  const params = new URLSearchParams(location.search).get('page');
+  const params = useGetParams({key:'page'})
   const query = params ? parseInt(params) : 1;
   const state = useRecoilValue(PostFilterState)
-
-  const {data,isLoading} = useQuery('tip-list',async ()=>{
+  const {data,isLoading,refetch} = useQuery('q&a-list',async ()=>{
     const page = query;
     const postType:PostType = 'QNA'
     const {postCategory,isAcceptedCommentCond,titleCond,sort,hasCommentCond,memberNameCond} = state
@@ -36,9 +36,14 @@ export default function QNABoardPage() {
     titleCond !== "" && (params = {...params,titleCond });
     hasCommentCond !== undefined && (params = {...params,hasCommentCond });
     memberNameCond !== "" && (params = {...params,memberNameCond });
-    const result = await axios.get('/post',{params})
+    const result = await privateRequest.get('/post',{params})
     return result.data
   })
+  useEffect(()=>{
+    if(!isLoading){
+      refetch()
+    }
+  },[params])
   return (
     <div className={'relative'}>
       <PageTitle>질문 & 답변 게시판</PageTitle>
@@ -60,11 +65,14 @@ export default function QNABoardPage() {
           <NoticeBlock />
           {
             !isLoading &&
-              data.data?.posts.map((li:PostRow)=>(
+              data.posts.map((li:PostRow)=>(
                   <PostTableRow key={li.postId} data={li}/>
               ))
           }
-          <Pagination postLength={100} listLength={10} />
+          {
+            !isLoading &&
+            <Pagination postLength={data.totalPageSize} listLength={20} />
+          }
         </div>
       </div>
       <BoardModalContent/>

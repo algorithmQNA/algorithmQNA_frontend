@@ -23,7 +23,7 @@ export default function PostViewContent() {
   return (
     <div className={'post-content'}>
       <div
-        className={'min-h-[350px]'}
+        className={'min-h-[350px] ck-content'}
         dangerouslySetInnerHTML={{
           __html: data?.postContent ? data?.postContent : '',
         }}
