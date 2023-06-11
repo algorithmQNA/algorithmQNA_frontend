@@ -30,19 +30,28 @@ function NoticeModifyEditor() {
       onSuccess: (res: AxiosResponse<PostView>) => {
         const data = res.data;
         setState({
-          category: 0,
+          postType: 'NOTICE',
+          imageIds: [],
+          keyWord: [],
+          postCategory: 'BRUTE_FORCE',
           content: data.postContent,
-          kind: 3,
           title: data.postTitle,
         });
       },
     }
   );
-
   const modifyPost = useMutation(
     () => {
       if (notificationId)
-        updatePostRequest(+notificationId, state.title, state.content, 3, 3);
+        updatePostRequest(
+          +notificationId,
+          state.title,
+          state.content,
+          'BRUTE_FORCE',
+          'NOTICE',
+          [],
+          []
+        );
       return new Promise((_, rej) => rej('notificationId'));
     },
     {
