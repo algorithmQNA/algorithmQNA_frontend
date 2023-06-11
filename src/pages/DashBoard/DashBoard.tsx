@@ -12,6 +12,7 @@ import {privateRequest} from "../../apis/instance";
 import {useRecoilState, useRecoilValue} from "recoil";
 import {DashBoardState} from "../../storage/Dash/DashBoard";
 import {useEffect} from "react";
+import FilledThumbsUp from "../../components/Icon/FilledThumbsUp";
 
 export default function DashBoardPage() {
   const state = useRecoilValue(DashBoardState)
@@ -58,8 +59,8 @@ export default function DashBoardPage() {
         <div>
           <SelectTabBlock/>
           <div className={'dash-post-li'}>
-            {!isLoading &&
-              data.posts.map((li: PostRow) => <PostTableRow key={li.postId} data={li} />)}
+            {/*{!isLoading &&*/}
+            {/*  data.posts.map((li: PostRow) => <PostTableRow key={li.postId} data={li} />)}*/}
           </div>
         </div>
       </div>
