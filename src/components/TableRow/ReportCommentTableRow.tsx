@@ -12,12 +12,12 @@ import {
   getReportedPostDetailRequest,
 } from '../../apis/adminApi';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { REPORT_MAP } from '../../constants/Report';
 import UserProfile from '../UserProfile/UserProfile';
 import { useSearchParams } from 'react-router-dom';
 import IconButton from '../Button/IconButton';
 import { AiOutlineClose } from 'react-icons/ai';
 import { useState } from 'react';
+import ReportTag from '../Report/ReportTag';
 
 interface AdminPageTableRowProps {
   title?: string;
@@ -125,9 +125,7 @@ export default function ReportCommentTableRow({
                             </div>
                           </div>
                           <div className="flex flex-row gap-2">
-                            <div className="rounded-lg bg-red-500 text-sm text-white px-2">
-                              {report.category}
-                            </div>
+                            <ReportTag category={report.category} />
                             <IconButton
                               Icon={
                                 <AiOutlineClose style={{ display: 'inline' }} />
