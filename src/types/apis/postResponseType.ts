@@ -1,8 +1,8 @@
 import { Pagination } from '../pagination';
-import { BriefPost, Post } from '../post';
+import { PostBrief, Post } from '../post';
 
 export type GetPostResponse = Post & Pagination;
 
 export type GetCategoryPostsResponse = {
-  posts: BriefPost[];
+  posts: PostBrief[];
 } & Pagination;

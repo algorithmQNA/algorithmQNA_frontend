@@ -12,7 +12,9 @@ import {
   getReportedPostDetailRequest,
 } from '../../apis/adminApi';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { REPORT_MAP } from '../../constants/Report';
 import UserProfile from '../UserProfile/UserProfile';
+import { useSearchParams } from 'react-router-dom';
 import IconButton from '../Button/IconButton';
 import { AiOutlineClose } from 'react-icons/ai';
 import { useState } from 'react';
@@ -21,10 +23,10 @@ interface AdminPageTableRowProps {
   title?: string;
   date: string;
   id: number;
-  member: MemberBrief;
   content: string;
+  member: MemberBrief;
 }
-export default function ReportPostTableRow({
+export default function ReportCommentTableRow({
   title,
   date,
   id,
@@ -32,21 +34,22 @@ export default function ReportPostTableRow({
 }: AdminPageTableRowProps) {
   const reportManageModal = useModal();
   const deletePostModal = useModal();
+  const [searchParams] = useSearchParams();
   const page = 1;
 
   const queryClient = useQueryClient();
 
   //TODO: useInfiniteQuery로 변경
-  const { data } = useQuery(['reportPostList', page], () =>
-    getReportedPostDetailRequest(id, 1)
+  const { data } = useQuery(['reportList', page], () =>
+    getReportedPostDetailRequest(id, page)
   );
   const { mutate: deleteReportedMutate } = useMutation(
     deleteReportedPostRequest,
     {
       onSettled: () => {
-        queryClient.invalidateQueries(['reportedPost']);
         deletePostModal.closeModal();
         reportManageModal.closeModal();
+        queryClient.invalidateQueries(['reportedComment']);
       },
     }
   );
@@ -83,14 +86,14 @@ export default function ReportPostTableRow({
             onClose={reportManageModal.closeModal}
             size="lg"
           >
-            <div className="flex justify-stretch w-[70vw] h-[32rem] overflow-auto">
+            <div className="flex justify-stretch w-full h-[32rem] overflow-auto">
               <section className="flex-grow basis-1/2 h-full overflow-auto">
                 <div className="flex justify-between bg-box-bg p-2 border border-border">
                   <UserProfile {...data.data.member} />
                   <div className="flex flex-row items-end"></div>
                 </div>
                 <div
-                  className="ck ck-content p-2 text-left break-words"
+                  className="ck ck-content p-2 text-left"
                   dangerouslySetInnerHTML={{
                     __html: content,
                   }}
@@ -101,10 +104,7 @@ export default function ReportPostTableRow({
                 <div className="bg-box-bg">
                   {data.data.PostReports.map((report, idx) => {
                     return (
-                      <div
-                        className="w-full border text-left p-2"
-                        key={report.updatedAt}
-                      >
+                      <div className="w-full border text-left p-2">
                         <div className="w-full flex flex-row justify-between">
                           <div className="flex flex-row gap-2">
                             <input
