@@ -1,9 +1,9 @@
 import {rest} from "msw";
 import {AlarmType} from "../../types/Alarm";
-
+const MOCK_BASED_URL = process.env.REACT_APP_API_BASE_URL;
 export const alarmHandler = [
     rest.get(
-        '/alarm',
+        `/${MOCK_BASED_URL}/alarm`,
         async (req,res,ctx)=>{
 
             const json:AlarmType[] = [{
