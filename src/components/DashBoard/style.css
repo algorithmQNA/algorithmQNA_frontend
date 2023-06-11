@@ -5,13 +5,13 @@
     @apply w-fit m-auto bg-title flex p-2.5 rounded-full gap-2 mb-6;
 }
 .post-kind-label{
-    @apply cursor-pointer
+    @apply cursor-pointer relative z-20
 }
 .post-kind-label input[type=radio] + p{
     @apply bg-transparent text-white
 }
 .post-kind-label input[type=radio]:checked + p{
-    @apply bg-white text-[#FA7D39]
+    @apply text-[#FA7D39]
 }
 .dash-post-li{
     @apply grid grid-cols-1 md:grid-cols-2 p-4 gap-4;
