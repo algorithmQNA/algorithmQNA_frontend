@@ -11,12 +11,15 @@ const handlers = [
     return req(ctx.status(200), ctx.json(PostInitData));
   }),
   rest.get(`${MOCK_BASED_URL}/post`, async (req, res, ctx) => {
-    const type = req.url.searchParams.get('type') as unknown as number;
-    const page = req.url.searchParams.get('page') as unknown as number;
+    const postType = req.url.searchParams.get('postType') as unknown as string;
+    const page = (req.url.searchParams.get('page') as unknown as number) || 1;
 
     const start = (page - 1) * 20;
 
-    const posts = mockData.slice(start, start + 20);
+    const posts =
+      postType === 'QNA'
+        ? QNAData.slice(start, start + 20)
+        : mockData.slice(start, start + 20);
     const pageInfo: Pagination = {
       next: true,
       page: page,
@@ -36,12 +39,25 @@ const handlers = [
       return res(ctx.status(200));
     }
   ),
+  rest.post(`${MOCK_BASED_URL}/post`, async (req, res, ctx) => {
+    return res(ctx.delay(1000), ctx.status(201), ctx.json({ success: true }));
+  }),
 ];
 
-/**공지사항 mock 데이터 생성기 */
+/**공지사항 mock 데이터 */
 const mockData: PostBrief[] = new Array(37).fill(0).map((_, idx) => ({
   postId: 2000 + idx,
   postTitle: `${idx + 1}번째 공지사항`,
+  createdAt: generateRandomDate(),
+  member: generateMockMember(idx),
+  totalCommentCnt: generateRandomInt(10),
+  views: generateRandomInt(5),
+}));
+
+/**QNA mock 데이터 */
+const QNAData: PostBrief[] = new Array(37).fill(0).map((_, idx) => ({
+  postId: 2000 + idx,
+  postTitle: `${idx + 1}번째 질문`,
   createdAt: generateRandomDate(),
   member: generateMockMember(idx),
   totalCommentCnt: generateRandomInt(10),
@@ -62,6 +78,7 @@ const PostInitData: GetPostResponse = {
   prev: false,
   page: 0,
   size: 20,
+  postKeyWords: ['a', 'b'],
   totalPageSize: 5,
   commentList: [
     {
@@ -77,6 +94,11 @@ const PostInitData: GetPostResponse = {
       isLiked: true,
       hasChild: false,
       updatedAt: '2023-03-03',
+      next: true,
+      page: 1,
+      prev: false,
+      size: 10,
+      totalPageSize: 21,
     },
     {
       commentId: 2,
@@ -90,6 +112,11 @@ const PostInitData: GetPostResponse = {
       isLiked: true,
       updatedAt: '2023-03-03',
       hasChild: false,
+      next: true,
+      page: 1,
+      prev: false,
+      size: 10,
+      totalPageSize: 21,
     },
     {
       commentId: 3,
@@ -103,6 +130,11 @@ const PostInitData: GetPostResponse = {
       isLiked: false,
       updatedAt: '2023-03-03',
       hasChild: true,
+      next: true,
+      page: 1,
+      prev: false,
+      size: 10,
+      totalPageSize: 21,
     },
     {
       commentId: 4,
@@ -116,6 +148,11 @@ const PostInitData: GetPostResponse = {
       isLiked: false,
       updatedAt: '2023-03-03',
       hasChild: false,
+      next: true,
+      page: 1,
+      prev: false,
+      size: 10,
+      totalPageSize: 21,
     },
   ],
 };
