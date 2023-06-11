@@ -17,29 +17,14 @@ import {PostFilterState} from "../../storage/Post/Post";
 import {privateRequest} from "../../apis/instance";
 import {useEffect} from "react";
 import useGetParams from "../../hooks/useGetParams";
+import {getCategoryPostsRequest} from "../../apis/postApi";
 
 
 export default function QNABoardPage() {
   const params = useGetParams('page')
   const query = params ? parseInt(params) : 1;
   const state = useRecoilValue(PostFilterState)
-  const {data,isLoading,refetch} = useQuery('q&a-list',async ()=>{
-    const page = query;
-    const postType:PostType = 'QNA'
-    const {postCategory,isAcceptedCommentCond,titleCond,sort,hasCommentCond,memberNameCond} = state
-    let params:PostListParams = {
-      postCategory,
-      sort,
-      postType,
-      page
-    }
-    isAcceptedCommentCond !== undefined && (params = {...params,isAcceptedCommentCond});
-    titleCond !== "" && (params = {...params,titleCond });
-    hasCommentCond !== undefined && (params = {...params,hasCommentCond });
-    memberNameCond !== "" && (params = {...params,memberNameCond });
-    const result = await privateRequest.get('/post',{params})
-    return result.data
-  })
+  const {data,isLoading,refetch} = useQuery('q&a-list',()=>getCategoryPostsRequest(state.postCategory,state.sort,query,'QNA'))
   useEffect(()=>{
     if(!isLoading){
       refetch()

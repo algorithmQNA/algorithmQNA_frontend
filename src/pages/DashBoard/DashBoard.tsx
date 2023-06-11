@@ -3,22 +3,16 @@ import tip from '../../assets/images/tip.png';
 import write from '../../assets/images/write.png';
 import MainPageMove from '../../components/DashBoard/PageMove';
 import PageTitle from '../../components/PageTitle/PageTitle';
-import { useMutation, useQuery } from 'react-query';
-import { createPostRequest } from '../../apis/postApi';
+import { useQuery } from 'react-query';
+import {getCategoryPostsRequest} from '../../apis/postApi';
 import SelectTabBlock from "../../components/DashBoard/SelectTab/SelectTabBlock";
-import {privateRequest} from "../../apis/instance";
 import {useRecoilValue} from "recoil";
 import {DashBoardState} from "../../storage/Dash/DashBoard";
 import {useEffect} from "react";
 
 export default function DashBoardPage() {
   const state = useRecoilValue(DashBoardState)
-  const { data, isLoading,refetch } = useQuery('dashboard-post', async () => {
-    const result = await privateRequest.get(
-      `/post?postType=${state.select}&page=1&sort=latestDesc&postCategory=DP`
-    );
-    return result.data;
-  });
+  const { data, isLoading,refetch } = useQuery('dashboard-post', ()=>getCategoryPostsRequest('DP','latestDesc',1,state.select));
   useEffect(()=>{
     if(!isLoading){
       refetch()

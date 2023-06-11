@@ -2,6 +2,7 @@ import { useRecoilState } from 'recoil';
 import { DashBoardState } from '../../../storage/Dash/DashBoard';
 import { ChangeEvent } from 'react';
 import '../style.css';
+import {PostType} from "../../../types/Post/Post";
 
 interface Props {
   kind: string;
@@ -10,9 +11,11 @@ interface Props {
 export default function SelectKind({ kind, text }: Props) {
   const [state, setState] = useRecoilState(DashBoardState);
   const selectKind = (e: ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value as PostType
+
     setState((prev) => ({
       ...prev,
-      select: e.target.value,
+      select: value,
     }));
   };
   return (

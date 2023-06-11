@@ -94,8 +94,8 @@ export interface PostWrite{
     imageIds:number[]
 }
 export interface PostFilter{
-    sort:PostSort | '',
-    postCategory:PostCategory | '',
+    sort:PostSort,
+    postCategory:PostCategory,
     hasCommentCond:boolean | undefined,
     keyWordCond:string,
     titleCond:string,
