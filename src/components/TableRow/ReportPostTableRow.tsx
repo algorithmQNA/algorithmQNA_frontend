@@ -10,12 +10,14 @@ import { MemberBrief } from '../../types/member';
 import {
   deleteReportedPostRequest,
   getReportedPostDetailRequest,
+  rejectReportePostRequest,
 } from '../../apis/adminApi';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import UserProfile from '../UserProfile/UserProfile';
 import IconButton from '../Button/IconButton';
 import { AiOutlineClose } from 'react-icons/ai';
 import { useState } from 'react';
+import ReportTag from '../Report/ReportTag';
 
 interface AdminPageTableRowProps {
   title?: string;
@@ -32,7 +34,10 @@ export default function ReportPostTableRow({
 }: AdminPageTableRowProps) {
   const reportManageModal = useModal();
   const deletePostModal = useModal();
+  const reportCancelModal = useModal();
   const page = 1;
+
+  const [reportId, setReportId] = useState(-1);
 
   const queryClient = useQueryClient();
 
@@ -51,6 +56,13 @@ export default function ReportPostTableRow({
     }
   );
 
+  const rejectReport = useMutation(rejectReportePostRequest, {
+    onSettled: () => {
+      queryClient.invalidateQueries(['reportPostList', page]);
+      reportCancelModal.closeModal();
+    },
+  });
+
   const [checkedList, setCheckedList] = useState<Set<number>>(new Set());
 
   /** 삭제 Confirm 모달 관련 함수들 */
@@ -63,9 +75,24 @@ export default function ReportPostTableRow({
     deletePostModal.openModal();
   };
 
+  /** 신고내역 취소 버튼 클릭 핸들러*/
+  const handleRejectBtnClick = (id: number) => {
+    setReportId(id);
+    reportCancelModal.openModal();
+  };
+
   if (data?.data)
     return (
       <>
+        {reportCancelModal.open && (
+          <Modal
+            onClose={reportCancelModal.closeModal}
+            onConfirm={() => rejectReport.mutate(10)}
+            onCancel={reportCancelModal.closeModal}
+          >
+            <div>신고내역 {reportId}을 삭제하시겠습니까?</div>
+          </Modal>
+        )}
         {deletePostModal.open && (
           <Modal
             onClose={deletePostModal.closeModal}
@@ -125,18 +152,20 @@ export default function ReportPostTableRow({
                             </div>
                           </div>
                           <div className="flex flex-row gap-2">
-                            <div className="rounded-lg bg-red-500 text-sm text-white px-2">
-                              {report.category}
-                            </div>
+                            <ReportTag category={report.category} />
+
                             <IconButton
                               Icon={
                                 <AiOutlineClose style={{ display: 'inline' }} />
                               }
+                              onClick={() =>
+                                handleRejectBtnClick(report.reportPostId)
+                              }
                             />
                           </div>
                         </div>
-                        {idx % 7 === 0 && (
-                          <div className="mt-2 font-light">기타사유 detail</div>
+                        {!!report.detail?.length && (
+                          <div className="mt-2 font-light">{report.detail}</div>
                         )}
                       </div>
                     );
