@@ -2,7 +2,7 @@ import {
   GetCategoryPostsResponse,
   GetPostResponse,
 } from '../types/apis/postResponseType';
-import { SortOption } from '../types/post';
+import { PostCategoryKey, PostTypeKey, SortOption } from '../types/post';
 import { privateRequest } from './instance';
 import {
   PostCategory,

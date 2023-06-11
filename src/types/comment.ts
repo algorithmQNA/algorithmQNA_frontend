@@ -1,25 +1,39 @@
-import { Member } from './member';
+import { MemberBrief } from './member';
+import { Pagination } from './pagination';
 
+// 커멘트 관련 전체 내용 불러올 때 타입
 export type Comment = {
   commentId: number;
-  parentId: number | null;
-  member: Member;
+  member: MemberBrief;
   content: string;
+  createdAt: string;
   updatedAt: string;
   likeCnt: number;
   dislikeCnt: number;
   hasChild: boolean;
-  createdAt: string;
-  depth: 0 | 1 | 2 | 3;
+  depth: number;
   isPinned: boolean;
   isLiked: boolean | null;
   childCommentList?: Comment[];
   childSize?: number;
 };
 
-export type ReportedComment = {
-  reportCommentId: number;
+export type TopComment = Comment & Pagination;
+
+export type FlatComment = {
+  postId: number;
   commentId: number;
-  memberName: string;
+  member: MemberBrief;
+  content: string;
   createdAt: string;
+  updatedAt: string;
+  likeCnt: number;
+  dislikeCnt: number;
+};
+
+/**
+ * @deprecated report 타입 정의 파일의 ReportComment를 대신 사용
+ */
+export type ReportedComment = {
+  reportedComments: FlatComment[];
 };
