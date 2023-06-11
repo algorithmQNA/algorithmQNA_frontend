@@ -3,7 +3,7 @@ import tip from '../../assets/images/tip.png';
 import write from '../../assets/images/write.png';
 import MainPageMove from '../../components/DashBoard/PageMove';
 import PostTableRow from '../../components/TableRow/PostTableRow';
-import SelectKind from '../../components/DashBoard/SelectKind';
+import SelectKind from '../../components/DashBoard/SelectTab/SelectKind';
 import PageTitle from '../../components/PageTitle/PageTitle';
 import { useMutation, useQuery } from 'react-query';
 import axios from 'axios';
@@ -11,6 +11,7 @@ import { PostRow } from '../../types/Post/Post';
 import { useRecoilValue } from 'recoil';
 import { DashBoardState } from '../../storage/Dash/DashBoard';
 import { createPostRequest } from '../../apis/postApi';
+import SelectTabBlock from "../../components/DashBoard/SelectTab/SelectTabBlock";
 
 export default function DashBoardPage() {
   const select = useRecoilValue(DashBoardState);
@@ -47,10 +48,7 @@ export default function DashBoardPage() {
           />
         </div>
         <div>
-          <div className={'dash-post-tab'}>
-            <SelectKind text={'질문&답변'} kind={'q&a'} />
-            <SelectKind text={'팁'} kind={'tip'} />
-          </div>
+          <SelectTabBlock/>
           <div className={'dash-post-li'}>
             {/* {!isLoading &&
               data.posts.map((li: PostRow) => <PostTableRow data={li} />)} */}

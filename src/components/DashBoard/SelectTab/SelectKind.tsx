@@ -1,7 +1,7 @@
 import { useRecoilState } from 'recoil';
-import { DashBoardState } from '../../storage/Dash/DashBoard';
+import { DashBoardState } from '../../../storage/Dash/DashBoard';
 import { ChangeEvent } from 'react';
-import './style.css';
+import '../style.css';
 
 interface Props {
   kind: string;
@@ -27,57 +27,8 @@ export default function SelectKind({ kind, text }: Props) {
       />
       <p
         className={
-          'bg-white text-[#FA7D39] py-2.5 rounded-full font-medium w-[125px] text-center transition-color duration-300'
+          'bg-transparent text-[#FA7D39] py-2.5 rounded-full font-medium w-[125px] text-center transition-color duration-300'
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-
-
-
-
       >
         {text}
       </p>
