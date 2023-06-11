@@ -5,11 +5,12 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import PostReportButton from "./PostOption/PostReportButton";
 import PostViewOptionBlock from "./PostOption/PostOptionBlock";
-import useGetParams from "../../GetParams/GetParams";
+import useGetParams from "../../../hooks/useGetParams";
+
 
 export default function PostViewContent() {
   const nav = useNavigate();
-  const params = useGetParams({key:'pid'});
+  const params = useGetParams('pid')
   const query = params ? parseInt(params) : 'a';
   const is = parseInt(query as string);
   useEffect(() => {

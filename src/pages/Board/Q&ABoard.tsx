@@ -16,10 +16,11 @@ import {useRecoilValue} from "recoil";
 import {PostFilterState} from "../../storage/Post/Post";
 import {privateRequest} from "../../apis/instance";
 import {useEffect} from "react";
-import useGetParams from "../../components/GetParams/GetParams";
+import useGetParams from "../../hooks/useGetParams";
+
 
 export default function QNABoardPage() {
-  const params = useGetParams({key:'page'})
+  const params = useGetParams('page')
   const query = params ? parseInt(params) : 1;
   const state = useRecoilValue(PostFilterState)
   const {data,isLoading,refetch} = useQuery('q&a-list',async ()=>{

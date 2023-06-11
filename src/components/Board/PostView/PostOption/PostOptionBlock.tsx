@@ -1,10 +1,11 @@
 import PostDeleteButton from "./PostDeleteButton";
 import PostReportButton from "./PostReportButton";
-import useGetParams from "../../../GetParams/GetParams";
+
 import {Link} from "react-router-dom";
+import useGetParams from "../../../../hooks/useGetParams";
 
 export default function PostViewOptionBlock(){
-    const params = useGetParams({key:'pid'})
+    const params = useGetParams('pid')
     
     return(
         <div className={'w-full flex justify-end gap-4'}>
