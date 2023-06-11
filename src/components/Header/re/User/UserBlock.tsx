@@ -3,7 +3,7 @@ import React, {ChangeEvent, useRef, useState} from "react";
 import {FiBell} from "react-icons/fi";
 import {AlarmType} from "../../../../types/Alarm";
 import {useInfiniteQuery} from "react-query";
-import {getNewAlarm, getOldAlarm} from "./test";
+import {getOldAlarm} from "./test";
 
 const data:AlarmType[] = [
     {
@@ -64,17 +64,6 @@ export default function HeaderUserBlock(){
     const navigate = useNavigate();
     const [state, setState] = useState({
         alarm: false,
-        test:false
-    })
-    const newData = useInfiniteQuery(['new-alarm'],getNewAlarm,{
-        getNextPageParam:(lastPage, allPages)=>{
-            return true
-        },
-        select:(prev)=>{
-            const copy = {...prev}
-            copy.pages = prev.pages.reverse();
-            return {...copy}
-        }
     })
 
     const oldData = useInfiniteQuery(['old-alarm'],getOldAlarm,{
@@ -85,6 +74,7 @@ export default function HeaderUserBlock(){
             return true
         }
     })
+    console.log(oldData)
     const setDisplayAlarm = (e: ChangeEvent<HTMLInputElement>) => {
         setState((prev) => ({
             ...prev,
@@ -105,7 +95,6 @@ export default function HeaderUserBlock(){
     const getNewData = (e:React.UIEvent<HTMLUListElement>) =>{
         if(!button.current) return
         if(e.currentTarget.scrollTop === 0){
-
             oldData.fetchPreviousPage({pageParam:{page:1,direction:'prev'}})
         }
         else if(e.currentTarget.scrollTop + (e.currentTarget.clientHeight-childHeight) >= button.current?.offsetTop){
@@ -150,20 +139,6 @@ export default function HeaderUserBlock(){
                         }
                         onScroll={getNewData}
                     >
-                        {
-                            newData.data?.pages[0] !== undefined &&
-                            newData.data?.pages.map((li)=>(
-                                li.map((i:AlarmType)=>(
-                                    <li
-                                        key={i.alarmId}
-                                        className={`text-content hover:text-primary text-sm h-[${childHeight}px] flex items-center`}
-                                        onClick={() => post(1)}
-                                    >
-                                        <span>{i.msg}</span>
-                                    </li>
-                                ))
-                            ))
-                        }
                         {
                             oldData.data?.pages.map((li)=>(
                                 li.map((i:AlarmType)=>(
