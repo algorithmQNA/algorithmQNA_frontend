@@ -1,5 +1,5 @@
 import './style.css';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { setDateWritten } from '../../utils/TextProcessing';
 
@@ -19,7 +19,7 @@ interface AdminPageTableRowProps {
   date?: string;
   id?: number;
 }
-export default function AdminPageTableRow({
+export default function NoticePageTableRow({
   title = '이거 어케 푸나요?',
   date = '2023-05-07 23:04:11',
   id = 2001,
@@ -27,6 +27,7 @@ export default function AdminPageTableRow({
   const navigate = useNavigate();
   const { open, closeModal, openModal } = useModal();
   const queryClient = useQueryClient();
+
   const { mutate: deleteMutate } = useMutation({
     mutationFn: deleteNotification,
     onSuccess: () => {
@@ -47,7 +48,7 @@ export default function AdminPageTableRow({
   };
 
   const handleModifyBtnClick = () => {
-    navigate('/post/write');
+    navigate(`modify/${id}`);
   };
 
   return (
@@ -62,12 +63,16 @@ export default function AdminPageTableRow({
           정말 삭제하시겠습니까?
         </Modal>
       )}
-      <div className={`p-4 gap-1.5 bg-box-bg border-border relative`}>
+      <div
+        className={`p-4 gap-1.5 bg-box-bg border backdrop:border-border relative`}
+      >
         <div className={'flex flex-row justify-between h-full w-full'}>
           <div>
-            <span className={'font-bold text-sm truncate max-w-[200px]'}>
-              {title}
-            </span>
+            <Link to={`/post/view/${id}`}>
+              <span className={'font-bold text-sm truncate max-w-[200px]'}>
+                {title}
+              </span>
+            </Link>
             <div className={'flex items-center justify-between w-full text-xs'}>
               <div>
                 <BiTimeFive style={{ display: 'inline' }} />

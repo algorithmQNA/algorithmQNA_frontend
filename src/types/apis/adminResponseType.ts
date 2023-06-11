@@ -1,14 +1,13 @@
-import { ReportedComment } from '../comment';
+import { FlatComment } from '../comment';
 import { Pagination } from '../pagination';
-import { ReportedPostDetail } from '../post';
-import { ReportedPost } from '../report';
+import { PostWithContent, ReportedPostDetail } from '../post';
 
 export type GetReportedPostListResponse = {
-  reportedPostList: ReportedPost[];
+  posts: PostWithContent[];
 } & Pagination;
 
 export type GetReportedCommentListResponse = {
-  reportComments: ReportedComment[];
+  reportComments: FlatComment[];
 } & Pagination;
 
 export type GetReportedPostDetailResponse = ReportedPostDetail;
