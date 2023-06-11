@@ -5,10 +5,10 @@ import {
 import { PostCategoryKey, PostTypeKey, SortOption } from '../types/post';
 import { privateRequest } from './instance';
 import {
-  PostCategory,
-  PostListParams,
-  PostType,
-  PostView,
+    PostCategory,
+    PostListParams, PostSort,
+    PostType,
+    PostView,
 } from '../types/Post/Post';
 
 // 게시물 조회 API
@@ -66,15 +66,27 @@ export const deletePostRequest = (postId: string) =>
 
 // 카테고리별 게시물 조회 API
 export const getCategoryPostsRequest = (
-  categoryId: string,
-  sort: SortOption,
-  page: number
+  postCategory: PostCategory,
+  sort: PostSort,
+  page: number,
+  postType: PostType,
+  hasCommentCond?:boolean,
+  keyWordCond?:string,
+  titleCond?:string,
+  memberNameCond?:string,
+  isAcceptedCommentCond?:boolean
 ) =>
   privateRequest.get<GetCategoryPostsResponse>('post', {
     params: {
-      category: categoryId,
-      sort,
-      page,
+        postCategory,
+        sort,
+        page,
+        postType,
+        hasCommentCond,
+        keyWordCond,
+        titleCond,
+        memberNameCond,
+        isAcceptedCommentCond
     },
   });
 
