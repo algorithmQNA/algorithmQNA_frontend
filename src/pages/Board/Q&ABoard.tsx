@@ -7,7 +7,7 @@ import NoticeBlock from '../../components/Board/Notice';
 import { useQuery } from 'react-query';
 import {PostListParams, PostRow, PostType} from "../../types/Post/Post";
 import PostTableRow from "../../components/TableRow/PostTableRow";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import FilterBar from "../../components/Board/SideBlockBar/FilterBar";
 import SortSelectBox from "../../components/Board/SortSelectBox";
 import ModalButton from "../../components/Board/SideBlockBar/ModalButton";
@@ -18,9 +18,11 @@ import {privateRequest} from "../../apis/instance";
 import {useEffect} from "react";
 import useGetParams from "../../hooks/useGetParams";
 import {getCategoryPostsRequest} from "../../apis/postApi";
+import {AxiosError} from "axios/index";
 
 
 export default function QNABoardPage() {
+  const nav = useNavigate()
   const params = useGetParams('page')
   const query = params ? parseInt(params) : 1;
   const state = useRecoilValue(PostFilterState)
@@ -35,6 +37,12 @@ export default function QNABoardPage() {
         state.memberNameCond,
         state.isAcceptedCommentCond
   )
+  },{
+    onError:(error:AxiosError)=>{
+      if(error.status === 403){
+        nav('/access')
+      }
+    }
   })
   useEffect(()=>{
     if(!isLoading){

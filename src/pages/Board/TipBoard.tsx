@@ -17,8 +17,11 @@ import {privateRequest} from "../../apis/instance";
 import {useEffect} from "react";
 import useGetParams from "../../hooks/useGetParams";
 import {getCategoryPostsRequest} from "../../apis/postApi";
+import {useNavigate} from "react-router-dom";
+import {AxiosError} from "axios/index";
 
 export default function TipBoardPage() {
+  const nav = useNavigate()
   const params = useGetParams('page')
   const query = params ? parseInt(params) : 1;
   const state = useRecoilValue(PostFilterState)
@@ -33,6 +36,13 @@ export default function TipBoardPage() {
         state.memberNameCond,
         state.isAcceptedCommentCond
     )
+  },
+      {
+    onError:(error:AxiosError)=>{
+      if(error.status === 403){
+        nav('/access')
+      }
+    }
   })
   useEffect(()=>{
     if(!isLoading){
