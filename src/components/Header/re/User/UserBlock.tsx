@@ -61,11 +61,9 @@ export default function HeaderUserBlock(){
                     checked={state.alarm}
                     onChange={setDisplayAlarm}
                 />
-                <span>
-          <span className={'test-ani block hover:text-primary'}>
-              <FaBell size={24}/>
-          </span>
-        </span>
+                <span className={'bell-shake block hover:text-primary hover:cursor-pointer'}>
+                    <FaBell size={24}/>
+                </span>
                 {state.alarm && (
                     <ul
                         className={

@@ -1,19 +1,28 @@
 import {ChangeEvent, ReactElement, useEffect} from 'react';
 import { FiThumbsUp, FiThumbsDown } from 'react-icons/fi';
 import './style.css';
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {QueryClient, useMutation, useQuery} from "react-query";
-import {getPostRequest} from "../../../../apis/postApi";
+import {getPostRequest, recommendPostRequest} from "../../../../apis/postApi";
 import {privateRequest} from "../../../../apis/instance";
+import {c} from "msw/lib/glossary-de6278a9";
 
-export function RecommendBtn() {
+interface MutationParam{
+    pid:number,
+    isLike:boolean,
+    cancel:boolean
+}
+
+interface props{
+    checked:boolean
+}
+export function RecommendBtn({checked}:props) {
     const location = useLocation();
     const params = new URLSearchParams(location.search).get('pid');
     const query = params ? parseInt(params) : 'a';
     const is = parseInt(query as string);
-    const get = useQuery('post-view', () => getPostRequest(is));
 
-    const mutationLike = useMutation(({isLike,cancel}:{isLike:boolean,cancel:boolean})=>privateRequest.post(`/post/${is}/like`,{isLike,cancel}),{
+    const mutationLike = useMutation(({pid,isLike,cancel}:MutationParam)=>recommendPostRequest(pid,{isLike,cancel}),{
         onError:(error, variables, context)=>{
 
         },
@@ -23,11 +32,16 @@ export function RecommendBtn() {
         }
     })
     const likeChange = (e:ChangeEvent<HTMLInputElement>) =>{
-        mutationLike.mutate({isLike:true,cancel:e.target.checked})
+        const param = {
+            pid:is,
+            isLike:true,
+            cancel:e.target.checked
+        }
+        mutationLike.mutate(param)
     }
   return (
     <label className={'rec-btn'}>
-      <input type={'checkbox'} className={'hidden'} name={'rec'}  onChange={likeChange}/>
+      <input type={'checkbox'} className={'hidden'} name={'rec'} checked={checked} onChange={likeChange}/>
       <div
         className={
           'flex flex-col border-blue-500 border-2 py-1 px-6 rounded-lg text-blue-500'
@@ -39,13 +53,13 @@ export function RecommendBtn() {
     </label>
   );
 }
-export function UnRecommendBtn() {
+export function UnRecommendBtn({checked}:props) {
     const location = useLocation();
     const params = new URLSearchParams(location.search).get('pid');
     const query = params ? parseInt(params) : 'a';
     const is = parseInt(query as string);
 
-    const mutationLike = useMutation(({isLike,cancel}:{isLike:boolean,cancel:boolean})=>privateRequest.post(`/post/${is}/like`,{isLike,cancel}),{
+    const mutationLike = useMutation(({pid,isLike,cancel}:MutationParam)=>recommendPostRequest(pid,{isLike,cancel}),{
         onError:(error, variables, context)=>{
 
         },
@@ -55,11 +69,16 @@ export function UnRecommendBtn() {
         }
     })
     const likeChange = (e:ChangeEvent<HTMLInputElement>) =>{
-        mutationLike.mutate({isLike:false,cancel:e.target.checked})
+        const param = {
+            pid:is,
+            isLike:false,
+            cancel:e.target.checked
+        }
+        mutationLike.mutate(param)
     }
   return (
     <label className={'unrec-btn'}>
-      <input type={'checkbox'} className={'hidden'} name={'rec'} onChange={likeChange}/>
+      <input type={'checkbox'} className={'hidden'} name={'rec'} checked={checked} onChange={likeChange}/>
       <div
         className={
           'flex flex-col border-red-500 border-2 py-1 px-6 rounded-lg text-red-500'

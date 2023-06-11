@@ -24,7 +24,18 @@ export default function QNABoardPage() {
   const params = useGetParams('page')
   const query = params ? parseInt(params) : 1;
   const state = useRecoilValue(PostFilterState)
-  const {data,isLoading,refetch} = useQuery('q&a-list',()=>getCategoryPostsRequest(state.postCategory,state.sort,query,'QNA'))
+  const {data,isLoading,refetch} = useQuery('q&a-list',()=>{
+    return getCategoryPostsRequest(
+        state.postCategory,
+        state.sort,query,
+        'QNA',
+        state.hasCommentCond,
+        state.keyWordCond,
+        state.titleCond,
+        state.memberNameCond,
+        state.isAcceptedCommentCond
+  )
+  })
   useEffect(()=>{
     if(!isLoading){
       refetch()

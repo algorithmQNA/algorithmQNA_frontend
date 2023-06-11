@@ -8,7 +8,7 @@ import {
     PostCategory,
     PostListParams, PostSort,
     PostType,
-    PostView,
+    PostView, ReportCategory,
 } from '../types/Post/Post';
 
 // 게시물 조회 API
@@ -91,12 +91,12 @@ export const getCategoryPostsRequest = (
   });
 
 // 게시물 추천 API
-export const recommendPostRequest = (postId: string) =>
-  privateRequest.post(`post/${postId}/like`);
+export const recommendPostRequest = (postId: number,{isLike,cancel}:{isLike:boolean,cancel:boolean}) =>
+  privateRequest.post(`post/${postId}/like`,{isLike,cancel});
 
 // 게시물 신고 API
-export const reportPostRequest = (postId: string) =>
-  privateRequest.post(`post/${postId}/report`);
+export const reportPostRequest = (postId: string,{category,detail}:{category:ReportCategory,detail:string}) =>
+  privateRequest.post(`post/${postId}/report`,{category,detail});
 
 //게시물 이미지 업로드 API
 export const imagePostRequest = (form: FormData) =>
