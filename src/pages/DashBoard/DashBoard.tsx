@@ -9,10 +9,19 @@ import SelectTabBlock from "../../components/DashBoard/SelectTab/SelectTabBlock"
 import {useRecoilValue} from "recoil";
 import {DashBoardState} from "../../storage/Dash/DashBoard";
 import {useEffect} from "react";
+import {AxiosError} from "axios";
+import {useLocation, useNavigate} from "react-router-dom";
 
 export default function DashBoardPage() {
+  const nav = useNavigate()
   const state = useRecoilValue(DashBoardState)
-  const { data, isLoading,refetch } = useQuery('dashboard-post', ()=>getCategoryPostsRequest('DP','latestDesc',1,state.select));
+  const { data, isLoading,refetch } = useQuery('dashboard-post', ()=>getCategoryPostsRequest('DP','latestDesc',1,state.select),{
+    onError:(error:AxiosError)=>{
+      if(error.status === 403){
+        nav('/access')
+      }
+    }
+  });
   useEffect(()=>{
     if(!isLoading){
       refetch()
