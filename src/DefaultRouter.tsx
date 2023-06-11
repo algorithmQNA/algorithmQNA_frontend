@@ -15,7 +15,6 @@ import PostUpdatePage from './pages/Post/PostWrite/PostUpdate';
 import CommentTest from './pages/CommentTest';
 import NoticeEditor from './components/Notice/NoticeEditor';
 import ReportComment from './components/Report/ReportComment';
-import Comment from './components/MyPage/Comment';
 import NoticeModifyEditor from './components/Notice/NoticeModifyEditor';
 
 const adminPages = {
@@ -71,10 +70,11 @@ function Router() {
         <Route path="history" element={<MyPage.Post />}>
           <Route index element={<Navigate replace to="post" />} />
           <Route path="post" element={<Post />} />
-          <Route path="comment" element={<Comment />} />
+          <Route path="comment" element={<div>왜사라졌지..</div>} />
         </Route>
         <Route path="badge" element={<MyPage.Badge />} />
       </Route>
+      <Route path="commenttest/:postId" element={<CommentTest />} />
     </Routes>
   );
 }

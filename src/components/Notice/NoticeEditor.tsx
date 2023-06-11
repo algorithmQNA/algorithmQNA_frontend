@@ -28,7 +28,15 @@ function NoticeEditor() {
       content: string;
       postCategory: PostCategoryKey;
       keyWords?: string[];
-    }) => createPostRequest(title, content, postCategory, 'NOTICE', keyWords),
+    }) =>
+      createPostRequest({
+        title,
+        content,
+        category: postCategory,
+        contentType: 'NOTICE',
+        imageIds: [],
+        keyWords,
+      }),
     {
       onSuccess: () => {
         /** window.alert말고 notification 컴포넌트 만들기 */
