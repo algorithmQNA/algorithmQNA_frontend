@@ -30,7 +30,6 @@ export default function PostUpdateBtn({id}:Props) {
         }
     );
     const writeEnd = () => {
-        console.log(state);
         if (state.title === '') {
             alert('제목 입력란에 한글자 이상 입력이 필요합니다');
             return;
