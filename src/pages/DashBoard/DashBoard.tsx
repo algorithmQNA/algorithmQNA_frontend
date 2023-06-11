@@ -15,10 +15,12 @@ import SelectTabBlock from "../../components/DashBoard/SelectTab/SelectTabBlock"
 
 export default function DashBoardPage() {
   const select = useRecoilValue(DashBoardState);
-  // const { data, isLoading } = useQuery('dashboard-post', async () => {
-  //   const result = await axios.get('/post');
-  //   return result.data;
-  // });
+  const { data, isLoading } = useQuery('dashboard-post', async () => {
+    const result = await axios.get(
+      '/api/post?postType=QNA&page=1&sort=latestDesc&postCategory=DP'
+    );
+    return result.data;
+  });
   const { mutate } = useMutation(createPostRequest, {
     onSuccess: (t) => console.log('통신 성공', t),
     onError: (p) => console.log('error'),
@@ -50,9 +52,8 @@ export default function DashBoardPage() {
         <div>
           <SelectTabBlock/>
           <div className={'dash-post-li'}>
-            {/* {!isLoading &&
-              data.posts.map((li: PostRow) => <PostTableRow data={li} />)} */}
-            <div>임시데이터</div>
+            {!isLoading &&
+              data.posts.map((li: PostRow) => <PostTableRow data={li} />)}
           </div>
         </div>
       </div>
