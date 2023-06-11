@@ -3,11 +3,13 @@ import { useQuery } from 'react-query';
 import { getPostRequest } from '../../../apis/postApi';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import PostReportButton from "./PostOption/PostReportButton";
+import PostViewOptionBlock from "./PostOption/PostOptionBlock";
+import useGetParams from "../../GetParams/GetParams";
 
 export default function PostViewContent() {
   const nav = useNavigate();
-  const location = useLocation();
-  const params = new URLSearchParams(location.search).get('pid');
+  const params = useGetParams({key:'pid'});
   const query = params ? parseInt(params) : 'a';
   const is = parseInt(query as string);
   useEffect(() => {
@@ -27,6 +29,7 @@ export default function PostViewContent() {
         }}
       ></div>
       <PostRecommend />
+      <PostViewOptionBlock/>
     </div>
   );
 }

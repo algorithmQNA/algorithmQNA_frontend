@@ -41,7 +41,7 @@ export default function PostUpdatePage() {
     useEffect(()=>{
         if(!isLoading && data !== undefined){
             setState((prev)=>({
-                ...prev,title:data.data.postTitle,content:data.data.postContent,keyWord:data.data.postKeyWords
+                ...prev,title:data.data.postTitle,content:data.data.postContent,keyWord:['안녕','하세요','인사']
             }))
         }
     },[isLoading])
