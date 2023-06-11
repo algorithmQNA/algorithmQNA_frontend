@@ -4,12 +4,7 @@ import {
 } from '../types/apis/postResponseType';
 import { PostCategoryKey, PostTypeKey, SortOption } from '../types/post';
 import { privateRequest } from './instance';
-import {
-  PostCategory,
-  PostListParams,
-  PostType,
-  PostView,
-} from '../types/Post/Post';
+import { PostCategory, PostType } from '../types/Post/Post';
 
 // 게시물 조회 API
 export const getPostRequest = (postId: number) =>

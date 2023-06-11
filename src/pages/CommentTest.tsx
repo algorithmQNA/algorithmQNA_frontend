@@ -62,7 +62,7 @@ function CommentTest() {
           <IconButton Icon={<BiChevronLeft />}></IconButton>
         </Link>
         <div>
-          {page}/{data.totalPageCount}
+          {page}/{data.totalPageSize}
         </div>
         <Link to={`${location.pathname}?page=${+page + 1}`}>
           <IconButton Icon={<BiChevronRight />}></IconButton>
