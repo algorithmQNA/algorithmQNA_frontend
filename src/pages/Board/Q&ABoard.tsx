@@ -63,16 +63,16 @@ export default function QNABoardPage() {
             </div>
           </div>
           <NoticeBlock />
-          {
-            !isLoading &&
-              data.posts.map((li:PostRow)=>(
-                  <PostTableRow key={li.postId} data={li}/>
-              ))
-          }
-          {
-            !isLoading &&
-            <Pagination postLength={data.totalPageSize} listLength={20} />
-          }
+          {/*{*/}
+          {/*  !isLoading &&*/}
+          {/*    data.posts.map((li:PostRow)=>(*/}
+          {/*        <PostTableRow key={li.postId} data={li}/>*/}
+          {/*    ))*/}
+          {/*}*/}
+          {/*{*/}
+          {/*  !isLoading &&*/}
+          {/*  <Pagination postLength={data.totalPageSize} listLength={20} />*/}
+          {/*}*/}
         </div>
       </div>
       <BoardModalContent/>

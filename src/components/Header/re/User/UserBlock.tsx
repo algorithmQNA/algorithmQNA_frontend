@@ -138,23 +138,23 @@ export default function HeaderUserBlock(){
                         }
                         onScroll={getNewData}
                     >
-                        {
-                            oldData.data?.pages.map((li)=>(
-                                li.map((i:AlarmType)=>(
-                                    <li
-                                        key={i.alarmId}
-                                        className={`text-content hover:text-primary text-sm h-[${childHeight}px] flex items-center`}
-                                        onClick={() => post(1)}
-                                    >
-                                        <span>{i.msg}</span>
-                                    </li>
-                                ))
-                            ))
-                        }
-                        {
-                            oldData.hasNextPage &&
-                            <button className={`h-[${childHeight}px] flex items-center text-sm text-primary`} ref={button}><span>더보기</span></button>
-                        }
+                        {/*{*/}
+                        {/*    oldData.data?.pages.map((li)=>(*/}
+                        {/*        li.map((i:AlarmType)=>(*/}
+                        {/*            <li*/}
+                        {/*                key={i.alarmId}*/}
+                        {/*                className={`text-content hover:text-primary text-sm h-[${childHeight}px] flex items-center`}*/}
+                        {/*                onClick={() => post(1)}*/}
+                        {/*            >*/}
+                        {/*                <span>{i.msg}</span>*/}
+                        {/*            </li>*/}
+                        {/*        ))*/}
+                        {/*    ))*/}
+                        {/*}*/}
+                        {/*{*/}
+                        {/*    oldData.hasNextPage &&*/}
+                        {/*    <button className={`h-[${childHeight}px] flex items-center text-sm text-primary`} ref={button}><span>더보기</span></button>*/}
+                        {/*}*/}
                     </ul>
                 )}
             </label>

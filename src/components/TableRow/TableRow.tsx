@@ -1,8 +1,7 @@
 import './style.css';
 
 import { setDateWritten, setOverValue } from '../../utils/TextProcessing';
-import CommentIcon from '../Icon/Comment';
-import ViewIcon from '../Icon/View';
+import {FiEye, FiMessageCircle} from "react-icons/fi";
 interface props {
   img?: string | undefined;
   title: string;
@@ -34,7 +33,7 @@ export default function TableRow({
           <span className={'text-xs'}>{writer}</span>
           <div className={'flex items-center h-full gap-1'}>
             <span className={'text-[#9ca3af] text-xs flex items-center gap-1'}>
-              <ViewIcon />
+              <FiEye/>
               {setOverValue(view, 999)}
             </span>
             <span className={'text-[#9ca3af]'}>·</span>
@@ -43,7 +42,7 @@ export default function TableRow({
                 'text-[#9ca3af] text-xs flex items-center justify-end gap-1'
               }
             >
-              <CommentIcon />
+              <FiMessageCircle/>
               {setOverValue(comment, 99)}
             </span>
             <span className={'text-[#9ca3af]'}>·</span>
