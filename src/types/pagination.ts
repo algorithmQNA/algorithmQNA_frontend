@@ -1,7 +1,13 @@
+import { PostWithContent } from './post';
+
 export type Pagination = {
-  totalPageCount?: number;
+  totalPageSize: number;
   page: number;
   next: boolean;
   prev: boolean;
   size: number;
 };
+
+export type PostPagination = {
+  posts: PostWithContent[];
+} & Pagination;

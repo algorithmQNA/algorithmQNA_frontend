@@ -1,22 +1,44 @@
-import { Report } from '../constants/Report';
+import { POST_CATEGORY } from '../constants/PostCategory';
+import { POST_TYPE } from '../constants/PostType';
 import { Comment } from './comment';
-import { Member } from './member';
+import { MemberBrief } from './member';
 import { Pagination } from './pagination';
+import { ReportType } from './report';
 
 export type SortOption = 'ID' | 'VOTE_COUNT';
 
-export type BriefPost = {
-  title: string;
-  author: string;
-  authorProfile: string;
+/**
+ * 포스트 카테고리(알고리즘 종류) 타입
+ */
+export type PostCategoryKey = keyof typeof POST_CATEGORY;
+export type PostCategoryValue = keyof typeof POST_CATEGORY;
+
+/**
+ * 포스트 타입(게시판 종류) 타입
+ */
+export type PostTypeKey = keyof typeof POST_TYPE;
+export type PostTypeValue = keyof typeof POST_TYPE;
+
+export type PostBrief = {
+  postId: number;
+  postTitle: string;
+  member: MemberBrief;
   createdAt: string;
-  viewCount: number;
-  commentCount: number;
+  views: number;
+  totalCommentCnt: number;
+};
+
+export type PostWithContent = PostBrief & {
+  postCategory: PostCategoryKey;
+  postType: PostTypeKey;
+  postLikeCnt: number;
+  postDisLikeCnt: number;
+  postContent: string;
 };
 
 export type Post = {
   postId: number;
-  member: Member;
+  member: MemberBrief;
   postTitle: string;
   postContent: string;
   createdAt: string;
@@ -36,16 +58,15 @@ export type PostCRUDBody = {
 
 export type ReportedPostDetail = {
   postId: number;
-  content: string;
-  member: Member;
+  member: MemberBrief;
   PostReports: ReportReason[];
   totalReportedCnt: number;
 } & Pagination;
 
 export type ReportReason = {
   reportPostId: number;
-  member: Member;
-  category: Report;
+  member: MemberBrief;
+  category: ReportType;
   detail?: string;
   updatedAt: string;
 };
