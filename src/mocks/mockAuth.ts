@@ -21,7 +21,7 @@ const handlers = [
       })
     );
   }),
-  rest.patch(`${MOCK_BASED_URL}/member`, async (req, res, ctx) => {
+  rest.get(`${MOCK_BASED_URL}/member`, async (req, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
@@ -33,6 +33,9 @@ const handlers = [
       })
     );
   }),
+  rest.patch(`${MOCK_BASED_URL}/member`, async (req, res, ctx) => {
+    return res(ctx.status(200));
+  }),
   rest.get(`${MOCK_BASED_URL}/member/post`, async (req, res, ctx) => {
     const posts: PostWithContent[] = Array(50)
       .fill(0)
@@ -40,7 +43,7 @@ const handlers = [
         member: generateMockMember(idx),
         createdAt: generateRandomDate(),
         views: 1000,
-        totalCommentCnt: 50,
+        totalCommentCnt: 0,
         postCategory: 'QUEUE_STACK_HASH',
         postContent: generateRandomString(2000),
         postDisLikeCnt: generateRandomInt(1000),
