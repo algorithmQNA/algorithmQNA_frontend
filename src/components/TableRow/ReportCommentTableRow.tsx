@@ -9,11 +9,10 @@ import ButtonComponent from '../Button/ButtonComponent';
 import { MemberBrief } from '../../types/member';
 import {
   deleteReportedPostRequest,
-  getReportedPostDetailRequest,
+  getReportedCommentDetailRequest,
 } from '../../apis/adminApi';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import UserProfile from '../UserProfile/UserProfile';
-import { useSearchParams } from 'react-router-dom';
 import IconButton from '../Button/IconButton';
 import { AiOutlineClose } from 'react-icons/ai';
 import { useState } from 'react';
@@ -34,14 +33,13 @@ export default function ReportCommentTableRow({
 }: AdminPageTableRowProps) {
   const reportManageModal = useModal();
   const deletePostModal = useModal();
-  const [searchParams] = useSearchParams();
   const page = 1;
 
   const queryClient = useQueryClient();
 
   //TODO: useInfiniteQuery로 변경
-  const { data } = useQuery(['reportList', page], () =>
-    getReportedPostDetailRequest(id, page)
+  const { data } = useQuery(['reportCommentList', page], () =>
+    getReportedCommentDetailRequest(id, page)
   );
   const { mutate: deleteReportedMutate } = useMutation(
     deleteReportedPostRequest,
@@ -65,8 +63,8 @@ export default function ReportCommentTableRow({
   const handleRemoveBtnClick = () => {
     deletePostModal.openModal();
   };
-
-  if (data?.data)
+  console.log(data);
+  if (data)
     return (
       <>
         {deletePostModal.open && (
@@ -102,20 +100,20 @@ export default function ReportCommentTableRow({
               <section className="flex-grow basis-1/2 h-full overflow-auto">
                 <p className="font-semibold text-left">s{title} 신고사유</p>
                 <div className="bg-box-bg">
-                  {data.data.PostReports.map((report, idx) => {
+                  {data.data.commentReports.map((report, idx) => {
                     return (
                       <div className="w-full border text-left p-2">
                         <div className="w-full flex flex-row justify-between">
                           <div className="flex flex-row gap-2">
                             <input
                               type="checkbox"
-                              checked={checkedList?.has(report.reportPostId)}
+                              checked={checkedList?.has(report.reportCommentId)}
                               onChange={() => {
                                 setCheckedList((prev) => {
                                   const copy = new Set(prev);
-                                  if (copy.has(report.reportPostId))
-                                    copy.delete(report.reportPostId);
-                                  else copy.add(report.reportPostId);
+                                  if (copy.has(report.reportCommentId))
+                                    copy.delete(report.reportCommentId);
+                                  else copy.add(report.reportCommentId);
                                   return copy;
                                 });
                               }}
