@@ -4,7 +4,7 @@ import CommentBadge from './CommentBadge';
 
 const LikeBadge = () => {
   return (
-    <svg width="256" height="256">
+    <svg width="150" height="150">
       <defs>
         <linearGradient id="level4" x1="0" x2="0" y1="1" y2="0">
           <stop offset="0%" stopColor="#8c6eff" />
@@ -23,8 +23,8 @@ const LikeBadge = () => {
           <stop offset="100%" stopColor="#be9345" stopOpacity={0.7} />
         </linearGradient>
       </defs>
-      <rect x="0" y="0" width="256" height="256" rx="128" fill="url(#level3)" />
-      <WriteBadge width="200" height="200" />
+      {/* <rect x="0" y="0" width="256" height="256" rx="128" fill="url(#level3)" /> */}
+      <WriteBadge width="150" height="150" />
     </svg>
   );
 };
