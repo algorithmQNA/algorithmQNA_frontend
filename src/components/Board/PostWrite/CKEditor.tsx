@@ -4,11 +4,12 @@ import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { PostWriteState } from '../../../storage/PostWrite/PostWrite';
 import axios from 'axios';
+import {privateRequest} from "../../../apis/instance";
 
 export default function PostWriteCKEditor() {
   const [state, setState] = useRecoilState(PostWriteState);
   const [flag, setFlag] = useState(false);
-  const link = 'http://13.54.50.218:8080';
+  const link = 'https://algoqna.ddns.net';
 
   const customUploadAdapter = (loader: any) => {
     return {
@@ -16,9 +17,8 @@ export default function PostWriteCKEditor() {
         return new Promise((resolve, reject) => {
           const data = new FormData();
           loader.file.then((file: File) => {
-            data.append('name', file.name);
             data.append('file', file);
-            axios
+            privateRequest
               .post('/upload', data)
               .then((res) => {
                 if (!flag) {

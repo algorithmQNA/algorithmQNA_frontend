@@ -1,62 +1,10 @@
 import {useNavigate} from "react-router-dom";
 import React, {ChangeEvent, useRef, useState} from "react";
 import {FiBell} from "react-icons/fi";
-import {AlarmType} from "../../../../types/Alarm";
 import {useInfiniteQuery} from "react-query";
-import {getNewAlarm, getOldAlarm} from "./test";
-
-const data:AlarmType[] = [
-    {
-        "alarmId": 2097,
-        "subjectMemberName": "testMember5",
-        "eventURL": "/post/4",
-        "checked": false,
-        "alarmType": "COMMENT_LIKE",
-        "commentId": 828,
-        "msg": "testMember5님이 당신의 댓글에 좋아요를 남겼습니다.",
-        "createdAt": "2023-05-26T17:11:17.506706"
-    },
-    {
-        "alarmId": 2098,
-        "subjectMemberName": "testMember5",
-        "eventURL": "/post/4",
-        "checked": false,
-        "alarmType": "COMMENT_LIKE",
-        "commentId": 827,
-        "msg": "testMember5님이 당신의 댓글에 좋아요를 남겼습니다.",
-        "createdAt": "2023-05-26T17:11:17.505708"
-    },
-    {
-        "alarmId": 2099,
-        "subjectMemberName": "testMember5",
-        "eventURL": "/post/4",
-        "checked": false,
-        "alarmType": "COMMENT_LIKE",
-        "commentId": 828,
-        "msg": "testMember5님이 당신의 댓글에 좋아요를 남겼습니다.",
-        "createdAt": "2023-05-26T17:11:17.506706"
-    },
-    {
-        "alarmId": 2100,
-        "subjectMemberName": "testMember5",
-        "eventURL": "/post/4",
-        "checked": false,
-        "alarmType": "COMMENT_LIKE",
-        "commentId": 827,
-        "msg": "testMember5님이 당신의 댓글에 좋아요를 남겼습니다.",
-        "createdAt": "2023-05-26T17:11:17.505708"
-    },
-    {
-        "alarmId": 2101,
-        "subjectMemberName": "testMember5",
-        "eventURL": "/post/4",
-        "checked": false,
-        "alarmType": "COMMENT_LIKE",
-        "commentId": 828,
-        "msg": "testMember5님이 당신의 댓글에 좋아요를 남겼습니다.",
-        "createdAt": "2023-05-26T17:11:17.506706"
-    },
-]
+import {getOldAlarm} from "./test";
+import {AlarmType} from "../../../../types/Alarm";
+import {FaBell} from "react-icons/fa";
 
 
 export default function HeaderUserBlock(){
@@ -64,19 +12,7 @@ export default function HeaderUserBlock(){
     const navigate = useNavigate();
     const [state, setState] = useState({
         alarm: false,
-        test:false
     })
-    const newData = useInfiniteQuery(['new-alarm'],getNewAlarm,{
-        getNextPageParam:(lastPage, allPages)=>{
-            return true
-        },
-        select:(prev)=>{
-            const copy = {...prev}
-            copy.pages = prev.pages.reverse();
-            return {...copy}
-        }
-    })
-
     const oldData = useInfiniteQuery(['old-alarm'],getOldAlarm,{
         getNextPageParam:(lastPage, allPages)=>{
             return allPages[0].length >= 10
@@ -98,14 +34,11 @@ export default function HeaderUserBlock(){
             },
         });
     };
-
-    const [result,setResult] = useState<AlarmType[]>(data)
     const button = useRef<HTMLButtonElement>(null)
     const childHeight = 50
     const getNewData = (e:React.UIEvent<HTMLUListElement>) =>{
         if(!button.current) return
         if(e.currentTarget.scrollTop === 0){
-
             oldData.fetchPreviousPage({pageParam:{page:1,direction:'prev'}})
         }
         else if(e.currentTarget.scrollTop + (e.currentTarget.clientHeight-childHeight) >= button.current?.offsetTop){
@@ -113,24 +46,12 @@ export default function HeaderUserBlock(){
                 const page = oldData.data?.pages[oldData.data?.pages.length-1][oldData.data?.pages[oldData.data?.pages.length-1].length-1].alarmId;
                 oldData.fetchNextPage({pageParam:{page,direction:'next'}})
             }
-            setResult([...result,{
-                "alarmId": result[result.length-1].alarmId+1,
-                "subjectMemberName": "testMember5",
-                "eventURL": "/post/4",
-                "checked": false,
-                "alarmType": "COMMENT_LIKE",
-                "commentId": 828,
-                "msg": "testMember5님이 당신의 댓글에 좋아요를 남겼습니다.",
-                "createdAt": "2023-05-26T17:11:17.506706"
-            }])
         }
     }
-
-
     return (
         <div
             className={
-                'flex items-center w-full col-span-1 justify-end gap-3 md:gap-6 hover:text-primary'
+                'flex items-center w-fit col-span-1 justify-end gap-3 md:gap-6'
             }
         >
             <label className={'relative'}>
@@ -140,9 +61,9 @@ export default function HeaderUserBlock(){
                     checked={state.alarm}
                     onChange={setDisplayAlarm}
                 />
-                <span>
-          <FiBell size={26} />
-        </span>
+                <span className={'bell-shake block hover:text-primary hover:cursor-pointer'}>
+                    <FaBell size={24}/>
+                </span>
                 {state.alarm && (
                     <ul
                         className={
@@ -151,22 +72,8 @@ export default function HeaderUserBlock(){
                         onScroll={getNewData}
                     >
                         {
-                            newData.data?.pages[0] !== undefined &&
-                            newData.data?.pages.map((li)=>(
-                                li.map((i:AlarmType)=>(
-                                    <li
-                                        key={i.alarmId}
-                                        className={`text-content hover:text-primary text-sm h-[${childHeight}px] flex items-center`}
-                                        onClick={() => post(1)}
-                                    >
-                                        <span>{i.msg}</span>
-                                    </li>
-                                ))
-                            ))
-                        }
-                        {
                             oldData.data?.pages.map((li)=>(
-                                li.map((i:AlarmType)=>(
+                                li.data.alarms.map((i:AlarmType)=>(
                                     <li
                                         key={i.alarmId}
                                         className={`text-content hover:text-primary text-sm h-[${childHeight}px] flex items-center`}

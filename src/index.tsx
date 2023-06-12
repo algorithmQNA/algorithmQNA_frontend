@@ -5,10 +5,10 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { RecoilRoot } from 'recoil';
 import { BrowserRouter } from 'react-router-dom';
 
-if (process.env.NODE_ENV === 'development' && process.env.REACT_APP_MOCK) {
-  const { worker } = require('./mocks/browser');
-  worker.start({ quiet: true, onUnhandledRequest: 'bypass' });
-}
+// if (process.env.NODE_ENV === 'development' && process.env.REACT_APP_MOCK) {
+//   const { worker } = require('./mocks/browser');
+//   worker.start({ quiet: true, onUnhandledRequest: 'bypass' });
+// }
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

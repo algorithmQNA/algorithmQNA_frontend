@@ -5,10 +5,10 @@ import {
 import { PostCategoryKey, PostTypeKey, SortOption } from '../types/post';
 import { privateRequest } from './instance';
 import {
-  PostCategory,
-  PostListParams,
-  PostType,
-  PostView,
+    PostCategory,
+    PostListParams, PostSort,
+    PostType,
+    PostView, ReportCategory,
 } from '../types/Post/Post';
 
 // 게시물 조회 API
@@ -66,25 +66,37 @@ export const deletePostRequest = (postId: string) =>
 
 // 카테고리별 게시물 조회 API
 export const getCategoryPostsRequest = (
-  categoryId: string,
-  sort: SortOption,
-  page: number
+  postCategory: PostCategory,
+  sort: PostSort,
+  page: number,
+  postType: PostType,
+  hasCommentCond?:boolean,
+  keyWordCond?:string,
+  titleCond?:string,
+  memberNameCond?:string,
+  isAcceptedCommentCond?:boolean
 ) =>
   privateRequest.get<GetCategoryPostsResponse>('post', {
     params: {
-      category: categoryId,
-      sort,
-      page,
+        postCategory,
+        sort,
+        page,
+        postType,
+        hasCommentCond,
+        keyWordCond,
+        titleCond,
+        memberNameCond,
+        isAcceptedCommentCond
     },
   });
 
 // 게시물 추천 API
-export const recommendPostRequest = (postId: string) =>
-  privateRequest.post(`post/${postId}/like`);
+export const recommendPostRequest = (postId: number,{isLike,cancel}:{isLike:boolean,cancel:boolean}) =>
+  privateRequest.post(`post/${postId}/like`,{isLike,cancel});
 
 // 게시물 신고 API
-export const reportPostRequest = (postId: string) =>
-  privateRequest.post(`post/${postId}/report`);
+export const reportPostRequest = (postId: string,{category,detail}:{category:ReportCategory,detail:string}) =>
+  privateRequest.post(`post/${postId}/report`,{category,detail});
 
 //게시물 이미지 업로드 API
 export const imagePostRequest = (form: FormData) =>
@@ -92,3 +104,6 @@ export const imagePostRequest = (form: FormData) =>
     status: { code: number; message: string };
     data: { image_url: string };
   }>('/image', form);
+
+
+//대시보드

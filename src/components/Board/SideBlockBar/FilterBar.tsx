@@ -2,9 +2,9 @@ import {FiCircle, FiX} from "react-icons/fi";
 import {useRecoilState} from "recoil";
 import {PostFilterState} from "../../../storage/Post/Post";
 
+
 export default function FilterBar() {
     const [state,setState] = useRecoilState(PostFilterState)
-
     return(
         <div className={'board-side-bar w-full'}>
             <div className={'side-block-title'}>
@@ -23,11 +23,13 @@ export default function FilterBar() {
                             type={'text'}
                             className={'p-1 text-sm border border-baisc focus:border-primary rounded w-full'}
                             placeholder={'검색'}
-                            value={state.memberNameCond}
                             onChange={(e)=>{
-                                setState((prev)=>({
-                                    ...prev,memberNameCond:e.target.value
-                                }))
+                                let timer = setTimeout(()=>{
+                                    setState((prev)=>({
+                                        ...prev,memberNameCond:e.target.value
+                                    }))
+                                },1000)
+                                clearTimeout(timer)
                             }}
                         />
                     </label>
@@ -39,11 +41,12 @@ export default function FilterBar() {
                             type={'text'}
                             className={'p-1 text-sm border border-baisc focus:border-primary rounded w-full'}
                             placeholder={'검색'}
-                            value={state.titleCond}
                             onChange={(e)=>{
-                                setState((prev)=>({
-                                    ...prev,titleCond:e.target.value
-                                }))
+                                setTimeout(()=>{
+                                    setState((prev)=>({
+                                        ...prev,titleCond:e.target.value
+                                    }))
+                                },1000)
                             }}
                         />
                     </label>
@@ -55,11 +58,13 @@ export default function FilterBar() {
                             type={'text'}
                             className={'p-1 text-sm border border-basic focus:border-primary rounded w-full'}
                             placeholder={'검색'}
-                            value={state.keyWordCond}
                             onChange={(e)=>{
-                                setState((prev)=>({
-                                    ...prev,keyWordCond:e.target.value
-                                }))
+                                let timer = setTimeout(()=>{
+                                    setState((prev)=>({
+                                        ...prev,keyWordCond:e.target.value
+                                    }))
+                                },1000)
+                                clearTimeout(timer)
                             }}
                         />
                     </label>
