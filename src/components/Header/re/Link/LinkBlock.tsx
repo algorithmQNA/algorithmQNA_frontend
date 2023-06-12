@@ -8,8 +8,8 @@ export default function HeaderLinkBlock(){
             <a href={'/'} className={'mr-2 md:mr-6'}>
                 Logo
             </a>
-            <a href={'/board/q&a'}>Q&A</a>
-            <a href={'/board/tip'}>꿀팁</a>
+            <a className={'hover:text-primary transition-colors duration-300'} href={'/board/q&a'}>Q&A</a>
+            <a className={'hover:text-primary transition-colors duration-300'} href={'/board/tip'}>꿀팁</a>
         </nav>
     )
 }
