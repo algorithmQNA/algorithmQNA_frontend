@@ -19,11 +19,11 @@ function ReportComment() {
     suspense: true,
   });
 
-  const reportedComments = data?.data.reportComments;
+  const reportComments = data?.data.reportComments;
 
   return (
     <div className="flex flex-col gap-2 ">
-      {reportedComments?.map((comment, idx) => {
+      {reportComments?.map((comment, idx) => {
         const { member, createdAt, postId, content } = comment;
         return (
           <ReportCommentTableRow

@@ -58,10 +58,7 @@ function Modal({
           </div>
           {onConfirm && (
             <div className="flex justify-center gap-4 ">
-              <ButtonComponent
-                onClick={onCancel}
-                className="!bg-white !text-primary"
-              >
+              <ButtonComponent onClick={onCancel} type="outline">
                 취소
               </ButtonComponent>
               <ButtonComponent onClick={onConfirm}>확인</ButtonComponent>
