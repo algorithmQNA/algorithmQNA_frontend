@@ -9,7 +9,7 @@ function Comment() {
   const [searchParams] = useSearchParams();
   const page = searchParams.get('page') || 1;
   const myComments = useQuery(['mycomment', page], () => getMyComments(+page));
-  const comments = myComments.data?.data;
+  const comments = myComments.data?.data.data;
 
   if (!!comments?.comments?.length)
     return (

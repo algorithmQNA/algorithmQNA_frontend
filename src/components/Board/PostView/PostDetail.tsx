@@ -28,7 +28,7 @@ export default function PostViewDetailBlock() {
       }
     },
   });
-  const data = get.data?.data;
+  const data = get.data?.data.data;
 
   return (
     <div>

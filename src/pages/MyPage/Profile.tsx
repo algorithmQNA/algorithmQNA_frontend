@@ -19,8 +19,9 @@ import { useNavigate } from 'react-router-dom';
 
 function Profile() {
   const { id, profile, name } = useRecoilValue(isLogin);
-  const [nickname, setNickname] = useState(name || '');
   const [repeatEmail, setRepeatEmail] = useState('');
+  const [nickname, setNickname] = useState('');
+
   const navigate = useNavigate();
 
   const queryClient = useQueryClient();
@@ -34,7 +35,7 @@ function Profile() {
 
   const memberInfo = useQuery(['memberDetail'], getMemberDetailInfo, {
     onSuccess: (res) => {
-      setNickname(res.data.memberName);
+      setNickname(res.data.data.memberName);
     },
   });
 
@@ -74,8 +75,8 @@ function Profile() {
     }
   };
 
-  const isValidRepeatEmail = repeatEmail === memberInfo.data?.data.memberEmail;
-
+  const isValidRepeatEmail =
+    repeatEmail === memberInfo.data?.data.data.memberEmail;
   return (
     <div>
       {secessionModalOpen && (
@@ -97,8 +98,8 @@ function Profile() {
                 disabled={!isValidRepeatEmail}
                 className="bg-primary border border-primary text-white px-6 py-2 font-semibold text-base rounded-full w-fit disabled:bg-gray-500 disabled:border-none disabled:cursor-not-allowed"
                 onClick={() => {
-                  if (memberInfo.data?.data.memberId)
-                    successUser.mutate(memberInfo.data?.data.memberId);
+                  if (memberInfo.data?.data.data.memberId)
+                    successUser.mutate(memberInfo.data?.data.data.memberId);
                 }}
               >
                 탈퇴
@@ -114,7 +115,7 @@ function Profile() {
             <label htmlFor="name">닉네임</label>
             <input
               id="name"
-              value={memberInfo.data?.data.memberName}
+              value={nickname}
               placeholder="nickname"
               onChange={(e) => {
                 setNickname(e.target.value);
@@ -126,7 +127,7 @@ function Profile() {
             <label htmlFor="email">이메일</label>
             <input
               id="email"
-              defaultValue={memberInfo.data?.data.memberEmail}
+              defaultValue={memberInfo.data?.data.data.memberEmail}
               placeholder="email"
               className="bg-border border border-[#D9D9D9] w-full py-1 px-2 relative rounded text-sm p-0 focus:outline-none hover:cursor-not-allowed"
               disabled
@@ -137,7 +138,7 @@ function Profile() {
           <Rounded
             alt="user profile image"
             src={
-              profile ||
+              memberInfo.data?.data.data.memberProfileUrl ||
               'https://lh3.googleusercontent.com/ogw/AOLn63HADtscguumy1K7WcYQFGzKCnZLaQa2_f4YwqM66Q=s32-c-mo'
             }
             width="160px"

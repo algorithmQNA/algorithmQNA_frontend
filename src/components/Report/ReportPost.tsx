@@ -19,7 +19,10 @@ function ReportPost() {
     suspense: true,
   });
 
-  const reportedList = data?.data.posts;
+  const reportedList = data?.data.data.posts;
+  const isEmpty = !data?.data.data.posts.length;
+
+  if (isEmpty) return <div>신고내역이 없습니다.</div>;
 
   return (
     <div className="flex flex-col gap-2 ">
@@ -36,7 +39,10 @@ function ReportPost() {
           />
         );
       })}
-      <Pagination postLength={30} listLength={5} />
+      <Pagination
+        postLength={data?.data.data.totalPageSize || 0}
+        listLength={data?.data.data.size || 0}
+      />
     </div>
   );
 }

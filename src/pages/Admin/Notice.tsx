@@ -11,6 +11,7 @@ import { SelectBox, SelectOption } from '../../components/DropDown/SelectBox';
 import { POST_CATEGORY } from '../../constants/PostCategory';
 import Pagination from '../../components/Pagination/Pagination';
 import { PostCategoryKey } from '../../types/post';
+import ErrorBoundary from '../../components/ErrorBoundary';
 
 const INITIAL_POST_CATEGORY = 'BRUTE_FORCE';
 
@@ -27,10 +28,12 @@ const NotificationRow = () => {
         postCategory: tag as PostCategoryKey,
         page: +page,
       }),
+    onError: () => {},
     suspense: true,
+    useErrorBoundary: true,
   });
 
-  const data = notificationQuery.data?.data;
+  const data = notificationQuery.data?.data.data;
   const isEmptyData = !data?.posts?.length;
 
   if (!isEmptyData)
@@ -107,7 +110,9 @@ function Notice() {
           </div>
         }
       >
-        <NotificationRow />
+        <ErrorBoundary>
+          <NotificationRow />
+        </ErrorBoundary>
       </Suspense>
     </div>
   );

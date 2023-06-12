@@ -2,7 +2,8 @@ import './style.css';
 import PageTitle from '../../../components/PageTitle/PageTitle';
 import PostViewDetailBlock from '../../../components/Board/PostView/PostDetail';
 import PostViewContent from '../../../components/Board/PostView/PostContent';
-import PostViewKeywordBlock from "../../../components/Board/PostView/PostKeyword";
+import PostViewKeywordBlock from '../../../components/Board/PostView/PostKeyword';
+import CommentTest from '../../CommentTest';
 
 export default function PostViewPage() {
   return (
@@ -12,8 +13,9 @@ export default function PostViewPage() {
         <div className={'content-set'}>
           <PostViewDetailBlock />
           <PostViewContent />
-          <PostViewKeywordBlock/>
+          <PostViewKeywordBlock />
         </div>
+        <CommentTest />
       </div>
     </div>
   );
