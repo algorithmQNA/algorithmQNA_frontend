@@ -12,11 +12,13 @@ interface MyPageTableRowProps {
   views: number;
   totalCommentCnt: number;
   postId: number;
+  comment?: boolean;
 }
 export default function MyPageTableRow({
   postTitle,
   createdAt,
   views,
+  comment,
   totalCommentCnt,
   postId,
 }: MyPageTableRowProps) {
@@ -37,26 +39,30 @@ export default function MyPageTableRow({
                 {setDateWritten(createdAt)}
               </span>
             </div>
-            <div>
-              <AiOutlineEye style={{ display: 'inline' }} />
-              <span className={'text-[#9ca3af] text-xs text-right'}>
-                {views}회
-              </span>
-            </div>
-            <div>
-              <AiOutlineComment style={{ display: 'inline' }} />
-              <span className={'text-[#9ca3af] text-xs text-right'}>
-                {totalCommentCnt}회
-              </span>
-            </div>
+            {!comment && (
+              <>
+                <div>
+                  <AiOutlineEye style={{ display: 'inline' }} />
+                  <span className={'text-[#9ca3af] text-xs text-right'}>
+                    {views}회
+                  </span>
+                </div>
+                <div>
+                  <AiOutlineComment style={{ display: 'inline' }} />
+                  <span className={'text-[#9ca3af] text-xs text-right'}>
+                    {totalCommentCnt}회
+                  </span>
+                </div>
+              </>
+            )}
           </div>
         </div>
         <div className="flex gap-2 text-right absolute bottom-4 right-4">
-          {hasNoComments && (
+          {!comment && hasNoComments && (
             <ButtonComponent type="outline">끌어올리기</ButtonComponent>
           )}
           <ButtonComponent onClick={(e) => e.preventDefault()}>
-            <Link to={`/post/view?pid=${postId}`}>글 보기</Link>
+            <Link to={`/post/view?pid=${postId}`}>댓글단 글 보기</Link>
           </ButtonComponent>
         </div>
       </div>

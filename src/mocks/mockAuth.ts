@@ -84,7 +84,7 @@ const handlers = [
     return res(
       ctx.status(200),
       ctx.json({
-        posts: comments.slice(0, 20),
+        comments: comments.slice(0, 20),
         prev: false,
         totalPageSize: 50,
         page: 1,
