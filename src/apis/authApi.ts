@@ -4,7 +4,6 @@ import {
   GetMemberDetailInfoResponse,
   GetMyCommentsResponse,
   GetMyPostsResponse,
-  UpdateMemberDetailInfoResponse,
   UpdateProfileImgResponse,
 } from '../types/apis/authResponseType';
 import { privateRequest } from './instance';
@@ -23,6 +22,9 @@ export const getAuthRequest = (code: string, state: string) =>
 export const refreshAccessTokenRequest = () =>
   axios.get('/oauth/token/renew', { withCredentials: true });
 
+export const successionUserRequest = (memberId: string | number) =>
+  privateRequest.delete(`member/${memberId}`);
+
 /** 2글자 이상 20글자 미만 */
 // 닉네임 업데이트 API
 export const updateMemberNicknameRequest = (memberName: string) =>
@@ -30,9 +32,17 @@ export const updateMemberNicknameRequest = (memberName: string) =>
 
 // 프로필 이미지 업데이트 API ,확장자 png/jpeg
 export const updateProfileImgRequest = (file: FormData) =>
-  privateRequest.post<UpdateProfileImgResponse>('member/profile', {
-    file,
-  });
+  privateRequest.post<UpdateProfileImgResponse>(
+    'member/profile',
+    {
+      file,
+    },
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }
+  );
 
 //회원정보 조회 API
 export const getMemberDetailInfo = () =>
