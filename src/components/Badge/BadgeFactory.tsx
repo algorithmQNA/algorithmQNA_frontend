@@ -10,7 +10,7 @@ type BadgeFactoryProps = {
 
 const MAX_LEVEL = 5;
 
-const base = [0, 10, 20, 30, 40, 50];
+const base = [0, 10, 30, 60, 100, 150];
 
 const badgeInfo = {
   comment: {
@@ -21,7 +21,7 @@ const badgeInfo = {
   },
   like: {
     name: '추천 사냥꾼',
-    target: 'comment',
+    target: 'post',
     description: (lv: 1 | 2 | 3 | 4 | 5) =>
       `추천받은 갯수가 ${10 * lv}개를 돌파했어요`,
   },
@@ -44,9 +44,13 @@ function BadgeFactory({ type, level }: BadgeFactoryProps) {
         src="https://dummyimage.com/sqrpop"
       />
       <div className="flex flex-col gap-1">
-        <p className="text-xl font-semibold">프로답변러 Lv.{level}</p>
+        <p className="text-xl font-semibold">
+          {badgeInfo[type].name} Lv.{level}
+        </p>
         <p className="font-light text-sm"> {badge.description(level)}</p>
-        {!isMaximumLevel && (
+        {isMaximumLevel ? (
+          <p className="font-light text-xs">최대 레벨에 도달했습니다</p>
+        ) : (
           <p className="font-light text-xs">
             <span className="bg-box-bg rounded-sm ">다음 레벨 해금 조건</span>
             {'  '}
