@@ -16,6 +16,7 @@ import CommentTest from './pages/CommentTest';
 import NoticeEditor from './components/Notice/NoticeEditor';
 import ReportComment from './components/Report/ReportComment';
 import NoticeModifyEditor from './components/Notice/NoticeModifyEditor';
+import Comment from './components/MyPage/Comment/Comment';
 
 const adminPages = {
   base: 'admin',
