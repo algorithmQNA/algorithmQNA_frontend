@@ -15,14 +15,7 @@ function CommentBadge(props: SVGProps<SVGSVGElement>) {
       y="0"
       viewBox="0 0 512 512"
     >
-      <rect
-        x="-2.4"
-        y="-2.4"
-        width="512"
-        height="512"
-        rx="256"
-        fill="url(#level1)"
-      ></rect>
+      <rect x="-2.4" y="-2.4" rx="128" fill="url(#level1)"></rect>
       <g>
         <path
           fill="#dfdfdf"

@@ -4,15 +4,15 @@ type LikeBadgeProps = {
   level: 0 | 1 | 2 | 3 | 4 | 5;
 };
 
-function LikeBadge(props: SVGProps<SVGSVGElement>) {
+function LikeBadge2(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       fill="#000000"
-      viewBox="-2.4 -2.4 28.80 28.80"
+      viewBox="-2.4 -2.4 30 30"
       xmlns="http://www.w3.org/2000/svg"
       transform="rotate(180)"
-      width="360"
-      height="360"
+      width="100"
+      height="100"
       {...props}
     >
       <defs>
@@ -27,4 +27,4 @@ function LikeBadge(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-export default LikeBadge;
+export default LikeBadge2;
