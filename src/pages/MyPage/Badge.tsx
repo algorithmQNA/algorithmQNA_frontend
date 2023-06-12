@@ -1,19 +1,18 @@
 import React from 'react';
 import { useQuery } from 'react-query';
-import { getMyBadges } from '../../apis/authApi';
+import { getMemberDetailInfo, getMyBadges } from '../../apis/authApi';
 import Loading from '../../components/Loading/Loading';
 import BadgeFactory from '../../components/Badge/BadgeFactory';
 import NoBadges from '../../components/Badge/NoBadges';
 
 function Badge() {
   //const {} = useRecoilValue(isLogin)
-  const { isLoading, data } = useQuery(['mypage', 'badge'], getMyBadges, {
-    staleTime: 1000 * 60,
-    onSettled: (t) => {
-      console.log('DONE~', t);
-    },
-  });
-  if (data) {
+  const memberInfo = useQuery(['memberDetail'], getMemberDetailInfo);
+  const data = memberInfo.data;
+
+  if (memberInfo.isLoading) return <Loading />;
+
+  if (data?.data) {
     const { memberCommentBadge, memberLikeBadge, memberPostBadge } =
       data?.data as unknown as {
         memberCommentBadge: 0 | 1 | 2 | 3 | 4 | 5;
@@ -45,9 +44,6 @@ function Badge() {
     );
   }
 
-  if (isLoading) {
-    <Loading />;
-  }
   return <NoBadges />;
 }
 

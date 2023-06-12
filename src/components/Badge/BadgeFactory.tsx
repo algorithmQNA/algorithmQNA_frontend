@@ -1,5 +1,8 @@
 import React from 'react';
 import Rounded from '../RoundedImage/RoundedImage';
+import CommentBadge from './CommentBadge';
+import { LikeBadge, WriteBadge } from '.';
+import LikeBadge2 from './LikeBadge';
 
 type badgeType = 'comment' | 'like' | 'post';
 
@@ -18,19 +21,28 @@ const badgeInfo = {
     target: 'comment',
     description: (lv: 1 | 2 | 3 | 4 | 5) =>
       `답변 작성 갯수가 ${10 * lv}개를 돌파했어요`,
+    component: CommentBadge,
   },
   like: {
     name: '추천 사냥꾼',
     target: 'post',
     description: (lv: 1 | 2 | 3 | 4 | 5) =>
       `추천받은 갯수가 ${10 * lv}개를 돌파했어요`,
+    component: LikeBadge,
   },
   post: {
     name: '추천 사냥꾼',
     target: 'like',
     description: (lv: 1 | 2 | 3 | 4 | 5) =>
       `좋아요 갯수가 ${10 * lv}개를 돌파했어요`,
+    component: LikeBadge,
   },
+};
+
+const Badge = ({ type }: { type: string }) => {
+  if (type === 'like') return <LikeBadge2 />;
+  if (type === 'post') return <WriteBadge />;
+  if (type === 'comment') return <CommentBadge />;
 };
 
 function BadgeFactory({ type, level }: BadgeFactoryProps) {
@@ -38,11 +50,7 @@ function BadgeFactory({ type, level }: BadgeFactoryProps) {
   const isMaximumLevel = level === MAX_LEVEL;
   return (
     <div className="flex items-center gap-3  rounded-md border-border border p-4">
-      <Rounded
-        alt="뱃지이미지"
-        width={100}
-        src="https://dummyimage.com/sqrpop"
-      />
+      {Badge({ type })}
       <div className="flex flex-col gap-1">
         <p className="text-xl font-semibold">
           {badgeInfo[type].name} Lv.{level}
