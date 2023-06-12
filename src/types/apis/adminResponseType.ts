@@ -1,6 +1,8 @@
 import { FlatComment } from '../comment';
+import { MemberBrief } from '../member';
 import { Pagination } from '../pagination';
 import { PostWithContent, ReportedPostDetail } from '../post';
+import { ReportComment } from '../report';
 
 export type GetReportedPostListResponse = {
   posts: PostWithContent[];
@@ -13,11 +15,8 @@ export type GetReportedCommentListResponse = {
 export type GetReportedPostDetailResponse = ReportedPostDetail;
 
 export type GetReportedCommentDetailResponse = {
+  postId: number;
   commentId: number;
-  commentContent: string;
-  memberName: string;
-  reportMemberName: string;
-  createdAt: string;
-  reason: string;
-  otherReason?: string;
-};
+  member: MemberBrief;
+  commentReports: ReportComment[];
+} & Pagination;
