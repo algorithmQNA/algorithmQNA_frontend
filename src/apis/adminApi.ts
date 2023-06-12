@@ -32,7 +32,7 @@ export const getReportedCommentDetailRequest = (
   page: number
 ) =>
   privateRequest.get<GetReportedCommentDetailResponse>(
-    `admin/report/comment/${commentId}?page=${page}`
+    `admin/comment/${commentId}?page=${page}`
   );
 
 //게시물 신고요청 취소 API

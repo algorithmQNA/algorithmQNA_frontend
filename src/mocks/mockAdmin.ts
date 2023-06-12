@@ -7,6 +7,8 @@ import {
 } from '../utils/random';
 import { generateMockMember } from './utils/generateMockData';
 import { PostWithContent } from '../types/post';
+import { ReportComment } from '../types/report';
+import { FlatComment } from '../types/comment';
 const MOCK_BASED_URL = process.env.REACT_APP_API_BASE_URL;
 
 /**공지사항 mock 데이터 생성기 */
@@ -110,28 +112,77 @@ const handlers = [
     );
   }),
   rest.get(`${MOCK_BASED_URL}/admin/comment`, async (req, res, ctx) => {
+    const data = Array(20)
+      .fill(0)
+      .map((t) => ({
+        commentId: generateRandomInt(57),
+        content: generateRandomString(20),
+        createdAt: generateRandomDate(),
+        dislikeCnt: generateRandomInt(20),
+        likeCnt: generateRandomInt(20),
+        member: generateMockMember(10),
+        postId: generateRandomInt(34000),
+        updatedAt: generateRandomDate(),
+      }));
     return res(
       ctx.status(200),
       ctx.json({
-        reportComments: new Array(50).fill(0).map((idx) => ({
-          postId: generateRandomInt(100),
-          commentId: generateRandomInt(200),
-          member: generateMockMember(idx),
-          content: generateRandomString(),
-          createdAt: generateRandomDate(),
-          updatedAt: generateRandomDate(),
-          likeCnt: generateRandomInt(10),
-          dislikeCnt: generateRandomInt(20),
-        })),
-
+        reportComments: data,
+        totalPageSize: data.length,
         page: 1,
-        totalPageSizes: 10,
         next: true,
-        prev: false,
-        size: 10,
+        prev: true,
+        size: 20,
       })
     );
   }),
+  /**신고된 글 mock */
+  rest.get(
+    `${MOCK_BASED_URL}/admin/comment/:commentId`,
+    async (req, res, ctx) => {
+      console.log('WHY?');
+      const { commentId } = req.params;
+      const page = req.url.searchParams.get('page') || 0;
+
+      return res(
+        ctx.status(200),
+        ctx.json({
+          postId: 20,
+          commentId: 10,
+          member: {
+            memberId: 11,
+            memberName: '욕한사람',
+            memberCommentBadge: 1,
+            memeberPostBadge: 0,
+            memberLikeBadge: 0,
+            memberProfileUrl: 'https://picsum.photos/200',
+          },
+          commentReports: Array(20)
+            .fill(0)
+            .map((_, idx) => ({
+              reportPostId: 12 + idx,
+              member: {
+                memberId: 17 + idx,
+                memberName: `신고한 사람${idx + 1}`,
+                memberCommentBadge: generateRandomInt(5),
+                memeberPostBadge: generateRandomInt(5),
+                memberLikeBadge: generateRandomInt(5),
+                memberProfileUrl: 'https://picsum.photos/200',
+              },
+              category: Object.keys(REPORT_MAP)[generateRandomInt(7)],
+              detail: null,
+              updatedAt: generateRandomDate(),
+            })),
+          page,
+          totalPageSize: 10,
+          next: true,
+          prev: false,
+          size: 10,
+          totalReportedCnt: 100,
+        })
+      );
+    }
+  ),
 ];
 
 export default handlers;
