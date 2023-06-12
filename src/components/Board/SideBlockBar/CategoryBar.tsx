@@ -6,18 +6,24 @@ import {PostCategory} from "../../../types/Post/Post";
 
 export default function CategoryBar() {
   const [state,setState] = useRecoilState(PostFilterState)
-  const list = ['Brute Force','TWO_POINTER','DP','Queue / Hash / Stack','Graph','Greedy','BINARY_SEARCH','Sort','BFS / DFS'];
+
+  const category = [
+      {name:'Brute Force',value:'BRUTE_FORCE'},
+      {name:'Two Pointer',value:'TWO_POINTER'},
+      {name:'DP',value:'DP'},
+      {name:'Queue / Stack / Hash',value:'QUEUE_STACK_HASH'},
+      {name:'Graph',value:'GRAPH'},
+      {name:'Greedy',value:'GREEDY'},
+      {name:'Binary Search',value:'BINARY_SEARCH'},
+      {name:'Sort',value:'SORT'},
+      {name:'DFS / BFS',value:'DFS_BFS'},
+  ]
 
   const changeStart = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value as PostCategory;
     if(e.target.checked){
         setState((prev)=>({
             ...prev,postCategory:value
-        }))
-    }
-    else{
-        setState((prev)=>({
-            ...prev,postCategory:''
         }))
     }
   };
@@ -31,20 +37,22 @@ export default function CategoryBar() {
         </p>
       </div>
       <ul className={'select-filter side-block-ul'}>
-        {list.map((li) => (
-          <label key={li} className={'side-block-li'}>
-            <input
-              type={'checkbox'}
-              value={li}
-              className={'hidden'}
-              checked={state.postCategory === li}
-              onChange={changeStart}
-            />
-            <p>
-              <span>{li}</span>
-            </p>
-          </label>
-        ))}
+          {
+              category.map((li)=>(
+                  <label key={li.value} className={'side-block-li'}>
+                      <input
+                          type={'radio'}
+                          value={li.value}
+                          className={'hidden'}
+                          checked={state.postCategory === li.value}
+                          onChange={changeStart}
+                      />
+                      <p>
+                          <span>{li.name}</span>
+                      </p>
+                  </label>
+              ))
+          }
       </ul>
     </div>
   );

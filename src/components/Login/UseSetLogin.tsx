@@ -31,10 +31,10 @@ export default function useSetLogin({ code, state }: Props) {
         name,
         profile,
       }));
-      nav('/');
-      alert('로그인에 성공했습니다.');
     } catch (err) {
-      nav('/error');
+      alert('로그인에 실패했습니다.')
+    } finally {
+      nav('/')
     }
   };
   useEffect(() => {

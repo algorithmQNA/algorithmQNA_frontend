@@ -32,6 +32,7 @@ export interface PostListParams{
 export type PostType = 'QNA' | 'TIP' | 'NOTICE'
 export type PostCategory = 'BRUTE_FORCE' | 'TWO_POINTER' | 'DP' | 'QUEUE_STACK_HASH' | 'GRAPH' | 'GREEDY' | 'BINARY_SEARCH' | 'SORT' | 'DFS_BFS'
 export type PostSort = 'latestDesc' | 'latestAsc' | 'commentCntAsc' | 'commentCntDesc' | 'likeAsc' | 'likeCntAsc' | 'viewCntAsc' | 'viewCntDesc' | 'popular'
+export type ReportCategory = 'SLANG' | 'POLITICAL' | 'AD' | 'INSULT' | 'LUSTFUL' | 'OUT_OF_TOPIC' | 'OUT_OF_FORMAT' | 'ETC'
 export interface PostViewMember{
     "memberId": number,
     "memberName": string,
@@ -94,8 +95,8 @@ export interface PostWrite{
     imageIds:number[]
 }
 export interface PostFilter{
-    sort:PostSort | '',
-    postCategory:PostCategory | '',
+    sort:PostSort,
+    postCategory:PostCategory,
     hasCommentCond:boolean | undefined,
     keyWordCond:string,
     titleCond:string,

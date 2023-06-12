@@ -2,28 +2,31 @@ import question from '../../assets/images/question.png';
 import tip from '../../assets/images/tip.png';
 import write from '../../assets/images/write.png';
 import MainPageMove from '../../components/DashBoard/PageMove';
-import PostTableRow from '../../components/TableRow/PostTableRow';
-import SelectKind from '../../components/DashBoard/SelectKind';
 import PageTitle from '../../components/PageTitle/PageTitle';
-import { useMutation, useQuery } from 'react-query';
-import axios from 'axios';
-import { PostRow } from '../../types/Post/Post';
-import { useRecoilValue } from 'recoil';
-import { DashBoardState } from '../../storage/Dash/DashBoard';
-import { createPostRequest } from '../../apis/postApi';
+import { useQuery } from 'react-query';
+import {getCategoryPostsRequest} from '../../apis/postApi';
+import SelectTabBlock from "../../components/DashBoard/SelectTab/SelectTabBlock";
+import {useRecoilValue} from "recoil";
+import {DashBoardState} from "../../storage/Dash/DashBoard";
+import {useEffect} from "react";
+import {AxiosError} from "axios";
+import {useLocation, useNavigate} from "react-router-dom";
 
 export default function DashBoardPage() {
-  const select = useRecoilValue(DashBoardState);
-  const { data, isLoading } = useQuery('dashboard-post', async () => {
-    const result = await axios.get(
-      '/api/post?postType=QNA&page=1&sort=latestDesc&postCategory=DP'
-    );
-    return result.data;
+  const nav = useNavigate()
+  const state = useRecoilValue(DashBoardState)
+  const { data, isLoading,refetch } = useQuery('dashboard-post', ()=>getCategoryPostsRequest('DP','latestDesc',1,state.select),{
+    onError:(error:AxiosError)=>{
+      if(error.status === 403){
+        nav('/access')
+      }
+    }
   });
-  const { mutate } = useMutation(createPostRequest, {
-    onSuccess: (t) => console.log('통신 성공', t),
-    onError: (p) => console.log('error'),
-  });
+  useEffect(()=>{
+    if(!isLoading){
+      refetch()
+    }
+  },[state.select])
   return (
     <div>
       <PageTitle>대시보드</PageTitle>
@@ -49,13 +52,10 @@ export default function DashBoardPage() {
           />
         </div>
         <div>
-          <div className={'dash-post-tab'}>
-            <SelectKind text={'질문&답변'} kind={'q&a'} />
-            <SelectKind text={'팁'} kind={'tip'} />
-          </div>
+          <SelectTabBlock/>
           <div className={'dash-post-li'}>
-            {!isLoading &&
-              data.posts.map((li: PostRow) => <PostTableRow data={li} />)}
+            {/*{!isLoading &&*/}
+            {/*  data.posts.map((li: PostRow) => <PostTableRow key={li.postId} data={li} />)}*/}
           </div>
         </div>
       </div>
