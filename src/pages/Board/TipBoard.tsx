@@ -27,8 +27,9 @@ export default function TipBoardPage() {
   const state = useRecoilValue(PostFilterState)
   const {data,isLoading,refetch} = useQuery('tip-list',()=>{
     return getCategoryPostsRequest(
-        state.postCategory,
-        state.sort,query,
+        state.postCategory||'BRUTE_FORCE',
+        state.sort || 'LATESTASC',
+        query,
         'QNA',
         state.hasCommentCond,
         state.keyWordCond,

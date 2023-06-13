@@ -8,7 +8,7 @@ import {AxiosError} from "axios";
 import {useLocation} from "react-router-dom";
 import {privateRequest} from "../../../../apis/instance";
 import {reportPostRequest} from "../../../../apis/postApi";
-import {ReportCategory} from "../../../../types/Post/Post";
+import { ReportType } from "../../../../types/report";
 
 export default function PostReportButton(){
     const location = useLocation();
@@ -22,7 +22,7 @@ export default function PostReportButton(){
     }
     interface Categorys{
         text:string
-        value:ReportCategory
+        value:ReportType
     }
     const categorys:Categorys[] = [
         {text:'비속어',value:'SLANG'},
@@ -35,7 +35,7 @@ export default function PostReportButton(){
         {text:'기타 발언',value:'ETC'},
     ]
     interface ReportState{
-        category:ReportCategory
+        category:ReportType;
         content:string
     }
     const [state,setState] = useState<ReportState>({
@@ -48,7 +48,7 @@ export default function PostReportButton(){
             ...prev,content: e.target.value
         }))
     }
-    const changeCategory = (value:ReportCategory)=>{
+    const changeCategory = (value:ReportType)=>{
         setState((prev)=>({
             ...prev,category: value
         }))
