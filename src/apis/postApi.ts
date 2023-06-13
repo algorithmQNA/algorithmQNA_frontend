@@ -2,9 +2,10 @@ import {
   GetCategoryPostsResponse,
   GetPostResponse,
 } from '../types/apis/postResponseType';
-import { PostCategoryKey, PostTypeKey, SortOption } from '../types/post';
+
 import { privateRequest } from './instance';
-import { PostCategory, PostType } from '../types/Post/Post';
+import { PostCategory, PostSort, PostType } from '../types/Post/Post';
+import { ReportType } from '../types/report';
 
 // 게시물 조회 API
 export const getPostRequest = (postId: number) =>
@@ -28,13 +29,24 @@ export const createPostRequest = ({
   imageIds: number[];
 }) =>
   privateRequest.post('post', {
-    title: '찐막테스트',
-    content: '마지막테스트입니다.',
-    postCategory: 'DP',
-    postType: 'QNA',
-    keyWords: ['abc'],
-    imageIds,
+    title: title || '가짜 타이틀입니다',
+    content: content || '내용 좀 넣어주세요',
+    type: contentType,
+    sort: 'LATESTASC',
+    categoryName: category,
+    keyWords: keyWords.length ? keyWords : [],
+    imageIds: imageIds.length ? imageIds : [],
   });
+
+// TODO : 실서버 재배포 후에 위의 parameter 아래의 parameter로 변경
+// privateRequest.post('post', {
+//   title: title||'찐막테스트',
+//   content: content||'마지막테스트입니다.',
+//   postCategory: 'DP',
+//   postType: 'NOTICE',
+//   keyWords: ['abc'],
+//   imageIds,
+// });
 
 // 게시물 수정 API
 export const updatePostRequest = (
@@ -61,25 +73,42 @@ export const deletePostRequest = (postId: string) =>
 
 // 카테고리별 게시물 조회 API
 export const getCategoryPostsRequest = (
-  categoryId: string,
-  sort: SortOption,
-  page: number
+  postCategory: PostCategory,
+  sort: PostSort,
+  page: number,
+  postType: PostType,
+  hasCommentCond?: boolean,
+  keyWordCond?: string,
+  titleCond?: string,
+  memberNameCond?: string,
+  isAcceptedCommentCond?: boolean
 ) =>
+//TODO: 서버재배포후 categoryName, type 키 원상복구해두기
   privateRequest.get<GetCategoryPostsResponse>('post', {
     params: {
-      category: categoryId,
+      categoryName: postCategory,
       sort,
       page,
+      type: postType,
+      hasCommentCond,
+      keyWordCond,
+      titleCond,
+      memberNameCond,
+      isAcceptedCommentCond,
     },
   });
 
 // 게시물 추천 API
-export const recommendPostRequest = (postId: string) =>
-  privateRequest.post(`post/${postId}/like`);
+export const recommendPostRequest = (
+  postId: number,
+  body: { isLike: boolean; cancel: boolean }
+) => privateRequest.post(`post/${postId}/like`, body);
 
 // 게시물 신고 API
-export const reportPostRequest = (postId: string) =>
-  privateRequest.post(`post/${postId}/report`);
+export const reportPostRequest = (
+  postId: string,
+  body: { category: ReportType; detail: string }
+) => privateRequest.post(`post/${postId}/report`, body);
 
 //게시물 이미지 업로드 API
 export const imagePostRequest = (form: FormData) =>

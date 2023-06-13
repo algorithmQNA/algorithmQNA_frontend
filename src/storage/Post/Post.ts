@@ -4,7 +4,7 @@ import {PostFilter} from "../../types/Post/Post";
 export const PostFilterState = atom<PostFilter>({
     key:'post-option',
     default:{
-        sort:'latestDesc',
+        sort:'LATESTDESC',
         postCategory:'BRUTE_FORCE',
         hasCommentCond:undefined,
         keyWordCond:'',
