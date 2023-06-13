@@ -2,9 +2,10 @@ import {
   GetCategoryPostsResponse,
   GetPostResponse,
 } from '../types/apis/postResponseType';
-import { PostCategoryKey, PostTypeKey, SortOption } from '../types/post';
+
 import { privateRequest } from './instance';
 import { PostCategory, PostSort, PostType } from '../types/Post/Post';
+import { ReportType } from '../types/report';
 
 // 게시물 조회 API
 export const getPostRequest = (postId: number) =>
@@ -82,12 +83,13 @@ export const getCategoryPostsRequest = (
   memberNameCond?: string,
   isAcceptedCommentCond?: boolean
 ) =>
+//TODO: 서버재배포후 categoryName, type 키 원상복구해두기
   privateRequest.get<GetCategoryPostsResponse>('post', {
     params: {
-      postCategory,
+      categoryName: postCategory,
       sort,
       page,
-      postType,
+      type: postType,
       hasCommentCond,
       keyWordCond,
       titleCond,
@@ -97,12 +99,16 @@ export const getCategoryPostsRequest = (
   });
 
 // 게시물 추천 API
-export const recommendPostRequest = (postId: string) =>
-  privateRequest.post(`post/${postId}/like`);
+export const recommendPostRequest = (
+  postId: number,
+  body: { isLike: boolean; cancel: boolean }
+) => privateRequest.post(`post/${postId}/like`, body);
 
 // 게시물 신고 API
-export const reportPostRequest = (postId: string) =>
-  privateRequest.post(`post/${postId}/report`);
+export const reportPostRequest = (
+  postId: string,
+  body: { category: ReportType; detail: string }
+) => privateRequest.post(`post/${postId}/report`, body);
 
 //게시물 이미지 업로드 API
 export const imagePostRequest = (form: FormData) =>
