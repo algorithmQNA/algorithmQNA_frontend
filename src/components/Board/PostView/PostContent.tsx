@@ -34,8 +34,13 @@ export default function PostViewContent() {
           {
               !get.isLoading && data &&
               <div className={'recommend-btn-block'}>
-                  <RecommendBtn checked={data.isLiked}/>
-                  <UnRecommendBtn checked={data.isLiked}/>
+                {/* 
+                  * @author 이진희
+                  * 타입에러때문에 null일 떄 false값으로 처리되도록 해두었습니다.
+                  * 추후에 RecommendBtn, UnRecommendBtn에서 null상태도 처리 해주고 나서 '|| false'는 삭제해주시면 됩니다.
+                  * */}
+                  <RecommendBtn checked={data.isLiked || false}/>
+                  <UnRecommendBtn checked={data.isLiked || false}/>
               </div>
           }
           <PostViewOptionBlock/>
