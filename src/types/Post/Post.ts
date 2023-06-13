@@ -40,16 +40,17 @@ export type PostCategory =
   | 'BINARY_SEARCH'
   | 'SORT'
   | 'DFS_BFS';
+  
 export type PostSort =
-  | 'latestDesc'
-  | 'latestAsc'
-  | 'commentCntAsc'
-  | 'commentCntDesc'
-  | 'likeAsc'
-  | 'likeCntAsc'
-  | 'viewCntAsc'
-  | 'viewCntDesc'
-  | 'popular';
+  | 'LATESTDESC'
+  | 'LATESTASC'
+  | 'COMMENTCNTASC'
+  | 'COMMENTCNTDESC'
+  | 'LIKEASC'
+  | 'LIKECNTASC'
+  | 'VIEWCNTASC'
+  | 'VIEWCNTDESC'
+  | 'POPULAR';
 export interface PostViewMember {
   memberId: number;
   memberName: string;
