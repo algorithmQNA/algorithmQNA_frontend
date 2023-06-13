@@ -3,11 +3,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { setYMD } from '../../../utils/TextProcessing';
 import { getPostRequest } from '../../../apis/postApi';
 import { useEffect, useRef } from 'react';
-import useGetParams from "../../../hooks/useGetParams";
+import useGetParams from '../../../hooks/useGetParams';
 
 export default function PostViewDetailBlock() {
   const nav = useNavigate();
-  const params = useGetParams('pid')
+  const params = useGetParams('pid');
   const query = params ? parseInt(params) : 'a';
   const is = parseInt(query as string);
 
@@ -22,7 +22,8 @@ export default function PostViewDetailBlock() {
       }
     },
   });
-  const data = get.data?.data;
+  const data = get.data?.data.data;
+
   return (
     <div>
       {data !== undefined && (

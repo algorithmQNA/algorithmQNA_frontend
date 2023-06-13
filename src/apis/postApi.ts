@@ -4,16 +4,11 @@ import {
 } from '../types/apis/postResponseType';
 import { PostCategoryKey, PostTypeKey, SortOption } from '../types/post';
 import { privateRequest } from './instance';
-import {
-    PostCategory,
-    PostListParams, PostSort,
-    PostType,
-    PostView, ReportCategory,
-} from '../types/Post/Post';
+import { PostCategory, PostType } from '../types/Post/Post';
 
 // 게시물 조회 API
 export const getPostRequest = (postId: number) =>
-  privateRequest.get<PostView>(`/post/${postId}`);
+  privateRequest.get<GetPostResponse>(`/post/${postId}`);
 
 // 게시물 생성 API
 // TODO:: 테스트를 위해서 다 정해진 값으로 보내놓게 해둠. 사용할 때 원상복구
@@ -66,37 +61,25 @@ export const deletePostRequest = (postId: string) =>
 
 // 카테고리별 게시물 조회 API
 export const getCategoryPostsRequest = (
-  postCategory: PostCategory,
-  sort: PostSort,
-  page: number,
-  postType: PostType,
-  hasCommentCond?:boolean,
-  keyWordCond?:string,
-  titleCond?:string,
-  memberNameCond?:string,
-  isAcceptedCommentCond?:boolean
+  categoryId: string,
+  sort: SortOption,
+  page: number
 ) =>
   privateRequest.get<GetCategoryPostsResponse>('post', {
     params: {
-        postCategory,
-        sort,
-        page,
-        postType,
-        hasCommentCond,
-        keyWordCond,
-        titleCond,
-        memberNameCond,
-        isAcceptedCommentCond
+      category: categoryId,
+      sort,
+      page,
     },
   });
 
 // 게시물 추천 API
-export const recommendPostRequest = (postId: number,{isLike,cancel}:{isLike:boolean,cancel:boolean}) =>
-  privateRequest.post(`post/${postId}/like`,{isLike,cancel});
+export const recommendPostRequest = (postId: string) =>
+  privateRequest.post(`post/${postId}/like`);
 
 // 게시물 신고 API
-export const reportPostRequest = (postId: string,{category,detail}:{category:ReportCategory,detail:string}) =>
-  privateRequest.post(`post/${postId}/report`,{category,detail});
+export const reportPostRequest = (postId: string) =>
+  privateRequest.post(`post/${postId}/report`);
 
 //게시물 이미지 업로드 API
 export const imagePostRequest = (form: FormData) =>
@@ -104,6 +87,3 @@ export const imagePostRequest = (form: FormData) =>
     status: { code: number; message: string };
     data: { image_url: string };
   }>('/image', form);
-
-
-//대시보드

@@ -48,7 +48,7 @@ const handlers = [
     const start = (page - 1) * 10;
     return res(
       ctx.status(200),
-      ctx.json({ list: mockData.slice(start, start + 10) })
+      ctx.json({ data: { list: mockData.slice(start, start + 10) } })
     );
   }),
 
@@ -59,38 +59,40 @@ const handlers = [
     return res(
       ctx.status(200),
       ctx.json({
-        postId: 20,
-        member: {
-          memberId: 11,
-          memberName: '욕한사람',
-          memberCommentBadge: 1,
-          memeberPostBadge: 0,
-          memberLikeBadge: 0,
-          memberProfileUrl: 'https://picsum.photos/200',
-        },
-        PostReports: Array(20)
-          .fill(0)
-          .map((_, idx) => ({
-            reportPostId: 12 + idx,
-            member: {
-              memberId: 17 + idx,
-              memberName: `신고한 사람${idx + 1}`,
-              memberCommentBadge: generateRandomInt(5),
-              memeberPostBadge: generateRandomInt(5),
-              memberLikeBadge: generateRandomInt(5),
-              memberProfileUrl: 'https://picsum.photos/200',
-            },
+        data: {
+          postId: 20,
+          member: {
+            memberId: 11,
+            memberName: '욕한사람',
+            memberCommentBadge: 1,
+            memeberPostBadge: 0,
+            memberLikeBadge: 0,
+            memberProfileUrl: 'https://picsum.photos/200',
+          },
+          PostReports: Array(20)
+            .fill(0)
+            .map((_, idx) => ({
+              reportPostId: 12 + idx,
+              member: {
+                memberId: 17 + idx,
+                memberName: `신고한 사람${idx + 1}`,
+                memberCommentBadge: generateRandomInt(5),
+                memeberPostBadge: generateRandomInt(5),
+                memberLikeBadge: generateRandomInt(5),
+                memberProfileUrl: 'https://picsum.photos/200',
+              },
 
-            category: Object.keys(REPORT_MAP)[generateRandomInt(7)],
-            detail: null,
-            updatedAt: generateRandomDate(),
-          })),
-        page,
-        totalPageSize: 10,
-        next: true,
-        prev: false,
-        size: 10,
-        totalReportedCnt: 100,
+              category: Object.keys(REPORT_MAP)[generateRandomInt(7)],
+              detail: null,
+              updatedAt: generateRandomDate(),
+            })),
+          page,
+          totalPageSize: 10,
+          next: true,
+          prev: false,
+          size: 10,
+          totalReportedCnt: 100,
+        },
       })
     );
   }),
@@ -102,12 +104,14 @@ const handlers = [
       ctx.delay(2000),
       ctx.status(200),
       ctx.json({
-        posts: posts,
-        page: +page,
-        totalPageCount: posts.length,
-        next: true,
-        prev: false,
-        size: 20,
+        data: {
+          posts: posts,
+          page: +page,
+          totalPageCount: posts.length,
+          next: true,
+          prev: false,
+          size: 20,
+        },
       })
     );
   }),
@@ -127,12 +131,14 @@ const handlers = [
     return res(
       ctx.status(200),
       ctx.json({
-        reportComments: data,
-        totalPageSize: data.length,
-        page: 1,
-        next: true,
-        prev: true,
-        size: 20,
+        data: {
+          reportComments: data,
+          totalPageSize: data.length,
+          page: 1,
+          next: true,
+          prev: true,
+          size: 20,
+        },
       })
     );
   }),
@@ -140,45 +146,60 @@ const handlers = [
   rest.get(
     `${MOCK_BASED_URL}/admin/comment/:commentId`,
     async (req, res, ctx) => {
-      console.log('WHY?');
       const { commentId } = req.params;
       const page = req.url.searchParams.get('page') || 0;
 
       return res(
         ctx.status(200),
         ctx.json({
-          postId: 20,
-          commentId: 10,
-          member: {
-            memberId: 11,
-            memberName: '욕한사람',
-            memberCommentBadge: 1,
-            memeberPostBadge: 0,
-            memberLikeBadge: 0,
-            memberProfileUrl: 'https://picsum.photos/200',
+          data: {
+            postId: 20,
+            commentId: 10,
+            member: {
+              memberId: 11,
+              memberName: '욕한사람',
+              memberCommentBadge: 1,
+              memeberPostBadge: 0,
+              memberLikeBadge: 0,
+              memberProfileUrl: 'https://picsum.photos/200',
+            },
+            commentReports: Array(19)
+              .fill(0)
+              .map((_, idx) => ({
+                reportPostId: 12 + idx,
+                member: {
+                  memberId: 17 + idx,
+                  memberName: `신고한 사람${idx + 1}`,
+                  memberCommentBadge: generateRandomInt(5),
+                  memeberPostBadge: generateRandomInt(5),
+                  memberLikeBadge: generateRandomInt(5),
+                  memberProfileUrl: 'https://picsum.photos/200',
+                },
+                category: Object.keys(REPORT_MAP)[generateRandomInt(7)],
+                detail: '',
+                updatedAt: generateRandomDate(),
+              }))
+              .push({
+                reportPostId: 1008,
+                member: {
+                  memberId: 17 + 1008,
+                  memberName: `신고한 사람${1008 + 1}`,
+                  memberCommentBadge: generateRandomInt(5),
+                  memeberPostBadge: generateRandomInt(5),
+                  memberLikeBadge: generateRandomInt(5),
+                  memberProfileUrl: 'https://picsum.photos/200',
+                },
+                category: 'ETC',
+                detail: '기타사유',
+                updatedAt: generateRandomDate(),
+              }),
+            page,
+            totalPageSize: 10,
+            next: true,
+            prev: false,
+            size: 10,
+            totalReportedCnt: 100,
           },
-          commentReports: Array(20)
-            .fill(0)
-            .map((_, idx) => ({
-              reportPostId: 12 + idx,
-              member: {
-                memberId: 17 + idx,
-                memberName: `신고한 사람${idx + 1}`,
-                memberCommentBadge: generateRandomInt(5),
-                memeberPostBadge: generateRandomInt(5),
-                memberLikeBadge: generateRandomInt(5),
-                memberProfileUrl: 'https://picsum.photos/200',
-              },
-              category: Object.keys(REPORT_MAP)[generateRandomInt(7)],
-              detail: null,
-              updatedAt: generateRandomDate(),
-            })),
-          page,
-          totalPageSize: 10,
-          next: true,
-          prev: false,
-          size: 10,
-          totalReportedCnt: 100,
         })
       );
     }
