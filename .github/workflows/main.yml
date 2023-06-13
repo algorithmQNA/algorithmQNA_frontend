@@ -36,7 +36,7 @@ jobs:
         npm install --legacy-peer-deps
         CI='false' npm run build
         echo "산출물"
-        ls dist
+        ls build
         
     - name: push build file to server
       uses: appleboy/scp-action@v0.1.3
