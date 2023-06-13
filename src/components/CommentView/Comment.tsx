@@ -35,15 +35,10 @@ import useModal from '../../hooks/useModal';
 import Modal from '../Modal/Modal';
 import InputText from '../Input/InputText';
 import { REPORT_MAP } from '../../constants/Report';
-import { PostViewComment } from '../../types/Post/Post';
-import { Post } from '../../types/post';
 
-export type CommentViewProps = TopComment & {
-  isLiked: boolean;
-  isPinned: boolean;
-};
-
+export type CommentViewProps = TopComment;
 /**리팩토링 시급!!!! */
+
 function CommentView({
   createdAt = '2023-03-31',
   content,
@@ -87,7 +82,9 @@ function CommentView({
 
       queryClient.setQueryData(POST_QUERY_KEY, (old) => {
         const {
-          data: { commentList },
+          data: {
+            data: { commentList },
+          },
         } = old as { data: GetPostResponse };
         const curComment = commentList.find(
           (comment) => comment.commentId === commentId
@@ -101,9 +98,8 @@ function CommentView({
       });
       return { previous };
     },
-    onSuccess: (T) => console.log(T),
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['post', postId] });
+      // queryClient.invalidateQueries({ queryKey: ['post', postId] });
     },
   });
   //댓글 수정
@@ -113,7 +109,10 @@ function CommentView({
   const { mutate: deleteComment } = useMutation(deleteCommentRequest);
 
   //댓글 채택
-  const { mutate: pinnedComment } = useMutation(pinCommentRequest);
+  const { mutate: pinnedComment } = useMutation(pinCommentRequest, {
+    onSuccess: () => window.alert('채택완료했습니다'),
+    onError: () => window.alert('채택을 실패 했습니다'),
+  });
 
   //댓글 신고
   const { mutate: reportComment } = useMutation(reportCommentRequest);
@@ -135,7 +134,7 @@ function CommentView({
   };
 
   return (
-    <>
+    <div className="w-full">
       {open && (
         <Modal
           title={`${commentId}번 댓글 신고`}
@@ -290,7 +289,7 @@ function CommentView({
           답글 보기
         </IconButton>
       )}
-    </>
+    </div>
   );
 }
 

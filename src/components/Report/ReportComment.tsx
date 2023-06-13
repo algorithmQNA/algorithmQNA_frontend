@@ -19,8 +19,9 @@ function ReportComment() {
     suspense: true,
   });
 
-  const reportComments = data?.data.reportComments;
-
+  const reportComments = data?.data.data.reportComments;
+  const isEmpty = !reportComments?.length;
+  if (isEmpty) return <div>댓글 신고 내역이 없습니다.</div>;
   return (
     <div className="flex flex-col gap-2 ">
       {reportComments?.map((comment, idx) => {
@@ -36,7 +37,10 @@ function ReportComment() {
           />
         );
       })}
-      <Pagination postLength={30} listLength={5} />
+      <Pagination
+        postLength={data?.data.data.totalPageSize || 0}
+        listLength={data?.data.data.size || 0}
+      />
     </div>
   );
 }

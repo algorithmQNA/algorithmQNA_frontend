@@ -81,6 +81,8 @@ export default function ReportPostTableRow({
     reportCancelModal.openModal();
   };
 
+  const isEmpty = !data?.data.data.PostReports.length;
+
   if (data?.data)
     return (
       <>
@@ -113,7 +115,7 @@ export default function ReportPostTableRow({
             <div className="flex justify-stretch w-[70vw] h-[32rem] overflow-auto">
               <section className="flex-grow basis-1/2 h-full overflow-auto">
                 <div className="flex justify-between bg-box-bg p-2 border border-border">
-                  <UserProfile {...data.data.member} />
+                  <UserProfile {...data.data.data.member} />
                   <div className="flex flex-row items-end"></div>
                 </div>
                 <div
@@ -126,50 +128,56 @@ export default function ReportPostTableRow({
               <section className="flex-grow basis-1/2 h-full overflow-auto">
                 <p className="font-semibold text-left">s{title} 신고사유</p>
                 <div className="bg-box-bg">
-                  {data.data.PostReports.map((report, idx) => {
-                    return (
-                      <div
-                        className="w-full border text-left p-2"
-                        key={report.updatedAt}
-                      >
-                        <div className="w-full flex flex-row justify-between">
-                          <div className="flex flex-row gap-2">
-                            <input
-                              type="checkbox"
-                              checked={checkedList?.has(report.reportPostId)}
-                              onChange={() => {
-                                setCheckedList((prev) => {
-                                  const copy = new Set(prev);
-                                  if (copy.has(report.reportPostId))
-                                    copy.delete(report.reportPostId);
-                                  else copy.add(report.reportPostId);
-                                  return copy;
-                                });
-                              }}
-                            />
-                            <div className="font-medium">
-                              {report.member.memberName}
+                  {isEmpty && <div>신고내역이 없습니다.</div>}
+                  {!isEmpty &&
+                    data.data.data.PostReports.map((report, idx) => {
+                      return (
+                        <div
+                          className="w-full border text-left p-2"
+                          key={report.updatedAt}
+                        >
+                          <div className="w-full flex flex-row justify-between">
+                            <div className="flex flex-row gap-2">
+                              <input
+                                type="checkbox"
+                                checked={checkedList?.has(report.reportPostId)}
+                                onChange={() => {
+                                  setCheckedList((prev) => {
+                                    const copy = new Set(prev);
+                                    if (copy.has(report.reportPostId))
+                                      copy.delete(report.reportPostId);
+                                    else copy.add(report.reportPostId);
+                                    return copy;
+                                  });
+                                }}
+                              />
+                              <div className="font-medium">
+                                {report.member.memberName}
+                              </div>
+                            </div>
+                            <div className="flex flex-row gap-2">
+                              <ReportTag category={report.category} />
+
+                              <IconButton
+                                Icon={
+                                  <AiOutlineClose
+                                    style={{ display: 'inline' }}
+                                  />
+                                }
+                                onClick={() =>
+                                  handleRejectBtnClick(report.reportPostId)
+                                }
+                              />
                             </div>
                           </div>
-                          <div className="flex flex-row gap-2">
-                            <ReportTag category={report.category} />
-
-                            <IconButton
-                              Icon={
-                                <AiOutlineClose style={{ display: 'inline' }} />
-                              }
-                              onClick={() =>
-                                handleRejectBtnClick(report.reportPostId)
-                              }
-                            />
-                          </div>
+                          {!!report.detail?.length && (
+                            <div className="mt-2 font-light">
+                              {report.detail}
+                            </div>
+                          )}
                         </div>
-                        {!!report.detail?.length && (
-                          <div className="mt-2 font-light">{report.detail}</div>
-                        )}
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
                 </div>
                 <div className="flex justify-around p-2">
                   <ButtonComponent type="outline">

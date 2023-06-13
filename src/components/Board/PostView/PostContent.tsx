@@ -20,7 +20,7 @@ export default function PostViewContent() {
     }
   }, []);
   const get = useQuery('post-view', () => getPostRequest(is));
-  const data = get.data?.data;
+  const data = get.data?.data.data;
 
   return (
       <div className={'post-content'}>
