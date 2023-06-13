@@ -30,7 +30,7 @@ const NotificationRow = () => {
     suspense: true,
   });
 
-  const data = notificationQuery.data?.data;
+  const data = notificationQuery.data?.data.data;
   const isEmptyData = !data?.posts?.length;
 
   if (!isEmptyData)
