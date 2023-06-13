@@ -6,14 +6,14 @@ interface Props {
 }
 export default function MainPageMove({ title, img, href, colorCode }: Props) {
   return (
-    <a href={href} className={'gap-6 text-center'}>
+    <a href={href} className={'gap-6 text-center dash-move'}>
       <div className={'flex justify-center'}>
         <div
-          className={`relative border-dashed border-2 rounded-full w-[100px] h-[100px] mb-6`}
+          className={`relative border-dashed border-2 rounded-full w-[100px] h-[100px] mb-6 move-tag`}
           style={{ borderColor: colorCode }}
         >
           <p
-            className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[70%] rounded-full overflow-hidden`}
+            className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[70%] rounded-full overflow-hidden transition-all duration-300`}
             style={{ backgroundColor: colorCode }}
           >
             <img

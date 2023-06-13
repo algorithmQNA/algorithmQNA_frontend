@@ -1,13 +1,17 @@
-import PostRecommend from './PostRecommend';
+
 import { useQuery } from 'react-query';
 import { getPostRequest } from '../../../apis/postApi';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import PostViewOptionBlock from "./PostOption/PostOptionBlock";
+import useGetParams from "../../../hooks/useGetParams";
+import {RecommendBtn, UnRecommendBtn} from "./Recommend/RecoomendButton";
+import {isLogin} from "../../../storage/Login/Login";
+
 
 export default function PostViewContent() {
   const nav = useNavigate();
-  const location = useLocation();
-  const params = new URLSearchParams(location.search).get('pid');
+  const params = useGetParams('pid')
   const query = params ? parseInt(params) : 'a';
   const is = parseInt(query as string);
   useEffect(() => {
@@ -19,14 +23,22 @@ export default function PostViewContent() {
   const data = get.data?.data.data;
 
   return (
-    <div className={'post-content'}>
-      <div
-        className={'min-h-[350px]'}
-        dangerouslySetInnerHTML={{
-          __html: data?.postContent ? data?.postContent : '',
-        }}
-      ></div>
-      <PostRecommend />
-    </div>
+      <div className={'post-content'}>
+          <div
+              className={'min-h-[350px] ck-content'}
+              dangerouslySetInnerHTML={{
+                  __html: data?.postContent ? data?.postContent : '',
+              }}
+          >
+          </div>
+          {
+              !get.isLoading && data &&
+              <div className={'recommend-btn-block'}>
+                  <RecommendBtn checked={data.isLiked}/>
+                  <UnRecommendBtn checked={data.isLiked}/>
+              </div>
+          }
+          <PostViewOptionBlock/>
+      </div>
   );
 }

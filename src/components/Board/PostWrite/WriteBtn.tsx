@@ -7,8 +7,10 @@ import { PostWriteState } from '../../../storage/PostWrite/PostWrite';
 import { PostCategory, PostType, PostWrite } from '../../../types/Post/Post';
 import { AxiosError } from 'axios';
 import { ErrorType } from '../../../types/Error';
+import {useNavigate} from "react-router-dom";
 
 export default function PostWriteBtn() {
+  const nav = useNavigate()
   const state = useRecoilValue(PostWriteState);
   /**
    * MESSAGE:
@@ -35,6 +37,7 @@ export default function PostWriteBtn() {
     {
       onSuccess: () => {
         alert('작성 완료 됐습니다. \n 게시판 목록으로 돌아갑니다.');
+        nav(-1)
       },
       onError: (error: AxiosError) => {
         if (!error.response) return;

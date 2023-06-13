@@ -38,3 +38,21 @@
 .modal-outline{
   background:rgba(0,0,0,0.5);
 }
+.bell-shake:hover{
+  animation: bell 2s infinite linear;
+}
+@keyframes bell{
+  0%, 50%{
+    transform: rotate(0deg);
+  }
+  5%, 15%, 25%, 35%, 45% {
+    transform: rotate(13deg);
+  }
+  10%, 20%, 30%, 40% {
+    transform: rotate(-13deg);
+  }
+}
+.dash-move:hover .move-tag > p{
+  @apply scale-125
+}
+

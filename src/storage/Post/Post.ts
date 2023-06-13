@@ -5,7 +5,7 @@ export const PostFilterState = atom<PostFilter>({
     key:'post-option',
     default:{
         sort:'latestDesc',
-        postCategory:'',
+        postCategory:'BRUTE_FORCE',
         hasCommentCond:undefined,
         keyWordCond:'',
         titleCond:'',

@@ -18,7 +18,7 @@ export default function SortSelectBox(){
         {text:"조회 수 높은순",value:"viewCntDesc"},
         {text:"조회 수 낮은순",value:"viewCntAsc"},
     ]
-    const change = (value:PostSort | "") =>{
+    const change = (value:PostSort) =>{
         setState((prev)=>({
             ...prev,sort:value
         }))
