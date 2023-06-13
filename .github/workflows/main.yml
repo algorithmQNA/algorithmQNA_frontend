@@ -32,7 +32,7 @@ jobs:
         echo "REACT_APP_API_BASE_URL=${{ secrets.REACT_APP_BASE_URL }}" >> .env.production
         echo "REACT_APP_OAUTH_REDIRECT_URL=${{ secrets.REACT_APP_OAUTH_REDIRECT_URL }}" >> .env.production
         cat .env.production
-        cp .env.production ./build/.env.production
+        cp -r .env.production ./build/.env.production
 
     - name: build
       run: |
