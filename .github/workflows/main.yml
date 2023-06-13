@@ -27,10 +27,13 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: set environment
+      env:
+        API_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
+        OAUTH_REDIRECT_URL: ${{ secrets.REACT_APP_OAUTH_REDIRECT_URL }}
       run: |
         touch .env.production
-        echo "REACT_APP_API_BASE_URL=${{ secrets.REACT_APP_BASE_URL }}" >> .env.production
-        echo "REACT_APP_OAUTH_REDIRECT_URL=${{ secrets.REACT_APP_OAUTH_REDIRECT_URL }}" >> .env.production
+        echo "REACT_APP_API_BASE_URL=$API_BASE_URL" >> .env.production
+        echo "REACT_APP_OAUTH_REDIRECT_URL=$OAUTH_REDIRECT_URL" >> .env.production
         ls -al
         cat .env.production
 
