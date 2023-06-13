@@ -1,5 +1,5 @@
 import {useNavigate} from "react-router-dom";
-import React, {ChangeEvent, useRef, useState} from "react";
+import React, {ChangeEvent, useEffect, useRef, useState} from "react";
 import {FiBell} from "react-icons/fi";
 import {useInfiniteQuery} from "react-query";
 import {getOldAlarm} from "./test";
@@ -8,7 +8,6 @@ import {FaBell} from "react-icons/fa";
 
 
 export default function HeaderUserBlock(){
-
     const navigate = useNavigate();
     const [state, setState] = useState({
         alarm: false,
@@ -48,11 +47,26 @@ export default function HeaderUserBlock(){
             }
         }
     }
+    const box = useRef<any>(null)
+    useEffect(() => {
+        const setCheck = (e: globalThis.MouseEvent) => {
+            const target = e.target as Element;
+            if (state.alarm && !box.current?.contains(target)) {
+                setState((prev) => ({
+                    ...prev,
+                    alarm: false,
+                }));
+            }
+        };
+        document.addEventListener('click', setCheck);
+        return () => document.removeEventListener('click', setCheck);
+    }, [state.alarm]);
     return (
         <div
             className={
-                'flex items-center w-fit col-span-1 justify-end gap-3 md:gap-6'
+                'flex items-center w-fit col-span-1 justify-end gap-3 md:gap-6 relative select-none'
             }
+            ref={box}
         >
             <label className={'relative'}>
                 <input
@@ -64,15 +78,21 @@ export default function HeaderUserBlock(){
                 <span className={'bell-shake block hover:text-primary hover:cursor-pointer'}>
                     <FaBell size={24}/>
                 </span>
-                {state.alarm && (
-                    <ul
-                        className={
-                            'alarm absolute border border-primary w-[200px] -left-[550%] top-[175%] bg-white  rounded shadow px-2 overflow-auto grid max-h-[250px] box-content'
-                        }
-                        onScroll={getNewData}
-                    >
-                        {
-                            oldData.data?.pages.map((li)=>(
+            </label>
+            {state.alarm && (
+                <ul
+                    className={
+                        'alarm absolute border border-primary w-[200px] -left-[160%] xl:-left-[100%] top-[100%] bg-white  rounded shadow px-2 overflow-auto grid max-h-[250px] box-content'
+                    }
+                    onScroll={getNewData}
+                >
+                    {
+                        oldData.data?.pages[0].data.alarms.length === 0
+                            ?
+                            <div className={'flex items-center justify-center p-4 text-gray-400 min-h-[200px]'}>
+                                알림이 없습니다.
+                            </div>
+                            : oldData.data?.pages.map((li)=>(
                                 li.data.alarms.map((i:AlarmType)=>(
                                     <li
                                         key={i.alarmId}
@@ -83,14 +103,13 @@ export default function HeaderUserBlock(){
                                     </li>
                                 ))
                             ))
-                        }
-                        {
-                            oldData.hasNextPage &&
-                            <button className={`h-[${childHeight}px] flex items-center text-sm text-primary`} ref={button}><span>더보기</span></button>
-                        }
-                    </ul>
-                )}
-            </label>
+                    }
+                    {
+                        oldData.hasNextPage &&
+                        <button className={`h-[${childHeight}px] flex items-center text-sm text-primary`} ref={button}><span>더보기</span></button>
+                    }
+                </ul>
+            )}
             <a
                 href={'/mypage/profile'}
                 className={'w-[45px] h-[45px] rounded-full border border-white'}
