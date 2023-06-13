@@ -19,7 +19,7 @@ export default function useSetLogin({ code, state }: Props) {
   const request = async () => {
     try {
       const { data } = await axios.get(
-        `/oauth/login?code=${code}&state=${state}&redirectUri=https://localhost:3000/google/callback`,
+        `/oauth/login?code=${code}&state=${state}&redirectUri=${process.env.REACT_APP_OAUTH_REDIRECT_URI}/google/callback`,
         {
           withCredentials: true,
         }
@@ -32,9 +32,9 @@ export default function useSetLogin({ code, state }: Props) {
         profile,
       }));
     } catch (err) {
-      alert('로그인에 실패했습니다.')
+      alert('로그인에 실패했습니다.');
     } finally {
-      nav('/')
+      nav('/');
     }
   };
   useEffect(() => {
