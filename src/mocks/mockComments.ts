@@ -7,16 +7,16 @@ const MOCK_BASED_URL = process.env.REACT_APP_API_BASE_URL;
 const handlers = [
   rest.get(`${MOCK_BASED_URL}/comment/:postId`, async (req, res, ctx) => {
     const page = req.url.searchParams.get('page') || 0;
-    return res(ctx.status(200), ctx.json(PostInitData));
+    return res(ctx.status(200), ctx.json({ data: PostInitData }));
   }),
   rest.post(`${MOCK_BASED_URL}/comment/:postId`, async (req, res, ctx) => {
     return res(
       ctx.status(200),
-      ctx.json({
+      ctx.json({data:{
         commentId: generateRandomInt(10000),
         createdAt: Date.now().toLocaleString(),
         depth: 1,
-      })
+      }})
     );
   }),
   // 댓글 추천 API
