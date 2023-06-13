@@ -26,29 +26,34 @@ export default function QNABoardPage() {
   const params = useGetParams('page')
   const query = params ? parseInt(params) : 1;
   const state = useRecoilValue(PostFilterState)
-  const {data,isLoading,refetch} = useQuery('q&a-list',()=>{
-    return getCategoryPostsRequest(
-        state.postCategory,
-        state.sort,query,
-        'QNA',
-        state.hasCommentCond,
-        state.keyWordCond,
-        state.titleCond,
-        state.memberNameCond,
-        state.isAcceptedCommentCond
-  )
-  },{
-    onError:(error:AxiosError)=>{
-      if(error.status === 403){
-        nav('/access')
-      }
-    }
+  const {data} = useQuery(['test-test'],async ()=>{
+    const result = await privateRequest.get('/post?categoryName=BRUTE_FORCE&type=QNA&sort=LATESTASC&page=1')
+    return result.data
   })
-  useEffect(()=>{
-    if(!isLoading){
-      refetch()
-    }
-  },[params])
+  console.log(data)
+  // const {data,isLoading,refetch} = useQuery('q&a-list',()=>{
+  //   return getCategoryPostsRequest(
+  //       state.postCategory,
+  //       state.sort,query,
+  //       'QNA',
+  //       state.hasCommentCond,
+  //       state.keyWordCond,
+  //       state.titleCond,
+  //       state.memberNameCond,
+  //       state.isAcceptedCommentCond
+  // )
+  // },{
+  //   onError:(error:AxiosError)=>{
+  //     if(error.status === 403){
+  //       nav('/access')
+  //     }
+  //   }
+  // })
+  // useEffect(()=>{
+  //   if(!isLoading){
+  //     refetch()
+  //   }
+  // },[params])
   return (
     <div className={'relative'}>
       <PageTitle>질문 & 답변 게시판</PageTitle>
