@@ -32,17 +32,11 @@ export const updateMemberNicknameRequest = (memberName: string) =>
 
 // 프로필 이미지 업데이트 API ,확장자 png/jpeg
 export const updateProfileImgRequest = (file: FormData) =>
-  privateRequest.post<UpdateProfileImgResponse>(
-    'member/profile',
-    {
-      file,
+  privateRequest.post<UpdateProfileImgResponse>('member/profile', file, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
     },
-    {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    }
-  );
+  });
 
 //회원정보 조회 API
 export const getMemberDetailInfo = () =>
