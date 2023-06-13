@@ -28,13 +28,24 @@ export const createPostRequest = ({
   imageIds: number[];
 }) =>
   privateRequest.post('post', {
-    title: '찐막테스트',
-    content: '마지막테스트입니다.',
-    postCategory: 'DP',
-    postType: 'QNA',
-    keyWords: ['abc'],
-    imageIds,
+    title: title || '가짜 타이틀입니다',
+    content: content || '내용 좀 넣어주세요',
+    type: contentType,
+    sort: 'LATESTASC',
+    categoryName: category,
+    keyWords: keyWords.length ? keyWords : [],
+    imageIds: imageIds.length ? imageIds : [],
   });
+
+// TODO : 실서버 재배포 후에 위의 parameter 아래의 parameter로 변경
+// privateRequest.post('post', {
+//   title: title||'찐막테스트',
+//   content: content||'마지막테스트입니다.',
+//   postCategory: 'DP',
+//   postType: 'NOTICE',
+//   keyWords: ['abc'],
+//   imageIds,
+// });
 
 // 게시물 수정 API
 export const updatePostRequest = (
