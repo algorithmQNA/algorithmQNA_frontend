@@ -25,11 +25,13 @@ const handlers = [
     return res(
       ctx.status(200),
       ctx.json({
-        ...generateMockMember(10),
-        memberEmail: 'test@test.com',
-        createdAt: generateRandomDate(),
-        updatedAt: generateRandomDate(),
-        memberRole: 'ROLE_ADMIN',
+        data: {
+          ...generateMockMember(10),
+          memberEmail: 'test@test.com',
+          createdAt: generateRandomDate(),
+          updatedAt: generateRandomDate(),
+          memberRole: 'ROLE_ADMIN',
+        },
       })
     );
   }),
@@ -59,12 +61,14 @@ const handlers = [
     return res(
       ctx.status(200),
       ctx.json({
-        posts: posts.slice(0, 20),
-        prev: false,
-        totalPageSize: 50,
-        page: 1,
-        next: true,
-        size: 20,
+        data: {
+          posts: posts.slice(0, 20),
+          prev: false,
+          totalPageSize: 50,
+          page: 1,
+          next: true,
+          size: 20,
+        },
       })
     );
   }),
@@ -84,12 +88,14 @@ const handlers = [
     return res(
       ctx.status(200),
       ctx.json({
-        comments: comments.slice(0, 20),
-        prev: false,
-        totalPageSize: 50,
-        page: 1,
-        next: true,
-        size: 20,
+        data: {
+          comments: comments.slice(0, 20),
+          prev: false,
+          totalPageSize: 50,
+          page: 1,
+          next: true,
+          size: 20,
+        },
       })
     );
   }),
