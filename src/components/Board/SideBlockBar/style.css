@@ -19,6 +19,6 @@
 .select-filter label p{
     @apply py-2
 }
-.select-filter label input[type=checkbox]:checked + p{
+.select-filter label input[type=radio]:checked + p{
     @apply text-primary font-bold
 }

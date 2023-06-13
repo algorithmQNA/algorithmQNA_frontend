@@ -3,19 +3,13 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { setYMD } from '../../../utils/TextProcessing';
 import { getPostRequest } from '../../../apis/postApi';
 import { useEffect, useRef } from 'react';
+import useGetParams from '../../../hooks/useGetParams';
 
 export default function PostViewDetailBlock() {
   const nav = useNavigate();
-  const location = useLocation();
-  const params = new URLSearchParams(location.search).get('pid');
+  const params = useGetParams('pid');
   const query = params ? parseInt(params) : 'a';
   const is = parseInt(query as string);
-
-  useEffect(() => {
-    if (isNaN(is)) {
-      nav(-1);
-    }
-  }, []);
 
   const get = useQuery('post-view', () => getPostRequest(is), {
     onError: (err: any) => {

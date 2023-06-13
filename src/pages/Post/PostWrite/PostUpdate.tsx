@@ -3,7 +3,6 @@ import PostWriteTitleBlock from "../../../components/Board/PostWrite/TitleBlock"
 import PostWriteSelectBlock from "../../../components/Board/PostWrite/SelectBlock";
 import PostWriteCKEditor from "../../../components/Board/PostWrite/CKEditor";
 import PostWriteKeywordBlock from "../../../components/Board/PostWrite/KeywordBlock";
-import PostWriteBtn from "../../../components/Board/PostWrite/WriteBtn";
 import React, {useEffect} from "react";
 import {useQuery} from "react-query";
 import {useLocation, useNavigate} from "react-router-dom";

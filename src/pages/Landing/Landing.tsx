@@ -3,9 +3,6 @@ import Google from '../../assets/images/Google.svg';
 
 export default function LandingPage() {
   const { search } = useLocation();
-  const url = new URLSearchParams(search).get('redirect');
-  const nav = useNavigate();
-  const to = '/oauth/google';
   return (
     <div
       className={
