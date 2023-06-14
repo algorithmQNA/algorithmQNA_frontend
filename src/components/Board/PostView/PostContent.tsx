@@ -34,8 +34,16 @@ export default function PostViewContent() {
           {
               !get.isLoading && data &&
               <div className={'recommend-btn-block'}>
-                  <RecommendBtn checked={data.isLiked}/>
-                  <UnRecommendBtn checked={data.isLiked}/>
+                  {
+                      data.isLiked === true
+                          ? <RecommendBtn checked={true}/>
+                          : <RecommendBtn checked={undefined}/>
+                  }
+                  {
+                      data.isLiked === false
+                          ? <UnRecommendBtn checked={true}/>
+                          : <UnRecommendBtn checked={undefined}/>
+                  }
               </div>
           }
           <PostViewOptionBlock/>

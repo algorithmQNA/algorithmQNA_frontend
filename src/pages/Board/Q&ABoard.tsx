@@ -27,7 +27,7 @@ export default function QNABoardPage() {
   const query = params ? parseInt(params) : 1;
   const state = useRecoilValue(PostFilterState)
   const {data} = useQuery(['test-test'],async ()=>{
-    const result = await privateRequest.get('/post?categoryName=BRUTE_FORCE&type=QNA&sort=LATESTASC&page=1')
+    const result = await privateRequest.get('/post?categoryName=BRUTE_FORCE&type=QNA&sort=LATESTASC&page=0')
     return result.data
   })
   console.log(data)

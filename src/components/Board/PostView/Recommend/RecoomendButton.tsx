@@ -1,11 +1,9 @@
-import {ChangeEvent, ReactElement, useEffect} from 'react';
+import {ChangeEvent} from 'react';
 import { FiThumbsUp, FiThumbsDown } from 'react-icons/fi';
 import './style.css';
-import {useLocation, useNavigate} from "react-router-dom";
-import {QueryClient, useMutation, useQuery} from "react-query";
-import {getPostRequest, recommendPostRequest} from "../../../../apis/postApi";
-import {privateRequest} from "../../../../apis/instance";
-import {c} from "msw/lib/glossary-de6278a9";
+import {useLocation} from "react-router-dom";
+import {QueryClient, useMutation} from "react-query";
+import {recommendPostRequest} from "../../../../apis/postApi";
 
 interface MutationParam{
     pid:number,
@@ -14,7 +12,7 @@ interface MutationParam{
 }
 
 interface props{
-    checked:boolean
+    checked:boolean | undefined
 }
 export function RecommendBtn({checked}:props) {
     const location = useLocation();
@@ -35,7 +33,7 @@ export function RecommendBtn({checked}:props) {
         const param = {
             pid:is,
             isLike:true,
-            cancel:e.target.checked
+            cancel:!e.target.checked
         }
         mutationLike.mutate(param)
     }
@@ -72,7 +70,7 @@ export function UnRecommendBtn({checked}:props) {
         const param = {
             pid:is,
             isLike:false,
-            cancel:e.target.checked
+            cancel:!e.target.checked
         }
         mutationLike.mutate(param)
     }
