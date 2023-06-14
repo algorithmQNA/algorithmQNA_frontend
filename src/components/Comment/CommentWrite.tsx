@@ -4,31 +4,39 @@ import CustomEditor from 'ckeditor5-custom-build';
 import ButtonComponent from '../Button/ButtonComponent';
 import { useMutation, useQueryClient } from 'react-query';
 import { createCommentRequest } from '../../apis/commentApi';
-import { useParams } from 'react-router-dom';
+import useGetParams from '../../hooks/useGetParams';
 
 function CommentWrite() {
   const queryClient = useQueryClient();
-  const editorRef = useRef<CKEditor<any>>(null);
   const { mutate: writeComment } = useMutation(createCommentRequest, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['post', postId]);
+      queryClient.invalidateQueries(['post', pid]);
       editorRef.current?.editor?.data.set('');
     },
+    onError(error, variables, context) {
+      //TODO :: validation해주기
+      console.log(error);
+    },
   });
-  const [data, setData] = useState('');
-  const { postId } = useParams();
+
+  const [content, setContent] = useState('');
+  const editorRef = useRef<CKEditor<any>>(null);
+  const pid = useGetParams('pid');
 
   const handleSubmitBtnClick = () => {
-    if (postId)
-      writeComment({ postId: +postId, content: data, parentCommentId: null });
+    if (pid)
+      writeComment({ postId: +pid, content: content, parentCommentId: null });
   };
+
   const handleEditorChange: (event: Object, editor: any) => void = (
     _,
     editor
   ) => {
-    const data = editor?.getData();
-    setData(data);
+    const _editor = editor as unknown as CustomEditor;
+    const data = _editor.getData();
+    setContent(data);
   };
+
   return (
     <div className="border p-0 m-0">
       <div className="comment-editor">
@@ -38,11 +46,7 @@ function CommentWrite() {
           onChange={handleEditorChange}
         />
       </div>
-      <div className="flex p-2 flex-row justify-between">
-        <div>
-          <span>{data.length}</span>
-          <span>/300</span>
-        </div>
+      <div className="p-2 text-right">
         <ButtonComponent onClick={handleSubmitBtnClick}>작성</ButtonComponent>
       </div>
     </div>
