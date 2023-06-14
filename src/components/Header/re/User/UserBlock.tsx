@@ -1,6 +1,5 @@
 import {useNavigate} from "react-router-dom";
 import React, {ChangeEvent, useEffect, useRef, useState} from "react";
-import {FiBell} from "react-icons/fi";
 import {useInfiniteQuery} from "react-query";
 import {getOldAlarm} from "./test";
 import {AlarmType} from "../../../../types/Alarm";
@@ -35,10 +34,12 @@ export default function HeaderUserBlock(){
     };
     const button = useRef<HTMLButtonElement>(null)
     const childHeight = 50
-    const getNewData = (e:React.UIEvent<HTMLUListElement>) =>{
+    const getNewData = async (e:React.UIEvent<HTMLUListElement>) =>{
         if(!button.current) return
-        if(e.currentTarget.scrollTop === 0){
-            oldData.fetchPreviousPage({pageParam:{page:1,direction:'prev'}})
+        if(e.currentTarget.scrollTop === 0 && topProgress.current){
+            topProgress.current.style.display = "flex"
+            await oldData.fetchPreviousPage({pageParam:{page:1,direction:'prev'}})
+            topProgress.current.style.display = "none"
         }
         else if(e.currentTarget.scrollTop + (e.currentTarget.clientHeight-childHeight) >= button.current?.offsetTop){
             if(oldData.hasNextPage){
@@ -61,6 +62,8 @@ export default function HeaderUserBlock(){
         document.addEventListener('click', setCheck);
         return () => document.removeEventListener('click', setCheck);
     }, [state.alarm]);
+    const topProgress = useRef<HTMLSpanElement>(null)
+    const bottomProgress = useRef<HTMLSpanElement>(null)
     return (
         <div
             className={
@@ -86,6 +89,9 @@ export default function HeaderUserBlock(){
                     }
                     onScroll={getNewData}
                 >
+                    <span ref={topProgress} className={`hidden items-center justify-center w-full h-[${childHeight}px]`}>
+                        <img src={'/svg/spinner.svg'} alt={'progress'} className={'w-auto h-[100%]'}/>
+                    </span>
                     {
                         oldData.data?.pages[0].data.alarms.length === 0
                             ?
@@ -106,7 +112,11 @@ export default function HeaderUserBlock(){
                     }
                     {
                         oldData.hasNextPage &&
-                        <button className={`h-[${childHeight}px] flex items-center text-sm text-primary`} ref={button}><span>더보기</span></button>
+                        <button className={`h-[${childHeight}px] flex items-center text-sm text-primary`} ref={button}>
+                            <span ref={bottomProgress} className={'hidden items-center justify-center w-full h-full'}>
+                                <img src={'/svg/spinner.svg'} alt={'progress'} className={'w-auto h-[100%]'}/>
+                            </span>
+                        </button>
                     }
                 </ul>
             )}
