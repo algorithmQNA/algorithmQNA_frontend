@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef, useState } from 'react';
+import React, { ChangeEvent, useRef, useState } from 'react';
 import { TopComment } from '../../types/comment';
 import UserProfile from '../UserProfile/UserProfile';
 
@@ -50,6 +50,7 @@ function CommentView({
   commentId,
   ...props
 }: CommentViewProps) {
+  console.log('나 렌더링됨~,', commentId);
   const { id } = useRecoilValue(isLogin);
   const ROLE: 'admin' | 'user' = 'admin';
   //TODO :: 나중에 내 id랑 비교하는 것도 필요하게씀!..
@@ -293,4 +294,4 @@ function CommentView({
   );
 }
 
-export default CommentView;
+export default React.memo(CommentView);
