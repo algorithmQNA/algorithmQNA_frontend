@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useRef, useState } from 'react';
-import { TopComment } from '../../types/comment';
-import UserProfile from '../UserProfile/UserProfile';
+import { TopComment } from '../../../types/comment';
+import UserProfile from '../../UserProfile/UserProfile';
 
 import { useMutation, useQueryClient } from 'react-query';
 import {
@@ -10,31 +10,34 @@ import {
   recommendCommentRequest,
   reportCommentRequest,
   updateCommentRequest,
-} from '../../apis/commentApi';
+} from '../../../apis/commentApi';
 
-import { SelectBox, SelectOption } from '../DropDown/SelectBox';
+import { SelectBox, SelectOption } from '../../DropDown/SelectBox';
 
-import IconButton from '../Button/IconButton';
-import { BsChevronCompactDown, BsHandThumbsDownFill } from 'react-icons/bs';
+import IconButton from '../../Button/IconButton';
+import {
+  BsChevronCompactDown,
+  BsChevronCompactUp,
+  BsHandThumbsDownFill,
+} from 'react-icons/bs';
 import { AiOutlineLike } from 'react-icons/ai';
 import { RxDotsVertical } from 'react-icons/rx';
-import ThumbsDown from '../Icon/ThumbsDown';
-import FilledThumbsUp from '../Icon/FilledThumbsUp';
+import ThumbsDown from '../../Icon/ThumbsDown';
+import FilledThumbsUp from '../../Icon/FilledThumbsUp';
 
-import { setDateWritten } from '../../utils/TextProcessing';
+import { setDateWritten } from '../../../utils/TextProcessing';
 
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import CustomEditor from 'ckeditor5-custom-build';
-import ButtonComponent from '../Button/ButtonComponent';
-import { MyCustomUploadAdapterPlugin } from './CustomImageUpload';
-import { useRecoilValue } from 'recoil';
-import { isLogin } from '../../storage/Login/Login';
-import { useParams } from 'react-router-dom';
-import { GetPostResponse } from '../../types/apis/postResponseType';
-import useModal from '../../hooks/useModal';
-import Modal from '../Modal/Modal';
-import InputText from '../Input/InputText';
-import { REPORT_MAP } from '../../constants/Report';
+import ButtonComponent from '../../Button/ButtonComponent';
+import { MyCustomUploadAdapterPlugin } from '../CustomImageUpload';
+import { GetPostResponse } from '../../../types/apis/postResponseType';
+import useModal from '../../../hooks/useModal';
+import Modal from '../../Modal/Modal';
+import InputText from '../../Input/InputText';
+import ReplyComment from './ReplyComment';
+import { REPORT_MAP } from '../../../constants/Report';
+import useGetParams from '../../../hooks/useGetParams';
 
 export type CommentViewProps = TopComment;
 /**리팩토링 시급!!!! */
@@ -50,11 +53,8 @@ function CommentView({
   commentId,
   ...props
 }: CommentViewProps) {
-  console.log('나 렌더링됨~,', commentId);
-  const { id } = useRecoilValue(isLogin);
-  const ROLE: 'admin' | 'user' = 'admin';
-  //TODO :: 나중에 내 id랑 비교하는 것도 필요하게씀!..
-  const { postId } = useParams();
+  const pid = useGetParams('pid');
+  const [openReply, setOpenReply] = useState(!depth ? true : false);
   const [openMenu, setOpenMenu] = useState(false);
   const [mode, setMode] = useState<'read' | 'modify'>('read');
   const [openReplyEditor, setOpenReplyEditor] = useState(false);
@@ -71,12 +71,16 @@ function CommentView({
   const queryClient = useQueryClient();
   //댓글 작성
   const { mutate: writeComment } = useMutation(createCommentRequest, {
-    onSuccess: () => setOpenReplyEditor(false),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['post', pid] });
+      setOpenReplyEditor(false);
+    },
   });
   //댓글 추천/비추천
   const { mutate: recommendComment } = useMutation(recommendCommentRequest, {
     onMutate: async (params) => {
-      const POST_QUERY_KEY = ['post', postId];
+      /**  이 쿼리키 바꿔줄거면 CommentList의 queryKey도 바꿔줄것!*/
+      const POST_QUERY_KEY = ['post', pid];
       await queryClient.cancelQueries({ queryKey: POST_QUERY_KEY });
       const previous =
         queryClient.getQueryData<GetPostResponse>(POST_QUERY_KEY);
@@ -104,7 +108,9 @@ function CommentView({
     },
   });
   //댓글 수정
-  const { mutate: modifyComment } = useMutation(updateCommentRequest);
+  const { mutate: modifyComment } = useMutation(updateCommentRequest, {
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['post', pid] }),
+  });
 
   //댓글 삭제
   const { mutate: deleteComment } = useMutation(deleteCommentRequest);
@@ -199,7 +205,7 @@ function CommentView({
         {mode === 'read' && (
           <div className="border border-border py-4 px-2">
             <div
-              className="ck ck-content p-2"
+              className="ck ck-content p-2 break-words"
               dangerouslySetInnerHTML={{
                 __html: content,
               }}
@@ -245,8 +251,8 @@ function CommentView({
               </ButtonComponent>
               <ButtonComponent
                 onClick={() => {
-                  // const data = editorRef.current?.editor?.data.get();
-                  const data = '<p>수정된 파일입니다.</p>';
+                  const data = editorRef.current?.editor?.data.get();
+                  //const data = '<p>수정된 파일입니다.</p>';
                   if (data) modifyComment({ commentId, content: data });
                   setMode('read');
                 }}
@@ -268,13 +274,12 @@ function CommentView({
           <ButtonComponent onClick={toggleReplyEditor}>취소</ButtonComponent>
           <ButtonComponent
             onClick={() => {
-              //const data = editorRef.current?.editor?.data.get();
-              // if (data)
-              if (true)
+              const data = editorRef.current?.editor?.data.get();
+              if (data && pid)
                 writeComment({
-                  content: '<p>테스트내용입니다.</p>',
-                  parentCommentId: 1000,
-                  postId: 2000,
+                  content: data,
+                  parentCommentId: commentId,
+                  postId: +pid,
                 });
             }}
           >
@@ -283,12 +288,22 @@ function CommentView({
         </>
       )}
       {hasChild && (
-        <IconButton
-          Icon={<BsChevronCompactDown style={{ display: 'inline' }} />}
-          color="primary"
-        >
-          답글 보기
-        </IconButton>
+        <>
+          <IconButton
+            Icon={
+              openReply ? (
+                <BsChevronCompactUp style={{ display: 'inline' }} />
+              ) : (
+                <BsChevronCompactDown style={{ display: 'inline' }} />
+              )
+            }
+            onClick={() => setOpenReply((prev) => !prev)}
+            color="primary"
+          >
+            {openReply ? '접기' : '펴기'}
+          </IconButton>
+          {openReply && <ReplyComment commentId={commentId} />}
+        </>
       )}
     </div>
   );

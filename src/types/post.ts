@@ -24,6 +24,8 @@ export type PostBrief = {
   postTitle: string;
   member: MemberBrief;
   createdAt: string;
+  postLikeCnt: number;
+  postDislikeCnt: number;
   views: number;
   totalCommentCnt: number;
 };
@@ -31,8 +33,6 @@ export type PostBrief = {
 export type PostWithContent = PostBrief & {
   postCategory: PostCategoryKey;
   postType: PostTypeKey;
-  postLikeCnt: number;
-  postDisLikeCnt: number;
   postContent: string;
 };
 
