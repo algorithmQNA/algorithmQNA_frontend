@@ -38,16 +38,6 @@ export const createPostRequest = ({
     imageIds: imageIds.length ? imageIds : [],
   });
 
-// TODO : 실서버 재배포 후에 위의 parameter 아래의 parameter로 변경
-// privateRequest.post('post', {
-//   title: title||'찐막테스트',
-//   content: content||'마지막테스트입니다.',
-//   postCategory: 'DP',
-//   postType: 'NOTICE',
-//   keyWords: ['abc'],
-//   imageIds,
-// });
-
 // 게시물 수정 API
 export const updatePostRequest = (
   postId: number,
@@ -83,13 +73,13 @@ export const getCategoryPostsRequest = (
   memberNameCond?: string,
   isAcceptedCommentCond?: boolean
 ) =>
-//TODO: 서버재배포후 categoryName, type 키 원상복구해두기
+  //TODO: 서버재배포후 categoryName, type 키 원상복구해두기
   privateRequest.get<GetCategoryPostsResponse>('post', {
     params: {
-      categoryName: postCategory,
+      postCategory,
       sort,
       page,
-      type: postType,
+      postType,
       hasCommentCond,
       keyWordCond,
       titleCond,
