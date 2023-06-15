@@ -62,7 +62,7 @@ export default function MyPageTableRow({
             <ButtonComponent type="outline">끌어올리기</ButtonComponent>
           )}
           <ButtonComponent onClick={(e) => e.preventDefault()}>
-            <Link to={`/post/view?pid=${postId}`}>댓글단 글 보기</Link>
+            <Link to={`/post/view?pid=${postId}`}>작성한 글 보기</Link>
           </ButtonComponent>
         </div>
       </div>

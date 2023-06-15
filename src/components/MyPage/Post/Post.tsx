@@ -7,7 +7,7 @@ import { getMyPosts } from '../../../apis/authApi';
 
 function Post() {
   const [searchParams] = useSearchParams();
-  const page = searchParams.get('page') || 1;
+  const page = searchParams.get('page') || 0;
   const myPosts = useQuery(['mypost_', page], () => getMyPosts(+page));
   const posts = myPosts.data?.data.data;
 

@@ -105,10 +105,7 @@ function NoticeEditor() {
           취소
         </ButtonComponent>
         {!createPost.isLoading ? (
-          <ButtonComponent
-            // TODO : catogoryId, contentTypeId 타입 number->string으로 바꿀것
-            onClick={submitNotificationForm}
-          >
+          <ButtonComponent onClick={submitNotificationForm}>
             작성
           </ButtonComponent>
         ) : (
