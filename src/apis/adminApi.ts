@@ -58,22 +58,12 @@ export const getNotificationList = (props: {
 }) => {
   return privateRequest.get<{ data: { posts: PostBrief[] } & Pagination }>(
     `post`,
-    // TODO :: 서버 재배포시 원상태로 복구
-    // {
-    //   params: { postType: 'NOTICE', sort: 'latestDesc', ...props },
-    // }
     {
-      params: {
-        type: 'NOTICE',
-        sort: 'LATESTASC',
-        categoryName: props.postCategory,
-        page: 0,
-      },
+      params: { postType: 'NOTICE', sort: 'LATESTDESC', ...props },
     }
   );
 };
 //공지사항 삭제 API
 export const deleteNotification = (notificationId: number) => {
-  console.log(notificationId);
   return privateRequest.delete(`post/${notificationId}`);
 };
