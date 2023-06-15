@@ -55,14 +55,7 @@ function ReplyComment({
       {data?.pages.map((page) =>
         page.result.map((child) => (
           <CommentWrapper depth={child.depth}>
-            <CommentView
-              next={false}
-              page={10}
-              prev={false}
-              size={4}
-              totalPageSize={59}
-              {...child}
-            />
+            <CommentView {...child} />
           </CommentWrapper>
         ))
       )}
