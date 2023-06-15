@@ -17,6 +17,7 @@ import NoticeEditor from './components/Notice/NoticeEditor';
 import ReportComment from './components/Report/ReportComment';
 import NoticeModifyEditor from './components/Notice/NoticeModifyEditor';
 import Comment from './components/MyPage/Comment/Comment';
+import LogoutPage from "./pages/Logout/LogoutPage";
 
 const adminPages = {
   base: 'admin',
@@ -40,6 +41,7 @@ function Router() {
     <Routes>
       <Route path={'/'} element={<DashBoardPage />} />
       <Route path={'/access'} element={<LandingPage />} />
+      <Route path={'/logout'} element={<LogoutPage/>} />
       <Route path={'/google/callback'} element={<LoginProcessPage />} />
       <Route path="board">
         <Route path="q&a" element={<QNABoardPage />} />

@@ -46,16 +46,16 @@ export const updatePostRequest = (
   postId: number,
   title: string,
   content: string,
-  categoryId: PostCategory | '',
-  contentTypeId: PostType | '',
+  postCategory: PostCategory | '',
+  postType: PostType | '',
   keyWords: string[],
   imageIds: number[]
 ) =>
   privateRequest.patch(`post/${postId}`, {
     title,
     content,
-    categoryId,
-    contentTypeId,
+      postCategory,
+      postType,
     keyWords,
     imageIds,
   });
@@ -78,7 +78,7 @@ export const getCategoryPostsRequest = (
 ) =>
   privateRequest.get<GetCategoryPostsResponse>('post', {
     params: {
-        postCategory,
+        postCategory:"DP",
         sort,
         page,
         postType,

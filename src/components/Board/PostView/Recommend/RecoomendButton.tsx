@@ -2,7 +2,7 @@ import {ChangeEvent} from 'react';
 import { FiThumbsUp, FiThumbsDown } from 'react-icons/fi';
 import './style.css';
 import {useLocation} from "react-router-dom";
-import {QueryClient, useMutation} from "react-query";
+import {QueryClient, useMutation, useQueryClient} from "react-query";
 import {recommendPostRequest} from "../../../../apis/postApi";
 
 interface MutationParam{
@@ -19,14 +19,14 @@ export function RecommendBtn({checked}:props) {
     const params = new URLSearchParams(location.search).get('pid');
     const query = params ? parseInt(params) : 'a';
     const is = parseInt(query as string);
+    const qc = useQueryClient()
 
     const mutationLike = useMutation(({pid,isLike,cancel}:MutationParam)=>recommendPostRequest(pid,{isLike,cancel}),{
         onError:(error, variables, context)=>{
 
         },
         onSuccess:async ()=>{
-            const qc = new QueryClient()
-            await qc.invalidateQueries('post-view')
+            await qc.invalidateQueries(['post-view'])
         }
     })
     const likeChange = (e:ChangeEvent<HTMLInputElement>) =>{
@@ -56,14 +56,13 @@ export function UnRecommendBtn({checked}:props) {
     const params = new URLSearchParams(location.search).get('pid');
     const query = params ? parseInt(params) : 'a';
     const is = parseInt(query as string);
-
+    const qc = useQueryClient()
     const mutationLike = useMutation(({pid,isLike,cancel}:MutationParam)=>recommendPostRequest(pid,{isLike,cancel}),{
         onError:(error, variables, context)=>{
 
         },
         onSuccess:async ()=>{
-            const qc = new QueryClient()
-            await qc.invalidateQueries('post-view')
+            await qc.invalidateQueries(['post-view'])
         }
     })
     const likeChange = (e:ChangeEvent<HTMLInputElement>) =>{
