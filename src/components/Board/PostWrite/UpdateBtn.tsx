@@ -7,16 +7,15 @@ import { PostWriteState } from '../../../storage/PostWrite/PostWrite';
 import {PostType, PostWrite} from '../../../types/Post/Post';
 import { AxiosError } from 'axios';
 import { ErrorType } from '../../../types/Error';
+import useGetParams from "../../../hooks/useGetParams";
 
-interface Props{
-    id:number
-}
 
-export default function PostUpdateBtn({id}:Props) {
+export default function PostUpdateBtn() {
+    const id = useGetParams("pid")
     const state = useRecoilValue(PostWriteState);
     const { mutate } = useMutation(
         ({ title, content, postCategory, postType, keyWord, imageIds }: PostWrite) =>
-            updatePostRequest(id,title, content, postCategory, postType as PostType, keyWord, imageIds),
+            updatePostRequest(parseInt(id as string),title, content, postCategory, postType as PostType, keyWord, imageIds),
         {
             onSuccess: () => {
                 alert('작성 완료 됐습니다. \n 게시판 목록으로 돌아갑니다.');

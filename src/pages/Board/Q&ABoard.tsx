@@ -14,46 +14,37 @@ import ModalButton from "../../components/Board/SideBlockBar/ModalButton";
 import BoardModalContent from "../../components/Board/SideBlockBar/ModalContent";
 import {useRecoilValue} from "recoil";
 import {PostFilterState} from "../../storage/Post/Post";
-import {privateRequest} from "../../apis/instance";
 import {useEffect} from "react";
 import useGetParams from "../../hooks/useGetParams";
 import {getCategoryPostsRequest} from "../../apis/postApi";
 import {AxiosError} from "axios/index";
+import {getMemberDetailInfo} from "../../apis/authApi";
 
 
 export default function QNABoardPage() {
   const nav = useNavigate()
   const params = useGetParams('page')
-  const query = params ? parseInt(params) : 1;
-  const state = useRecoilValue(PostFilterState)
-  const {data} = useQuery(['test-test'],async ()=>{
-    const result = await privateRequest.get('/post?categoryName=BRUTE_FORCE&type=QNA&sort=LATESTASC&page=0')
-    return result.data
+  const query = params ? parseInt(params) : 0;
+  const {postCategory,sort,hasCommentCond,keyWordCond,titleCond,memberNameCond,isAcceptedCommentCond,} = useRecoilValue(PostFilterState)
+  const {data,isLoading,refetch} = useQuery('q&a-list',()=>{
+    return getCategoryPostsRequest(
+        postCategory,
+        'LATESTASC',
+        query,
+        'QNA',
+  )
+  },{
+    onError:(error:AxiosError)=>{
+      if(error.status === 403){
+        nav('/access')
+      }
+    }
   })
-  console.log(data)
-  // const {data,isLoading,refetch} = useQuery('q&a-list',()=>{
-  //   return getCategoryPostsRequest(
-  //       state.postCategory,
-  //       state.sort,query,
-  //       'QNA',
-  //       state.hasCommentCond,
-  //       state.keyWordCond,
-  //       state.titleCond,
-  //       state.memberNameCond,
-  //       state.isAcceptedCommentCond
-  // )
-  // },{
-  //   onError:(error:AxiosError)=>{
-  //     if(error.status === 403){
-  //       nav('/access')
-  //     }
-  //   }
-  // })
-  // useEffect(()=>{
-  //   if(!isLoading){
-  //     refetch()
-  //   }
-  // },[params])
+  useEffect(()=>{
+    if(!isLoading){
+      refetch()
+    }
+  },[params])
   return (
     <div className={'relative'}>
       <PageTitle>질문 & 답변 게시판</PageTitle>

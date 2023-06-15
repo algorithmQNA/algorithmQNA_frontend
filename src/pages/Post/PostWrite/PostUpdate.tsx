@@ -38,9 +38,11 @@ export default function PostUpdatePage() {
         },
     });
     useEffect(()=>{
-        if(!isLoading && data !== undefined){
+        if(!isLoading && data){
+            const result:any = data.data
+            console.log(result)
             setState((prev)=>({
-                ...prev,title:data.data.postTitle,content:data.data.postContent,keyWord:data.data.postKeyWords
+                ...prev,title:result.data.postTitle,content:result.data.postContent,keyWord:result.data.postKeyWords
             }))
         }
     },[isLoading])
@@ -54,7 +56,7 @@ export default function PostUpdatePage() {
                 <PostWriteKeywordBlock/>
                 {
                     !isLoading && data !== undefined &&
-                    <PostUpdateBtn id={data.data.postId}/>
+                    <PostUpdateBtn />
                 }
             </div>
         </div>

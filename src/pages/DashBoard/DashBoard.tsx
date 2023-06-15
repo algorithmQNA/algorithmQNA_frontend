@@ -15,7 +15,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 export default function DashBoardPage() {
   const nav = useNavigate()
   const state = useRecoilValue(DashBoardState)
-  const { data, isLoading,refetch } = useQuery('dashboard-post', ()=>getCategoryPostsRequest('DP','latestDesc',1,state.select),{
+  const { data, isLoading,refetch } = useQuery('dashboard-post', ()=>getCategoryPostsRequest('DP','LATESTDESC',1,state.select),{
     onError:(error:AxiosError)=>{
       if(error.status === 403){
         nav('/access')
