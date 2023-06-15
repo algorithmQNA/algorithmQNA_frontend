@@ -35,7 +35,7 @@ export default function ReportPostTableRow({
   const reportManageModal = useModal();
   const deletePostModal = useModal();
   const reportCancelModal = useModal();
-  const page = 1;
+  const page = 0;
 
   const [reportId, setReportId] = useState(-1);
 
