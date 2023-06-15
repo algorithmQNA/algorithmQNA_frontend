@@ -2,43 +2,57 @@ import { Comment } from '../comment';
 import { Pagination } from '../pagination';
 
 export type GetCommentByPostIdReponse = {
-  postId: number;
-  commentList: Comment[];
-} & Pagination;
+  data: {
+    postId: number;
+    commentList: Comment[];
+  } & Pagination;
+};
 
 export type GetSpreadCommentByCommentIdResponse = {
-  parentId: number;
-  childCommentList: Comment[];
-} & Pagination;
+  data: {
+    parentId: number;
+    childCommentList: Comment[];
+  } & Pagination;
+};
 
 export type CreateCommentResponse = {
-  commentId: number;
-  createdAt: string;
-  depth: number;
+  data: {
+    commentId: number;
+    createdAt: string;
+    depth: number;
+  };
 };
 
 export type UpdateCommentResponse = {
-  commentId: number;
-  contentLocation: string;
-  updatedAt: string;
+  data: {
+    commentId: number;
+    contentLocation: string;
+    updatedAt: string;
+  };
 };
 
 export type RecommendCommentResponse = {
-  updatedAt: string;
+  data: {
+    updatedAt: string;
+  };
 };
 
 export type AcceptCommentResponse = {
-  commentId: number;
-  commentMemberName: string;
-  commentMember: number;
-  prevCommentMemberName: string;
-  prevCommentMemberId: string;
-  updatedAt: string;
+  data: {
+    commentId: number;
+    commentMemberName: string;
+    commentMember: number;
+    prevCommentMemberName: string;
+    prevCommentMemberId: string;
+    updatedAt: string;
+  };
 };
 
 export type ReportCommentResponse = {
-  commentId: number;
-  commentMemberName: string;
-  commentMemberId: number;
-  updatedAt: string;
+  data: {
+    commentId: number;
+    commentMemberName: string;
+    commentMemberId: number;
+    updatedAt: string;
+  };
 };

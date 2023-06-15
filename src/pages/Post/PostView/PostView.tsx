@@ -6,7 +6,7 @@ import PostViewKeywordBlock from '../../../components/Board/PostView/PostKeyword
 import { useNavigate } from 'react-router-dom';
 import useGetParams from '../../../hooks/useGetParams';
 import { useEffect } from 'react';
-import CommentTest from '../../CommentTest';
+import CommentSection from '../../../components/Comment';
 
 export default function PostViewPage() {
   const nav = useNavigate();
@@ -28,8 +28,8 @@ export default function PostViewPage() {
           <PostViewContent />
           <PostViewKeywordBlock />
         </div>
-        <CommentTest />
       </div>
+      <CommentSection />
     </div>
   );
 }

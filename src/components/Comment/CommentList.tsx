@@ -1,95 +1,46 @@
 import React from 'react';
-import CommentView, { CommentViewProps } from './Comment';
+import CommentView from './CommentView/CommentView';
+import useGetParams from '../../hooks/useGetParams';
+import { useNavigate } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import { getPostRequest } from '../../apis/postApi';
 
-const bages = [
-  {
-    name: 'read',
-    src: 'https://lh3.googleusercontent.com/ogw/AOLn63HADtscguumy1K7WcYQFGzKCnZLaQa2_f4YwqM66Q=s32-c-mo',
-  },
-  {
-    name: 'write',
-    src: 'https://lh3.googleusercontent.com/ogw/AOLn63HADtscguumy1K7WcYQFGzKCnZLaQa2_f4YwqM66Q=s32-c-mo',
-  },
-];
+import CommentWrapper from './CommentWrapper';
 
-// /**임시 Comment 생성하는 함수. 아래에서 임시 데이터를 생성하는 함수는 추후 삭제 */
-// const createComment: (
-//   username: string | number,
-//   depth: number
-// ) => CommentViewProps & {
-//   reply: (CommentViewProps & { reply: [] })[];
-// } = (username, depth) => {
-//   return {
-//     depth,
-//     username: `${username}`,
-//     badges: bages,
-//     profileImgSrc:
-//       'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png',
-//     date: '2023-03-31',
-//     comment: '테스트',
-//     reply: [],
-//   };
-// };
-
-// /** dummy data 저장할 배열 */
-// const dummyComments: (CommentViewProps & { reply: CommentViewProps[] })[] = [];
-
-// /** dummy data 생성 */
-// (function () {
-//   for (let i = 0; i < 10; i++) {
-//     dummyComments.push(createComment(`comment-${i}`, 0));
-//   }
-//   for (let i = 0; i < 3; i++) {
-//     dummyComments[0].reply.push(createComment(`reply-${i}`, 1));
-//   }
-
-//   for (let i = 0; i < 1; i++) {
-//     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//     // @ts-ignore
-//     dummyComments[0].reply[0].reply.push(
-//       createComment(`reply-nested-nested-${i}`, 2)
-//     );
-//   }
-
-//   for (let i = 0; i < 4; i++) {
-//     dummyComments[3].reply.push(createComment(`reply-to-third-${i}`, 1));
-//   }
-// })();
-
-// /** nested object를 1차원 배열로 펼쳐주는 함수 */
-// function flatten(into: any[], node: { [key: string]: any }) {
-//   const { reply, ...rest } = node;
-//   into.push(rest);
-//   if (reply.length) return reply.reduce(flatten, into);
-//   return into;
-// }
-
-// /** dummy Data에 flatten 함수 적용해서 서버에서 받아온 데이터를 UI에 적용할 수 있는 형태로 변형 */
-// const completeFlatten = dummyComments.reduce((prev, comment) => {
-//   const flattenComments = flatten([], comment);
-//   const result = prev.concat(flattenComments);
-//   return result;
-// }, []);
-
-/** 대댓글의 최대 depth 2 - 협의 */
-const marginLeft: { [key: string]: string } = {
-  0: 'ml-0',
-  1: 'ml-6',
-  2: 'ml-12',
-};
+/** 대댓글의 최대 depth 3*/
 
 function CommentList() {
   // const datas = completeFlatten as never as CommentViewProps[];
+  const pid = useGetParams('pid');
+  const page = useGetParams('page');
+  const navigate = useNavigate();
 
-  return (
-    <section>
-      {/* {datas.map((data, idx) => (
-        <div className={marginLeft[data.depth]} key={idx}>
-          <CommentView {...data} />
-        </div>
-      ))} */}
-    </section>
-  );
+  const { data: res } = useQuery({
+    queryKey: ['post', pid],
+    queryFn: () => {
+      return getPostRequest(pid ? +pid : 2000);
+    },
+    onSuccess: (t) => {
+      console.log('SUCCESS', t);
+    },
+    onError: (e) => {
+      alert('존재하지 않는 게시글입니다.');
+      navigate(-1);
+    },
+  });
+
+  const commentList = res?.data.data.commentList;
+  if (!!commentList?.length)
+    return (
+      <section>
+        {commentList.map((data, idx) => (
+          <CommentWrapper depth={data.depth} key={data.commentId}>
+            <CommentView {...data} />
+          </CommentWrapper>
+        ))}
+      </section>
+    );
+  return <p>댓글이 없습니다.</p>;
 }
 
 export default CommentList;
