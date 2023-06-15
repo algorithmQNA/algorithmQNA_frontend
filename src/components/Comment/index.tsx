@@ -1,7 +1,6 @@
 import React from 'react';
 import Controller from './Controller';
 import CommentWrite from './CommentWrite';
-import CommentView from './CommentView/CommentView';
 import CommentList from './CommentList';
 
 function CommentSection() {

@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useRef, useState } from 'react';
-import { TopComment } from '../../../types/comment';
+import { Comment } from '../../../types/comment';
 import UserProfile from '../../UserProfile/UserProfile';
 
 import { useMutation, useQueryClient } from 'react-query';
@@ -39,7 +39,7 @@ import ReplyComment from './ReplyComment';
 import { REPORT_MAP } from '../../../constants/Report';
 import useGetParams from '../../../hooks/useGetParams';
 
-export type CommentViewProps = TopComment;
+export type CommentViewProps = Comment;
 /**리팩토링 시급!!!! */
 
 function CommentView({
@@ -53,7 +53,8 @@ function CommentView({
   commentId,
   ...props
 }: CommentViewProps) {
-  const pid = useGetParams('pid');
+  const pid = useGetParams('pid') || 0;
+  const page = useGetParams('page') || 0;
   const [openReply, setOpenReply] = useState(!depth ? true : false);
   const [openMenu, setOpenMenu] = useState(false);
   const [mode, setMode] = useState<'read' | 'modify'>('read');
@@ -72,7 +73,7 @@ function CommentView({
   //댓글 작성
   const { mutate: writeComment } = useMutation(createCommentRequest, {
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['post', pid] });
+      queryClient.invalidateQueries({ queryKey: ['comment', pid] });
       setOpenReplyEditor(false);
     },
   });
@@ -80,36 +81,32 @@ function CommentView({
   const { mutate: recommendComment } = useMutation(recommendCommentRequest, {
     onMutate: async (params) => {
       /**  이 쿼리키 바꿔줄거면 CommentList의 queryKey도 바꿔줄것!*/
-      const POST_QUERY_KEY = ['post', pid];
+      const POST_QUERY_KEY = ['comment', +pid, +page];
       await queryClient.cancelQueries({ queryKey: POST_QUERY_KEY });
       const previous =
         queryClient.getQueryData<GetPostResponse>(POST_QUERY_KEY);
 
-      queryClient.setQueryData(POST_QUERY_KEY, (old) => {
-        const {
-          data: {
-            data: { commentList },
-          },
-        } = old as { data: GetPostResponse };
-        const curComment = commentList.find(
-          (comment) => comment.commentId === commentId
-        );
-        if (curComment) {
-          if (params.cancel) curComment.isLiked = null;
-          else curComment.isLiked = params.isLike;
+      queryClient.setQueryData<Comment[] | undefined>(
+        POST_QUERY_KEY,
+        (commentList) => {
+          const curComment = commentList?.find(
+            (comment) => comment.commentId === commentId
+          );
+          console.log(curComment);
+          if (curComment) {
+            if (params.cancel) curComment.isLiked = null;
+            else curComment.isLiked = params.isLike;
+          }
+          return commentList;
         }
-
-        return old;
-      });
+      );
       return { previous };
-    },
-    onSettled: () => {
-      // queryClient.invalidateQueries({ queryKey: ['post', postId] });
     },
   });
   //댓글 수정
   const { mutate: modifyComment } = useMutation(updateCommentRequest, {
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['post', pid] }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ['comment', pid, page] }),
   });
 
   //댓글 삭제
