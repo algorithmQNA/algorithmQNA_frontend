@@ -4,5 +4,7 @@ import { PostBrief, Post } from '../post';
 export type GetPostResponse = { data: Post & Pagination };
 
 export type GetCategoryPostsResponse = {
-  posts: PostBrief[];
-} & Pagination;
+  data: {
+    posts: PostBrief[];
+  } & Pagination;
+};

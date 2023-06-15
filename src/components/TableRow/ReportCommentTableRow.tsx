@@ -63,7 +63,6 @@ export default function ReportCommentTableRow({
   const handleRemoveBtnClick = () => {
     deletePostModal.openModal();
   };
-  console.log(data);
   if (data)
     return (
       <>

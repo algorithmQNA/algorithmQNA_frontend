@@ -50,6 +50,8 @@ const mockData: PostBrief[] = new Array(37).fill(0).map((_, idx) => ({
   postTitle: `${idx + 1}번째 공지사항`,
   createdAt: generateRandomDate(),
   member: generateMockMember(idx),
+  postDislikeCnt: generateRandomInt(5100),
+  postLikeCnt: generateRandomInt(5100),
   totalCommentCnt: generateRandomInt(10),
   views: generateRandomInt(5),
 }));
@@ -60,6 +62,8 @@ const QNAData: PostBrief[] = new Array(37).fill(0).map((_, idx) => ({
   postTitle: `${idx + 1}번째 질문`,
   createdAt: generateRandomDate(),
   member: generateMockMember(idx),
+  postDislikeCnt: generateRandomInt(idx),
+  postLikeCnt: generateRandomInt(idx),
   totalCommentCnt: generateRandomInt(10),
   views: generateRandomInt(5),
 }));
