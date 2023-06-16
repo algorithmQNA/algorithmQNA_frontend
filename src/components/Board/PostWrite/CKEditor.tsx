@@ -3,7 +3,6 @@ import CustomEditor from 'ckeditor5-custom-build';
 import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { PostWriteState } from '../../../storage/PostWrite/PostWrite';
-import axios from 'axios';
 import {privateRequest} from "../../../apis/instance";
 
 export default function PostWriteCKEditor() {
@@ -14,25 +13,23 @@ export default function PostWriteCKEditor() {
   const customUploadAdapter = (loader: any) => {
     return {
       upload() {
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
           const data = new FormData();
           loader.file.then((file: File) => {
             data.append('file', file);
-            privateRequest
-              .post('/upload', data)
-              .then((res) => {
+            privateRequest.post('/upload', data).then((res) => {
                 if (!flag) {
                   setFlag(true);
                 }
                 setState((prev) => ({
                   ...prev,
-                  imageIds: [...prev.imageIds, res.data.ImageUploadRes.id],
+                  imageIds: [...prev.imageIds, res.data.data.id],
                 }));
                 resolve({
-                  default: `${link + res.data.ImageUploadRes.url}`,
+                  default: `${res.data.data.url}`,
                 });
               })
-              .catch((err) => reject(err));
+              // .catch((err) => reject(err));
           });
         });
       },
