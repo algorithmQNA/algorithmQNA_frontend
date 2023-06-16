@@ -7,7 +7,7 @@ import { getMyComments } from '../../../apis/authApi';
 
 function Comment() {
   const [searchParams] = useSearchParams();
-  const page = searchParams.get('page') || 1;
+  const page = searchParams.get('page') || 0;
   const myComments = useQuery(['mycomment', page], () => getMyComments(+page));
   const comments = myComments.data?.data.data;
 
@@ -17,7 +17,7 @@ function Comment() {
         {comments.comments.map((comment) => (
           <MyPageTableRow
             createdAt={comment.createdAt}
-            postId={comment.commentId}
+            postId={comment.postId}
             postTitle={`${comment.postId}에 작성한 ${comment.commentId}번 댓글`}
             totalCommentCnt={1}
             views={0}

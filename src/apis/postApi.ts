@@ -31,9 +31,9 @@ export const createPostRequest = ({
   privateRequest.post('post', {
     title: title || '가짜 타이틀입니다',
     content: content || '내용 좀 넣어주세요',
-    type: contentType,
+    postType: contentType,
     sort: 'LATESTASC',
-    categoryName: category,
+    postCategory: category,
     keyWords: keyWords.length ? keyWords : [],
     imageIds: imageIds.length ? imageIds : [],
   });
