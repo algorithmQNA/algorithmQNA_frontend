@@ -16,6 +16,7 @@ import NoticeEditor from './components/Notice/NoticeEditor';
 import ReportComment from './components/Report/ReportComment';
 import NoticeModifyEditor from './components/Notice/NoticeModifyEditor';
 import Comment from './components/MyPage/Comment/Comment';
+import PrivateRoute from './components/PrivateRoute';
 
 const adminPages = {
   base: 'admin',
@@ -37,43 +38,44 @@ const mypagePages = {
 function Router() {
   return (
     <Routes>
-      <Route path={'/'} element={<DashBoardPage />} />
       <Route path={'/access'} element={<LandingPage />} />
       <Route path={'/google/callback'} element={<LoginProcessPage />} />
-      <Route path="board">
-        <Route path="q&a" element={<QNABoardPage />} />
-        <Route path="tip" element={<TipBoardPage />} />
-      </Route>
-      <Route path="post">
-        <Route path="view" element={<PostViewPage />} />
-        <Route path="write" element={<PostWritePage />} />
-        <Route path="update" element={<PostUpdatePage />} />
-      </Route>
-      <Route path="admin" element={<SidebarLayout links={adminPages} />}>
-        <Route index element={<Navigate replace to="report/post" />} />
-        <Route path="report" element={<Admin.Post />}>
-          <Route index element={<Navigate replace to="post" />} />
-          <Route path="post" element={<ReportPost />} />
-          <Route path="comment" element={<ReportComment />} />
+      <Route element={<PrivateRoute />}>
+        <Route path={'/'} element={<DashBoardPage />} />
+        <Route path="board">
+          <Route path="q&a" element={<QNABoardPage />} />
+          <Route path="tip" element={<TipBoardPage />} />
         </Route>
-        <Route path="notice" element={<Admin.Notice />} />
-        <Route path="notice/write" element={<NoticeEditor />} />
-        <Route
-          path="notice/modify/:notificationId"
-          element={<NoticeModifyEditor />}
-        />
-      </Route>
-      <Route path="mypage" element={<SidebarLayout links={mypagePages} />}>
-        <Route index element={<Navigate replace to="profile" />} />
-        <Route path="profile" element={<MyPage.Profile />} />
-        <Route path="history" element={<MyPage.Post />}>
-          <Route index element={<Navigate replace to="post" />} />
-          <Route path="post" element={<Post />} />
-          <Route path="comment" element={<Comment />} />
+        <Route path="post">
+          <Route path="view" element={<PostViewPage />} />
+          <Route path="write" element={<PostWritePage />} />
+          <Route path="update" element={<PostUpdatePage />} />
         </Route>
-        <Route path="badge" element={<MyPage.Badge />} />
+        <Route path="admin" element={<SidebarLayout links={adminPages} />}>
+          <Route index element={<Navigate replace to="report/post" />} />
+          <Route path="report" element={<Admin.Post />}>
+            <Route index element={<Navigate replace to="post" />} />
+            <Route path="post" element={<ReportPost />} />
+            <Route path="comment" element={<ReportComment />} />
+          </Route>
+          <Route path="notice" element={<Admin.Notice />} />
+          <Route path="notice/write" element={<NoticeEditor />} />
+          <Route
+            path="notice/modify/:notificationId"
+            element={<NoticeModifyEditor />}
+          />
+        </Route>
+        <Route path="mypage" element={<SidebarLayout links={mypagePages} />}>
+          <Route index element={<Navigate replace to="profile" />} />
+          <Route path="profile" element={<MyPage.Profile />} />
+          <Route path="history" element={<MyPage.Post />}>
+            <Route index element={<Navigate replace to="post" />} />
+            <Route path="post" element={<Post />} />
+            <Route path="comment" element={<Comment />} />
+          </Route>
+          <Route path="badge" element={<MyPage.Badge />} />
+        </Route>
       </Route>
-      <Route path="commenttest/:postId" element={<CommentTest />} />
     </Routes>
   );
 }
