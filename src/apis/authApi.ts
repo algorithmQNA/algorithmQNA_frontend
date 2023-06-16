@@ -38,6 +38,14 @@ export const updateProfileImgRequest = (file: FormData) =>
     },
   });
 
+// 로그아웃 API. 쿠키 삭제
+export const logoffRequest = () =>
+  axios
+    .get('/oauth/deleteCookie', {
+      withCredentials: true,
+    })
+    .catch((e) => window.alert('로그아웃 실패'));
+
 //회원정보 조회 API
 export const getMemberDetailInfo = () =>
   privateRequest.get<GetMemberDetailInfoResponse>('member');
