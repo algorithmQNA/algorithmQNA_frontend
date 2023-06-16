@@ -1,7 +1,11 @@
 import React, {ChangeEvent, useEffect, useRef, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
+import {useQuery} from "react-query";
+import {getMemberDetailInfo} from "../../../../apis/authApi";
 
 export default function UserMenuBlock(){
+    const {data,isLoading}:{data:any,isLoading:boolean} = useQuery(['user'],getMemberDetailInfo)
+
     const [state, setState] = useState({
         menu: false,
     })
@@ -35,7 +39,6 @@ export default function UserMenuBlock(){
                     onChange={setDisplayAlarm}
                 />
                 <span className={'bell-shake block hover:text-primary hover:cursor-pointer'}>
-
                 </span>
             </label>
             {state.menu && (
