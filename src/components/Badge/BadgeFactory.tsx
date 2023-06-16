@@ -1,5 +1,4 @@
 import React from 'react';
-import Rounded from '../RoundedImage/RoundedImage';
 import CommentBadge from './CommentBadge';
 import { LikeBadge, WriteBadge } from '.';
 import LikeBadge2 from './LikeBadge';
@@ -8,7 +7,7 @@ type badgeType = 'comment' | 'like' | 'post';
 
 type BadgeFactoryProps = {
   type: badgeType;
-  level: 1 | 2 | 3 | 4 | 5;
+  level: number;
 };
 
 const MAX_LEVEL = 5;
@@ -19,22 +18,19 @@ const badgeInfo = {
   comment: {
     name: '프로 답변러',
     target: 'comment',
-    description: (lv: 1 | 2 | 3 | 4 | 5) =>
-      `답변 작성 갯수가 ${10 * lv}개를 돌파했어요`,
+    description: (lv: number) => `답변 작성 갯수가 ${10 * lv}개를 돌파했어요`,
     component: CommentBadge,
   },
   like: {
     name: '추천 사냥꾼',
     target: 'post',
-    description: (lv: 1 | 2 | 3 | 4 | 5) =>
-      `추천받은 갯수가 ${10 * lv}개를 돌파했어요`,
+    description: (lv: number) => `추천받은 갯수가 ${10 * lv}개를 돌파했어요`,
     component: LikeBadge,
   },
   post: {
     name: '추천 사냥꾼',
     target: 'like',
-    description: (lv: 1 | 2 | 3 | 4 | 5) =>
-      `좋아요 갯수가 ${10 * lv}개를 돌파했어요`,
+    description: (lv: number) => `좋아요 갯수가 ${10 * lv}개를 돌파했어요`,
     component: LikeBadge,
   },
 };
