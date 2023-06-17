@@ -23,12 +23,35 @@ function CommentList() {
   }, []);
 
   //For comment api call dependent
-  const { isFetching } = useQuery('post-view', () => getPostRequest(+pid), {
-    onSuccess: (res) => {
-      const commentList = res.data.data.commentList || [];
-      queryClient.setQueryData(['comment', +pid, +page], commentList);
-    },
-  });
+  const { isFetching } = useQuery(
+    ['post-view', +pid],
+    () => getPostRequest(+pid),
+    {
+      onSuccess: (res) => {
+        const commentList = res.data.data.commentList || [];
+        queryClient.setQueryData(['comment', +pid, +page], commentList);
+        // 대댓글도 캐싱
+        commentList.forEach((comment) => {
+          if (!!comment.childSize) {
+            queryClient.setQueryData(['reply', +comment.commentId], (prev) => {
+              return {
+                pages: [
+                  {
+                    result: [...(comment.childCommentList as [])],
+                    nextPage: 1,
+                    prevPage: -1,
+                    isLast: !comment.next,
+                    isFirst: !comment.prev,
+                  },
+                ],
+                pageParams: 0,
+              };
+            });
+          }
+        });
+      },
+    }
+  );
 
   const { data: commentList } = useQuery({
     queryKey: ['comment', +pid, +page],
