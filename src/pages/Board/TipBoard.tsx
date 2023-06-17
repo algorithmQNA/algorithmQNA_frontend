@@ -74,7 +74,7 @@ function PostListBlock({data}:any){
               <div className={'grid gap-3'}>
                 {
                   data.data.posts.map((li:PostRow)=>(
-                      <PostTableRow key={li.postId} data={li}/>
+                      <PostTableRow key={li.postId} data={li} type={"TIP"}/>
                   ))
                 }
                 {

@@ -12,13 +12,22 @@ import {Link} from "react-router-dom";
 
 interface Props {
   data:any;
+  type?:"QNA" | "TIP"
 }
 
-export default function PostTableRow({ data }: Props) {
+export default function PostTableRow({ data,type="QNA" }: Props) {
   return (
       <Link to={`/post/${data.postId}`}>
         <TableRow>
-          <div className={'post-thumbnail'}></div>
+          <div className={'p-1'}>
+            {
+              type === "QNA"
+                  ?
+                  <img src={'/svg/question.png'}/>
+                  :
+                  <img src={'/svg/tip.png'}/>
+            }
+          </div>
           <div>
             <div className={'flex items-center justify-between'}>
               <h1 className={'row-post-title'}>{data.title}</h1>
