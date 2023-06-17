@@ -21,14 +21,19 @@ export default function QNABoardPage() {
   const params = useGetParams('page')
   const query = params ? parseInt(params) : 1;
   const {postCategory,sort,hasCommentCond,keyWordCond,titleCond,memberNameCond,isAcceptedCommentCond,}:PostFilter = useRecoilValue(PostFilterState)
-  const {data,isLoading} = useQuery(
-      ['q&a-list',postCategory,sort,hasCommentCond,keyWordCond,titleCond,memberNameCond,isAcceptedCommentCond],
+  const {data,isLoading} = useQuery<any>(
+      ['q&a-list',postCategory,sort,query,hasCommentCond,keyWordCond,titleCond,memberNameCond,isAcceptedCommentCond],
       ()=>{
         return getCategoryPostsRequest(
             postCategory as any,
             sort as any,
             query-1,
             'QNA',
+            hasCommentCond,
+            keyWordCond,
+            titleCond,
+            memberNameCond,
+            isAcceptedCommentCond
             )
       })
   return (
@@ -43,7 +48,10 @@ export default function QNABoardPage() {
           <div className={'board-menu-bar'}>
             <SortSelectBox/>
             <div className={'hidden lg:block'}>
-              <RowListTo page={1} />
+                {
+                    data && !isLoading &&
+                    <RowListTo size={data.data.data.size} totalPage={data.data.data.totalPageCount}/>
+                }
             </div>
             <div className={'block lg:hidden text-title'}>
               <ModalButton/>
