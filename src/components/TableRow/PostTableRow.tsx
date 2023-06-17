@@ -19,7 +19,7 @@ export default function PostTableRow({ data,type="QNA" }: Props) {
   return (
       <Link to={`/post/${data.postId}`}>
         <TableRow>
-          <div className={'p-1'}>
+          <div className={'w-[60px] md:w-[70px]'}>
             {
               type === "QNA"
                   ?
@@ -31,7 +31,7 @@ export default function PostTableRow({ data,type="QNA" }: Props) {
           <div>
             <div className={'flex items-center justify-between'}>
               <h1 className={'row-post-title'}>{data.title}</h1>
-              <p className={'text-[#739093] text-sm'}>
+              <p className={'text-[#739093] text-sm whitespace-nowrap'}>
                 {setDateWritten(data.createdAt)}
               </p>
             </div>
