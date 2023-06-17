@@ -18,7 +18,7 @@ export default function DashBoardPage() {
       ()=>{
         return getCategoryPostsRequest(
             "DP",
-            "LATESTASC",
+            "LATESTDESC",
             0,
             state.select,
         )
