@@ -18,12 +18,11 @@ export default function PostWriteSelectBlock() {
       postCategory: value,
     }));
   };
-  console.log(state)
   return (
     <div className={'select-block'}>
       <div className={'board-select-block'}>
         <p className={'name-tag'}>게시판</p>
-        <SelectBox event={selectBoard} selected={String(state.postType)}>
+        <SelectBox event={selectBoard} selected={state.postType}>
           <SelectOption value={''}>게시판 선택</SelectOption>
           <SelectOption value={'QNA'}>Q&A</SelectOption>
           <SelectOption value={'TIP'}>꿀팁</SelectOption>
@@ -31,7 +30,7 @@ export default function PostWriteSelectBlock() {
       </div>
       <div className={'category-select-block'}>
         <p className={'name-tag'}>카테고리</p>
-        <SelectBox event={selectCategory} selected={String(state.postCategory)}>
+        <SelectBox event={selectCategory} selected={state.postCategory}>
           <SelectOption value={''}>카테고리 선택</SelectOption>
           <SelectOption value={'BRUTE_FORCE'}>BRUTE_FORCE</SelectOption>
           <SelectOption value={'TWO_POINTER'}>TWO_POINTER</SelectOption>

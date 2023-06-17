@@ -19,8 +19,13 @@ export default function PostUpdatePage() {
     const query = params ? parseInt(params) : 'a';
     const is = parseInt(query as string);
 
-    const setState = useSetRecoilState(PostWriteState)
+    useEffect(() => {
+        if (isNaN(is)) {
+            nav(-1);
+        }
+    }, []);
 
+    const setState = useSetRecoilState(PostWriteState)
 
     const {data:updateData,isLoading} = useQuery('post-update', () => getPostRequest(is), {
         onError: (err: any) => {
@@ -35,13 +40,11 @@ export default function PostUpdatePage() {
     });
 
     const data = updateData?.data
-    
     useEffect(()=>{
         if(!isLoading && data){
             const result:any = data.data
-            console.log(result)
             setState((prev)=>({
-                ...prev,title:result.data.postTitle,content:result.data.postContent,keyWord:result.data.postKeyWords
+                ...prev,title:result.postTitle,content:result.postContent,keyWord:result.postKeyWords,postCategory:result.postCategory,postType:result.postType
             }))
         }
     },[isLoading])
