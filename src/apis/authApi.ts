@@ -25,6 +25,11 @@ export const refreshAccessTokenRequest = () =>
 export const successionUserRequest = (memberId: string | number) =>
   privateRequest.delete(`member/${memberId}`);
 
+export const logoffRequest = () =>
+  axios
+    .get('/oauth/deleteCookie')
+    .catch((e) => alert('로그아웃에 실패했습니다. 다시 시도해주세요'));
+
 /** 2글자 이상 20글자 미만 */
 // 닉네임 업데이트 API
 export const updateMemberNicknameRequest = (memberName: string) =>
@@ -32,17 +37,11 @@ export const updateMemberNicknameRequest = (memberName: string) =>
 
 // 프로필 이미지 업데이트 API ,확장자 png/jpeg
 export const updateProfileImgRequest = (file: FormData) =>
-  privateRequest.post<UpdateProfileImgResponse>(
-    'member/profile',
-    {
-      file,
+  privateRequest.post<UpdateProfileImgResponse>('member/profile', file, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
     },
-    {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    }
-  );
+  });
 
 //회원정보 조회 API
 export const getMemberDetailInfo = () =>

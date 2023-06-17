@@ -19,13 +19,13 @@ import {PostFilter, PostRow} from "../../types/Post/Post";
 export default function TipBoardPage() {
   const params = useGetParams('page')
   const query = params ? parseInt(params) : 0;
-  const {postCategory,sort,hasCommentCond,keyWordCond,titleCond,memberNameCond,isAcceptedCommentCond,}:PostFilter = useRecoilValue(PostFilterState)
+  const {postCategory,sort,hasCommentCond,keyWordCond,titleCond,memberNameCond,isAcceptedCommentCond,} = useRecoilValue(PostFilterState)
   const {data,isLoading} = useQuery(
       ['tip-list',postCategory,sort,hasCommentCond,keyWordCond,titleCond,memberNameCond,isAcceptedCommentCond],
       ()=>{
         return getCategoryPostsRequest(
-            postCategory,
-            sort,
+            postCategory as any,
+            sort as any,
             query,
             'TIP',
         )

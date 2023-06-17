@@ -2,6 +2,7 @@ import PostViewOptionBlock from "./PostOption/PostOptionBlock";
 import {RecommendBtn, UnRecommendBtn} from "./Recommend/RecoomendButton";
 
 
+
 export default function PostViewContent({data}:{data:any}) {
   return (
       <div className={'post-content'}>
@@ -14,6 +15,7 @@ export default function PostViewContent({data}:{data:any}) {
           </div>
           {
               <div className={'recommend-btn-block'}>
+
                   {
                       data.data.isLiked === true
                           ? <RecommendBtn checked={true}/>

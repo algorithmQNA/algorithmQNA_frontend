@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "main","development" ]
   pull_request:
-    branches: [ "main", "development" ]
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -27,10 +27,16 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: set environment
+      env:
+        API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
+        OAUTH_REDIRECT_URI: ${{ secrets.REACT_APP_OAUTH_REDIRECT_URI }}
       run: |
         touch .env.production
-        echo "REACT_APP_API_BASE_URL=${{ secrets.REACT_APP_BASE_URL }}" >> .env.production
+        echo "REACT_APP_API_BASE_URL=$API_BASE_URL" >> .env.production
+        echo "REACT_APP_OAUTH_REDIRECT_URI=$OAUTH_REDIRECT_URI" >> .env.production
+        ls -al
         cat .env.production
+
     - name: build
       run: |
         npm install --legacy-peer-deps

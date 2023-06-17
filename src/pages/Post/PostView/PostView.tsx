@@ -2,12 +2,13 @@ import './style.css';
 import PageTitle from '../../../components/PageTitle/PageTitle';
 import PostViewDetailBlock from '../../../components/Board/PostView/PostDetail';
 import PostViewContent from '../../../components/Board/PostView/PostContent';
-import PostViewKeywordBlock from "../../../components/Board/PostView/PostKeyword";
 import {useNavigate, useParams} from "react-router-dom";
 import React, {useEffect} from "react";
 import {useQuery} from "react-query";
 import {getPostRequest} from "../../../apis/postApi";
 import DataIsLoading from "../../../components/isLoading/isLoading";
+import CommentSection from "../../../components/Comment";
+import PostViewKeywordBlock from "../../../components/Board/PostView/PostKeyword";
 
 export default function PostViewPage() {
     const nav = useNavigate();
@@ -48,6 +49,7 @@ export default function PostViewPage() {
                   <DataIsLoading/>
           }
       </div>
+      <CommentSection />
     </div>
   );
 }

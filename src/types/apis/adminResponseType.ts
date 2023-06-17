@@ -3,20 +3,25 @@ import { MemberBrief } from '../member';
 import { Pagination } from '../pagination';
 import { PostWithContent, ReportedPostDetail } from '../post';
 import { ReportComment } from '../report';
-
 export type GetReportedPostListResponse = {
-  posts: PostWithContent[];
-} & Pagination;
+  data: {
+    posts: PostWithContent[];
+  } & Pagination;
+};
 
 export type GetReportedCommentListResponse = {
-  reportComments: FlatComment[];
-} & Pagination;
+  data: {
+    reportComments: FlatComment[];
+  } & Pagination;
+};
 
-export type GetReportedPostDetailResponse = ReportedPostDetail;
+export type GetReportedPostDetailResponse = { data: ReportedPostDetail };
 
 export type GetReportedCommentDetailResponse = {
-  postId: number;
-  commentId: number;
-  member: MemberBrief;
-  commentReports: ReportComment[];
-} & Pagination;
+  data: {
+    postId: number;
+    commentId: number;
+    member: MemberBrief;
+    commentReports: ReportComment[];
+  } & Pagination;
+};

@@ -44,7 +44,6 @@ export const createCommentRequest = ({
   content: string;
   parentCommentId?: number | null;
 }) => {
-  console.log('하이', content);
   return privateRequest.post<CreateCommentResponse>(`comment/${postId}`, {
     content,
     parentCommentId,
@@ -88,7 +87,7 @@ export const resetCommentRecommendStatusRequest = (commentId: number) =>
 
 // 댓글 채택 API
 export const pinCommentRequest = (commentId: number) =>
-  privateRequest.patch<AcceptCommentResponse>(`comment/pin/${commentId}`);
+  privateRequest.patch<AcceptCommentResponse>(`comment/${commentId}/pin`);
 
 // 댓글 신고 API
 export const reportCommentRequest = ({
@@ -99,8 +98,13 @@ export const reportCommentRequest = ({
   commentId: number;
   category: keyof typeof REPORT_MAP;
   detail: string;
-}) =>
-  privateRequest.post<ReportCommentResponse>(`comment/report/${commentId}`, {
-    category,
-    detail,
-  });
+}) => {
+  let _detail = detail.length ? detail : undefined;
+  return privateRequest.post<ReportCommentResponse>(
+    `comment/${commentId}/report`,
+    {
+      category,
+      detail: _detail,
+    }
+  );
+};

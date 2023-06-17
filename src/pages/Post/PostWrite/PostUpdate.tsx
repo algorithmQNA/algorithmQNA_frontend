@@ -22,7 +22,7 @@ export default function PostUpdatePage() {
     const setState = useSetRecoilState(PostWriteState)
 
 
-    const {data,isLoading} = useQuery('post-update', () => getPostRequest(is), {
+    const {data:updateData,isLoading} = useQuery('post-update', () => getPostRequest(is), {
         onError: (err: any) => {
             const { status } = err.response.data;
             alert(status.message);
@@ -33,6 +33,9 @@ export default function PostUpdatePage() {
             }
         },
     });
+
+    const data = updateData?.data
+    
     useEffect(()=>{
         if(!isLoading && data){
             const result:any = data.data

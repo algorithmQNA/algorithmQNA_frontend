@@ -34,7 +34,7 @@ function Profile() {
 
   const memberInfo = useQuery(['memberDetail'], getMemberDetailInfo, {
     onSuccess: (res) => {
-      setNickname(res.data.memberName);
+      setNickname(res.data.data.memberName);
     },
   });
 
@@ -74,8 +74,10 @@ function Profile() {
     }
   };
 
-  const isValidRepeatEmail = repeatEmail === memberInfo.data?.data.memberEmail;
+  const data = memberInfo.data?.data.data;
 
+  const isValidRepeatEmail = repeatEmail === data?.memberEmail;
+  if (!data) return <div>사용자 정보를 가져올 수 없습니다.</div>;
   return (
     <div>
       {secessionModalOpen && (
@@ -97,8 +99,7 @@ function Profile() {
                 disabled={!isValidRepeatEmail}
                 className="bg-primary border border-primary text-white px-6 py-2 font-semibold text-base rounded-full w-fit disabled:bg-gray-500 disabled:border-none disabled:cursor-not-allowed"
                 onClick={() => {
-                  if (memberInfo.data?.data.memberId)
-                    successUser.mutate(memberInfo.data?.data.memberId);
+                  if (data.memberId) successUser.mutate(data.memberId);
                 }}
               >
                 탈퇴
@@ -114,7 +115,7 @@ function Profile() {
             <label htmlFor="name">닉네임</label>
             <input
               id="name"
-              value={memberInfo.data?.data.memberName}
+              value={data.memberName}
               placeholder="nickname"
               onChange={(e) => {
                 setNickname(e.target.value);
@@ -126,7 +127,7 @@ function Profile() {
             <label htmlFor="email">이메일</label>
             <input
               id="email"
-              defaultValue={memberInfo.data?.data.memberEmail}
+              defaultValue={data.memberEmail}
               placeholder="email"
               className="bg-border border border-[#D9D9D9] w-full py-1 px-2 relative rounded text-sm p-0 focus:outline-none hover:cursor-not-allowed"
               disabled

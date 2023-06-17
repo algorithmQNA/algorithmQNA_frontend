@@ -63,7 +63,6 @@ export default function ReportCommentTableRow({
   const handleRemoveBtnClick = () => {
     deletePostModal.openModal();
   };
-  console.log(data);
   if (data)
     return (
       <>
@@ -87,7 +86,7 @@ export default function ReportCommentTableRow({
             <div className="flex justify-stretch w-full h-[32rem] overflow-auto">
               <section className="flex-grow basis-1/2 h-full overflow-auto">
                 <div className="flex justify-between bg-box-bg p-2 border border-border">
-                  <UserProfile {...data.data.member} />
+                  <UserProfile {...data.data.data.member} />
                   <div className="flex flex-row items-end"></div>
                 </div>
                 <div
@@ -100,7 +99,7 @@ export default function ReportCommentTableRow({
               <section className="flex-grow basis-1/2 h-full overflow-auto">
                 <p className="font-semibold text-left">s{title} 신고사유</p>
                 <div className="bg-box-bg">
-                  {data.data.commentReports.map((report, idx) => {
+                  {data.data.data.commentReports.map((report, idx) => {
                     return (
                       <div className="w-full border text-left p-2">
                         <div className="w-full flex flex-row justify-between">
