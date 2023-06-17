@@ -40,7 +40,7 @@ function ReportPost() {
         );
       })}
       <Pagination
-        postLength={data?.data.data.totalPageSize || 0}
+          pageCount={data?.data.data.totalPageSize || 0}
         listLength={data?.data.data.size || 0}
       />
     </div>

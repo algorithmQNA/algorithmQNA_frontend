@@ -19,7 +19,7 @@ import {getCategoryPostsRequest} from "../../apis/postApi";
 
 export default function QNABoardPage() {
   const params = useGetParams('page')
-  const query = params ? parseInt(params) : 0;
+  const query = params ? parseInt(params) : 1;
   const {postCategory,sort,hasCommentCond,keyWordCond,titleCond,memberNameCond,isAcceptedCommentCond,}:PostFilter = useRecoilValue(PostFilterState)
   const {data,isLoading} = useQuery(
       ['q&a-list',postCategory,sort,hasCommentCond,keyWordCond,titleCond,memberNameCond,isAcceptedCommentCond],
@@ -27,7 +27,7 @@ export default function QNABoardPage() {
         return getCategoryPostsRequest(
             postCategory as any,
             sort as any,
-            query,
+            query-1,
             'QNA',
             )
       })
@@ -62,6 +62,7 @@ export default function QNABoardPage() {
 }
 
 function PostListBlock({data}:any){
+    console.log(data.data)
     return(
         <div>
             {
@@ -74,7 +75,7 @@ function PostListBlock({data}:any){
                             ))
                         }
                         {
-                            <Pagination postLength={data.data.totalPageSize} listLength={20} />
+                            <Pagination pageCount={data.data.totalPageCount} listLength={20} />
                         }
                     </div>
                     :
