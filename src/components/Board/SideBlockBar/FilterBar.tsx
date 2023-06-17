@@ -5,7 +5,6 @@ import SearchNickName from "./Input/Nickname";
 import SearchTitle from "./Input/Title";
 import SearchKeyword from "./Input/Keyword";
 
-
 export default function FilterBar() {
     const [state,setState] = useRecoilState(PostFilterState)
 
