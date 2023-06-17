@@ -1,10 +1,14 @@
 import {FiCircle, FiX} from "react-icons/fi";
 import {useRecoilState} from "recoil";
 import {PostFilterState} from "../../../storage/Post/Post";
+import SearchNickName from "./Input/Nickname";
+import SearchTitle from "./Input/Title";
+import SearchKeyword from "./Input/Keyword";
 
 
 export default function FilterBar() {
     const [state,setState] = useRecoilState(PostFilterState)
+
     return(
         <div className={'board-side-bar w-full'}>
             <div className={'side-block-title'}>
@@ -15,59 +19,9 @@ export default function FilterBar() {
             </div>
             <div>
                 <ul className={'select-filter side-block-ul'}>
-                    <label className={'side-block-li'}>
-                        <p>
-                            <span className={'flex items-center gap-1'}>닉네임</span>
-                        </p>
-                        <input
-                            type={'text'}
-                            className={'p-1 text-sm border border-baisc focus:border-primary rounded w-full'}
-                            placeholder={'검색'}
-                            onChange={(e)=>{
-                                let timer = setTimeout(()=>{
-                                    setState((prev)=>({
-                                        ...prev,memberNameCond:e.target.value
-                                    }))
-                                },1000)
-                                clearTimeout(timer)
-                            }}
-                        />
-                    </label>
-                    <label className={'side-block-li'}>
-                        <p>
-                            <span className={'flex items-center gap-1'}>제목</span>
-                        </p>
-                        <input
-                            type={'text'}
-                            className={'p-1 text-sm border border-baisc focus:border-primary rounded w-full'}
-                            placeholder={'검색'}
-                            onChange={(e)=>{
-                                setTimeout(()=>{
-                                    setState((prev)=>({
-                                        ...prev,titleCond:e.target.value
-                                    }))
-                                },1000)
-                            }}
-                        />
-                    </label>
-                    <label className={'side-block-li'}>
-                        <p>
-                            <span className={'flex items-center gap-1'}>키워드</span>
-                        </p>
-                        <input
-                            type={'text'}
-                            className={'p-1 text-sm border border-basic focus:border-primary rounded w-full'}
-                            placeholder={'검색'}
-                            onChange={(e)=>{
-                                let timer = setTimeout(()=>{
-                                    setState((prev)=>({
-                                        ...prev,keyWordCond:e.target.value
-                                    }))
-                                },1000)
-                                clearTimeout(timer)
-                            }}
-                        />
-                    </label>
+                    <SearchNickName/>
+                    <SearchTitle/>
+                    <SearchKeyword/>
                     <div className={'grid grid-cols-2 items-center'}>
                         <label className={'side-block-li'}>
                             <input

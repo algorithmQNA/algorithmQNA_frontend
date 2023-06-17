@@ -29,6 +29,15 @@ export interface PostListParams {
   memberNameCond?: string;
   isAcceptedCommentCond?: boolean;
 }
+export interface PostViewMember{
+    "memberId": number,
+    "memberName": string,
+    "memberRole": string,
+    "memberCommentBadge": number,
+    "memberPostBadge": number,
+    "memberLikeBadge": number,
+    "memberProfileUrl": string
+}
 export type PostType = 'QNA' | 'TIP' | 'NOTICE';
 export type PostCategory =
   | 'BRUTE_FORCE'
