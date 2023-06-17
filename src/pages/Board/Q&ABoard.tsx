@@ -15,6 +15,7 @@ import {useRecoilValue} from "recoil";
 import {PostFilterState} from "../../storage/Post/Post";
 import useGetParams from "../../hooks/useGetParams";
 import {getCategoryPostsRequest} from "../../apis/postApi";
+import DataIsLoading from "../../components/isLoading/isLoading";
 
 
 export default function QNABoardPage() {
@@ -38,6 +39,10 @@ export default function QNABoardPage() {
       })
   return (
     <div className={'relative'}>
+        {
+            isLoading &&
+            <DataIsLoading/>
+        }
       <PageTitle>질문 & 답변 게시판</PageTitle>
       <div className={'main-content board-grid'}>
         <div className={'option-bar-block'}>
