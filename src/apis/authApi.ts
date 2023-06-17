@@ -22,9 +22,11 @@ export const getAuthRequest = (code: string, state: string) =>
 export const refreshAccessTokenRequest = () =>
   axios.get('/oauth/token/renew', { withCredentials: true });
 
+// 탈퇴 API
 export const successionUserRequest = (memberId: string | number) =>
   privateRequest.delete(`member/${memberId}`);
 
+// 로그아웃 API. 쿠키 삭제
 export const logoffRequest = () =>
   axios
     .get('/oauth/deleteCookie')
@@ -56,14 +58,3 @@ export const getMyComments = (page: number = 1) =>
   privateRequest.get<GetMyCommentsResponse>('member/comment', {
     params: { page },
   });
-
-/* FAKE API. 아직 명세가 없어서 임시 작성*/
-
-// 마이페이지-내 뱃지 정보 받아옴.
-export const getMyBadges = () => privateRequest.get('/my/badges');
-
-// 마이페이지-내가 작성한 글 정보 받아옴.
-//export const getMyPosts = () => privateRequest.get('/my/badges');
-
-// 마이페이지-내가 작성한 댓글 정보 받아옴.
-//export const getMyComments = () => privateRequest.get('/my/badges');

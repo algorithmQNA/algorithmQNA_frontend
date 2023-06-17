@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery } from 'react-query';
-import { getMemberDetailInfo, getMyBadges } from '../../apis/authApi';
+import { getMemberDetailInfo } from '../../apis/authApi';
 import Loading from '../../components/Loading/Loading';
 import BadgeFactory from '../../components/Badge/BadgeFactory';
 import NoBadges from '../../components/Badge/NoBadges';

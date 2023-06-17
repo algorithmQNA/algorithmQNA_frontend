@@ -34,6 +34,12 @@ const handlers = [
         },
       })
     );
+    // return res(
+    //   ctx.status(403),
+    //   ctx.json({
+    //     msg: 'forbidden',
+    //   })
+    // );
   }),
   rest.patch(`${MOCK_BASED_URL}/member`, async (req, res, ctx) => {
     return res(ctx.status(200));
@@ -48,7 +54,7 @@ const handlers = [
         totalCommentCnt: 0,
         postCategory: 'QUEUE_STACK_HASH',
         postContent: generateRandomString(2000),
-        postDisLikeCnt: generateRandomInt(1000),
+        postDislikeCnt: generateRandomInt(1000),
         postLikeCnt: generateRandomInt(2999),
         postId: generateRandomInt(70),
         postTitle: generateRandomString(),
