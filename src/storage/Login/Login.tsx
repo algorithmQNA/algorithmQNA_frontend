@@ -3,5 +3,5 @@ import { User } from '../../types/Login';
 
 export const isLogin = atom({
   key: 'loginInfo',
-  default: {},
+  default: { id: null, name: null, profile: null },
 });
