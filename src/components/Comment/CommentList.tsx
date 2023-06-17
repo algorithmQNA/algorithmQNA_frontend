@@ -8,6 +8,7 @@ import { getPostRequest } from '../../apis/postApi';
 import CommentWrapper from './CommentWrapper';
 import { getCommentByPostid } from '../../apis/commentApi';
 import MessageBox from '../MessageBox';
+import CommentWrite from './CommentWrite';
 
 /** 대댓글의 최대 depth 3*/
 
@@ -23,7 +24,7 @@ function CommentList() {
   }, []);
 
   //For comment api call dependent
-  const { isFetching } = useQuery(
+  const { isFetching, isLoading } = useQuery(
     ['post-view', +pid],
     () => getPostRequest(+pid),
     {
@@ -53,7 +54,7 @@ function CommentList() {
     }
   );
 
-  const { data: commentList } = useQuery({
+  const { data: commentList, isFetching: commentFetching } = useQuery({
     queryKey: ['comment', +pid, +page],
     queryFn: async ({ queryKey }) => {
       const pid = queryKey[1] as number;
@@ -65,9 +66,13 @@ function CommentList() {
     enabled: !isFetching,
   });
 
+  /** skeleton 적용 */
+  if (isLoading) return <></>;
+
   if (!!commentList?.length)
     return (
       <section>
+        <CommentWrite />
         {commentList.map((data) => (
           <CommentWrapper depth={data.depth} key={data.commentId}>
             <CommentView {...data} />
