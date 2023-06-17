@@ -1,11 +1,21 @@
 import { setYMD } from '../../../utils/TextProcessing';
+import LikeBadge from "../../Badge/LikeBadge";
 
 export default function PostViewDetailBlock({data}:{data:any}) {
+    console.log(data)
+    const checkType = () =>{
+        switch (data.data.postType){
+            case "QNA":
+                return "질문&답변"
+            case "TIP":
+                return "꿀팁"
+        }
+    }
   return (
       <section className={'page-section'}>
         <h1 className={'post-title'}>{data.data.postTitle}</h1>
         <div className={'post-info-block'}>
-          <p>게시판 / 카테고리</p>
+          <p>{checkType()} / {data.data.postCategory}</p>
           <p>{setYMD(data.data.createdAt.split('T')[0])} 작성</p>
         </div>
         <div className={'writer-block'}>
@@ -23,7 +33,7 @@ export default function PostViewDetailBlock({data}:{data:any}) {
         </div>
         <div className={'post-info'}>
           <div className={'view-comment'}>
-            <p>조회수 12</p>
+            <p>조회수 {data.data.viewCnt}</p>
             <p>댓글 {data.data.totalCommentCnt}</p>
           </div>
           <div className={'recommend-block'}>
