@@ -8,7 +8,6 @@ import {getCategoryPostsRequest} from '../../apis/postApi';
 import SelectTabBlock from "../../components/DashBoard/SelectTab/SelectTabBlock";
 import {useRecoilValue} from "recoil";
 import {DashBoardState} from "../../storage/Dash/DashBoard";
-import {useNavigate} from "react-router-dom";
 import PostTableRow from "../../components/TableRow/PostTableRow";
 import DataIsLoading from "../../components/isLoading/isLoading";
 
@@ -19,7 +18,7 @@ export default function DashBoardPage() {
       ()=>{
         return getCategoryPostsRequest(
             "DP",
-            "LATESTASC",
+            "LATESTDESC",
             0,
             state.select,
         )
@@ -56,7 +55,7 @@ export default function DashBoardPage() {
           <SelectTabBlock/>
           {
             !isLoading && data &&
-              <PostListBlock data={data.data}/>
+              <PostListBlock data={data.data} type={state.select}/>
           }
         </div>
       </div>
@@ -64,12 +63,22 @@ export default function DashBoardPage() {
   );
 }
 
-function PostListBlock({data}:any){
+function PostListBlock({data,type}:any){
   return (
-      <div className={'dash-post-li'}>
-        {
-          data.data.posts.map((li: any) => <PostTableRow key={li.postId} data={li} />)
-        }
+      <div>
+          {
+              data.data.posts.length !== 0
+                  ?
+                  <div className={'dash-post-li'}>
+                      {
+                          data.data.posts.map((li: any) => <PostTableRow key={li.postId} data={li} type={type}/>)
+                      }
+                  </div>
+                  :
+                  <div className={'w-full h-[350px] flex justify-center items-center text-content border border-content rounded'}>
+                      조회된 게시물이 없습니다.
+                  </div>
+          }
       </div>
   )
 }

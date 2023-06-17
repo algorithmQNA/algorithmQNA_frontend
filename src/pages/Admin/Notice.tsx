@@ -47,7 +47,7 @@ const NotificationRow = () => {
         <Pagination
           displayPages={+page}
           listLength={data.size}
-          postLength={data.totalPageSize}
+          pageCount={data.totalPageSize}
         />
       </div>
     );

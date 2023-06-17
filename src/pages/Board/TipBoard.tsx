@@ -18,16 +18,21 @@ import {PostFilter, PostRow} from "../../types/Post/Post";
 
 export default function TipBoardPage() {
   const params = useGetParams('page')
-  const query = params ? parseInt(params) : 0;
+  const query = params ? parseInt(params) : 1;
   const {postCategory,sort,hasCommentCond,keyWordCond,titleCond,memberNameCond,isAcceptedCommentCond,} = useRecoilValue(PostFilterState)
-  const {data,isLoading} = useQuery(
-      ['tip-list',postCategory,sort,hasCommentCond,keyWordCond,titleCond,memberNameCond,isAcceptedCommentCond],
+  const {data,isLoading} = useQuery<any>(
+      ['tip-list',postCategory,sort,query,hasCommentCond,keyWordCond,titleCond,memberNameCond,isAcceptedCommentCond],
       ()=>{
         return getCategoryPostsRequest(
             postCategory as any,
             sort as any,
-            query,
+            query-1,
             'TIP',
+            hasCommentCond,
+            keyWordCond,
+            titleCond,
+            memberNameCond,
+            isAcceptedCommentCond
         )
       })
   return (
@@ -47,7 +52,10 @@ export default function TipBoardPage() {
             <div className={'board-menu-bar'}>
               <SortSelectBox/>
               <div className={'hidden lg:block'}>
-                <RowListTo page={1} />
+                  {
+                      data && !isLoading &&
+                      <RowListTo size={data.data.data.size} totalPage={data.data.data.totalPageCount}/>
+                  }
               </div>
               <div className={'block lg:hidden text-title'}>
                 <ModalButton/>
@@ -74,11 +82,11 @@ function PostListBlock({data}:any){
               <div className={'grid gap-3'}>
                 {
                   data.data.posts.map((li:PostRow)=>(
-                      <PostTableRow key={li.postId} data={li}/>
+                      <PostTableRow key={li.postId} data={li} type={"TIP"}/>
                   ))
                 }
                 {
-                  <Pagination postLength={data.data.totalPageSize} listLength={20} />
+                  <Pagination pageCount={data.data.totalPageSize} listLength={20} />
                 }
               </div>
               :
