@@ -28,7 +28,7 @@ function Comment() {
 
         <Pagination
           listLength={comments.size}
-          postLength={comments.totalPageSize}
+          pageCount={comments.totalPageSize}
         />
       </div>
     );

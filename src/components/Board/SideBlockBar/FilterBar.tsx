@@ -5,7 +5,6 @@ import SearchNickName from "./Input/Nickname";
 import SearchTitle from "./Input/Title";
 import SearchKeyword from "./Input/Keyword";
 
-
 export default function FilterBar() {
     const [state,setState] = useRecoilState(PostFilterState)
 
@@ -39,7 +38,7 @@ export default function FilterBar() {
                                 }}
                             />
                             <p>
-                                <span className={'flex items-center gap-1'}>댓글 <FiCircle size={12}/></span>
+                                <span className={'flex items-center gap-1 font-medium'}>댓글 <FiCircle size={12}/></span>
                             </p>
                         </label>
                         <label className={'side-block-li'}>
@@ -59,7 +58,7 @@ export default function FilterBar() {
                                 }}
                             />
                             <p>
-                                <span className={'flex items-center gap-1'}>댓글 <FiX/></span>
+                                <span className={'flex items-center gap-1 font-medium'}>댓글 <FiX/></span>
                             </p>
                         </label>
                     </div>
@@ -81,7 +80,7 @@ export default function FilterBar() {
                                 }}
                             />
                             <p>
-                                <span className={'flex items-center gap-1'}>채택 <FiCircle size={12}/></span>
+                                <span className={'flex items-center gap-1 font-medium'}>채택 <FiCircle size={12}/></span>
                             </p>
                         </label>
                         <label className={'side-block-li'}>
@@ -100,7 +99,7 @@ export default function FilterBar() {
                                 }}
                             />
                             <p>
-                                <span className={'flex items-center gap-1'}>채택 <FiX/></span>
+                                <span className={'flex items-center gap-1 font-medium'}>채택 <FiX/></span>
                             </p>
                         </label>
                     </div>

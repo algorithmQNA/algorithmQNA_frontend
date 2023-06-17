@@ -2,6 +2,7 @@ import React, {ChangeEvent, useEffect, useRef, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {useQuery} from "react-query";
 import {getMemberDetailInfo} from "../../../../apis/authApi";
+import Rounded from "../../../RoundedImage/RoundedImage";
 
 export default function UserMenuBlock(){
     const {data,isLoading}:{data:any,isLoading:boolean} = useQuery(['user'],getMemberDetailInfo)
@@ -41,7 +42,7 @@ export default function UserMenuBlock(){
                 <span className={''}>
                     {
                         !isLoading && data &&
-                        <img src={data.data.data.memberProfileUrl}/>
+                        <Rounded size={'sm'} alt="프로필 이미지" src={data.data.data.memberProfileUrl}/>
                     }
                 </span>
             </label>

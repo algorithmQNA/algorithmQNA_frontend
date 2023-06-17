@@ -15,7 +15,7 @@ export default function PostViewOptionBlock({user_id}:{user_id:number}){
     const member:any = data?.data as any
     const memberId = member.data.memberId
     return(
-        <div className={'w-full flex justify-end gap-4'}>
+        <div className={'w-full flex justify-end gap-4 text-content'}>
             {
                 memberId === user_id &&
                 <Link to={`/post/update?pid=${pid}`}>
@@ -26,7 +26,6 @@ export default function PostViewOptionBlock({user_id}:{user_id:number}){
                 memberId === user_id &&
                 <PostDeleteButton/>
             }
-
             <PostReportButton/>
         </div>
     )
