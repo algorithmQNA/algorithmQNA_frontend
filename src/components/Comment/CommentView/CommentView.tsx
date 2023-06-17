@@ -88,7 +88,8 @@ function CommentView({
   //댓글 작성
   const { mutate: writeComment } = useMutation(createCommentRequest, {
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: invalidateQueryKey });
+      //얘는 본인 레벨을 invalidate하는게 아니라 본인 자식을 update해줘야함.
+      queryClient.invalidateQueries({ queryKey: ['reply', commentId] });
       setOpenReplyEditor(false);
     },
   });
