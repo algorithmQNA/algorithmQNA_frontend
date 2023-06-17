@@ -5,7 +5,7 @@ import PostWriteCKEditor from "../../../components/Board/PostWrite/CKEditor";
 import PostWriteKeywordBlock from "../../../components/Board/PostWrite/KeywordBlock";
 import React, {useEffect} from "react";
 import {useQuery} from "react-query";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {getPostRequest} from "../../../apis/postApi";
 import {useSetRecoilState} from "recoil";
 import {PostWriteState} from "../../../storage/PostWrite/PostWrite";
@@ -13,6 +13,7 @@ import PostUpdateBtn from "../../../components/Board/PostWrite/UpdateBtn";
 
 export default function PostUpdatePage() {
     const nav = useNavigate();
+    const {pid} = useParams()
     const location = useLocation();
     const params = new URLSearchParams(location.search).get('pid');
     const query = params ? parseInt(params) : 'a';
@@ -20,11 +21,6 @@ export default function PostUpdatePage() {
 
     const setState = useSetRecoilState(PostWriteState)
 
-    useEffect(() => {
-        if (isNaN(is)) {
-            nav(-1);
-        }
-    }, []);
 
     const {data:updateData,isLoading} = useQuery('post-update', () => getPostRequest(is), {
         onError: (err: any) => {
@@ -41,9 +37,11 @@ export default function PostUpdatePage() {
     const data = updateData?.data
     
     useEffect(()=>{
-        if(!isLoading && data !== undefined){
+        if(!isLoading && data){
+            const result:any = data.data
+            console.log(result)
             setState((prev)=>({
-                ...prev,title:data.data.postTitle,content:data.data.postContent,keyWord:data.data.postKeyWords
+                ...prev,title:result.data.postTitle,content:result.data.postContent,keyWord:result.data.postKeyWords
             }))
         }
     },[isLoading])
@@ -57,7 +55,7 @@ export default function PostUpdatePage() {
                 <PostWriteKeywordBlock/>
                 {
                     !isLoading && data !== undefined &&
-                    <PostUpdateBtn id={data.data.postId}/>
+                    <PostUpdateBtn />
                 }
             </div>
         </div>

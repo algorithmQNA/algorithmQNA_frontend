@@ -10,8 +10,8 @@ export default function SortSelectBox(){
     const sort:{text:string,value:PostSort}[] = [
         {text:"최신순",value:"LATESTDESC"},
         {text:"오래된순",value:"LATESTASC"},
-        {text:"댓글 많은순",value:"COMMENTCNTDESC"},
-        {text:"댓글 적은순",value:"COMMENTCNTASC"},
+        {text:"댓글 많은순",value:"COMMENTCNTASC"},
+        {text:"댓글 적은순",value:"COMMENTCNTDESC"},
         {text:"추천 높은순",value:"LIKECNTASC"},
         {text:"추천 낮은순",value:"LIKEASC"},
         {text:"명예 점수 높은순",value:"POPULAR"},

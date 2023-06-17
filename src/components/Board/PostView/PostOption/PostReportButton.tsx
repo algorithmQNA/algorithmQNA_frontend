@@ -5,15 +5,13 @@ import {ChangeEvent, useState} from "react";
 import ButtonComponent from "../../../Button/ButtonComponent";
 import {useMutation} from "react-query";
 import {AxiosError} from "axios";
-import {useLocation} from "react-router-dom";
-import {privateRequest} from "../../../../apis/instance";
+import {useParams} from "react-router-dom";
 import {reportPostRequest} from "../../../../apis/postApi";
 import { ReportType } from "../../../../types/report";
 
 export default function PostReportButton(){
-    const location = useLocation();
-    const params = new URLSearchParams(location.search).get('pid');
-    const query = params ? parseInt(params) : 'a';
+    const {pid} = useParams()
+    const query = pid ? parseInt(pid) : 'a';
     const is = parseInt(query as string);
     const {open,closeModal ,openModal} = useModal()
 

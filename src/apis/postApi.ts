@@ -43,16 +43,16 @@ export const updatePostRequest = (
   postId: number,
   title: string,
   content: string,
-  categoryId: PostCategory | '',
-  contentTypeId: PostType | '',
+  postCategory: PostCategory | '',
+  postType: PostType | '',
   keyWords: string[],
   imageIds: number[]
 ) =>
   privateRequest.patch(`post/${postId}`, {
     title,
     content,
-    categoryId,
-    contentTypeId,
+      postCategory,
+      postType,
     keyWords,
     imageIds,
   });
@@ -84,8 +84,8 @@ export const getCategoryPostsRequest = (
       keyWordCond,
       titleCond,
       memberNameCond,
-      isAcceptedCommentCond,
-    },
+      isAcceptedCommentCond
+    }
   });
 
 // 게시물 추천 API

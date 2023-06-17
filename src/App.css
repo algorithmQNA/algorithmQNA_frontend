@@ -28,7 +28,9 @@
 .comment-editor .ck.ck-editor__editable:not(.ck-editor__nested-editable) {
   border: none;
 }
-
+.white-50{
+  background:rgba(255,255,255,0.5);
+}
 .comment-editor .ck.ck-toolbar {
   border: 1px solid #eeeeee;
 }
