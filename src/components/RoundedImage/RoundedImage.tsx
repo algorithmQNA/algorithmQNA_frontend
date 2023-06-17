@@ -3,7 +3,7 @@ import type { ImgHTMLAttributes } from 'react';
 
 type RoundedImageProps = ImgHTMLAttributes<HTMLImageElement> & {
   alt: string;
-  size?: 'sm' | 'rg';
+  size?: 'sm' | 'rg' | 'profile';
 };
 
 function Rounded({ size = 'sm', ...props }: RoundedImageProps) {
@@ -11,6 +11,13 @@ function Rounded({ size = 'sm', ...props }: RoundedImageProps) {
     return (
       <img
         className="rounded-full object-cover object-center w-[150px] h-[150px]"
+        {...props}
+      />
+    );
+  if (size === 'profile')
+    return (
+      <img
+        className="rounded-full object-cover object-center w-[50px] h-[50px]"
         {...props}
       />
     );

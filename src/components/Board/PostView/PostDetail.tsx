@@ -1,5 +1,5 @@
 import { setYMD } from '../../../utils/TextProcessing';
-import LikeBadge from "../../Badge/LikeBadge";
+import UserProfile from '../../UserProfile/UserProfile';
 
 export default function PostViewDetailBlock({data}:{data:any}) {
     const checkType = () =>{
@@ -17,7 +17,7 @@ export default function PostViewDetailBlock({data}:{data:any}) {
           <p>{checkType()} / {data.data.postCategory}</p>
           <p>{setYMD(data.data.createdAt.split('T')[0])} 작성</p>
         </div>
-        <div className={'writer-block'}>
+        {/* <div className={'writer-block'}>
           <div className={'writer-profile-img'}>
             <img src={data.data.member.memberProfileUrl} alt={'user=profile'} className={'w-full h-full'}/>
           </div>
@@ -29,7 +29,8 @@ export default function PostViewDetailBlock({data}:{data:any}) {
               <span className={'writer-badge'}></span>
             </p>
           </div>
-        </div>
+        </div> */}
+        <UserProfile {...data.data.member} />
         <div className={'post-info'}>
           <div className={'view-comment'}>
             <p>조회수 {data.data.viewCnt}</p>
