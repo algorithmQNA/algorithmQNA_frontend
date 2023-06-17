@@ -4,8 +4,8 @@ function LogoIcon() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="75"
-      height="55"
+      width="100%"
+      height="100%"
       overflow="visible"
       viewBox="0 0 191.404 147.003"
     >
