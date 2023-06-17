@@ -11,3 +11,7 @@ export type GetCategoryPostsResponse = {
     posts: PostBrief[];
   } & Pagination;
 };
+export type GetHightlightCommentListResponse = {
+  data: { pinnedComment: Comment; highlightCommentId: number } & Post &
+    Pagination;
+};
