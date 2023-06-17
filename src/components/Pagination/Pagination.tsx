@@ -74,18 +74,18 @@ export default function Pagination({
   return (
     <nav className={'m-auto flex gap-1 w-fit items-center'}>
       {query === 1 || page.length === 0 ? (
-        <label
+        <span
           className={
-            'w-[40px] h-[35px] flex items-center justify-center rounded stroke-[#ABABAB] bg-[#f5f5f5]'
+            'w-[35px] sm:w-[40px] h-[30px] sm:h-[35px] flex items-center justify-center rounded stroke-[#ABABAB] bg-[#f5f5f5]'
           }
         >
           <Left />
-        </label>
+        </span>
       ) : (
         <Link
           to={setParams(query - 1)}
           className={
-            'w-[40px] h-[35px] flex rounded items-center justify-center stroke-[#3c4f74] bg-[#f5f5f5]'
+            'w-[35px] sm:w-[40px] h-[30px] sm:h-[35px] flex rounded items-center justify-center stroke-[#3c4f74] bg-[#f5f5f5]'
           }
         >
           <Left />
@@ -94,7 +94,7 @@ export default function Pagination({
       {page.map((li) => (
         <Link
           key={li}
-          className={`w-[40px] h-[35px] flex items-center justify-center rounded font-bold ${
+          className={`w-[35px] sm:w-[40px] h-[30px] sm:h-[35px] flex items-center justify-center rounded font-bold ${
             query === li
               ? 'text-white bg-primary'
               : 'bg-[#f5f5f5] text-[#3c4f74]'
@@ -107,7 +107,7 @@ export default function Pagination({
       {query >= totalPage || page.length === 0 ? (
         <span
           className={
-            'w-[40px] h-[35px] flex items-center justify-center stroke-[#ABABAB] bg-[#f5f5f5]'
+            'w-[35px] sm:w-[40px] h-[30px] sm:h-[35px] flex items-center justify-center stroke-[#ABABAB] bg-[#f5f5f5]'
           }
         >
           <Right />
@@ -116,7 +116,7 @@ export default function Pagination({
         <Link
           to={setParams(query + 1)}
           className={
-            'w-[40px] h-[35px] rounded flex items-center justify-center stroke-[#3c4f74] bg-[#f5f5f5]'
+            'w-[35px] sm:w-[40px] h-[30px] sm:h-[35px] rounded flex items-center justify-center stroke-[#3c4f74] bg-[#f5f5f5]'
           }
         >
           <Right />
