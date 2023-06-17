@@ -31,7 +31,6 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import CustomEditor from 'ckeditor5-custom-build';
 import ButtonComponent from '../../Button/ButtonComponent';
 import { MyCustomUploadAdapterPlugin } from '../CustomImageUpload';
-import { GetPostResponse } from '../../../types/apis/postResponseType';
 import useModal from '../../../hooks/useModal';
 import Modal from '../../Modal/Modal';
 import InputText from '../../Input/InputText';
@@ -90,8 +89,9 @@ function CommentView({
   //댓글 작성
   const { mutate: writeComment } = useMutation(createCommentRequest, {
     onSuccess: () => {
-      //얘는 본인 레벨을 invalidate하는게 아니라 본인 자식을 update해줘야함.
-      queryClient.invalidateQueries({ queryKey: ['reply', commentId] });
+      if (depth >= 2)
+        queryClient.invalidateQueries({ queryKey: ['reply', parentId] });
+      else queryClient.invalidateQueries({ queryKey: ['reply', commentId] });
       setOpenReplyEditor(false);
     },
   });
@@ -199,8 +199,11 @@ function CommentView({
           </div>
         </Modal>
       )}
-      <div className="grow" id={`${commentId}`}>
-        <div className="flex justify-between bg-box-bg p-2 border border-border">
+      <div className="grow">
+        <div
+          className="flex justify-between bg-box-bg p-2 border border-border"
+          id={`${commentId}`}
+        >
           <UserProfile {...props.member} />
           <div className="flex flex-row items-end">
             <span className={'text-[#9ca3af] text-xs text-right'}>
