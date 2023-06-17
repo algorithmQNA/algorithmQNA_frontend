@@ -1,13 +1,11 @@
 import {useMutation} from "react-query";
 import {AxiosError} from "axios";
-import {useLocation, useNavigate} from "react-router-dom";
-import {privateRequest} from "../../../../apis/instance";
+import {useNavigate, useParams} from "react-router-dom";
 import {deletePostRequest} from "../../../../apis/postApi";
 
 export default function PostDeleteButton(){
     const nav = useNavigate()
-    const location = useLocation();
-    const params = new URLSearchParams(location.search).get('pid');
+    const {pid:params} = useParams()
     const pid = parseInt(params as string);
 
     const {mutate} = useMutation(deletePostRequest,{

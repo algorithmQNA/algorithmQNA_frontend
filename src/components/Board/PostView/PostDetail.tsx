@@ -1,21 +1,7 @@
-
 import { setYMD } from '../../../utils/TextProcessing';
-import {useNavigate} from "react-router-dom";
-import useGetParams from "../../../hooks/useGetParams";
-import {useEffect} from "react";
-import {useRecoilState} from "recoil";
-import {isLogin} from "../../../storage/Login/Login";
 
 export default function PostViewDetailBlock({data}:{data:any}) {
-    const nav = useNavigate();
-    const params = useGetParams('pid')
-    const query = params ? parseInt(params) : 'a';
-    const is = parseInt(query as string);
-    useEffect(() => {
-        if (isNaN(is)) {
-            nav(-1);
-        }
-    }, []);
+
   return (
       <section className={'page-section'}>
         <h1 className={'post-title'}>{data.data.postTitle}</h1>

@@ -1,4 +1,3 @@
-import {useNavigate} from "react-router-dom";
 import React from "react";
 import AlarmBlock from "./Alarm";
 import UserMenuBlock from "./UserMenu";

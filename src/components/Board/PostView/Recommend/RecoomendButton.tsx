@@ -1,8 +1,8 @@
 import {ChangeEvent} from 'react';
 import { FiThumbsUp, FiThumbsDown } from 'react-icons/fi';
 import './style.css';
-import {useLocation} from "react-router-dom";
-import {QueryClient, useMutation, useQueryClient} from "react-query";
+import {useParams} from "react-router-dom";
+import {useMutation, useQueryClient} from "react-query";
 import {recommendPostRequest} from "../../../../apis/postApi";
 
 interface MutationParam{
@@ -15,9 +15,9 @@ interface props{
     checked:boolean | undefined
 }
 export function RecommendBtn({checked}:props) {
-    const location = useLocation();
-    const params = new URLSearchParams(location.search).get('pid');
-    const query = params ? parseInt(params) : 'a';
+
+    const {pid} = useParams()
+    const query = pid ? parseInt(pid) : 'a';
     const is = parseInt(query as string);
     const qc = useQueryClient()
 
@@ -52,9 +52,8 @@ export function RecommendBtn({checked}:props) {
   );
 }
 export function UnRecommendBtn({checked}:props) {
-    const location = useLocation();
-    const params = new URLSearchParams(location.search).get('pid');
-    const query = params ? parseInt(params) : 'a';
+    const {pid} = useParams()
+    const query = pid ? parseInt(pid) : 'a';
     const is = parseInt(query as string);
     const qc = useQueryClient()
     const mutationLike = useMutation(({pid,isLike,cancel}:MutationParam)=>recommendPostRequest(pid,{isLike,cancel}),{

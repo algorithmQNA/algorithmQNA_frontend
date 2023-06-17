@@ -3,24 +3,26 @@ import PageTitle from '../../../components/PageTitle/PageTitle';
 import PostViewDetailBlock from '../../../components/Board/PostView/PostDetail';
 import PostViewContent from '../../../components/Board/PostView/PostContent';
 import PostViewKeywordBlock from "../../../components/Board/PostView/PostKeyword";
-import {useNavigate} from "react-router-dom";
-import useGetParams from "../../../hooks/useGetParams";
-import {useEffect} from "react";
-import {useQuery, useQueryClient} from "react-query";
+import {useNavigate, useParams} from "react-router-dom";
+import React, {useEffect} from "react";
+import {useQuery} from "react-query";
 import {getPostRequest} from "../../../apis/postApi";
+import DataIsLoading from "../../../components/isLoading/isLoading";
 
 export default function PostViewPage() {
     const nav = useNavigate();
-    const params = useGetParams('pid')
+    const par = useParams();
+    const params = par.pid
     const query = params ? parseInt(params) : 'a';
     const is = parseInt(query as string);
+
     useEffect(() => {
         if (isNaN(is)) {
             nav(-1);
         }
     }, []);
 
-    const {data,isLoading} = useQuery('post-view', () => getPostRequest(is), {
+    const {data,isLoading} = useQuery(['post-view',is], () => getPostRequest(is), {
         onError: (err: any) => {
             const { status } = err.response.data;
             alert(status.message);
@@ -31,18 +33,19 @@ export default function PostViewPage() {
             }
         },
     });
-
   return (
     <div>
       <PageTitle>{''}</PageTitle>
-      <div className={'main-content post-view-page p-4'}>
+      <div className={'main-content post-view-page p-4 min-h-[750px]'}>
           {
-              data && !isLoading &&
-              <div className={'content-set'}>
-                  <PostViewDetailBlock data={data.data}/>
-                  <PostViewContent data={data.data}/>
-                  <PostViewKeywordBlock data={data.data}/>
-              </div>
+              data && !isLoading ?
+                  <div className={'content-set'}>
+                      <PostViewDetailBlock data={data.data}/>
+                      <PostViewContent data={data.data}/>
+                      <PostViewKeywordBlock data={data.data}/>
+                  </div>
+                  :
+                  <DataIsLoading/>
           }
       </div>
     </div>

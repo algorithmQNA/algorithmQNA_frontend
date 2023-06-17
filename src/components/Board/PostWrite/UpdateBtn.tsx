@@ -8,9 +8,11 @@ import {PostType, PostWrite} from '../../../types/Post/Post';
 import { AxiosError } from 'axios';
 import { ErrorType } from '../../../types/Error';
 import useGetParams from "../../../hooks/useGetParams";
+import {useNavigate} from "react-router-dom";
 
 
 export default function PostUpdateBtn() {
+    const nav = useNavigate()
     const id = useGetParams("pid")
     const state = useRecoilValue(PostWriteState);
     const { mutate } = useMutation(
@@ -18,7 +20,8 @@ export default function PostUpdateBtn() {
             updatePostRequest(parseInt(id as string),title, content, postCategory, postType as PostType, keyWord, imageIds),
         {
             onSuccess: () => {
-                alert('작성 완료 됐습니다. \n 게시판 목록으로 돌아갑니다.');
+                alert('수정 완료 됐습니다. \n 게시글로 돌아갑니다.');
+                nav(-1)
             },
             onError: (error: AxiosError) => {
                 if (!error.response) return;
@@ -44,7 +47,7 @@ export default function PostUpdateBtn() {
     };
     return (
         <div className={'text-right'}>
-            <ButtonComponent onClick={writeEnd}>등록</ButtonComponent>
+            <ButtonComponent onClick={writeEnd}>수정</ButtonComponent>
         </div>
     );
 }
