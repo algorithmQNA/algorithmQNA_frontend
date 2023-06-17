@@ -1,14 +1,19 @@
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import React, {ChangeEvent, useEffect, useRef, useState} from "react";
-import {FiBell} from "react-icons/fi";
-import {useInfiniteQuery} from "react-query";
+import {FaBell} from "react-icons/fa";
+import {FiLogOut} from "react-icons/fi";
+import Rounded from "../../../RoundedImage/RoundedImage";
+import {useInfiniteQuery, useQueryClient} from "react-query";
+import useGetMember from "../../../../hooks/useGetMember";
+import { logoffRequest } from "../../../../apis/authApi";
 import {getOldAlarm} from "./test";
 import {AlarmType} from "../../../../types/Alarm";
-import {FaBell} from "react-icons/fa";
 
 
 export default function HeaderUserBlock(){
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
+    const {isLoading,data} = useGetMember()
     const [state, setState] = useState({
         alarm: false,
     })
@@ -110,10 +115,23 @@ export default function HeaderUserBlock(){
                     }
                 </ul>
             )}
-            <a
-                href={'/mypage/profile'}
+                    <label
+          className={'relative cursor-pointer'}
+          onClick={() =>
+            logoffRequest().then(() => {
+              queryClient.resetQueries('user');
+              navigate('/access');
+            })
+          }
+        >
+          <FiLogOut size={24} />
+        </label>
+        <Link
+                to={'/mypage/profile'}
                 className={'w-[45px] h-[45px] rounded-full border border-white'}
-            ></a>
+        >
+          {!isLoading && <Rounded size="sm" alt="profileImg" src={data?.data.data.memberProfileUrl}/>}
+        </Link>
         </div>
     );
 }
