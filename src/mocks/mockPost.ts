@@ -14,7 +14,7 @@ const handlers = [
     const postType = req.url.searchParams.get('postType') as unknown as string;
     const page = (req.url.searchParams.get('page') as unknown as number) || 1;
 
-    const start = (page - 1) * 20;
+    const start = page * 20;
 
     const posts =
       postType === 'QNA'
@@ -131,7 +131,7 @@ const PostInitData: GetPostResponse = {
         dislikeCnt: 20,
         createdAt: '2023-03-03',
         depth: 1,
-        isPinned: true,
+        isPinned: false,
         isLiked: false,
         updatedAt: '2023-03-03',
         hasChild: true,
@@ -160,6 +160,19 @@ const PostInitData: GetPostResponse = {
         totalPageSize: 21,
       },
     ],
+    pinnedComment: {
+      commentId: 4,
+      member: generateMockMember(5),
+      content: '<h1>채택된 답변~</h1>',
+      likeCnt: 10,
+      dislikeCnt: 20,
+      createdAt: '2023-03-03',
+      depth: 1,
+      isPinned: true,
+      isLiked: false,
+      updatedAt: '2023-03-03',
+      hasChild: false,
+    },
   },
 };
 
