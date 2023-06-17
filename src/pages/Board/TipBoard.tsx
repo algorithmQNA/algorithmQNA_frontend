@@ -39,6 +39,7 @@ export default function TipBoardPage() {
         <PageTitle>꿀팁 게시판</PageTitle>
         <div className={'main-content board-grid'}>
           <div className={'option-bar-block'}>
+
             <FilterBar/>
             <CategoryBar/>
           </div>
