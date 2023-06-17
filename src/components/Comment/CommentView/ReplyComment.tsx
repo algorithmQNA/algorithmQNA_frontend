@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useInfiniteQuery } from 'react-query';
 import { getSpreadCommentByCommentId } from '../../../apis/commentApi';
 import CommentView from './CommentView';
@@ -8,9 +8,11 @@ import IconButton from '../../Button/IconButton';
 function ReplyComment({
   commentId,
   page = 0,
+  commentMode = 'normal',
 }: {
   commentId: number;
   page?: number;
+  commentMode?: 'hightlight' | 'normal';
 }) {
   const {
     data,
@@ -54,8 +56,12 @@ function ReplyComment({
       )}
       {data?.pages.map((page) =>
         page.result.map((child) => (
-          <CommentWrapper depth={child.depth}>
-            <CommentView {...child} />
+          <CommentWrapper depth={child.depth} key={child.commentId}>
+            <CommentView
+              {...child}
+              commentMode={commentMode}
+              parentId={commentId}
+            />
           </CommentWrapper>
         ))
       )}

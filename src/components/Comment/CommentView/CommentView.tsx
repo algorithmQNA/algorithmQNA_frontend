@@ -38,9 +38,11 @@ import InputText from '../../Input/InputText';
 import ReplyComment from './ReplyComment';
 import { REPORT_MAP } from '../../../constants/Report';
 import useGetParams from '../../../hooks/useGetParams';
+import { useParams } from 'react-router-dom';
 
 export type CommentViewProps = Comment & {
   commentMode?: 'hightlight' | 'normal';
+  parentId?: number;
 };
 
 function CommentView({
@@ -54,11 +56,21 @@ function CommentView({
   commentId,
   isPinned,
   mentionerName,
+  parentId,
+  commentMode = 'normal',
   ...props
 }: CommentViewProps) {
-  const pid = useGetParams('pid') || 0;
+  const { pid = -1 } = useParams();
   const page = useGetParams('page') || 0;
-  const [openReply, setOpenReply] = useState(!depth ? true : false);
+  //깊이 0이면 1까지는 자동으로 열려있음
+  const defaultOpenReply =
+    commentMode === 'hightlight' ? true : !depth ? true : false;
+  const isRoot = !depth;
+  const invalidateQueryKey = isRoot
+    ? ['comment', +pid, +page]
+    : ['reply', parentId];
+
+  const [openReply, setOpenReply] = useState(defaultOpenReply);
   const [openMenu, setOpenMenu] = useState(false);
   const [mode, setMode] = useState<'read' | 'modify'>('read');
   const [openReplyEditor, setOpenReplyEditor] = useState(false);
@@ -76,7 +88,7 @@ function CommentView({
   //댓글 작성
   const { mutate: writeComment } = useMutation(createCommentRequest, {
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['comment', pid] });
+      queryClient.invalidateQueries({ queryKey: invalidateQueryKey });
       setOpenReplyEditor(false);
     },
   });
@@ -84,7 +96,7 @@ function CommentView({
   const { mutate: recommendComment } = useMutation(recommendCommentRequest, {
     onMutate: async (params) => {
       /**  이 쿼리키 바꿔줄거면 CommentList의 queryKey도 바꿔줄것!*/
-      const POST_QUERY_KEY = ['comment', +pid, +page];
+      const POST_QUERY_KEY = invalidateQueryKey;
       await queryClient.cancelQueries({ queryKey: POST_QUERY_KEY });
       const previous =
         queryClient.getQueryData<GetPostResponse>(POST_QUERY_KEY);
@@ -109,15 +121,27 @@ function CommentView({
   //댓글 수정
   const { mutate: modifyComment } = useMutation(updateCommentRequest, {
     onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ['comment', pid, page] }),
+      queryClient.invalidateQueries({
+        queryKey: invalidateQueryKey,
+      }),
+    onError: (e) => alert(e),
   });
 
   //댓글 삭제
-  const { mutate: deleteComment } = useMutation(deleteCommentRequest);
+  const { mutate: deleteComment } = useMutation(deleteCommentRequest, {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: invalidateQueryKey });
+    },
+    onError: () => {
+      window.alert('삭제 실패했습니다.');
+    },
+  });
 
   //댓글 채택
   const { mutate: pinnedComment } = useMutation(pinCommentRequest, {
-    onSuccess: () => window.alert('채택완료했습니다'),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: invalidateQueryKey });
+    },
     onError: () => window.alert('채택을 실패 했습니다'),
   });
 
@@ -146,7 +170,9 @@ function CommentView({
         <p className="text-secondary text-sm font-semibold">질문자 채택</p>
       )}
       {mentionerName && (
-        <p className="font-light text-sm text-secondary">@{mentionerName}</p>
+        <p className="font-light text-sm text-secondary my-1">
+          @{mentionerName}
+        </p>
       )}
       {open && (
         <Modal
@@ -184,7 +210,7 @@ function CommentView({
           </div>
         </Modal>
       )}
-      <div className="grow">
+      <div className="grow" id={`${commentId}`}>
         <div className="flex justify-between bg-box-bg p-2 border border-border">
           <UserProfile {...props.member} />
           <div className="flex flex-row items-end">
@@ -307,7 +333,9 @@ function CommentView({
           >
             {openReply ? '접기' : '펴기'}
           </IconButton>
-          {openReply && <ReplyComment commentId={commentId} />}
+          {openReply && (
+            <ReplyComment commentId={commentId} commentMode={commentMode} />
+          )}
         </>
       )}
     </div>
