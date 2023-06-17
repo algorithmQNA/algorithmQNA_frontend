@@ -24,13 +24,15 @@ export default function AlarmBlock(){
             alarm: e.target.checked
         }));
     };
-    const post = (post_id: number) => {
-        navigate(`/post/view?pid=${post_id}`, {
+    const comment = (data: AlarmType) => {
+        navigate(data.eventURL, {
             state: {
-                targetPost: post_id,
+                targetPost: data.commentId,
             },
         });
     };
+    const topProgress = useRef<HTMLSpanElement>(null)
+    const bottomProgress = useRef<HTMLSpanElement>(null)
     const button = useRef<HTMLButtonElement>(null)
     const childHeight = 50
     const getNewData = async (e:React.UIEvent<HTMLUListElement>) =>{
@@ -61,8 +63,6 @@ export default function AlarmBlock(){
         document.addEventListener('click', setCheck);
         return () => document.removeEventListener('click', setCheck);
     }, [state.alarm]);
-    const topProgress = useRef<HTMLSpanElement>(null)
-    const bottomProgress = useRef<HTMLSpanElement>(null)
     return(
         <div ref={box}>
             <label className={'relative'}>
@@ -84,10 +84,10 @@ export default function AlarmBlock(){
                     onScroll={getNewData}
                 >
                     <span ref={topProgress} className={`hidden items-center justify-center w-full h-[${childHeight}px]`}>
-                        <img src={'/svg/spinner.svg'} alt={'progress'} className={'w-auto h-[100%]'}/>
+                        <img src={'/svg/spinner.png'} alt={'progress'} className={'w-auto h-[100%]'}/>
                     </span>
                     {
-                        oldData.data?.pages[0].data.alarms.length === 0
+                        oldData.data?.pages[0].data.alarms.length === 0 || !oldData.data
                             ?
                             <div className={'flex items-center justify-center p-4 text-gray-400 min-h-[200px]'}>
                                 알림이 없습니다.
@@ -96,8 +96,8 @@ export default function AlarmBlock(){
                                 li.data.alarms.map((i:AlarmType)=>(
                                     <li
                                         key={i.alarmId}
-                                        className={`text-content hover:text-primary text-sm h-[${childHeight}px] flex items-center`}
-                                        onClick={() => post(1)}
+                                        className={`text-content hover:text-primary text-sm h-[${childHeight}px] flex items-center w-full`}
+                                        onClick={() => comment(i)}
                                     >
                                         <span>{i.msg}</span>
                                     </li>
@@ -108,7 +108,7 @@ export default function AlarmBlock(){
                         oldData.hasNextPage &&
                         <button className={`h-[${childHeight}px] flex items-center text-sm text-primary`} ref={button}>
                             <span ref={bottomProgress} className={'hidden items-center justify-center w-full h-full'}>
-                                <img src={'/svg/spinner.svg'} alt={'progress'} className={'w-auto h-[100%]'}/>
+                                <img src={'/svg/spinner.png'} alt={'progress'} className={'w-auto h-[100%]'}/>
                             </span>
                         </button>
                     }

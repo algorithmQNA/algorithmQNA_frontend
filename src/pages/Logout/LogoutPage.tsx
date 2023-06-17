@@ -15,7 +15,9 @@ export default function LogoutPage(){
     })
     return(
         <div className={'fixed z-[1000] top-0 left-0 w-full h-screen bg-white flex justify-center items-center select-none'}>
-            <img src={'/svg/spinner.svg'} alt={'loading'}/>
+            <p className={'w-[50px] h-auto'}>
+                <img src={'/svg/spinner.png'} alt={'loading'}/>
+            </p>
         </div>
     )
 }

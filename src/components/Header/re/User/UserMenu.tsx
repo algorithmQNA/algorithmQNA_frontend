@@ -31,14 +31,18 @@ export default function UserMenuBlock(){
     }, [state.menu]);
     return(
         <div ref={box}>
-            <label className={'block w-[45px] h-[45px] rounded-full border border-white relative'}>
+            <label className={'block w-[45px] h-[45px] rounded-full relative hover:cursor-pointer overflow-hidden'}>
                 <input
                     type={'checkbox'}
                     className={'hidden'}
                     checked={state.menu}
                     onChange={setDisplayAlarm}
                 />
-                <span className={'bell-shake block hover:text-primary hover:cursor-pointer'}>
+                <span className={''}>
+                    {
+                        !isLoading && data &&
+                        <img src={data.data.data.memberProfileUrl}/>
+                    }
                 </span>
             </label>
             {state.menu && (

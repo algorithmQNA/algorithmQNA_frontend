@@ -48,7 +48,7 @@ function Router() {
         <Route path="tip" element={<TipBoardPage />} />
       </Route>
       <Route path="post">
-        <Route path="view" element={<PostViewPage />} />
+        <Route path=":pid" element={<PostViewPage />} />
         <Route path="write" element={<PostWritePage />} />
         <Route path="update" element={<PostUpdatePage />} />
       </Route>
