@@ -1,3 +1,5 @@
+import {Link} from "react-router-dom";
+
 interface Props {
   title: string;
   img: any;
@@ -6,7 +8,7 @@ interface Props {
 }
 export default function MainPageMove({ title, img, href, colorCode }: Props) {
   return (
-    <a href={href} className={'gap-6 text-center dash-move'}>
+    <Link to={href} className={'gap-6 text-center dash-move'}>
       <div className={'flex justify-center'}>
         <div
           className={`relative border-dashed border-2 rounded-full w-[100px] h-[100px] mb-6 move-tag`}
@@ -28,6 +30,6 @@ export default function MainPageMove({ title, img, href, colorCode }: Props) {
       <div className={'text-title text-2xl font-medium text-center'}>
         {title}
       </div>
-    </a>
+    </Link>
   );
 }
