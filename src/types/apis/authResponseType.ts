@@ -4,18 +4,24 @@ import { Pagination } from '../pagination';
 import { PostWithContent } from '../post';
 import { UserInfo } from '../user';
 
-export type GetAuthResponse = UserInfo & { state: string };
+export type GetAuthResponse = { data: UserInfo & { state: string } };
 
 export type UpdateProfileImgResponse = {
-  updatedProfileUrl: string;
+  data: {
+    updatedProfileUrl: string;
+  };
 };
 
-export type GetMemberDetailInfoResponse = MemberDetail;
+export type GetMemberDetailInfoResponse = { data: MemberDetail };
 
 export type GetMyPostsResponse = {
-  posts: PostWithContent[];
-} & Pagination;
+  data: {
+    posts: PostWithContent[];
+  } & Pagination;
+};
 
 export type GetMyCommentsResponse = {
-  comments: FlatComment[];
-} & Pagination;
+  data: {
+    comments: FlatComment[];
+  } & Pagination;
+};

@@ -1,7 +1,6 @@
 import { setYMD } from '../../../utils/TextProcessing';
 
 export default function PostViewDetailBlock({data}:{data:any}) {
-
   return (
       <section className={'page-section'}>
         <h1 className={'post-title'}>{data.data.postTitle}</h1>

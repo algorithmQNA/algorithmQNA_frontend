@@ -7,11 +7,11 @@ import { getMyPosts } from '../../../apis/authApi';
 
 function Post() {
   const [searchParams] = useSearchParams();
-  const page = searchParams.get('page') || 1;
+  const page = searchParams.get('page') || 0;
   const myPosts = useQuery(['mypost_', page], () => getMyPosts(+page));
-  const posts = myPosts.data?.data;
+  const posts = myPosts.data?.data.data;
 
-  if (posts)
+  if (!!posts?.posts.length)
     return (
       <div className="flex flex-col gap-2">
         {posts.posts.map((post, idx) => (
