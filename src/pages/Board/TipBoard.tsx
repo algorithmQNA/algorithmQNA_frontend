@@ -78,7 +78,7 @@ function PostListBlock({data}:any){
                   ))
                 }
                 {
-                  <Pagination postLength={data.data.totalPageSize} listLength={20} />
+                  <Pagination pageCount={data.data.totalPageSize} listLength={20} />
                 }
               </div>
               :

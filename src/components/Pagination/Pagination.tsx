@@ -4,7 +4,7 @@ import { ReactComponent as Left } from '../../assets/images/left.svg';
 import { ReactComponent as Right } from '../../assets/images/right.svg';
 
 interface props {
-  postLength: number;
+  pageCount: number;
   listLength: number;
   displayPages?: number;
 }
@@ -15,7 +15,7 @@ interface props {
  * displayPage = 페이지 표시 수
  * */
 export default function Pagination({
-  postLength,
+  pageCount,
   listLength,
   displayPages = 5,
 }: props) {
@@ -25,7 +25,7 @@ export default function Pagination({
   /** 페이지 쿼리값이 없으면 1로 할당 */
   const query = params ? parseInt(params) : 1;
   /** 총 페이지 수 계산 */
-  const totalPage = Math.ceil(postLength / listLength);
+  const totalPage = pageCount;
   /** 페이지 배열 */
   const page = useMemo(() => {
     /** 빈 배열 변수 생성 */
