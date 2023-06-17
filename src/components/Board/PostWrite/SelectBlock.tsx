@@ -18,6 +18,7 @@ export default function PostWriteSelectBlock() {
       postCategory: value,
     }));
   };
+  console.log(state)
   return (
     <div className={'select-block'}>
       <div className={'board-select-block'}>

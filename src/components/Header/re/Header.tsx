@@ -1,6 +1,5 @@
 import '../style.css';
 import HeaderLinkBlock from "./Link/LinkBlock";
-import HeaderSearchBlock from "./Search/SearchBlock";
 import HeaderUserBlock from "./User/UserBlock";
 
 export default function HeaderTest() {

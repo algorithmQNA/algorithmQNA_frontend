@@ -8,27 +8,28 @@ import {getCategoryPostsRequest} from '../../apis/postApi';
 import SelectTabBlock from "../../components/DashBoard/SelectTab/SelectTabBlock";
 import {useRecoilValue} from "recoil";
 import {DashBoardState} from "../../storage/Dash/DashBoard";
-import {useEffect} from "react";
-import {AxiosError} from "axios";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import PostTableRow from "../../components/TableRow/PostTableRow";
+import DataIsLoading from "../../components/isLoading/isLoading";
 
 export default function DashBoardPage() {
-  const nav = useNavigate()
   const state = useRecoilValue(DashBoardState)
-  const { data, isLoading,refetch } = useQuery('dashboard-post', ()=>getCategoryPostsRequest('DP','LATESTDESC',1,state.select),{
-    onError:(error:AxiosError)=>{
-      if(error.status === 403){
-        nav('/access')
-      }
-    }
-  });
-  useEffect(()=>{
-    if(!isLoading){
-      refetch()
-    }
-  },[state.select])
+  const {data,isLoading} = useQuery(
+      ['dash-list',state.select],
+      ()=>{
+        return getCategoryPostsRequest(
+            "DP",
+            "LATESTASC",
+            0,
+            state.select,
+        )
+      })
   return (
     <div>
+      {
+        isLoading &&
+          <DataIsLoading/>
+      }
       <PageTitle>대시보드</PageTitle>
       <div className={'main-content m-auto pb-12'}>
         <div className={'page-shortcut'}>
@@ -53,12 +54,22 @@ export default function DashBoardPage() {
         </div>
         <div>
           <SelectTabBlock/>
-          <div className={'dash-post-li'}>
-            {/*{!isLoading &&*/}
-            {/*  data.posts.map((li: PostRow) => <PostTableRow key={li.postId} data={li} />)}*/}
-          </div>
+          {
+            !isLoading && data &&
+              <PostListBlock data={data.data}/>
+          }
         </div>
       </div>
     </div>
   );
+}
+
+function PostListBlock({data}:any){
+  return (
+      <div className={'dash-post-li'}>
+        {
+          data.data.posts.map((li: any) => <PostTableRow key={li.postId} data={li} />)
+        }
+      </div>
+  )
 }

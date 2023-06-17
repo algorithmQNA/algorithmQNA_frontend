@@ -17,7 +17,7 @@
     @apply w-fit items-center flex gap-3;
 }
 .post-view-page .writer-profile-img{
-    @apply w-[50px] h-[50px] bg-primary rounded-full
+    @apply w-[50px] h-[50px] bg-primary rounded-full overflow-hidden
  }
 .post-view-page .writer-info-block{
     @apply flex flex-col gap-1 text-title text-sm font-medium;

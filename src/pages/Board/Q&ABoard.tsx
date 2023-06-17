@@ -5,55 +5,32 @@ import CategoryBar from '../../components/Board/SideBlockBar/CategoryBar';
 import RowListTo from '../../components/Board/ListTo';
 import NoticeBlock from '../../components/Board/Notice';
 import { useQuery } from 'react-query';
-import {PostListParams, PostRow, PostType} from "../../types/Post/Post";
+import {PostFilter, PostRow} from "../../types/Post/Post";
 import PostTableRow from "../../components/TableRow/PostTableRow";
-import {useLocation, useNavigate} from "react-router-dom";
 import FilterBar from "../../components/Board/SideBlockBar/FilterBar";
 import SortSelectBox from "../../components/Board/SortSelectBox";
 import ModalButton from "../../components/Board/SideBlockBar/ModalButton";
 import BoardModalContent from "../../components/Board/SideBlockBar/ModalContent";
 import {useRecoilValue} from "recoil";
 import {PostFilterState} from "../../storage/Post/Post";
-import {privateRequest} from "../../apis/instance";
-import {useEffect} from "react";
 import useGetParams from "../../hooks/useGetParams";
 import {getCategoryPostsRequest} from "../../apis/postApi";
-import {AxiosError} from "axios/index";
 
 
 export default function QNABoardPage() {
-  const nav = useNavigate()
   const params = useGetParams('page')
-  const query = params ? parseInt(params) : 1;
-  const state = useRecoilValue(PostFilterState)
-  const {data} = useQuery(['test-test'],async ()=>{
-    const result = await privateRequest.get('/post?categoryName=BRUTE_FORCE&type=QNA&sort=LATESTASC&page=1')
-    return result.data
-  })
-  console.log(data)
-  // const {data,isLoading,refetch} = useQuery('q&a-list',()=>{
-  //   return getCategoryPostsRequest(
-  //       state.postCategory,
-  //       state.sort,query,
-  //       'QNA',
-  //       state.hasCommentCond,
-  //       state.keyWordCond,
-  //       state.titleCond,
-  //       state.memberNameCond,
-  //       state.isAcceptedCommentCond
-  // )
-  // },{
-  //   onError:(error:AxiosError)=>{
-  //     if(error.status === 403){
-  //       nav('/access')
-  //     }
-  //   }
-  // })
-  // useEffect(()=>{
-  //   if(!isLoading){
-  //     refetch()
-  //   }
-  // },[params])
+  const query = params ? parseInt(params) : 0;
+  const {postCategory,sort,hasCommentCond,keyWordCond,titleCond,memberNameCond,isAcceptedCommentCond,}:PostFilter = useRecoilValue(PostFilterState)
+  const {data,isLoading} = useQuery(
+      ['q&a-list',postCategory,sort,hasCommentCond,keyWordCond,titleCond,memberNameCond,isAcceptedCommentCond],
+      ()=>{
+        return getCategoryPostsRequest(
+            postCategory as any,
+            sort as any,
+            query,
+            'QNA',
+            )
+      })
   return (
     <div className={'relative'}>
       <PageTitle>질문 & 답변 게시판</PageTitle>
@@ -73,19 +50,38 @@ export default function QNABoardPage() {
             </div>
           </div>
           <NoticeBlock />
-          {/*{*/}
-          {/*  !isLoading &&*/}
-          {/*    data.posts.map((li:PostRow)=>(*/}
-          {/*        <PostTableRow key={li.postId} data={li}/>*/}
-          {/*    ))*/}
-          {/*}*/}
-          {/*{*/}
-          {/*  !isLoading &&*/}
-          {/*  <Pagination postLength={data.totalPageSize} listLength={20} />*/}
-          {/*}*/}
+          {
+            data && !isLoading &&
+              <PostListBlock data={data?.data}/>
+          }
         </div>
       </div>
       <BoardModalContent/>
     </div>
   );
+}
+
+function PostListBlock({data}:any){
+    return(
+        <div>
+            {
+                data.data.posts.length !== 0
+                    ?
+                    <div className={'grid gap-3'}>
+                        {
+                            data.data.posts.map((li:PostRow)=>(
+                                <PostTableRow key={li.postId} data={li}/>
+                            ))
+                        }
+                        {
+                            <Pagination postLength={data.data.totalPageSize} listLength={20} />
+                        }
+                    </div>
+                    :
+                    <div className={'w-full h-[350px] flex justify-center items-center text-content border border-content rounded'}>
+                        조회된 게시물이 없습니다.
+                    </div>
+            }
+        </div>
+    )
 }
