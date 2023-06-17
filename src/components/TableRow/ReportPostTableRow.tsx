@@ -18,6 +18,7 @@ import IconButton from '../Button/IconButton';
 import { AiOutlineClose } from 'react-icons/ai';
 import { useState } from 'react';
 import ReportTag from '../Report/ReportTag';
+import MessageBox from '../MessageBox';
 
 interface AdminPageTableRowProps {
   title?: string;
@@ -128,7 +129,7 @@ export default function ReportPostTableRow({
               <section className="flex-grow basis-1/2 h-full overflow-auto">
                 <p className="font-semibold text-left">s{title} 신고사유</p>
                 <div className="bg-box-bg">
-                  {isEmpty && <div>신고내역이 없습니다.</div>}
+                  {isEmpty && <MessageBox msg={`😊 신고내역이 없습니다!`} />}
                   {!isEmpty &&
                     data.data.data.PostReports.map((report, idx) => {
                       return (

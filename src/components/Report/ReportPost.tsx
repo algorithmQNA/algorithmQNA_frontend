@@ -5,10 +5,11 @@ import { getReportedPostListRequest } from '../../apis/adminApi';
 
 import ReportPostTableRow from '../TableRow/ReportPostTableRow';
 import { useSearchParams } from 'react-router-dom';
+import MessageBox from '../MessageBox';
 
 function ReportPost() {
   const [searchParams] = useSearchParams();
-  const page = searchParams.get('page') || 1;
+  const page = searchParams.get('page') || 0;
 
   const { data } = useQuery({
     queryKey: ['reportedPost', +page],
@@ -22,7 +23,7 @@ function ReportPost() {
   const reportedList = data?.data.data.posts;
   const isEmpty = !data?.data.data.posts.length;
 
-  if (isEmpty) return <div>신고내역이 없습니다.</div>;
+  if (isEmpty) return <MessageBox msg={`😊 신고내역이 없습니다!`} />;
 
   return (
     <div className="flex flex-col gap-2 ">

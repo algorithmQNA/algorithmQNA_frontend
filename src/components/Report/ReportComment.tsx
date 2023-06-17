@@ -5,6 +5,7 @@ import { getReportedCommentListRequest } from '../../apis/adminApi';
 import { useSearchParams } from 'react-router-dom';
 
 import ReportCommentTableRow from '../TableRow/ReportCommentTableRow';
+import MessageBox from '../MessageBox';
 
 function ReportComment() {
   const [searchParams] = useSearchParams();
@@ -21,7 +22,7 @@ function ReportComment() {
 
   const reportComments = data?.data.data.reportComments;
   const isEmpty = !reportComments?.length;
-  if (isEmpty) return <div>댓글 신고 내역이 없습니다.</div>;
+  if (isEmpty) return <MessageBox msg={`😊 신고내역이 없습니다!`} />;
   return (
     <div className="flex flex-col gap-2 ">
       {reportComments?.map((comment, idx) => {
