@@ -7,8 +7,8 @@ import React, {useEffect} from "react";
 import {useQuery} from "react-query";
 import {getPostRequest} from "../../../apis/postApi";
 import DataIsLoading from "../../../components/isLoading/isLoading";
-import CommentSection from "../../../components/Comment";
 import PostViewKeywordBlock from "../../../components/Board/PostView/PostKeyword";
+import CommentSection from "../../../components/Comment";
 
 export default function PostViewPage() {
     const nav = useNavigate();

@@ -11,7 +11,7 @@ export default function NoticeBlock() {
         ['notice-list',postCategory],
         ()=>{
             return getCategoryPostsRequest(
-                postCategory,
+                postCategory as any,
                 "LATESTASC",
                 0,
                 'NOTICE'

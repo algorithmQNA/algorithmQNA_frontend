@@ -25,8 +25,8 @@ export default function QNABoardPage() {
       ['q&a-list',postCategory,sort,hasCommentCond,keyWordCond,titleCond,memberNameCond,isAcceptedCommentCond],
       ()=>{
         return getCategoryPostsRequest(
-            postCategory,
-            sort,
+            postCategory as any,
+            sort as any,
             query,
             'QNA',
             )
