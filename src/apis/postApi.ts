@@ -1,6 +1,7 @@
 import {
   GetCategoryPostsResponse,
   GetPostResponse,
+  GetHightlightCommentListResponse,
 } from '../types/apis/postResponseType';
 
 import { privateRequest } from './instance';
@@ -106,3 +107,12 @@ export const imagePostRequest = (form: FormData) =>
     status: { code: number; message: string };
     data: { image_url: string };
   }>('/image', form);
+
+//하이라이팅 API
+export const getHightlightCommentListRequest = (
+  postId: number,
+  commentId: number
+) =>
+  privateRequest.get<GetHightlightCommentListResponse>(
+    `post/${postId}/highlight/${commentId}`
+  );
