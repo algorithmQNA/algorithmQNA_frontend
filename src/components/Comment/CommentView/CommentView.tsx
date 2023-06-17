@@ -80,6 +80,8 @@ function CommentView({
   const [reportContent, setReportContent] = useState('');
   const { open, openModal, closeModal } = useModal();
 
+  /**좋아요 싫어요 관리 */
+  const [fakeLike, setFakeLike] = useState<boolean | null>(isLiked);
   const handleReportMenuChange = (value: string) => {
     setReportType(value as keyof typeof REPORT_MAP);
   };
@@ -99,24 +101,9 @@ function CommentView({
       /**  이 쿼리키 바꿔줄거면 CommentList의 queryKey도 바꿔줄것!*/
       const POST_QUERY_KEY = invalidateQueryKey;
       await queryClient.cancelQueries({ queryKey: POST_QUERY_KEY });
-      const previous =
-        queryClient.getQueryData<GetPostResponse>(POST_QUERY_KEY);
 
-      queryClient.setQueryData<Comment[] | undefined>(
-        POST_QUERY_KEY,
-        (commentList) => {
-          const curComment = commentList?.find(
-            (comment) => comment.commentId === commentId
-          );
-          console.log(curComment);
-          if (curComment) {
-            if (params.cancel) curComment.isLiked = null;
-            else curComment.isLiked = params.isLike;
-          }
-          return commentList;
-        }
-      );
-      return { previous };
+      if (params.cancel) setFakeLike(null);
+      else setFakeLike(params.isLike);
     },
   });
   //댓글 수정
@@ -152,17 +139,18 @@ function CommentView({
   const editorRef = useRef<CKEditor<any>>(null);
   const toggleReplyEditor = () => setOpenReplyEditor((prev) => !prev);
 
+  //같은 버튼을 눌렀다 -> 좋아요/싫어요를 취소했다.
   const isSameBtnClicked = (like: boolean) => {
-    if (isLiked === like) {
-      recommendComment({ commentId, isLike: false, cancel: true });
+    if (fakeLike === like) {
       return true;
     }
     return false;
   };
 
   const handleBtnClick = (like: boolean) => {
-    if (!isSameBtnClicked(like))
+    if (!isSameBtnClicked(like)) {
       recommendComment({ commentId, isLike: like, cancel: false });
+    }
   };
 
   return (
@@ -244,7 +232,7 @@ function CommentView({
               }}
             />
             <div className="flex items-center">
-              {isLiked ? (
+              {fakeLike ? (
                 <IconButton
                   Icon={<FilledThumbsUp width="14" />}
                   onClick={() => handleBtnClick(true)}
@@ -256,7 +244,7 @@ function CommentView({
                 />
               )}
               <span className="text-xs text-gray-700 p-1">{likeCnt}</span>
-              {isLiked === false ? (
+              {fakeLike === false ? (
                 <IconButton
                   Icon={<BsHandThumbsDownFill width="14" />}
                   onClick={() => handleBtnClick(false)}
