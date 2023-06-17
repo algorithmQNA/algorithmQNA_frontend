@@ -39,8 +39,9 @@ import ReplyComment from './ReplyComment';
 import { REPORT_MAP } from '../../../constants/Report';
 import useGetParams from '../../../hooks/useGetParams';
 
-export type CommentViewProps = Comment;
-/**리팩토링 시급!!!! */
+export type CommentViewProps = Comment & {
+  commentMode?: 'hightlight' | 'normal';
+};
 
 function CommentView({
   createdAt = '2023-03-31',
@@ -51,6 +52,8 @@ function CommentView({
   depth,
   isLiked,
   commentId,
+  isPinned,
+  mentionerName,
   ...props
 }: CommentViewProps) {
   const pid = useGetParams('pid') || 0;
@@ -138,7 +141,13 @@ function CommentView({
   };
 
   return (
-    <div className="w-full">
+    <div className={`w-full ${isPinned && 'border-t-2 border-secondary'}`}>
+      {isPinned && (
+        <p className="text-secondary text-sm font-semibold">질문자 채택</p>
+      )}
+      {mentionerName && (
+        <p className="font-light text-sm text-secondary">@{mentionerName}</p>
+      )}
       {open && (
         <Modal
           title={`${commentId}번 댓글 신고`}
@@ -249,7 +258,6 @@ function CommentView({
               <ButtonComponent
                 onClick={() => {
                   const data = editorRef.current?.editor?.data.get();
-                  //const data = '<p>수정된 파일입니다.</p>';
                   if (data) modifyComment({ commentId, content: data });
                   setMode('read');
                 }}
