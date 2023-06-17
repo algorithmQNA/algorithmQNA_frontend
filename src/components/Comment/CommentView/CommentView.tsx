@@ -128,6 +128,7 @@ function CommentView({
   //댓글 채택
   const { mutate: pinnedComment } = useMutation(pinCommentRequest, {
     onSuccess: () => {
+      queryClient.invalidateQueries(['comment', +pid, +page]);
       queryClient.invalidateQueries({ queryKey: invalidateQueryKey });
     },
     onError: () => window.alert('채택을 실패 했습니다'),

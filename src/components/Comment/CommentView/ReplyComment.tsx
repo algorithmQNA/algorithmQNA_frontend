@@ -4,6 +4,7 @@ import { getSpreadCommentByCommentId } from '../../../apis/commentApi';
 import CommentView from './CommentView';
 import CommentWrapper from '../CommentWrapper';
 import IconButton from '../../Button/IconButton';
+import CommentSkeleton from './CommentSkeleton';
 
 function ReplyComment({
   commentId,
@@ -20,6 +21,9 @@ function ReplyComment({
     fetchPreviousPage,
     hasNextPage,
     hasPreviousPage,
+    isFetchingNextPage,
+    isFetchingPreviousPage,
+    isLoading,
   } = useInfiniteQuery({
     queryKey: ['reply', commentId],
     queryFn: async ({ pageParam = page }) => {
@@ -47,8 +51,10 @@ function ReplyComment({
       return firstPage.prevPage;
     },
   });
+  if (isLoading) return <CommentSkeleton />;
   return (
     <>
+      {isFetchingPreviousPage && <div>...</div>}
       {hasPreviousPage && (
         <IconButton Icon={<></>} onClick={() => fetchPreviousPage()}>
           이전 댓글 불러오기
@@ -70,6 +76,7 @@ function ReplyComment({
           댓글 불러오기
         </IconButton>
       )}
+      {isFetchingNextPage && <CommentSkeleton />}
     </>
   );
 }
