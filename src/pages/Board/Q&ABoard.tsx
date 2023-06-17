@@ -70,7 +70,6 @@ export default function QNABoardPage() {
 }
 
 function PostListBlock({data}:any){
-    console.log(data.data)
     return(
         <div>
             {

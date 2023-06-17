@@ -2,7 +2,6 @@ import { setYMD } from '../../../utils/TextProcessing';
 import LikeBadge from "../../Badge/LikeBadge";
 
 export default function PostViewDetailBlock({data}:{data:any}) {
-    console.log(data)
     const checkType = () =>{
         switch (data.data.postType){
             case "QNA":

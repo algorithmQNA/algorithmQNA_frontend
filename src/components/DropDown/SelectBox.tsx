@@ -69,7 +69,7 @@ export function SelectBox({
         }
       })
     }
-  },[])
+  },[selected])
   /** 셀렉트 박스 클릭 */
   const selectStart = (e: ChangeEvent<HTMLInputElement>) => {
     setState({ ...state, displayOption: e.currentTarget.checked });
