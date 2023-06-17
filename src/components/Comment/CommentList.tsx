@@ -1,19 +1,20 @@
 import React, { useEffect, useRef } from 'react';
 import CommentView from './CommentView/CommentView';
 import useGetParams from '../../hooks/useGetParams';
-import { useNavigate } from 'react-router-dom';
-import { QueryClient, useQuery, useQueryClient } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
+import { useParams } from 'react-router-dom';
 import { getPostRequest } from '../../apis/postApi';
 
 import CommentWrapper from './CommentWrapper';
 import { getCommentByPostid } from '../../apis/commentApi';
+import MessageBox from '../MessageBox';
 
 /** 대댓글의 최대 depth 3*/
 
 function CommentList() {
   // const datas = completeFlatten as never as CommentViewProps[];
   const queryClient = useQueryClient();
-  const pid = useGetParams('pid') || 0;
+  const { pid = -1 } = useParams();
   const page = useGetParams('page') || 0;
   const entryPage = useRef<number | null>(null);
 
@@ -51,7 +52,9 @@ function CommentList() {
         ))}
       </section>
     );
-  return <p>댓글이 없습니다.</p>;
+  return (
+    <MessageBox msg={`🥲 댓글이 없어요! 댓글을 달아 지식을 공유해주세요`} />
+  );
 }
 
 export default CommentList;
