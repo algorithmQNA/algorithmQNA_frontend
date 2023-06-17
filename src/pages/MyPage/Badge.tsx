@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery } from 'react-query';
 import { getMemberDetailInfo } from '../../apis/authApi';
 import Loading from '../../components/Loading/Loading';
-import BadgeFactory from '../../components/Badge/BadgeFactory';
+import BadgeDescFactory from '../../components/Badge/BadgeDescFactory';
 import NoBadges from '../../components/Badge/NoBadges';
 import useGetMember from '../../hooks/useGetMember';
 
@@ -25,18 +25,15 @@ function Badge() {
     }
 
     return (
-      <div
-        className="grid gap-2"
-        style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}
-      >
+      <div className="grid lg:grid-cols-2 gap-2">
         {!!memberCommentBadge && (
-          <BadgeFactory type="comment" level={memberCommentBadge} />
+          <BadgeDescFactory type="comment" level={memberCommentBadge} />
         )}
         {!!memberLikeBadge && (
-          <BadgeFactory type="like" level={memberLikeBadge} />
+          <BadgeDescFactory type="like" level={memberLikeBadge} />
         )}
         {!!memberPostBadge && (
-          <BadgeFactory type="post" level={memberPostBadge} />
+          <BadgeDescFactory type="post" level={memberPostBadge} />
         )}
       </div>
     );
