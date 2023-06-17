@@ -13,7 +13,7 @@ const MOCK_BASED_URL = process.env.REACT_APP_API_BASE_URL;
 const handlers = [
   rest.get(`${MOCK_BASED_URL}/comment/:postId`, async (req, res, ctx) => {
     const page = req.url.searchParams.get('page') || 0;
-    return res(ctx.status(200), ctx.json({ data: PostInitData }));
+    return res(ctx.status(200), ctx.json(PostInitData));
   }),
   rest.post(`${MOCK_BASED_URL}/comment/:postId`, async (req, res, ctx) => {
     return res(
