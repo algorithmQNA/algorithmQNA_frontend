@@ -5,12 +5,12 @@ import mockAuth from './mockAuth';
 import mockAdmin from './mockAdmin';
 import mockPost from './mockPost';
 import mockComments from './mockComments';
-import {alarmHandler} from "./os/Alarm";
-import {postHandler} from "./os/Post";
+import { alarmHandler } from './os/Alarm';
+import { postHandler } from './os/Post';
 
 const set = [
-    ...alarmHandler,
-    ...postHandler
+  ...alarmHandler,
+  // ...postHandler
 ];
 
 // Service worker에서 mock handler 실행
