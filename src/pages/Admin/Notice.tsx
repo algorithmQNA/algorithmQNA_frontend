@@ -39,6 +39,7 @@ const NotificationRow = () => {
   if (isEmptyData) return <MessageBox msg="🫤 등록된 공지사항이 없어요" />;
   const posts = notificationQuery.data?.data.data.posts || [];
 
+
   return (
     <div className="flex flex-col gap-3">
       {posts.map(({ title, postId, createdAt }) => (

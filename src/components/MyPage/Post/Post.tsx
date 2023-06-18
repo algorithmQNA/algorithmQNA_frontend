@@ -18,7 +18,7 @@ function Post() {
           <MyPageTableRow {...post} key={`${post.postId}${idx}`} />
         ))}
 
-        <Pagination listLength={posts.size} postLength={posts.totalPageSize} />
+        <Pagination listLength={posts.size} pageCount={posts.totalPageSize} />
       </div>
     );
   return <div>작성한 글이 없습니다.</div>;

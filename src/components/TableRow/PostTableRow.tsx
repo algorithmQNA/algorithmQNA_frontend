@@ -12,17 +12,26 @@ import {Link} from "react-router-dom";
 
 interface Props {
   data:any;
+  type?:"QNA" | "TIP"
 }
 
-export default function PostTableRow({ data }: Props) {
+export default function PostTableRow({ data,type="QNA" }: Props) {
   return (
       <Link to={`/post/${data.postId}`}>
         <TableRow>
-          <div className={'post-thumbnail'}></div>
+          <div className={'w-[60px] md:w-[70px]'}>
+            {
+              type === "QNA"
+                  ?
+                  <img src={'/svg/question.png'}/>
+                  :
+                  <img src={'/svg/tip.png'}/>
+            }
+          </div>
           <div>
             <div className={'flex items-center justify-between'}>
               <h1 className={'row-post-title'}>{data.title}</h1>
-              <p className={'text-[#739093] text-sm'}>
+              <p className={'text-[#739093] text-sm whitespace-nowrap'}>
                 {setDateWritten(data.createdAt)}
               </p>
             </div>
@@ -52,13 +61,13 @@ export default function PostTableRow({ data }: Props) {
                 <span className={'text-blue-500'}>
                   <FiThumbsUp size={14} />
                 </span>
-                  <span>{setOverValue(data.postLikeCnt, 99)}</span>
+                  <span>{setOverValue(data.likeCnt, 99)}</span>
                 </p>
                 <p className={'flex gap-1 items-center text-red-500'}>
                 <span className={'text-red-500'}>
                   <FiThumbsDown size={14} />
                 </span>
-                  <span>{setOverValue(data.postDislikeCnt, 99)}</span>
+                  <span>{setOverValue(data.dislikeCnt, 99)}</span>
                 </p>
               </div>
             </div>

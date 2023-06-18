@@ -15,24 +15,34 @@ import {useRecoilValue} from "recoil";
 import {PostFilterState} from "../../storage/Post/Post";
 import useGetParams from "../../hooks/useGetParams";
 import {getCategoryPostsRequest} from "../../apis/postApi";
+import DataIsLoading from "../../components/isLoading/isLoading";
 
 
 export default function QNABoardPage() {
   const params = useGetParams('page')
-  const query = params ? parseInt(params) : 0;
+  const query = params ? parseInt(params) : 1;
   const {postCategory,sort,hasCommentCond,keyWordCond,titleCond,memberNameCond,isAcceptedCommentCond,}:PostFilter = useRecoilValue(PostFilterState)
-  const {data,isLoading} = useQuery(
-      ['q&a-list',postCategory,sort,hasCommentCond,keyWordCond,titleCond,memberNameCond,isAcceptedCommentCond],
+  const {data,isLoading} = useQuery<any>(
+      ['q&a-list',postCategory,sort,query,hasCommentCond,keyWordCond,titleCond,memberNameCond,isAcceptedCommentCond],
       ()=>{
         return getCategoryPostsRequest(
             postCategory as any,
             sort as any,
-            query,
+            query-1,
             'QNA',
+            hasCommentCond,
+            keyWordCond,
+            titleCond,
+            memberNameCond,
+            isAcceptedCommentCond
             )
       })
   return (
     <div className={'relative'}>
+        {
+            isLoading &&
+            <DataIsLoading/>
+        }
       <PageTitle>질문 & 답변 게시판</PageTitle>
       <div className={'main-content board-grid'}>
         <div className={'option-bar-block'}>
@@ -43,7 +53,10 @@ export default function QNABoardPage() {
           <div className={'board-menu-bar'}>
             <SortSelectBox/>
             <div className={'hidden lg:block'}>
-              <RowListTo page={1} />
+                {
+                    data && !isLoading &&
+                    <RowListTo size={data.data.data.size} totalPage={data.data.data.totalPageCount}/>
+                }
             </div>
             <div className={'block lg:hidden text-title'}>
               <ModalButton/>
@@ -70,11 +83,11 @@ function PostListBlock({data}:any){
                     <div className={'grid gap-3'}>
                         {
                             data.data.posts.map((li:PostRow)=>(
-                                <PostTableRow key={li.postId} data={li}/>
+                                <PostTableRow key={li.postId} data={li} type={"QNA"}/>
                             ))
                         }
                         {
-                            <Pagination postLength={data.data.totalPageSize} listLength={20} />
+                            <Pagination pageCount={data.data.totalPageCount} listLength={20} />
                         }
                     </div>
                     :
