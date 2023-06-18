@@ -3,10 +3,11 @@ import {Link, useNavigate} from "react-router-dom";
 import {useQuery} from "react-query";
 import {getMemberDetailInfo} from "../../../../apis/authApi";
 import Rounded from "../../../RoundedImage/RoundedImage";
+import useCheckAuthority from "../../../../hooks/useCheckAuthority";
 
 export default function UserMenuBlock(){
     const {data,isLoading}:{data:any,isLoading:boolean} = useQuery(['user'],getMemberDetailInfo)
-
+    const isAdmin = useCheckAuthority();
     const [state, setState] = useState({
         menu: false,
     })
@@ -52,7 +53,12 @@ export default function UserMenuBlock(){
                         'alarm absolute border border-primary w-[100px] right-0 top-[110%] bg-white  rounded shadow p-2 overflow-auto grid max-h-[250px] box-content'
                     }
                 >
-                    <Link to={'/mypage/profile'} className={'text-content hover:text-primary text-sm flex items-center py-1'}>
+                    {isAdmin && 
+                    <Link to={'/admin'} className={'text-content hover:text-primary text-sm flex items-center py-1'}>
+                        관리자 페이지
+                    </Link>}
+                    
+                        <Link to={'/mypage/profile'} className={'text-content hover:text-primary text-sm flex items-center py-1'}>
                         마이 페이지
                     </Link>
                     <Link to={'/logout'} className={'text-content hover:text-primary text-sm flex items-center py-1'}>
