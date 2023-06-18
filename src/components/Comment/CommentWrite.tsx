@@ -5,12 +5,13 @@ import ButtonComponent from '../Button/ButtonComponent';
 import { useMutation, useQueryClient } from 'react-query';
 import { createCommentRequest } from '../../apis/commentApi';
 import useGetParams from '../../hooks/useGetParams';
+import { useParams } from 'react-router-dom';
 
 function CommentWrite() {
   const queryClient = useQueryClient();
   const { mutate: writeComment } = useMutation(createCommentRequest, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['post', pid]);
+      queryClient.invalidateQueries({ queryKey: ['comment', +pid, +page] });
       editorRef.current?.editor?.data.set('');
     },
     onError(error, variables, context) {
@@ -21,7 +22,8 @@ function CommentWrite() {
 
   const [content, setContent] = useState('');
   const editorRef = useRef<CKEditor<any>>(null);
-  const pid = useGetParams('pid');
+  const { pid = -1 } = useParams();
+  const page = useGetParams('page') || 0;
 
   const handleSubmitBtnClick = () => {
     if (pid)

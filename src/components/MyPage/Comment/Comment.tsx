@@ -4,6 +4,7 @@ import Pagination from '../../Pagination/Pagination';
 import { useSearchParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { getMyComments } from '../../../apis/authApi';
+import MessageBox from '../../MessageBox';
 
 function Comment() {
   const [searchParams] = useSearchParams();
@@ -32,7 +33,7 @@ function Comment() {
         />
       </div>
     );
-  return <div>작성한 댓글이 없습니다.</div>;
+  return <MessageBox msg={`🥹 아직 작성한 댓글이 없습니다!`} />;
 }
 
 export default Comment;

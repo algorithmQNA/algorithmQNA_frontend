@@ -27,7 +27,7 @@ export default function MyPageTableRow({
     <div className={`p-4 gap-1.5 bg-box-bg border-border border relative`}>
       <div className={'flex flex-row justify-between h-full w-full'}>
         <div>
-          <Link to={`/post/view?pid=${postId}`}>
+          <Link to={`/post/view/${postId}`}>
             <span className={'font-bold text-sm truncate max-w-[200px]'}>
               {postTitle}
             </span>
@@ -62,7 +62,7 @@ export default function MyPageTableRow({
             <ButtonComponent type="outline">끌어올리기</ButtonComponent>
           )}
           <ButtonComponent onClick={(e) => e.preventDefault()}>
-            <Link to={`/post/view?pid=${postId}`}>작성한 글 보기</Link>
+            <Link to={`/post/view/${postId}`}>글 보기</Link>
           </ButtonComponent>
         </div>
       </div>

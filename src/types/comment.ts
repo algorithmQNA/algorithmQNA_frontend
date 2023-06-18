@@ -5,6 +5,8 @@ import { Pagination } from './pagination';
 export type Comment = {
   commentId: number;
   member: MemberBrief;
+  mentionerId?: number;
+  mentionerName?: string;
   content: string;
   createdAt: string;
   updatedAt: string;
