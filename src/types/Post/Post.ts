@@ -29,14 +29,14 @@ export interface PostListParams {
   memberNameCond?: string;
   isAcceptedCommentCond?: boolean;
 }
-export interface PostViewMember{
-    "memberId": number,
-    "memberName": string,
-    "memberRole": string,
-    "memberCommentBadge": number,
-    "memberPostBadge": number,
-    "memberLikeBadge": number,
-    "memberProfileUrl": string
+export interface PostViewMember {
+  memberId: number;
+  memberName: string;
+  memberRole: string;
+  memberCommentBadge: number;
+  memberPostBadge: number;
+  memberLikeBadge: number;
+  memberProfileUrl: string;
 }
 export type PostType = 'QNA' | 'TIP' | 'NOTICE';
 export type PostCategory =
@@ -49,7 +49,7 @@ export type PostCategory =
   | 'BINARY_SEARCH'
   | 'SORT'
   | 'DFS_BFS';
-  
+
 export type PostSort =
   | 'LATESTDESC'
   | 'LATESTASC'
@@ -99,6 +99,7 @@ export interface PostView {
   postId: number;
   postTitle: string;
   postContent: string;
+  postCategory?: PostCategory;
   createdAt: string;
   postLikeCnt: number;
   postDislikeCnt: number;

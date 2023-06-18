@@ -30,6 +30,21 @@ export type PostBrief = {
   totalCommentCnt: number;
 };
 
+
+//도대체 왜 이렇게 다른건지 모르겠네
+export type PostListBreif = {
+  postId: number;
+  title: string;
+  memberId: number;
+  memberName: string;
+  memberProfileUrl: string;
+  createdAt: string;
+  viewCount: number;
+  commentCount: number;
+  likeCnt:number;
+  dislikeCnt:number;
+};
+
 export type PostWithContent = PostBrief & {
   postCategory: PostCategoryKey;
   postType: PostTypeKey;
@@ -60,7 +75,7 @@ export type PostCRUDBody = {
 export type ReportedPostDetail = {
   postId: number;
   member: MemberBrief;
-  PostReports: ReportReason[];
+  postReports: ReportReason[];
   totalReportedCnt: number;
 } & Pagination;
 

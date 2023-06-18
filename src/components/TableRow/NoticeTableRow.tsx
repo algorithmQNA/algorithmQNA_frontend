@@ -67,7 +67,7 @@ export default function NoticePageTableRow({
       >
         <div className={'flex flex-row justify-between h-full w-full'}>
           <div>
-            <Link to={`/post/view/${id}`}>
+            <Link to={`/post/${id}`}>
               <span className={'font-bold text-sm truncate max-w-[200px]'}>
                 {title}
               </span>
