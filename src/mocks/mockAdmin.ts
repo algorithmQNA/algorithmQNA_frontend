@@ -7,8 +7,6 @@ import {
 } from '../utils/random';
 import { generateMockMember } from './utils/generateMockData';
 import { PostWithContent } from '../types/post';
-import { ReportComment } from '../types/report';
-import { FlatComment } from '../types/comment';
 const MOCK_BASED_URL = process.env.REACT_APP_API_BASE_URL;
 
 /**공지사항 mock 데이터 생성기 */
@@ -30,7 +28,7 @@ const generateReportPostMockData: () => Array<PostWithContent> = () => {
       postTitle: generateRandomString(),
       postCategory: 'BINARY_SEARCH',
       postType: 'QNA',
-      postContent: generateRandomString(1000),
+      postContent: generateRandomString(30),
       createdAt: generateRandomDate(),
       postLikeCnt: generateRandomInt(50),
       postDislikeCnt: generateRandomInt(100),
@@ -69,7 +67,7 @@ const handlers = [
             memberLikeBadge: 0,
             memberProfileUrl: 'https://picsum.photos/200',
           },
-          PostReports: Array(20)
+          postReports: Array(20)
             .fill(0)
             .map((_, idx) => ({
               reportPostId: 12 + idx,
