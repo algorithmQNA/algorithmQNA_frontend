@@ -11,6 +11,7 @@ import { useMutation } from 'react-query';
 import { createPostRequest } from '../../apis/postApi';
 import { PostCategoryKey } from '../../types/post';
 import { ImSpinner } from 'react-icons/im';
+import { PostCategory } from '../../types/Post/Post';
 
 function NoticeEditor() {
   const navigate = useNavigate();
@@ -51,8 +52,9 @@ function NoticeEditor() {
     return () => resetState();
   }, [resetState, setState]);
 
-  const handleCategoryChange = (category: string) => {
-    setState((prev) => ({ ...prev, category: +category }));
+  const handleCategoryChange = (category: PostCategory) => {
+    console.log(category);
+    setState((prev) => ({ ...prev, postCategory: category }));
   };
 
   const handleCancelBtnClick = () => {
@@ -60,13 +62,14 @@ function NoticeEditor() {
   };
 
   const submitNotificationForm = () => {
-    if (state.title.length > 5 && state.content.length > 10)
+    if (state.title.length > 5 && state.content.length > 10) {
+      const postCategory = state.postCategory || 'BRUTE_FORCE';
       createPost.mutate({
         title: state.title,
         content: state.content,
-        postCategory: 'BINARY_SEARCH',
+        postCategory: postCategory,
       });
-    else {
+    } else {
       alert('제목과 내용을 입력해주세요');
     }
   };

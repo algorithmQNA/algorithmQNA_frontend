@@ -1,63 +1,66 @@
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import AdminTableRow from '../../components/TableRow/NoticeTableRow';
 
 import IconButton from '../../components/Button/IconButton';
 import { AiFillNotification } from 'react-icons/ai';
 import { useQuery } from 'react-query';
 import { getNotificationList } from '../../apis/adminApi';
-import { Suspense } from 'react';
-import AdminTableRowSkeleton from '../../components/TableRow/AdminTableRowSkeleton';
-import { SelectBox, SelectOption } from '../../components/DropDown/SelectBox';
-import { POST_CATEGORY } from '../../constants/PostCategory';
+
 import Pagination from '../../components/Pagination/Pagination';
 import { PostCategoryKey } from '../../types/post';
+import MessageBox from '../../components/MessageBox';
+import { SelectBox, SelectOption } from '../../components/DropDown/SelectBox';
+import { POST_CATEGORY } from '../../constants/PostCategory';
+import NoticePageTableRow from '../../components/TableRow/NoticeTableRow';
+import { Suspense } from 'react';
+import AdminTableRowSkeleton from '../../components/TableRow/AdminTableRowSkeleton';
 
 const INITIAL_POST_CATEGORY = 'BRUTE_FORCE';
 
 const NotificationRow = () => {
   /** url에서 쿼리파라미터를 가져와서 api 요청할 때 같이 보냄 */
   const [searchParams] = useSearchParams();
-  const page = searchParams.get('page') || 1;
+  const page = searchParams.get('page') || 0;
   const tag = searchParams.get('tag') || INITIAL_POST_CATEGORY;
 
   const notificationQuery = useQuery({
-    queryKey: ['notification', page, tag],
+    queryKey: ['notification', +page, tag],
     queryFn: () =>
       getNotificationList({
         postCategory: tag as PostCategoryKey,
         page: +page,
       }),
+    onError: (e) => console.error(e),
     suspense: true,
+    useErrorBoundary: true,
   });
 
-  const data = notificationQuery.data?.data.data;
-  const isEmptyData = !data?.posts?.length;
+  if (notificationQuery.isLoading) return <div></div>;
+  const isEmptyData = !notificationQuery.data?.data.data.posts.length;
+  if (isEmptyData) return <MessageBox msg="🫤 등록된 공지사항이 없어요" />;
+  const posts = notificationQuery.data?.data.data.posts || [];
 
-  if (!isEmptyData)
-    return (
-      <div className="flex flex-col gap-3">
-        {data.posts.map(({ postTitle, postId, createdAt }) => (
-          <AdminTableRow
-            title={postTitle}
-            key={postId}
-            id={postId}
-            date={createdAt}
-          />
-        ))}
-        <Pagination
-          displayPages={+page}
-          listLength={data.size}
-          postLength={data.totalPageSize}
+  return (
+    <div className="flex flex-col gap-3">
+      {posts.map(({ title, postId, createdAt }) => (
+        <NoticePageTableRow
+          title={title}
+          key={postId}
+          id={postId}
+          date={createdAt}
         />
-      </div>
-    );
-  //검색은 성공했으나 등록된 공지사항 개수가 0개일 떄
-  return <div className="font-thin">등록된 공지사항이 없습니다</div>;
+      ))}
+      <Pagination
+        listLength={20}
+        pageCount={notificationQuery.data?.data.data.totalPageCount || 1}
+      />
+    </div>
+  );
 };
 
 function Notice() {
   const navigate = useNavigate();
   const [_, setSearchParams] = useSearchParams();
+
   const handleCreateNoticeButtonClick = () => {
     navigate('write');
   };
@@ -96,17 +99,7 @@ function Notice() {
           공지사항 작성
         </IconButton>
       </div>
-      <Suspense
-        fallback={
-          <div className="flex flex-col gap-2">
-            {Array(10)
-              .fill(null)
-              .map((_, idx) => (
-                <AdminTableRowSkeleton key={idx} />
-              ))}
-          </div>
-        }
-      >
+      <Suspense fallback={<AdminTableRowSkeleton />}>
         <NotificationRow />
       </Suspense>
     </div>
