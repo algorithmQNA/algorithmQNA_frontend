@@ -5,8 +5,7 @@ import type {
   GetReportedPostDetailResponse,
   GetReportedPostListResponse,
 } from '../types/apis/adminResponseType';
-import { PostBrief, PostCategoryKey } from '../types/post';
-import { Pagination } from '../types/pagination';
+import { PostCategoryKey, PostListBreif } from '../types/post';
 
 //신고된 게시물 리스트 목록 조회 API
 export const getReportedPostListRequest = (page: number) =>
@@ -56,12 +55,17 @@ export const getNotificationList = (props: {
   postCategory: PostCategoryKey;
   page: number;
 }) => {
-  return privateRequest.get<{ data: { posts: PostBrief[] } & Pagination }>(
-    `post`,
-    {
-      params: { postType: 'NOTICE', sort: 'LATESTDESC', ...props },
-    }
-  );
+  return privateRequest.get<{
+    data: { posts: PostListBreif[] } & {
+      currentPage: number;
+      totalPageCount: number;
+      next: boolean;
+      prev: boolean;
+      size: number;
+    };
+  }>(`post`, {
+    params: { postType: 'NOTICE', sort: 'LATESTDESC', ...props },
+  });
 };
 //공지사항 삭제 API
 export const deleteNotification = (notificationId: number) => {

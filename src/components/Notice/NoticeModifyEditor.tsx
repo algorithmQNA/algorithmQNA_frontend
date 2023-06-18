@@ -10,36 +10,31 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from 'react-query';
 import { getPostRequest, updatePostRequest } from '../../apis/postApi';
 import { ImSpinner } from 'react-icons/im';
-import { AxiosResponse } from 'axios';
-import { PostView } from '../../types/Post/Post';
+import { PostCategory } from '../../types/Post/Post';
 
 function NoticeModifyEditor() {
   const navigate = useNavigate();
-  const { notificationId } = useParams();
+  const { notificationId = '' } = useParams();
 
   const [state, setState] = useRecoilState(PostWriteState);
   const resetState = useResetRecoilState(PostWriteState);
 
-  useQuery(
-    ['notice', notificationId],
-    () => {
-      if (notificationId) return getPostRequest(+notificationId);
-      return new Promise((_, rej) => rej('notificationId'));
+  useQuery(['notice', notificationId], () => getPostRequest(+notificationId), {
+    onSuccess: (res) => {
+      const data = res.data.data;
+      console.log('?', data);
+      setState({
+        postType: 'NOTICE',
+        imageIds: [],
+        keyWord: [],
+        postCategory: data.postCategory || '',
+        content: data.postContent,
+        title: data.postTitle,
+      });
     },
-    {
-      onSuccess: (res: AxiosResponse<PostView>) => {
-        const data = res.data;
-        setState({
-          postType: 'NOTICE',
-          imageIds: [],
-          keyWord: [],
-          postCategory: 'BRUTE_FORCE',
-          content: data.postContent,
-          title: data.postTitle,
-        });
-      },
-    }
-  );
+    enabled: !!notificationId,
+  });
+
   const modifyPost = useMutation(
     () => {
       if (notificationId)
@@ -47,7 +42,7 @@ function NoticeModifyEditor() {
           +notificationId,
           state.title,
           state.content,
-          'BRUTE_FORCE',
+          state.postCategory,
           'NOTICE',
           [],
           []
@@ -67,8 +62,8 @@ function NoticeModifyEditor() {
     return () => resetState();
   }, [resetState, setState]);
 
-  const handleCategoryChange = (category: string) => {
-    setState((prev) => ({ ...prev, category: +category }));
+  const handleCategoryChange = (category: PostCategory) => {
+    setState((prev) => ({ ...prev, postCategory: category }));
   };
 
   const handleCancelBtnClick = () => {
@@ -82,7 +77,7 @@ function NoticeModifyEditor() {
       alert('제목과 내용을 입력해주세요');
     }
   };
-
+  console.log(state);
   return (
     <div className="flex flex-col gap-2">
       <div className={'title-block'}>
