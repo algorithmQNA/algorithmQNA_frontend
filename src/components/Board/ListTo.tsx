@@ -1,9 +1,13 @@
 interface Props {
-  page: number;
+  size: number
+  totalPage: number
 }
-export default function RowListTo({ page }: Props) {
-  const start = (page - 1) * 10 + 1;
-  const end = page * 10;
+export default function RowListTo({ size, totalPage }: Props) {
+    const list = 20;
+    const start = () =>{
+        const value = totalPage-1;
+        return totalPage === 0 ? 0 : (list * value) + 1
+    }
   return (
     <div className={'whitespace-nowrap'}>
       <p
@@ -13,7 +17,7 @@ export default function RowListTo({ page }: Props) {
       >
         <span>현재 목록</span>
         <span className={'text-primary'}>
-          {start} to {end}
+          {start()} to {size}
         </span>
       </p>
     </div>
