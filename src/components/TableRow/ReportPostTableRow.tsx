@@ -82,7 +82,7 @@ export default function ReportPostTableRow({
     reportCancelModal.openModal();
   };
 
-  const isEmpty = !data?.data.data.PostReports.length;
+  const isEmpty = !data?.data.data.postReports.length;
 
   if (data?.data)
     return (
@@ -131,7 +131,7 @@ export default function ReportPostTableRow({
                 <div className="bg-box-bg">
                   {isEmpty && <MessageBox msg={`😊 신고내역이 없습니다!`} />}
                   {!isEmpty &&
-                    data.data.data.PostReports.map((report, idx) => {
+                    data.data.data.postReports.map((report, idx) => {
                       return (
                         <div
                           className="w-full border text-left p-2"

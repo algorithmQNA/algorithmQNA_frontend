@@ -70,6 +70,9 @@ const QNAData: PostBrief[] = new Array(37).fill(0).map((_, idx) => ({
 
 const PostInitData: GetPostResponse = {
   data: {
+    postCategory: 'BINARY_SEARCH',
+    postType: 'NOTICE',
+    viewCnt: 1000,
     postId: 1,
     member: generateMockMember(5),
     postTitle: '게시물 하이',
