@@ -1,25 +1,25 @@
-import React, { ChangeEvent, useRef, useState } from 'react';
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import Rounded from '../../components/RoundedImage/RoundedImage';
-import { isLogin } from '../../storage/Login/Login';
-import { useRecoilValue } from 'recoil';
 import ButtonComponent from '../../components/Button/ButtonComponent';
 import useModal from '../../hooks/useModal';
 import Modal from '../../components/Modal/Modal';
 import IconButton from '../../components/Button/IconButton';
 import { BiPencil } from 'react-icons/bi';
 import InputComponent from '../../components/Input/InputComponent';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import {
-  getMemberDetailInfo,
   successionUserRequest,
   updateMemberNicknameRequest,
   updateProfileImgRequest,
 } from '../../apis/authApi';
 import { useNavigate } from 'react-router-dom';
+import useGetMember from '../../hooks/useGetMember';
+import MessageBox from '../../components/MessageBox';
 
 function Profile() {
-  const { id, profile, name } = useRecoilValue(isLogin);
-  const [nickname, setNickname] = useState(name || '');
+  const memberInfo = useGetMember();
+
+  const [nickname, setNickname] = useState('');
   const [repeatEmail, setRepeatEmail] = useState('');
   const navigate = useNavigate();
 
@@ -32,21 +32,15 @@ function Profile() {
 
   const profileUploadRef = useRef<HTMLInputElement>(null);
 
-  const memberInfo = useQuery(['memberDetail'], getMemberDetailInfo, {
-    onSuccess: (res) => {
-      setNickname(res.data.data.memberName);
-    },
-  });
-
   const updateNickname = useMutation(updateMemberNicknameRequest, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['memberDetail']);
+      queryClient.invalidateQueries(['user']);
       window.alert('닉네임 변경을 성공했습니다');
     },
   });
   const updateProfileImg = useMutation(updateProfileImgRequest, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['memberDetail']);
+      queryClient.invalidateQueries(['user']);
       window.alert('프로필 이미지 업데이트를 성공했습니다');
     },
   });
@@ -60,6 +54,11 @@ function Profile() {
       window.alert('회원 탈퇴를 실패했습니다');
     },
   });
+
+  useEffect(() => {
+    if (!memberInfo.isLoading && memberInfo.data?.data.data.memberName)
+      setNickname(memberInfo.data?.data.data.memberName);
+  }, [memberInfo.isLoading, memberInfo.data?.data.data.memberName]);
 
   const handleUpdateNicknameBtn = () => {
     updateNickname.mutate(nickname);
@@ -76,8 +75,14 @@ function Profile() {
 
   const data = memberInfo.data?.data.data;
 
+  if (memberInfo.isLoading) {
+    return <div>불러오는중</div>;
+  }
+
+  if (!data) return <MessageBox msg={`😊 사용자 정보를 가져올 수 없습니다`} />;
+
   const isValidRepeatEmail = repeatEmail === data?.memberEmail;
-  if (!data) return <div>사용자 정보를 가져올 수 없습니다.</div>;
+
   return (
     <div>
       {secessionModalOpen && (
@@ -115,7 +120,7 @@ function Profile() {
             <label htmlFor="name">닉네임</label>
             <input
               id="name"
-              value={data.memberName}
+              value={nickname}
               placeholder="nickname"
               onChange={(e) => {
                 setNickname(e.target.value);
@@ -137,8 +142,9 @@ function Profile() {
         <div>
           <Rounded
             alt="user profile image"
+            size="rg"
             src={
-              profile ||
+              data.memberProfileUrl ||
               'https://lh3.googleusercontent.com/ogw/AOLn63HADtscguumy1K7WcYQFGzKCnZLaQa2_f4YwqM66Q=s32-c-mo'
             }
             width="160px"

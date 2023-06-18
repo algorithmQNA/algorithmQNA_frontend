@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useInfiniteQuery } from 'react-query';
 import { getSpreadCommentByCommentId } from '../../../apis/commentApi';
 import CommentView from './CommentView';
 import CommentWrapper from '../CommentWrapper';
 import IconButton from '../../Button/IconButton';
+import CommentSkeleton from './CommentSkeleton';
 
 function ReplyComment({
   commentId,
   page = 0,
+  commentMode = 'normal',
 }: {
   commentId: number;
   page?: number;
+  commentMode?: 'hightlight' | 'normal';
 }) {
   const {
     data,
@@ -18,6 +21,9 @@ function ReplyComment({
     fetchPreviousPage,
     hasNextPage,
     hasPreviousPage,
+    isFetchingNextPage,
+    isFetchingPreviousPage,
+    isLoading,
   } = useInfiniteQuery({
     queryKey: ['reply', commentId],
     queryFn: async ({ pageParam = page }) => {
@@ -45,8 +51,10 @@ function ReplyComment({
       return firstPage.prevPage;
     },
   });
+  if (isLoading) return <CommentSkeleton />;
   return (
     <>
+      {isFetchingPreviousPage && <div>...</div>}
       {hasPreviousPage && (
         <IconButton Icon={<></>} onClick={() => fetchPreviousPage()}>
           이전 댓글 불러오기
@@ -54,8 +62,12 @@ function ReplyComment({
       )}
       {data?.pages.map((page) =>
         page.result.map((child) => (
-          <CommentWrapper depth={child.depth}>
-            <CommentView {...child} />
+          <CommentWrapper depth={child.depth} key={child.commentId}>
+            <CommentView
+              {...child}
+              commentMode={commentMode}
+              parentId={commentId}
+            />
           </CommentWrapper>
         ))
       )}
@@ -64,6 +76,7 @@ function ReplyComment({
           댓글 불러오기
         </IconButton>
       )}
+      {isFetchingNextPage && <CommentSkeleton />}
     </>
   );
 }

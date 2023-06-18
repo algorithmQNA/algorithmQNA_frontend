@@ -31,16 +31,18 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import CustomEditor from 'ckeditor5-custom-build';
 import ButtonComponent from '../../Button/ButtonComponent';
 import { MyCustomUploadAdapterPlugin } from '../CustomImageUpload';
-import { GetPostResponse } from '../../../types/apis/postResponseType';
 import useModal from '../../../hooks/useModal';
 import Modal from '../../Modal/Modal';
 import InputText from '../../Input/InputText';
 import ReplyComment from './ReplyComment';
 import { REPORT_MAP } from '../../../constants/Report';
 import useGetParams from '../../../hooks/useGetParams';
+import { useParams } from 'react-router-dom';
 
-export type CommentViewProps = Comment;
-/**리팩토링 시급!!!! */
+export type CommentViewProps = Comment & {
+  commentMode?: 'hightlight' | 'normal';
+  parentId?: number;
+};
 
 function CommentView({
   createdAt = '2023-03-31',
@@ -51,11 +53,23 @@ function CommentView({
   depth,
   isLiked,
   commentId,
+  isPinned,
+  mentionerName,
+  parentId,
+  commentMode = 'normal',
   ...props
 }: CommentViewProps) {
-  const pid = useGetParams('pid') || 0;
+  const { pid = -1 } = useParams();
   const page = useGetParams('page') || 0;
-  const [openReply, setOpenReply] = useState(!depth ? true : false);
+  //깊이 0이면 1까지는 자동으로 열려있음
+  const defaultOpenReply =
+    commentMode === 'hightlight' ? true : !depth ? true : false;
+  const isRoot = !depth;
+  const invalidateQueryKey = isRoot
+    ? ['comment', +pid, +page]
+    : ['reply', parentId];
+
+  const [openReply, setOpenReply] = useState(defaultOpenReply);
   const [openMenu, setOpenMenu] = useState(false);
   const [mode, setMode] = useState<'read' | 'modify'>('read');
   const [openReplyEditor, setOpenReplyEditor] = useState(false);
@@ -65,6 +79,8 @@ function CommentView({
   const [reportContent, setReportContent] = useState('');
   const { open, openModal, closeModal } = useModal();
 
+  /**좋아요 싫어요 관리 */
+  const [fakeLike, setFakeLike] = useState<boolean | null>(isLiked);
   const handleReportMenuChange = (value: string) => {
     setReportType(value as keyof typeof REPORT_MAP);
   };
@@ -73,7 +89,9 @@ function CommentView({
   //댓글 작성
   const { mutate: writeComment } = useMutation(createCommentRequest, {
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['comment', pid] });
+      if (depth >= 2)
+        queryClient.invalidateQueries({ queryKey: ['reply', parentId] });
+      else queryClient.invalidateQueries({ queryKey: ['reply', commentId] });
       setOpenReplyEditor(false);
     },
   });
@@ -81,40 +99,38 @@ function CommentView({
   const { mutate: recommendComment } = useMutation(recommendCommentRequest, {
     onMutate: async (params) => {
       /**  이 쿼리키 바꿔줄거면 CommentList의 queryKey도 바꿔줄것!*/
-      const POST_QUERY_KEY = ['comment', +pid, +page];
+      const POST_QUERY_KEY = invalidateQueryKey;
       await queryClient.cancelQueries({ queryKey: POST_QUERY_KEY });
-      const previous =
-        queryClient.getQueryData<GetPostResponse>(POST_QUERY_KEY);
 
-      queryClient.setQueryData<Comment[] | undefined>(
-        POST_QUERY_KEY,
-        (commentList) => {
-          const curComment = commentList?.find(
-            (comment) => comment.commentId === commentId
-          );
-          console.log(curComment);
-          if (curComment) {
-            if (params.cancel) curComment.isLiked = null;
-            else curComment.isLiked = params.isLike;
-          }
-          return commentList;
-        }
-      );
-      return { previous };
+      if (params.cancel) setFakeLike(null);
+      else setFakeLike(params.isLike);
     },
   });
   //댓글 수정
   const { mutate: modifyComment } = useMutation(updateCommentRequest, {
     onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ['comment', pid, page] }),
+      queryClient.invalidateQueries({
+        queryKey: invalidateQueryKey,
+      }),
+    onError: (e) => alert(e),
   });
 
   //댓글 삭제
-  const { mutate: deleteComment } = useMutation(deleteCommentRequest);
+  const { mutate: deleteComment } = useMutation(deleteCommentRequest, {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: invalidateQueryKey });
+    },
+    onError: () => {
+      window.alert('삭제 실패했습니다.');
+    },
+  });
 
   //댓글 채택
   const { mutate: pinnedComment } = useMutation(pinCommentRequest, {
-    onSuccess: () => window.alert('채택완료했습니다'),
+    onSuccess: () => {
+      queryClient.invalidateQueries(['comment', +pid, +page]);
+      queryClient.invalidateQueries({ queryKey: invalidateQueryKey });
+    },
     onError: () => window.alert('채택을 실패 했습니다'),
   });
 
@@ -124,21 +140,30 @@ function CommentView({
   const editorRef = useRef<CKEditor<any>>(null);
   const toggleReplyEditor = () => setOpenReplyEditor((prev) => !prev);
 
+  //같은 버튼을 눌렀다 -> 좋아요/싫어요를 취소했다.
   const isSameBtnClicked = (like: boolean) => {
-    if (isLiked === like) {
-      recommendComment({ commentId, isLike: false, cancel: true });
+    if (fakeLike === like) {
       return true;
     }
     return false;
   };
 
   const handleBtnClick = (like: boolean) => {
-    if (!isSameBtnClicked(like))
+    if (!isSameBtnClicked(like)) {
       recommendComment({ commentId, isLike: like, cancel: false });
+    }
   };
 
   return (
-    <div className="w-full">
+    <div className={`w-full ${isPinned && 'border-t-2 border-secondary'}`}>
+      {isPinned && (
+        <p className="text-secondary text-sm font-semibold">질문자 채택</p>
+      )}
+      {mentionerName && (
+        <p className="font-light text-sm text-secondary my-1">
+          @{mentionerName}
+        </p>
+      )}
       {open && (
         <Modal
           title={`${commentId}번 댓글 신고`}
@@ -176,7 +201,10 @@ function CommentView({
         </Modal>
       )}
       <div className="grow">
-        <div className="flex justify-between bg-box-bg p-2 border border-border">
+        <div
+          className="flex justify-between bg-box-bg p-2 border border-border"
+          id={`${commentId}`}
+        >
           <UserProfile {...props.member} />
           <div className="flex flex-row items-end">
             <span className={'text-[#9ca3af] text-xs text-right'}>
@@ -208,7 +236,7 @@ function CommentView({
               }}
             />
             <div className="flex items-center">
-              {isLiked ? (
+              {fakeLike ? (
                 <IconButton
                   Icon={<FilledThumbsUp width="14" />}
                   onClick={() => handleBtnClick(true)}
@@ -220,7 +248,7 @@ function CommentView({
                 />
               )}
               <span className="text-xs text-gray-700 p-1">{likeCnt}</span>
-              {isLiked === false ? (
+              {fakeLike === false ? (
                 <IconButton
                   Icon={<BsHandThumbsDownFill width="14" />}
                   onClick={() => handleBtnClick(false)}
@@ -249,7 +277,6 @@ function CommentView({
               <ButtonComponent
                 onClick={() => {
                   const data = editorRef.current?.editor?.data.get();
-                  //const data = '<p>수정된 파일입니다.</p>';
                   if (data) modifyComment({ commentId, content: data });
                   setMode('read');
                 }}
@@ -299,7 +326,9 @@ function CommentView({
           >
             {openReply ? '접기' : '펴기'}
           </IconButton>
-          {openReply && <ReplyComment commentId={commentId} />}
+          {openReply && (
+            <ReplyComment commentId={commentId} commentMode={commentMode} />
+          )}
         </>
       )}
     </div>
