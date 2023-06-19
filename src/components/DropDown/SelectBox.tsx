@@ -60,7 +60,7 @@ export function SelectBox({
     };
   }, []);
   useEffect(()=>{
-    if(selected !== ''){
+    if(selected !== undefined){
       child.map((li)=>{
         if(li.props.value === selected){
           setState((prev)=>({

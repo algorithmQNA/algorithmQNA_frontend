@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PageTitle from '../../../components/PageTitle/PageTitle';
 import './style.css';
 import PostWriteCKEditor from '../../../components/Board/PostWrite/CKEditor';
@@ -6,9 +6,16 @@ import PostWriteSelectBlock from '../../../components/Board/PostWrite/SelectBloc
 import PostWriteBtn from '../../../components/Board/PostWrite/WriteBtn';
 import PostWriteTitleBlock from "../../../components/Board/PostWrite/TitleBlock";
 import PostWriteKeywordBlock from "../../../components/Board/PostWrite/KeywordBlock";
+import {useSetRecoilState} from "recoil";
+import {PostWriteState} from "../../../storage/PostWrite/PostWrite";
 
 export default function PostWritePage() {
-
+    const setState = useSetRecoilState(PostWriteState)
+    useEffect(()=>{
+        setState((prev)=>({
+            ...prev,title:'',postCategory:'',postType:'',content:''
+        }))
+    },[])
   return (
     <div>
       <PageTitle>글 작성</PageTitle>
