@@ -161,7 +161,7 @@ const handlers = [
               memberLikeBadge: 0,
               memberProfileUrl: 'https://picsum.photos/200',
             },
-            commentReports: Array(19)
+            reportedComments: Array(19)
               .fill(0)
               .map((_, idx) => ({
                 reportPostId: 12 + idx,

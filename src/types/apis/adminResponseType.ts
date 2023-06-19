@@ -23,5 +23,6 @@ export type GetReportedCommentDetailResponse = {
     commentId: number;
     member: MemberBrief;
     commentReports: ReportComment[];
+    totalReportedCnt: number;
   } & Pagination;
 };
