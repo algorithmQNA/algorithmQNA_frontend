@@ -23,7 +23,6 @@ export default function AlarmBlock(){
             return true
         }
     })
-    console.log(data)
     const setDisplayAlarm = (e: ChangeEvent<HTMLInputElement>) => {
         setState((prev) => ({
             ...prev,
