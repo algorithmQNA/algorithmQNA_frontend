@@ -1,16 +1,21 @@
 import {FaBell} from "react-icons/fa";
 import {AlarmType} from "../../../../types/Alarm";
 import React, {ChangeEvent, useEffect, useRef, useState} from "react";
-import {useInfiniteQuery} from "react-query";
+import {useInfiniteQuery, useMutation, useQueryClient} from "react-query";
 import {getOldAlarm} from "./test";
 import {useNavigate} from "react-router-dom";
+import {FiX} from "react-icons/fi";
+import {privateRequest} from "../../../../apis/instance";
 
 export default function AlarmBlock(){
+    const queryClient = useQueryClient()
     const navigate = useNavigate();
     const [state, setState] = useState({
         alarm: false,
     })
-    const oldData = useInfiniteQuery(['old-alarm'],getOldAlarm,{
+    const check = useMutation((pid:number)=>privateRequest.patch(`/alarm/${pid}`))
+    const deleteAlarm = useMutation((pid:number)=>privateRequest.delete(`/alarm/${pid}`))
+    const {data,isLoading,hasNextPage,hasPreviousPage,fetchPreviousPage,fetchNextPage} = useInfiniteQuery(['old-alarm'],getOldAlarm,{
         getNextPageParam:(lastPage, allPages)=>{
             return allPages[0].length >= 10
         },
@@ -18,18 +23,39 @@ export default function AlarmBlock(){
             return true
         }
     })
+    console.log(data)
     const setDisplayAlarm = (e: ChangeEvent<HTMLInputElement>) => {
         setState((prev) => ({
             ...prev,
             alarm: e.target.checked
         }));
     };
-    const comment = (data: AlarmType) => {
-        navigate(data.eventURL, {
-            state: {
-                targetPost: data.commentId,
+    const deleteEvent = (data:AlarmType) =>{
+        deleteAlarm.mutate(data.commentId,{
+            onSuccess:()=>{
+                queryClient.invalidateQueries(['old-alarm'])
             },
-        });
+            onError:()=>{
+                alert("알람 삭제 실패했습니다. \n 새로고침 후 다시 시도해주세요!")
+                queryClient.invalidateQueries(['old-alarm'])
+            }
+        })
+    }
+    const comment = (data: AlarmType) => {
+        check.mutate(data.commentId,{
+            onSuccess:()=>{
+                navigate(data.eventURL, {
+                    state: {
+                        targetPost: data.commentId,
+                    },
+                });
+                queryClient.invalidateQueries(['old-alarm'])
+            },
+            onError:()=>{
+                alert("알람 확인에 실패했습니다. \n 새로고침 후 다시 시도해주세요!")
+                queryClient.invalidateQueries(['old-alarm'])
+            }
+        })
     };
     const topProgress = useRef<HTMLSpanElement>(null)
     const bottomProgress = useRef<HTMLSpanElement>(null)
@@ -39,13 +65,13 @@ export default function AlarmBlock(){
         if(!button.current) return
         if(e.currentTarget.scrollTop === 0 && topProgress.current){
             topProgress.current.style.display = "flex"
-            await oldData.fetchPreviousPage({pageParam:{page:1,direction:'prev'}})
+            await fetchPreviousPage({pageParam:{page:1,direction:'prev'}})
             topProgress.current.style.display = "none"
         }
         else if(e.currentTarget.scrollTop + (e.currentTarget.clientHeight-childHeight) >= button.current?.offsetTop){
-            if(oldData.hasNextPage){
-                const page = oldData.data?.pages[oldData.data?.pages.length-1][oldData.data?.pages[oldData.data?.pages.length-1].length-1].alarmId;
-                oldData.fetchNextPage({pageParam:{page,direction:'next'}})
+            if(hasNextPage){
+                const page = data?.pages[data?.pages.length-1][data?.pages[data?.pages.length-1].length-1].alarmId;
+                fetchNextPage({pageParam:{page,direction:'next'}})
             }
         }
     }
@@ -87,25 +113,27 @@ export default function AlarmBlock(){
                         <img src={'/svg/spinner.png'} alt={'progress'} className={'w-auto h-[100%]'}/>
                     </span>
                     {
-                        oldData.data?.pages[0].data.alarms.length === 0 || !oldData.data
+                        data?.pages[0].data.alarms.length === 0 || !data
                             ?
                             <div className={'flex items-center justify-center p-4 text-gray-400 min-h-[200px]'}>
                                 알림이 없습니다.
                             </div>
-                            : oldData.data?.pages.map((li)=>(
+                            : data?.pages.map((li)=>(
                                 li.data.alarms.map((i:AlarmType)=>(
                                     <li
                                         key={i.alarmId}
-                                        className={`text-content hover:text-primary text-sm h-[${childHeight}px] flex items-center w-full`}
-                                        onClick={() => comment(i)}
+                                        className={`h-[${childHeight}px] flex gap-2 items-center w-full text-content`}
                                     >
-                                        <span>{i.msg}</span>
+                                        <span className={'block hover:text-primary text-sm w-full'} onClick={() => comment(i)}>{i.msg}</span>
+                                        <button onClick={()=>deleteEvent(i)} className={'text-red-500'}>
+                                            <FiX/>
+                                        </button>
                                     </li>
                                 ))
                             ))
                     }
                     {
-                        oldData.hasNextPage &&
+                        hasNextPage &&
                         <button className={`h-[${childHeight}px] flex items-center text-sm text-primary`} ref={button}>
                             <span ref={bottomProgress} className={'hidden items-center justify-center w-full h-full'}>
                                 <img src={'/svg/spinner.png'} alt={'progress'} className={'w-auto h-[100%]'}/>
