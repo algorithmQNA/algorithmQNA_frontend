@@ -1,24 +1,23 @@
-import { setDateWritten } from '../../utils/TextProcessing';
+import { setDateWritten } from '../../../utils/TextProcessing';
 
 import { BiTimeFive } from 'react-icons/bi';
 
-import useModal from '../../hooks/useModal';
-import Modal from '../Modal/Modal';
+import useModal from '../../../hooks/useModal';
+import Modal from '../../Modal/Modal';
 
-import ButtonComponent from '../Button/ButtonComponent';
-import { MemberBrief } from '../../types/member';
+import ButtonComponent from '../../Button/ButtonComponent';
+import { MemberBrief } from '../../../types/member';
 import {
   deleteReportedPostRequest,
   getReportedPostDetailRequest,
   rejectReportePostRequest,
-} from '../../apis/adminApi';
+} from '../../../apis/adminApi';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import UserProfile from '../UserProfile/UserProfile';
-import IconButton from '../Button/IconButton';
+import UserProfile from '../../UserProfile/UserProfile';
+import IconButton from '../../Button/IconButton';
 import { AiOutlineClose } from 'react-icons/ai';
 import { useState } from 'react';
-import ReportTag from '../Report/ReportTag';
-import MessageBox from '../MessageBox';
+import ReportTag from '../ReportTag';
 
 interface AdminPageTableRowProps {
   title?: string;
@@ -44,7 +43,7 @@ export default function ReportPostTableRow({
 
   //TODO: useInfiniteQuery로 변경
   const { data } = useQuery(['reportPostList', page], () =>
-    getReportedPostDetailRequest(id, 1)
+    getReportedPostDetailRequest(id, page)
   );
   const { mutate: deleteReportedMutate } = useMutation(
     deleteReportedPostRequest,
@@ -113,8 +112,8 @@ export default function ReportPostTableRow({
             onClose={reportManageModal.closeModal}
             size="lg"
           >
-            <div className="flex justify-stretch w-[70vw] h-[32rem] overflow-auto">
-              <section className="flex-grow basis-1/2 h-full overflow-auto">
+            <div className="flex justify-stretch w-full h-[32rem] overflow-auto ">
+              <section className="flex-grow basis-1/2 h-full overflow-auto border">
                 <div className="flex justify-between bg-box-bg p-2 border border-border">
                   <UserProfile {...data.data.data.member} />
                   <div className="flex flex-row items-end"></div>
@@ -126,10 +125,10 @@ export default function ReportPostTableRow({
                   }}
                 />
               </section>
-              <section className="flex-grow basis-1/2 h-full overflow-auto">
-                <p className="font-semibold text-left">s{title} 신고사유</p>
-                <div className="bg-box-bg">
-                  {isEmpty && <MessageBox msg={`😊 신고내역이 없습니다!`} />}
+              <section className="flex-grow basis-1/2 h-full overflow-auto p-2">
+                <p className="font-semibold text-left">{title} 신고사유</p>
+                <div className="border">
+                  {isEmpty && <div>😊 신고내역이 없습니다!</div>}
                   {!isEmpty &&
                     data.data.data.postReports.map((report, idx) => {
                       return (
