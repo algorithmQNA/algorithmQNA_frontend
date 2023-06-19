@@ -7,9 +7,12 @@ import ReportPostTableRow from './ReportPostTableRow';
 import { useSearchParams } from 'react-router-dom';
 import MessageBox from '../../MessageBox';
 
+import ReportPostModal, { useReportPostModal } from '../Modal/ReportPostModal';
+
 function ReportPost() {
   const [searchParams] = useSearchParams();
   const page = searchParams.get('page') || 0;
+  const { setModalContent } = useReportPostModal();
 
   const { data } = useQuery({
     queryKey: ['reportedPost', +page],
@@ -27,17 +30,30 @@ function ReportPost() {
 
   return (
     <div className="flex flex-col gap-2 ">
+      <ReportPostModal />
       {reportedList?.map((post, idx) => {
         const { member, createdAt, postId, postTitle, postContent } = post;
         return (
-          <ReportPostTableRow
-            id={postId}
-            date={createdAt}
-            title={postTitle}
-            member={member}
-            content={postContent}
-            key={`comment${idx}`}
-          />
+          <div
+            className="cursor-pointer"
+            onClick={() =>
+              setModalContent({
+                contentQueryKey: ['reportedPost', +page],
+                reportListQueryKey: ['reportedPostList', postId],
+                idx: idx,
+                open: true,
+              })
+            }
+          >
+            <ReportPostTableRow
+              id={postId}
+              date={createdAt}
+              title={postTitle}
+              member={member}
+              content={postContent}
+              key={`comment${idx}`}
+            />
+          </div>
         );
       })}
       <Pagination
