@@ -13,7 +13,7 @@ export default function PostWritePage() {
     const setState = useSetRecoilState(PostWriteState)
     useEffect(()=>{
         setState((prev)=>({
-            ...prev,title:'',postCategory:'',postType:'',content:''
+            ...prev,title:'',postCategory:'',postType:'',content:'',keyWord:[],imageIds:[]
         }))
     },[])
   return (
