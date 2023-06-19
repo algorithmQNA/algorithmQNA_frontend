@@ -28,9 +28,16 @@ export const useGlobalModal = (key: string | number) => {
   const bodyElement = document.body;
 
   useEffect(() => {
-    if (modalStatus.open) bodyElement.style.overflow = 'hidden';
-    else bodyElement.style.overflow = 'auto';
-  }, [modalStatus.open, bodyElement.style]);
+    if (modalStatus.open) {
+      bodyElement.style.overflow = 'hidden';
+      return;
+    }
+
+    const parentElement = document.getElementById('modal');
+    if (!parentElement?.hasChildNodes) {
+      bodyElement.style.overflow = 'auto';
+    }
+  }, [modalStatus.open]);
 
   const openModal = () => setModalStatus((prev) => ({ ...prev, open: true }));
 
