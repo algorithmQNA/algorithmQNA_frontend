@@ -9,11 +9,9 @@ import CommentSkeleton from './CommentSkeleton';
 function ReplyComment({
   commentId,
   page = 0,
-  commentMode = 'normal',
 }: {
   commentId: number;
   page?: number;
-  commentMode?: 'hightlight' | 'normal';
 }) {
   const {
     data,
@@ -63,11 +61,7 @@ function ReplyComment({
       {data?.pages.map((page) =>
         page.result.map((child) => (
           <CommentWrapper depth={child.depth} key={child.commentId}>
-            <CommentView
-              {...child}
-              commentMode={commentMode}
-              parentId={commentId}
-            />
+            <CommentView {...child} parentId={commentId} />
           </CommentWrapper>
         ))
       )}
