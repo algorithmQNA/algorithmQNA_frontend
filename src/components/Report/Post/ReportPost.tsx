@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import Pagination from '../../Pagination/Pagination';
 import { useQuery } from 'react-query';
 import { getReportedPostListRequest } from '../../../apis/adminApi';
@@ -7,7 +7,7 @@ import ReportPostTableRow from './ReportPostTableRow';
 import { useSearchParams } from 'react-router-dom';
 import MessageBox from '../../MessageBox';
 
-import ReportPostModal, { useReportPostModal } from '../Modal/ReportPostModal';
+import ReportPostModal, { useReportPostModal } from './ReportPostModal';
 
 function ReportPost() {
   const [searchParams] = useSearchParams();
@@ -30,7 +30,9 @@ function ReportPost() {
 
   return (
     <div className="flex flex-col gap-2 ">
-      <ReportPostModal />
+      <Suspense fallback={<></>}>
+        <ReportPostModal />
+      </Suspense>
       {reportedList?.map((post, idx) => {
         const { member, createdAt, postId, postTitle, postContent } = post;
         return (

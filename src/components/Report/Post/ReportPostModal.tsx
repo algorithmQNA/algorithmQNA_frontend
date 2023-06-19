@@ -2,21 +2,18 @@ import React from 'react';
 import Modal from '../../Modal/Modal';
 import { useGlobalModal } from '../../../storage/Modal/Modal';
 import IconButton from '../../Button/IconButton';
-import { AiOutlineClose } from 'react-icons/ai';
 import ReportTag from '../ReportTag';
-import ButtonComponent from '../../Button/ButtonComponent';
-import { useInfiniteQuery, useMutation, useQuery } from 'react-query';
+import { useInfiniteQuery, useQuery } from 'react-query';
 import {
-  deleteReportedPostRequest,
   getReportedPostDetailRequest,
   getReportedPostListRequest,
-  rejectReportePostRequest,
 } from '../../../apis/adminApi';
 import UserProfile from '../../UserProfile/UserProfile';
 import { FiThumbsDown, FiThumbsUp } from 'react-icons/fi';
 import { setDateWritten } from '../../../utils/TextProcessing';
 import { BiChevronDown } from 'react-icons/bi';
-import DeletePostModal from './useDeletePost';
+import DeletePostModal from './DeletePostModal';
+import RejectReportModal from './RejectReportModal';
 
 function ReportPostModal() {
   const { modalStatus, closeModal } = useGlobalModal('report-post');
@@ -50,7 +47,7 @@ function ReportPostModal() {
         isLast: !data.next,
       };
     },
-    getNextPageParam: (lastPage, pages) => {
+    getNextPageParam: (lastPage) => {
       if (!lastPage.isLast) {
         return lastPage.nextPage;
       }
@@ -60,28 +57,10 @@ function ReportPostModal() {
     enabled: !!modalStatus.reportListQueryKey.length,
   });
 
-  // const { mutate: deleteReportedMutate } = useMutation(
-  //   deleteReportedPostRequest,
-  //   {
-  //     onSettled: () => {
-  //       queryClient.invalidateQueries(['reportedPost']);
-  //       deletePostModal.closeModal();
-  //     },
-  //   }
-  // );
-
-  // const rejectReport = useMutation(rejectReportePostRequest, {
-  //   onSettled: () => {
-  //     queryClient.invalidateQueries(['reportPostList']);
-  //     closeModal();
-  //   },
-  // });
-
   if (isLoading) <></>;
 
   return (
     <>
-      <DeletePostModal postId={data?.postId || 0} />
       {modalStatus.open && (
         <Modal
           title={`${data?.postTitle} 신고관리창`}
@@ -141,14 +120,9 @@ function ReportPostModal() {
                               {setDateWritten(report.updatedAt)}
                             </p>
                           </div>
-                          <IconButton
-                            Icon={
-                              <AiOutlineClose style={{ display: 'inline' }} />
-                            }
-                            onClick={
-                              () => console.log('H')
-                              // handleRejectBtnClick(report.reportPostId)
-                            }
+                          <RejectReportModal
+                            reportId={report.reportPostId}
+                            postId={+modalStatus.contentQueryKey[1]}
                           />
                         </div>
                         <ReportTag category={report.category} />
@@ -174,9 +148,7 @@ function ReportPostModal() {
                   )}
                 </div>
                 <div className="text-right">
-                  <ButtonComponent onClick={() => {}}>
-                    게시글 삭제
-                  </ButtonComponent>
+                  <DeletePostModal postId={data.postId} />
                 </div>
               </section>
             </div>
