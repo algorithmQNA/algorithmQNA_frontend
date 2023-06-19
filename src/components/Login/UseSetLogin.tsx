@@ -22,7 +22,7 @@ export default function useSetLogin({ code, state }: Props) {
 
   const request = async () => {
     const { data } = await axios.get<MemberBrief>(
-      `/oauth/login?code=${code}&state=${state}&redirectUri=${process.env.REACT_APP_OAUTH_REDIRECT_URI}/google/callback`,
+      `/oauth/login?code=${code}&state=${state}&redirectUri=https://localhost:3000/google/callback`,
       {
         withCredentials: true,
       }
