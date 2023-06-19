@@ -1,11 +1,11 @@
 import React from 'react';
-import Pagination from '../Pagination/Pagination';
+import Pagination from '../../Pagination/Pagination';
 import { useQuery } from 'react-query';
-import { getReportedPostListRequest } from '../../apis/adminApi';
+import { getReportedPostListRequest } from '../../../apis/adminApi';
 
-import ReportPostTableRow from '../TableRow/ReportPostTableRow';
+import ReportPostTableRow from './ReportPostTableRow';
 import { useSearchParams } from 'react-router-dom';
-import MessageBox from '../MessageBox';
+import MessageBox from '../../MessageBox';
 
 function ReportPost() {
   const [searchParams] = useSearchParams();
@@ -41,7 +41,7 @@ function ReportPost() {
         );
       })}
       <Pagination
-          pageCount={data?.data.data.totalPageSize || 0}
+        pageCount={data?.data.data.totalPageSize || 0}
         listLength={data?.data.data.size || 0}
       />
     </div>

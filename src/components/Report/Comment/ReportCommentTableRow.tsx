@@ -1,22 +1,21 @@
-import { setDateWritten } from '../../utils/TextProcessing';
+import { useState } from 'react';
+import useModal from '../../../hooks/useModal';
+import Modal from '../../Modal/Modal';
 
+import { setDateWritten } from '../../../utils/TextProcessing';
 import { BiTimeFive } from 'react-icons/bi';
 
-import useModal from '../../hooks/useModal';
-import Modal from '../Modal/Modal';
-
-import ButtonComponent from '../Button/ButtonComponent';
-import { MemberBrief } from '../../types/member';
+import ButtonComponent from '../../Button/ButtonComponent';
+import { MemberBrief } from '../../../types/member';
 import {
   deleteReportedPostRequest,
   getReportedCommentDetailRequest,
-} from '../../apis/adminApi';
+} from '../../../apis/adminApi';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import UserProfile from '../UserProfile/UserProfile';
-import IconButton from '../Button/IconButton';
+import UserProfile from '../../UserProfile/UserProfile';
+import IconButton from '../../Button/IconButton';
 import { AiOutlineClose } from 'react-icons/ai';
-import { useState } from 'react';
-import ReportTag from '../Report/ReportTag';
+import ReportTag from '../ReportTag';
 
 interface AdminPageTableRowProps {
   title?: string;
@@ -33,7 +32,7 @@ export default function ReportCommentTableRow({
 }: AdminPageTableRowProps) {
   const reportManageModal = useModal();
   const deletePostModal = useModal();
-  const page = 1;
+  const page = 0;
 
   const queryClient = useQueryClient();
 
@@ -97,7 +96,7 @@ export default function ReportCommentTableRow({
                 />
               </section>
               <section className="flex-grow basis-1/2 h-full overflow-auto">
-                <p className="font-semibold text-left">s{title} 신고사유</p>
+                <p className="font-semibold text-left">{title} 신고사유</p>
                 <div className="bg-box-bg">
                   {data.data.data.commentReports.map((report, idx) => {
                     return (
