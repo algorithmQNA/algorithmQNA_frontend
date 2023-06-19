@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useRef, useState } from 'react';
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { Comment } from '../../../types/comment';
 import UserProfile from '../../UserProfile/UserProfile';
 
@@ -38,9 +38,10 @@ import ReplyComment from './ReplyComment';
 import { REPORT_MAP } from '../../../constants/Report';
 import useGetParams from '../../../hooks/useGetParams';
 import { useParams } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import HighlightStatusAtom from '../../../storage/Highlight/Highlight';
 
 export type CommentViewProps = Comment & {
-  commentMode?: 'hightlight' | 'normal';
   parentId?: number;
 };
 
@@ -56,14 +57,25 @@ function CommentView({
   isPinned,
   mentionerName,
   parentId,
-  commentMode = 'normal',
   ...props
 }: CommentViewProps) {
   const { pid = -1 } = useParams();
   const page = useGetParams('page') || 0;
   //깊이 0이면 1까지는 자동으로 열려있음
-  const defaultOpenReply =
-    commentMode === 'hightlight' ? true : !depth ? true : false;
+  const highlightSetting = useRecoilValue(HighlightStatusAtom);
+  const defaultOpenReply = highlightSetting.highlightingMode
+    ? true
+    : !depth
+    ? true
+    : false;
+
+  /**해당하는 댓글만 열리게 로직 변경 */
+  useEffect(() => {
+    if (highlightSetting.highlightingMode) {
+      setOpenReply(true);
+    }
+  }, [highlightSetting]);
+
   const isRoot = !depth;
   const invalidateQueryKey = isRoot
     ? ['comment', +pid, +page]
@@ -155,7 +167,10 @@ function CommentView({
   };
 
   return (
-    <div className={`w-full ${isPinned && 'border-t-2 border-secondary'}`}>
+    <div
+      className={`w-full ${isPinned && 'border-t-2 border-secondary'}`}
+      id={`${commentId}`}
+    >
       {isPinned && (
         <p className="text-secondary text-sm font-semibold">질문자 채택</p>
       )}
@@ -201,10 +216,7 @@ function CommentView({
         </Modal>
       )}
       <div className="grow">
-        <div
-          className="flex justify-between bg-box-bg p-2 border border-border"
-          id={`${commentId}`}
-        >
+        <div className="flex justify-between bg-box-bg p-2 border border-border">
           <UserProfile {...props.member} />
           <div className="flex flex-row items-end">
             <span className={'text-[#9ca3af] text-xs text-right'}>
@@ -326,9 +338,7 @@ function CommentView({
           >
             {openReply ? '접기' : '펴기'}
           </IconButton>
-          {openReply && (
-            <ReplyComment commentId={commentId} commentMode={commentMode} />
-          )}
+          {openReply && <ReplyComment commentId={commentId} />}
         </>
       )}
     </div>

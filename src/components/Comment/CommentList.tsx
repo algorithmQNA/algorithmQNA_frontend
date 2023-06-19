@@ -54,7 +54,7 @@ function CommentList() {
     }
   );
 
-  const { data: commentList, isFetching: commentFetching } = useQuery({
+  const { data: commentList } = useQuery({
     queryKey: ['comment', +pid, +page],
     queryFn: async ({ queryKey }) => {
       const pid = queryKey[1] as number;
@@ -73,8 +73,8 @@ function CommentList() {
     return (
       <section>
         <CommentWrite />
-        {commentList.map((data) => (
-          <CommentWrapper depth={data.depth} key={data.commentId}>
+        {commentList.map((data, idx) => (
+          <CommentWrapper depth={data.depth} key={`${data.commentId}${idx}`}>
             <CommentView {...data} />
           </CommentWrapper>
         ))}
