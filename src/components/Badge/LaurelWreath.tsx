@@ -4,8 +4,8 @@ function Background(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="current"
-      height="current"
+      width="100%"
+      height="100%"
       enableBackground="new 0 0 512 512"
       viewBox="0 0 960 960"
       {...props}
