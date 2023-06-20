@@ -161,36 +161,20 @@ const handlers = [
               memberLikeBadge: 0,
               memberProfileUrl: 'https://picsum.photos/200',
             },
-            commentReports: Array(19)
-              .fill(0)
-              .map((_, idx) => ({
-                reportPostId: 12 + idx,
-                member: {
-                  memberId: 17 + idx,
-                  memberName: `신고한 사람${idx + 1}`,
-                  memberCommentBadge: generateRandomInt(5),
-                  memeberPostBadge: generateRandomInt(5),
-                  memberLikeBadge: generateRandomInt(5),
-                  memberProfileUrl: 'https://picsum.photos/200',
-                },
-                category: Object.keys(REPORT_MAP)[generateRandomInt(7)],
-                detail: '',
-                updatedAt: generateRandomDate(),
-              }))
-              .push({
-                reportPostId: 1008,
-                member: {
-                  memberId: 17 + 1008,
-                  memberName: `신고한 사람${1008 + 1}`,
-                  memberCommentBadge: generateRandomInt(5),
-                  memeberPostBadge: generateRandomInt(5),
-                  memberLikeBadge: generateRandomInt(5),
-                  memberProfileUrl: 'https://picsum.photos/200',
-                },
-                category: 'ETC',
-                detail: '기타사유',
-                updatedAt: generateRandomDate(),
-              }),
+            commentReports: new Array(19).fill(0).map((_, idx) => ({
+              reportPostId: 12 + idx,
+              member: {
+                memberId: 17 + idx,
+                memberName: `신고한 사람${idx + 1}`,
+                memberCommentBadge: generateRandomInt(5),
+                memeberPostBadge: generateRandomInt(5),
+                memberLikeBadge: generateRandomInt(5),
+                memberProfileUrl: 'https://picsum.photos/200',
+              },
+              category: Object.keys(REPORT_MAP)[generateRandomInt(7)],
+              detail: '',
+              updatedAt: generateRandomDate(),
+            })),
             page,
             totalPageSize: 10,
             next: true,
