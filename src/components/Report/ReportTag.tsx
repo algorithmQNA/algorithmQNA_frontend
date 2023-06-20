@@ -15,7 +15,9 @@ const TagColor: { [K in ReportType]: string } = {
 
 function ReportTag({ category }: { category: ReportType }) {
   return (
-    <div className={`rounded-lg ${TagColor[category]} text-sm text-white px-2`}>
+    <div
+      className={`rounded-lg ${TagColor[category]} text-sm text-white px-2 py-1`}
+    >
       {REPORT_MAP[category]}
     </div>
   );
