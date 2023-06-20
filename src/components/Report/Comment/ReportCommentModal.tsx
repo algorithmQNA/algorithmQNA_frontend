@@ -25,10 +25,11 @@ function ReportCommentModal() {
       return getReportedCommentListRequest(+page);
     },
     suspense: true,
+    useErrorBoundary: true,
     enabled: !!modalStatus.contentQueryKey.length,
   });
 
-  const data = contentData?.data.data.reportComments[modalStatus.idx];
+  const data = contentData?.data.data.reportedComments[modalStatus.idx];
 
   const {
     data: reportedList,
