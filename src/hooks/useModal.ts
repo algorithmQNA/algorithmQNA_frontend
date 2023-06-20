@@ -11,7 +11,7 @@ function useModal() {
     }
 
     const parentElement = document.getElementById('modal');
-    if (!parentElement?.hasChildNodes) {
+    if (!parentElement?.hasChildNodes()) {
       bodyElement.style.overflow = 'auto';
     }
   }, [open]);

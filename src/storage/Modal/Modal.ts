@@ -32,12 +32,11 @@ export const useGlobalModal = (key: string | number) => {
       bodyElement.style.overflow = 'hidden';
       return;
     }
-
     const parentElement = document.getElementById('modal');
-    if (!parentElement?.hasChildNodes) {
+    if (!parentElement?.hasChildNodes()) {
       bodyElement.style.overflow = 'auto';
     }
-  }, [modalStatus.open]);
+  }, [modalStatus.open, bodyElement.style]);
 
   const openModal = () => setModalStatus((prev) => ({ ...prev, open: true }));
 
