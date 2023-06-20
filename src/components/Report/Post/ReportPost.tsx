@@ -34,7 +34,15 @@ function ReportPost() {
         <ReportPostModal />
       </Suspense>
       {reportedList?.map((post, idx) => {
-        const { member, createdAt, postId, postTitle, postContent } = post;
+        const {
+          member,
+          createdAt,
+          postId,
+          postTitle,
+          postCategory,
+          postType,
+          totalCommentCnt,
+        } = post;
         return (
           <div
             className="cursor-pointer"
@@ -48,11 +56,12 @@ function ReportPost() {
             }
           >
             <ReportPostTableRow
-              id={postId}
               date={createdAt}
               title={postTitle}
               member={member}
-              content={postContent}
+              postCategory={postCategory}
+              postType={postType}
+              totalCommentCnt={totalCommentCnt}
               key={`comment${idx}`}
             />
           </div>
