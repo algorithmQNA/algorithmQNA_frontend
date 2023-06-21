@@ -6,7 +6,6 @@ import HeaderTest from './components/Header/re/Header';
 function App() {
   return (
     <div className="App">
-      <HeaderTest />
       <main className={'bg-white'}>
         <DefaultRouter />
       </main>
