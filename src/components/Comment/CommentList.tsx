@@ -81,7 +81,10 @@ function CommentList() {
       </section>
     );
   return (
-    <MessageBox msg={`🥲 댓글이 없어요! 댓글을 달아 지식을 공유해주세요`} />
+    <section>
+      <CommentWrite />
+      <MessageBox msg={`🥲 댓글이 없어요! 댓글을 달아 지식을 공유해주세요`} />
+    </section>
   );
 }
 
