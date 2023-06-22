@@ -19,14 +19,14 @@ function DeleteCommentModal({ commentId }: { commentId: number }) {
       queryClient.invalidateQueries(['reportedComment', +page]);
       closeReportModal();
     },
-    onError: (error: AxiosError) => {
-      alert(error.message);
+    onError: (error: AxiosError<{ status: { message: string } }>) => {
+      alert(error.response);
     },
   });
 
   return (
     <>
-      <ButtonComponent onClick={openModal}>게시글 삭제</ButtonComponent>
+      <ButtonComponent onClick={openModal}>댓글 삭제</ButtonComponent>
       {open && (
         <Modal
           onClose={closeModal}

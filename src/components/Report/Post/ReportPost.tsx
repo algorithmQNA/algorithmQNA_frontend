@@ -54,6 +54,7 @@ function ReportPost() {
                 open: true,
               })
             }
+            key={post.postId}
           >
             <ReportPostTableRow
               date={createdAt}
