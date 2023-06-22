@@ -54,7 +54,7 @@ function CommentList() {
     }
   );
 
-  const { data: commentList, isFetching: commentFetching } = useQuery({
+  const { data: commentList } = useQuery({
     queryKey: ['comment', +pid, +page],
     queryFn: async ({ queryKey }) => {
       const pid = queryKey[1] as number;
@@ -73,15 +73,18 @@ function CommentList() {
     return (
       <section>
         <CommentWrite />
-        {commentList.map((data) => (
-          <CommentWrapper depth={data.depth} key={data.commentId}>
+        {commentList.map((data, idx) => (
+          <CommentWrapper depth={data.depth} key={`${data.commentId}${idx}`}>
             <CommentView {...data} />
           </CommentWrapper>
         ))}
       </section>
     );
   return (
-    <MessageBox msg={`🥲 댓글이 없어요! 댓글을 달아 지식을 공유해주세요`} />
+    <section>
+      <CommentWrite />
+      <MessageBox msg={`🥲 댓글이 없어요! 댓글을 달아 지식을 공유해주세요`} />
+    </section>
   );
 }
 

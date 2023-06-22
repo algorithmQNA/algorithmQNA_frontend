@@ -49,7 +49,8 @@ export default function AlarmBlock(){
             onSuccess:()=>{
                 navigate(data.eventURL, {
                     state: {
-                        targetPost: data.commentId,
+                        highlighting:true,
+                        commentId:+data.commentId
                     },
                 });
                 queryClient.invalidateQueries(['old-alarm'])

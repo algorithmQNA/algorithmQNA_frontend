@@ -30,7 +30,6 @@ export type PostBrief = {
   totalCommentCnt: number;
 };
 
-
 //도대체 왜 이렇게 다른건지 모르겠네
 export type PostListBreif = {
   postId: number;
@@ -41,8 +40,8 @@ export type PostListBreif = {
   createdAt: string;
   viewCount: number;
   commentCount: number;
-  likeCnt:number;
-  dislikeCnt:number;
+  likeCnt: number;
+  dislikeCnt: number;
 };
 
 export type PostWithContent = PostBrief & {

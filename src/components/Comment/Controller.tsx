@@ -1,20 +1,17 @@
 import React from 'react';
-import {
-  useLocation,
-  useNavigate,
-  useParams,
-  useSearchParams,
-} from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { getPostRequest } from '../../apis/postApi';
 import IconButton from '../Button/IconButton';
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
 import ButtonComponent from '../Button/ButtonComponent';
+import { useRecoilState } from 'recoil';
+import HighlightStatusAtom from '../../storage/Highlight/Highlight';
 
 function Controller() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const location = useLocation();
-  const curLocation = location.pathname + location.search;
+  const [_, setHighlightingSetting] = useRecoilState(HighlightStatusAtom);
+
   const { pid = -1 } = useParams();
   const navigate = useNavigate();
 
@@ -23,18 +20,21 @@ function Controller() {
 
   const handleGoToPinnedBtnClick = () => {
     const PIN_COMMENT_ID = get.data?.data.data.pinnedComment?.commentId;
-    console.log(get.data);
-    if (PIN_COMMENT_ID)
-      navigate(curLocation, {
+    if (PIN_COMMENT_ID) {
+      navigate('', {
         state: {
           highlighting: true,
-          mode: 'pin',
           commentId: +PIN_COMMENT_ID,
         },
       });
-    else alert('채택된 댓글이 없습니다');
+      setHighlightingSetting((prev) => ({
+        ...prev,
+        commentId: +PIN_COMMENT_ID,
+        highlightingMode: true,
+      }));
+    } else alert('채택된 댓글이 없습니다');
   };
-  console.log(get.data?.data.data);
+
   const MIN_PAGE = 0;
   const MAX_PAGE = get.data?.data.data.totalPageSize || 0;
 
@@ -51,7 +51,7 @@ function Controller() {
   };
 
   const handlePrevBtnClick = () => {
-    if (prevPage > MIN_PAGE) updatePageParameter(prevPage);
+    if (prevPage >= MIN_PAGE) updatePageParameter(prevPage);
   };
   const handleNextBtnClick = () => {
     if (nextPage < MAX_PAGE) updatePageParameter(nextPage);
