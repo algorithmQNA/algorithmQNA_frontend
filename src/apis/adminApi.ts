@@ -16,7 +16,7 @@ export const getReportedPostListRequest = (page: number) =>
 // 신고된 댓글 리스트 목록 조회 API
 export const getReportedCommentListRequest = (page: number) =>
   privateRequest.get<GetReportedCommentListResponse>('admin/comment', {
-    params: { page_number: page },
+    params: { page },
   });
 
 //신고된 게시물 상세내용 조회 API

@@ -11,7 +11,7 @@ export type GetReportedPostListResponse = {
 
 export type GetReportedCommentListResponse = {
   data: {
-    reportComments: FlatComment[];
+    reportedComments: FlatComment[];
   } & Pagination;
 };
 
