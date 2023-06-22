@@ -66,7 +66,6 @@ export default function AlarmBlock(){
     const topProgress = useRef<HTMLSpanElement>(null)
     const bottomProgress = useRef<HTMLSpanElement>(null)
     const button = useRef<HTMLButtonElement>(null)
-    const childHeight = 50
     const getNewData = async (e:React.UIEvent<HTMLUListElement>) =>{
         if(!button.current) return
         if(e.currentTarget.scrollTop === 0 && topProgress.current){
@@ -75,7 +74,7 @@ export default function AlarmBlock(){
             await fetchPreviousPage({pageParam:{page:data?.pages[0].data.alarms[0].alarmId,direction:'prev'}})
             topProgress.current.style.display = "none"
         }
-        else if(e.currentTarget.scrollTop + (e.currentTarget.clientHeight-childHeight) >= button.current?.offsetTop){
+        else if(e.currentTarget.scrollTop + (e.currentTarget.clientHeight) >= button.current?.offsetTop+50){
             if(hasNextPage){
                 const page = data?.pages[data?.pages.length-1].data.alarms[data?.pages[data?.pages.length-1].data.alarms.length-1].alarmId;
                 fetchNextPage({pageParam:{page,direction:'next'}})
@@ -116,7 +115,7 @@ export default function AlarmBlock(){
                     }
                     onScroll={getNewData}
                 >
-                    <span ref={topProgress} className={`hidden items-center justify-center w-full h-[${childHeight}px]`}>
+                    <span ref={topProgress} className={`hidden items-center justify-center w-full h-[50px]`}>
                         <img src={'/svg/spinner.png'} alt={'progress'} className={'w-auto h-[100%]'}/>
                     </span>
                     {
@@ -129,7 +128,7 @@ export default function AlarmBlock(){
                                 li.data.alarms.map((i:AlarmType)=>(
                                     <li
                                         key={i.alarmId}
-                                        className={`h-[${childHeight}px] flex gap-2 items-center w-full ${i.checked ? 'text-gray-300' : 'text-content'}`}
+                                        className={`flex gap-2 items-center py-1 w-full ${i.checked ? 'text-gray-300' : 'text-content'}`}
                                     >
                                         <span className={'block hover:text-primary hover:cursor-pointer text-sm w-full'} onClick={() => comment(i)}>{i.msg}</span>
                                         <button onClick={()=>deleteEvent(i)} className={'text-red-500'}>
@@ -141,10 +140,8 @@ export default function AlarmBlock(){
                     }
                     {
                         hasNextPage &&
-                        <button className={`h-[${childHeight}px] flex items-center text-sm text-primary`} ref={button}>
-                            <span ref={bottomProgress} className={'hidden items-center justify-center w-full h-full'}>
-                                <img src={'/svg/spinner.png'} alt={'progress'} className={'w-auto h-[100%]'}/>
-                            </span>
+                        <button className={`h-[50px] flex items-center justify-center text-sm text-primary`} ref={button}>
+                            <img src={'/svg/spinner.png'} alt={'progress'} className={'w-auto h-[100%]'}/>
                         </button>
                     }
                 </ul>
