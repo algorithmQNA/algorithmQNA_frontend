@@ -44,7 +44,7 @@ function Modal({
         />
         <section
           role="dialog"
-          className={`absolute pb-4 top-1/2 left-1/2 min-w-[60vw] ${MODAL_SIZE[size]}  rounded-lg shadow-md bg-white animate-grow flex flex-col gap-4`}
+          className={`absolute pb-4 top-1/2 left-1/2 min-w-[90vw] ${MODAL_SIZE[size]}  rounded-lg shadow-md bg-white animate-grow flex flex-col gap-4`}
           style={{ translate: '-50% -50%' }}
           autoFocus
         >
