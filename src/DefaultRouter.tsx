@@ -33,6 +33,7 @@ const mypagePages = {
     { link: 'profile', title: '내 정보' },
     { link: 'history', title: '활동 내역' },
     { link: 'badge', title: '획득 뱃지' },
+    { link: 'alarm', title: '내 알람' },
   ],
 };
 
@@ -70,6 +71,7 @@ function Router() {
         <Route path="mypage" element={<SidebarLayout links={mypagePages} />}>
           <Route index element={<Navigate replace to="profile" />} />
           <Route path="profile" element={<MyPage.Profile />} />
+          <Route path="alarm" element={<MyPage.Alarm />} />
           <Route path="history" element={<MyPage.Post />}>
             <Route index element={<Navigate replace to="post" />} />
             <Route path="post" element={<Post />} />
