@@ -26,9 +26,10 @@ export default function AlarmBlock(){
     };
     const comment = (data: AlarmType) => {
         navigate(data.eventURL, {
-            state: {
-                targetPost: data.commentId,
-            },
+          state: {
+            highlighting:true,
+            commentId:+data.commentId
+          },
         });
     };
     const topProgress = useRef<HTMLSpanElement>(null)
