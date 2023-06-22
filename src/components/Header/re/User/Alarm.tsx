@@ -33,8 +33,9 @@ export default function AlarmBlock(){
         }));
     };
     const deleteEvent = (data:AlarmType) =>{
-        deleteAlarm.mutate(data.commentId,{
+        deleteAlarm.mutate(data.commentId+1,{
             onSuccess:()=>{
+                alert("선택한 알람이 삭제되었습니다!")
                 queryClient.invalidateQueries(['old-alarm'])
             },
             onError:()=>{
