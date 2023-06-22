@@ -23,7 +23,7 @@ const NotificationRow = () => {
   const tag = searchParams.get('tag') || INITIAL_POST_CATEGORY;
 
   const notificationQuery = useQuery({
-    queryKey: ['notification', +page, tag],
+    queryKey: ['notice-list', +page, tag],
     queryFn: () =>
       getNotificationList({
         postCategory: tag as PostCategoryKey,
@@ -38,7 +38,6 @@ const NotificationRow = () => {
   const isEmptyData = !notificationQuery.data?.data.data.posts.length;
   if (isEmptyData) return <MessageBox msg="🫤 등록된 공지사항이 없어요" />;
   const posts = notificationQuery.data?.data.data.posts || [];
-
 
   return (
     <div className="flex flex-col gap-3">

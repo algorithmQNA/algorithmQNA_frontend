@@ -22,7 +22,6 @@ function NoticeModifyEditor() {
   useQuery(['notice', notificationId], () => getPostRequest(+notificationId), {
     onSuccess: (res) => {
       const data = res.data.data;
-      console.log('?', data);
       setState({
         postType: 'NOTICE',
         imageIds: [],
