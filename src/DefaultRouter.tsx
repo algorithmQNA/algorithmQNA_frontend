@@ -9,11 +9,11 @@ import PostViewPage from './pages/Post/PostView/PostView';
 import PostWritePage from './pages/Post/PostWrite/PostWrite';
 import LandingPage from './pages/Landing/Landing';
 import Post from './components/MyPage/Post/Post';
-import ReportPost from './components/Report/ReportPost';
+import ReportPost from './components/Report/Post/ReportPost';
 import LoginProcessPage from './pages/LoginRequest/ProcessPage';
 import PostUpdatePage from './pages/Post/PostWrite/PostUpdate';
 import NoticeEditor from './components/Notice/NoticeEditor';
-import ReportComment from './components/Report/ReportComment';
+import ReportComment from './components/Report/Comment/ReportComment';
 import NoticeModifyEditor from './components/Notice/NoticeModifyEditor';
 import Comment from './components/MyPage/Comment/Comment';
 import LogoutPage from './pages/Logout/LogoutPage';
@@ -33,6 +33,7 @@ const mypagePages = {
     { link: 'profile', title: '내 정보' },
     { link: 'history', title: '활동 내역' },
     { link: 'badge', title: '획득 뱃지' },
+    { link: 'alarm', title: '내 알람' },
   ],
 };
 
@@ -70,6 +71,7 @@ function Router() {
         <Route path="mypage" element={<SidebarLayout links={mypagePages} />}>
           <Route index element={<Navigate replace to="profile" />} />
           <Route path="profile" element={<MyPage.Profile />} />
+          <Route path="alarm" element={<MyPage.Alarm />} />
           <Route path="history" element={<MyPage.Post />}>
             <Route index element={<Navigate replace to="post" />} />
             <Route path="post" element={<Post />} />
