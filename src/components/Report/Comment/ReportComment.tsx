@@ -6,10 +6,11 @@ import { useSearchParams } from 'react-router-dom';
 
 import ReportCommentTableRow from './ReportCommentTableRow';
 import MessageBox from '../../MessageBox';
+
+import ErrorBoundary from '../../ErrorBoundary';
 import ReportCommentModal, {
   useReportCommentModal,
 } from './ReportCommentModal';
-import ErrorBoundary from '../../ErrorBoundary';
 
 function ReportComment() {
   const [searchParams] = useSearchParams();
@@ -36,7 +37,7 @@ function ReportComment() {
       </ErrorBoundary>
       <div className="flex flex-col gap-2 ">
         {reportComments?.map((comment, idx) => {
-          const { member, createdAt, postId, dislikeCnt, likeCnt, commentId } =
+          const { member, createdAt, postId, commentId, dislikeCnt, likeCnt } =
             comment;
           return (
             <div
@@ -49,6 +50,7 @@ function ReportComment() {
                   open: true,
                 })
               }
+              key={commentId}
             >
               <ReportCommentTableRow
                 id={postId}
