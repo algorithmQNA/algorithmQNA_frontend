@@ -40,6 +40,7 @@ import useGetParams from '../../../hooks/useGetParams';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import HighlightStatusAtom from '../../../storage/Highlight/Highlight';
+import { AxiosError } from 'axios';
 
 export type CommentViewProps = Comment & {
   parentId?: number;
@@ -106,7 +107,16 @@ function CommentView({
       else queryClient.invalidateQueries({ queryKey: ['reply', commentId] });
       setOpenReplyEditor(false);
     },
+    onError: (e: AxiosError<{ message: string }>) => {
+      alert(e.response?.data.message);
+    },
   });
+
+  const resetReportForm = () => {
+    setReportType('SLANG');
+    setReportContent('');
+  };
+
   //댓글 추천/비추천
   const { mutate: recommendComment } = useMutation(recommendCommentRequest, {
     onMutate: async (params) => {
@@ -124,7 +134,7 @@ function CommentView({
       queryClient.invalidateQueries({
         queryKey: invalidateQueryKey,
       }),
-    onError: (e) => alert(e),
+    onError: (e) => alert('수정을 실패했습니다'),
   });
 
   //댓글 삭제
@@ -133,7 +143,7 @@ function CommentView({
       queryClient.invalidateQueries({ queryKey: invalidateQueryKey });
     },
     onError: () => {
-      window.alert('삭제 실패했습니다.');
+      window.alert('삭제 실패했습니다');
     },
   });
 
@@ -147,7 +157,15 @@ function CommentView({
   });
 
   //댓글 신고
-  const { mutate: reportComment } = useMutation(reportCommentRequest);
+  const { mutate: reportComment } = useMutation(reportCommentRequest, {
+    onSuccess: () => {
+      setReportType('SLANG');
+      setReportContent('');
+    },
+    onError: (e: AxiosError<{ status: { message: string } }>) => {
+      alert(e.response?.data.status.message);
+    },
+  });
 
   const editorRef = useRef<CKEditor<any>>(null);
   const toggleReplyEditor = () => setOpenReplyEditor((prev) => !prev);
@@ -167,10 +185,7 @@ function CommentView({
   };
 
   return (
-    <div
-      className={`w-full ${isPinned && 'border-t-2 border-secondary'}`}
-      id={`${commentId}`}
-    >
+    <div className={`w-full ${isPinned && 'border-t-2 border-secondary'}`}>
       {isPinned && (
         <p className="text-secondary text-sm font-semibold">질문자 채택</p>
       )}
@@ -183,7 +198,10 @@ function CommentView({
         <Modal
           title={`${commentId}번 댓글 신고`}
           size="lg"
-          onClose={closeModal}
+          onClose={() => {
+            resetReportForm();
+            closeModal();
+          }}
           onConfirm={() => {
             if (reportType)
               reportComment({
@@ -195,7 +213,7 @@ function CommentView({
           }}
           onCancel={closeModal}
         >
-          <div className="h-[20rem]">
+          <div className="px-4">
             <SelectBox defaultText="신고 유형" event={handleReportMenuChange}>
               {Object.entries(REPORT_MAP).map(([key, value]) => (
                 <SelectOption key={key} value={key}>
@@ -203,19 +221,18 @@ function CommentView({
                 </SelectOption>
               ))}
             </SelectBox>
-            {reportType === 'ETC' && (
-              <InputText
-                aria-disabled
-                defaultValue={reportContent}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  setReportContent(e.target?.value)
-                }
-              />
-            )}
+            <p className="text-left font-semibold text-sm mt-4">상세사유</p>
+            <textarea
+              className="w-full border border-border rounded-md min-h-[300px]"
+              value={reportContent}
+              onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                setReportContent(e.target?.value)
+              }
+            />
           </div>
         </Modal>
       )}
-      <div className="grow">
+      <div className="grow" id={`${commentId}`}>
         <div className="flex justify-between bg-box-bg p-2 border border-border">
           <UserProfile {...props.member} />
           <div className="flex flex-row items-end">
@@ -307,20 +324,24 @@ function CommentView({
             data=""
             ref={editorRef}
           />
-          <ButtonComponent onClick={toggleReplyEditor}>취소</ButtonComponent>
-          <ButtonComponent
-            onClick={() => {
-              const data = editorRef.current?.editor?.data.get();
-              if (data && pid)
-                writeComment({
-                  content: data,
-                  parentCommentId: commentId,
-                  postId: +pid,
-                });
-            }}
-          >
-            작성
-          </ButtonComponent>
+          <div className="flex justify-end gap-4">
+            <ButtonComponent type="outline" onClick={toggleReplyEditor}>
+              취소
+            </ButtonComponent>
+            <ButtonComponent
+              onClick={() => {
+                const data = editorRef.current?.editor?.data.get();
+                if (data && pid)
+                  writeComment({
+                    content: data,
+                    parentCommentId: commentId,
+                    postId: +pid,
+                  });
+              }}
+            >
+              작성
+            </ButtonComponent>
+          </div>
         </>
       )}
       {hasChild && (
