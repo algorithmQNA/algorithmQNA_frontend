@@ -31,7 +31,7 @@ export default function NoticePageTableRow({
   const { mutate: deleteMutate } = useMutation({
     mutationFn: deleteNotification,
     onSuccess: () => {
-      queryClient.invalidateQueries(['notification']);
+      queryClient.invalidateQueries(['notice-list']);
     },
   });
 

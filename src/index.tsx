@@ -21,7 +21,7 @@ const queryClient = new QueryClient({
       onError: (err) => {
         console.log(err);
       },
-      staleTime: 5 * 60 * 1000,
+      staleTime: 0.5 * 60 * 1000,
       retry: false,
     },
   },

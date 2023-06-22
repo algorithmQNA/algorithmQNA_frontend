@@ -7,7 +7,7 @@ import ButtonComponent from '../Button/ButtonComponent';
 import { SelectBox, SelectOption } from '../DropDown/SelectBox';
 import { POST_CATEGORY } from '../../constants/PostCategory';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { createPostRequest } from '../../apis/postApi';
 import { PostCategoryKey } from '../../types/post';
 import { ImSpinner } from 'react-icons/im';
@@ -17,7 +17,7 @@ function NoticeEditor() {
   const navigate = useNavigate();
   const [state, setState] = useRecoilState(PostWriteState);
   const resetState = useResetRecoilState(PostWriteState);
-
+  const queryClient = useQueryClient();
   const createPost = useMutation(
     ({
       title,
@@ -41,6 +41,7 @@ function NoticeEditor() {
     {
       onSuccess: () => {
         /** window.alert말고 notification 컴포넌트 만들기 */
+        queryClient.invalidateQueries(['notice-list']);
         alert('공지사항 등록을 성공했습니다.');
         navigate(-1);
       },
