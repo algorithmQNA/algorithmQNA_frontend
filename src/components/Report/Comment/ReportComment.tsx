@@ -9,6 +9,7 @@ import MessageBox from '../../MessageBox';
 import ReportCommentModal, {
   useReportCommentModal,
 } from './ReportCommentModal';
+import ErrorBoundary from '../../ErrorBoundary';
 
 function ReportComment() {
   const [searchParams] = useSearchParams();
@@ -24,31 +25,26 @@ function ReportComment() {
     suspense: true,
   });
 
-  const reportComments = data?.data.data.reportComments;
+  const reportComments = data?.data.data.reportedComments;
   const isEmpty = !reportComments?.length;
 
   if (isEmpty) return <MessageBox msg={`😊 신고내역이 없습니다!`} />;
   return (
     <>
-      <ReportCommentModal />
+      <ErrorBoundary>
+        <ReportCommentModal />
+      </ErrorBoundary>
       <div className="flex flex-col gap-2 ">
         {reportComments?.map((comment, idx) => {
-          const {
-            member,
-            createdAt,
-            postId,
-            content,
-
-            dislikeCnt,
-            likeCnt,
-          } = comment;
+          const { member, createdAt, postId, dislikeCnt, likeCnt, commentId } =
+            comment;
           return (
             <div
               className="cursor-pointer"
               onClick={() =>
                 setModalContent({
                   contentQueryKey: ['reportedComment', +page],
-                  reportListQueryKey: ['reportedCommentList', postId],
+                  reportListQueryKey: ['reportedCommentList', +commentId],
                   idx: idx,
                   open: true,
                 })
