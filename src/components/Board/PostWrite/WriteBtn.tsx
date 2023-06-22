@@ -1,6 +1,6 @@
 import ButtonComponent from '../../Button/ButtonComponent';
 import React from 'react';
-import { useMutation } from 'react-query';
+import {useMutation, useQueryClient} from 'react-query';
 import { createPostRequest } from '../../../apis/postApi';
 import { useRecoilValue } from 'recoil';
 import { PostWriteState } from '../../../storage/PostWrite/PostWrite';
@@ -12,6 +12,7 @@ import {useNavigate} from "react-router-dom";
 export default function PostWriteBtn() {
   const nav = useNavigate()
   const state = useRecoilValue(PostWriteState);
+  const queryClient = useQueryClient()
   /**
    * MESSAGE:
    * 포스팅 테스트한다고 해당 부분 임시로 수정해두었습니다. 오승님이 편한방식대로 수정하시면 됩니다!
@@ -35,7 +36,10 @@ export default function PostWriteBtn() {
         imageIds,
       }),
     {
-      onSuccess: () => {
+      onSuccess: async () => {
+          await queryClient.invalidateQueries(['dash-list'])
+          await queryClient.invalidateQueries(['q&a-list'])
+          await queryClient.invalidateQueries(['tip-list'])
         alert('작성 완료 됐습니다. \n 게시판 목록으로 돌아갑니다.');
         nav(-1)
       },
