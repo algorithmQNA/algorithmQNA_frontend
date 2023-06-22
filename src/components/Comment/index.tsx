@@ -49,7 +49,10 @@ function CommentSection() {
       onSuccess: (res) => {
         const oneDepthCommentList = res.data.data.commentList || [];
         const page = res.data.data.page;
-        queryClient.setQueryData(['comment', +pid, +page], oneDepthCommentList);
+        queryClient.setQueryData(
+          ['comment', +pid, +page],
+          oneDepthCommentList.reverse()
+        );
         oneDepthCommentList.forEach((comment) => {
           if (!!comment.childSize) {
             queryClient.setQueryData(['reply', +comment.commentId], (prev) => {
