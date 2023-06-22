@@ -32,8 +32,9 @@ export default function AlarmBlock(){
             alarm: e.target.checked
         }));
     };
+    console.log(data)
     const deleteEvent = (data:AlarmType) =>{
-        deleteAlarm.mutate(data.commentId+1,{
+        deleteAlarm.mutate(data.alarmId,{
             onSuccess:()=>{
                 alert("선택한 알람이 삭제되었습니다!")
                 queryClient.invalidateQueries(['old-alarm'])
@@ -46,7 +47,7 @@ export default function AlarmBlock(){
     }
     const comment = (data: AlarmType) => {
         if(data.commentId === null) return
-        check.mutate(data.commentId,{
+        check.mutate(data.alarmId,{
             onSuccess:()=>{
                 navigate(data.eventURL, {
                     state: {
@@ -76,9 +77,7 @@ export default function AlarmBlock(){
         }
         else if(e.currentTarget.scrollTop + (e.currentTarget.clientHeight-childHeight) >= button.current?.offsetTop){
             if(hasNextPage){
-                console.log(data)
                 const page = data?.pages[data?.pages.length-1].data.alarms[data?.pages[data?.pages.length-1].data.alarms.length-1].alarmId;
-                console.log(page)
                 fetchNextPage({pageParam:{page,direction:'next'}})
             }
         }
@@ -130,20 +129,12 @@ export default function AlarmBlock(){
                                 li.data.alarms.map((i:AlarmType)=>(
                                     <li
                                         key={i.alarmId}
-                                        className={`h-[${childHeight}px] flex gap-2 items-center w-full text-content`}
+                                        className={`h-[${childHeight}px] flex gap-2 items-center w-full ${i.checked ? 'text-gray-300' : 'text-content'}`}
                                     >
                                         <span className={'block hover:text-primary hover:cursor-pointer text-sm w-full'} onClick={() => comment(i)}>{i.msg}</span>
-                                        {
-                                            i.commentId !== null
-                                                ?
-                                            <button onClick={()=>deleteEvent(i)} className={'text-red-500'}>
-                                                <FiX/>
-                                            </button>
-                                                :
-                                                <button className={'text-gray-400'}>
-                                                    <FiX/>
-                                                </button>
-                                        }
+                                        <button onClick={()=>deleteEvent(i)} className={'text-red-500'}>
+                                            <FiX/>
+                                        </button>
                                     </li>
                                 ))
                             ))
