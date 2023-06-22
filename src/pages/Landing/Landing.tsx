@@ -18,7 +18,7 @@ export default function LandingPage() {
           페이지 이용을 위해서 로그인이 필요합니다!
         </p>
         <a
-          href={`http://algoqna.ddns.net/oauth/google?redirectUri=https://localhost:3000/google/callback`}
+          href={`http://algoqna.ddns.net/oauth/google?redirectUri=${process.env.REACT_APP_OAUTH_REDIRECT_URI}/google/callback`}
           className={
             'h-full border border-basic p-4 rounded-lg text-basic hover:text-black hover:border-primary transition duration-300'
           }
