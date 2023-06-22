@@ -27,7 +27,7 @@ export default function PostUpdatePage() {
 
     const setState = useSetRecoilState(PostWriteState)
 
-    const {data:updateData,isLoading} = useQuery('post-update', () => getPostRequest(is), {
+    const {data:updateData,isLoading} = useQuery(['post-update',is], () => getPostRequest(is), {
         onError: (err: any) => {
             const { status } = err.response.data;
             alert(status.message);

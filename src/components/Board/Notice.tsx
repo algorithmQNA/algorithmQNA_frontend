@@ -26,7 +26,7 @@ export default function NoticeBlock() {
                     data.data.data.posts.length !== 0
                         ?
                         data.data.data.posts.map((li:any)=>(
-                            <AnnouncementTableRow title={li.title} date={li.createdAt} pid={li.postId}/>
+                            <AnnouncementTableRow key={li.postId} title={li.title} date={li.createdAt} pid={li.postId}/>
                         ))
                         :
                         <div className={'w-full h-[100px] flex justify-center items-center text-content border border-content rounded'}>
