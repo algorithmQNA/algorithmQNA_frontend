@@ -17,12 +17,15 @@ export default function AlarmBlock(){
     const deleteAlarm = useMutation((pid:number)=>privateRequest.delete(`/alarm/${pid}`))
     const {data,isLoading,hasNextPage,hasPreviousPage,fetchPreviousPage,fetchNextPage} = useInfiniteQuery(['old-alarm'],getOldAlarm,{
         getNextPageParam:(lastPage, allPages)=>{
-            return allPages[0].length >= 10
+            return lastPage.data.alarms[0].alarmId ? lastPage.data.alarms[0].alarmId : undefined
         },
-        getPreviousPageParam:()=>{
+        getPreviousPageParam:(lastPage)=>{
             return true
         }
     })
+
+
+
     const setDisplayAlarm = (e: ChangeEvent<HTMLInputElement>) => {
         setState((prev) => ({
             ...prev,
@@ -35,12 +38,13 @@ export default function AlarmBlock(){
                 queryClient.invalidateQueries(['old-alarm'])
             },
             onError:()=>{
-                alert("알람 삭제 실패했습니다. \n 새로고침 후 다시 시도해주세요!")
+                alert("알람 삭제 실패했습니다.\n새로고침 후 다시 시도해주세요!")
                 queryClient.invalidateQueries(['old-alarm'])
             }
         })
     }
     const comment = (data: AlarmType) => {
+        if(data.commentId === null) return
         check.mutate(data.commentId,{
             onSuccess:()=>{
                 navigate(data.eventURL, {
@@ -51,7 +55,7 @@ export default function AlarmBlock(){
                 queryClient.invalidateQueries(['old-alarm'])
             },
             onError:()=>{
-                alert("알람 확인에 실패했습니다. \n 새로고침 후 다시 시도해주세요!")
+                alert("알람 확인에 실패했습니다.\n새로고침 후 다시 시도해주세요!")
                 queryClient.invalidateQueries(['old-alarm'])
             }
         })
@@ -64,12 +68,15 @@ export default function AlarmBlock(){
         if(!button.current) return
         if(e.currentTarget.scrollTop === 0 && topProgress.current){
             topProgress.current.style.display = "flex"
-            await fetchPreviousPage({pageParam:{page:1,direction:'prev'}})
+            console.log(data?.pages[0].data.alarms[0].alarmId)
+            await fetchPreviousPage({pageParam:{page:data?.pages[0].data.alarms[0].alarmId,direction:'prev'}})
             topProgress.current.style.display = "none"
         }
         else if(e.currentTarget.scrollTop + (e.currentTarget.clientHeight-childHeight) >= button.current?.offsetTop){
             if(hasNextPage){
-                const page = data?.pages[data?.pages.length-1][data?.pages[data?.pages.length-1].length-1].alarmId;
+                console.log(data)
+                const page = data?.pages[data?.pages.length-1].data.alarms[data?.pages[data?.pages.length-1].data.alarms.length-1].alarmId;
+                console.log(page)
                 fetchNextPage({pageParam:{page,direction:'next'}})
             }
         }
@@ -123,10 +130,18 @@ export default function AlarmBlock(){
                                         key={i.alarmId}
                                         className={`h-[${childHeight}px] flex gap-2 items-center w-full text-content`}
                                     >
-                                        <span className={'block hover:text-primary text-sm w-full'} onClick={() => comment(i)}>{i.msg}</span>
-                                        <button onClick={()=>deleteEvent(i)} className={'text-red-500'}>
-                                            <FiX/>
-                                        </button>
+                                        <span className={'block hover:text-primary hover:cursor-pointer text-sm w-full'} onClick={() => comment(i)}>{i.msg}</span>
+                                        {
+                                            i.commentId !== null
+                                                ?
+                                            <button onClick={()=>deleteEvent(i)} className={'text-red-500'}>
+                                                <FiX/>
+                                            </button>
+                                                :
+                                                <button className={'text-gray-400'}>
+                                                    <FiX/>
+                                                </button>
+                                        }
                                     </li>
                                 ))
                             ))

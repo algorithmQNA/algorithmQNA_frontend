@@ -20,9 +20,12 @@ export default function PostUpdateBtn() {
         ({ title, content, postCategory, postType, keyWord, imageIds }: PostWrite) =>
             updatePostRequest(parseInt(id as string),title, content, postCategory, postType as PostType, keyWord, imageIds),
         {
-            onSuccess: () => {
-                queryClient.invalidateQueries(['post-view'])
-                queryClient.invalidateQueries(['post-update'])
+            onSuccess:async () => {
+                await queryClient.invalidateQueries(['post-view'])
+                await queryClient.invalidateQueries(['post-update'])
+                await queryClient.invalidateQueries(['dash-list'])
+                await queryClient.invalidateQueries(['q&a-list'])
+                await queryClient.invalidateQueries(['tip-list'])
                 alert('수정 완료 됐습니다. \n 게시글로 돌아갑니다.');
                 nav(-1)
             },
