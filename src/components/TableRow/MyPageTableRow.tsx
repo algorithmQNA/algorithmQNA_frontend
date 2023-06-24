@@ -24,7 +24,7 @@ export default function MyPageTableRow({
   const hasNoComments = totalCommentCnt === 0;
   return (
     <div className={`p-4 bg-box-bg border border-border`}>
-      <Link to={`/post/view/${postId}`}>
+      <Link to={`/post/${postId}`}>
         <p className={'font-bold truncate max-w-[200px]'}>{postTitle}</p>
 
         <div
