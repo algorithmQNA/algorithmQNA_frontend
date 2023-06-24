@@ -106,7 +106,7 @@ export default function AlarmBlock(){
         let count = 0;
         if(!data) return count;
         data?.pages.forEach((li)=>(
-            li.data.alarms.focus((i:AlarmType)=>{
+            li.data.alarms.forEach((i:AlarmType)=>{
                 count++
             })
         ))
