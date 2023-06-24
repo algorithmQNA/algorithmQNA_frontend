@@ -9,7 +9,10 @@ import MessageBox from '../../MessageBox';
 function Post() {
   const [searchParams] = useSearchParams();
   const page = searchParams.get('page') || 0;
-  const myPosts = useQuery(['mypost_', page], () => getMyPosts(+page));
+  const myPosts = useQuery(['mypost_', page], () => getMyPosts(+page), {
+    suspense: true,
+    useErrorBoundary: true,
+  });
   const posts = myPosts.data?.data.data;
 
   if (!!posts?.posts.length)
