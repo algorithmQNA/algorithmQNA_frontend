@@ -343,7 +343,7 @@ const mockData: PostBrief[] = new Array(37).fill(0).map((_, idx) => ({
   member: generateMockMember(idx),
   postDislikeCnt: generateRandomInt(5100),
   postLikeCnt: generateRandomInt(5100),
-  totalCommentCnt: generateRandomInt(10),
+  commentCnt: generateRandomInt(10),
   views: generateRandomInt(5),
 }));
 
@@ -355,7 +355,7 @@ const QNAData: PostBrief[] = new Array(37).fill(0).map((_, idx) => ({
   member: generateMockMember(idx),
   postDislikeCnt: generateRandomInt(idx),
   postLikeCnt: generateRandomInt(idx),
-  totalCommentCnt: generateRandomInt(10),
+  commentCnt: generateRandomInt(10),
   views: generateRandomInt(5),
 }));
 

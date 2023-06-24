@@ -27,7 +27,7 @@ export type PostBrief = {
   postLikeCnt: number;
   postDislikeCnt: number;
   views: number;
-  totalCommentCnt: number;
+  commentCnt: number;
 };
 
 //도대체 왜 이렇게 다른건지 모르겠네
