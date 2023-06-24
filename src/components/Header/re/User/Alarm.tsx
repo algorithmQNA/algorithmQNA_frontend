@@ -1,6 +1,6 @@
 import {FaBell} from "react-icons/fa";
 import {AlarmType} from "../../../../types/Alarm";
-import React, {ChangeEvent, useEffect, useRef, useState} from "react";
+import React, {ChangeEvent, useEffect, useMemo, useRef, useState} from "react";
 import {useInfiniteQuery, useMutation, useQueryClient} from "react-query";
 import {getOldAlarm} from "./test";
 import {useNavigate} from "react-router-dom";
@@ -15,9 +15,10 @@ export default function AlarmBlock(){
     })
     const check = useMutation((pid:number)=>privateRequest.patch(`/alarm/${pid}`))
     const deleteAlarm = useMutation((pid:number)=>privateRequest.delete(`/alarm/${pid}`))
-    const {data,isLoading,hasNextPage,hasPreviousPage,fetchPreviousPage,fetchNextPage} = useInfiniteQuery(['old-alarm'],getOldAlarm,{
+    const {data,hasNextPage,fetchPreviousPage,fetchNextPage} =
+        useInfiniteQuery(['old-alarm'],getOldAlarm,{
         getNextPageParam:(lastPage, allPages)=>{
-            return lastPage.data.alarms[0].alarmId ? lastPage.data.alarms[0].alarmId : undefined
+            return lastPage.data.alarms.length >= 10 ? lastPage.data.alarms[0].alarmId : undefined
         },
         getPreviousPageParam:(lastPage)=>{
             return true
@@ -32,7 +33,6 @@ export default function AlarmBlock(){
             alarm: e.target.checked
         }));
     };
-    console.log(data)
     const deleteEvent = (data:AlarmType) =>{
         deleteAlarm.mutate(data.alarmId,{
             onSuccess:()=>{
@@ -68,10 +68,17 @@ export default function AlarmBlock(){
     const button = useRef<HTMLButtonElement>(null)
     const getNewData = async (e:React.UIEvent<HTMLUListElement>) =>{
         if(!button.current) return
-        if(e.currentTarget.scrollTop === 0 && topProgress.current){
+        if(e.currentTarget.scrollTop === 0 && topProgress.current && data?.pages){
+            let id:number | null = null
+            for(let li of data?.pages){
+                if(li.data.alarms.length !== 0){
+                    id = li.data.alarms[0].alarmId
+                    break;
+                }
+            }
+            if(id === null) return
             topProgress.current.style.display = "flex"
-            console.log(data?.pages[0].data.alarms[0].alarmId)
-            await fetchPreviousPage({pageParam:{page:data?.pages[0].data.alarms[0].alarmId,direction:'prev'}})
+            await fetchPreviousPage({pageParam:{page:id,direction:'prev'}})
             topProgress.current.style.display = "none"
         }
         else if(e.currentTarget.scrollTop + (e.currentTarget.clientHeight) >= button.current?.offsetTop+50){
@@ -95,6 +102,16 @@ export default function AlarmBlock(){
         document.addEventListener('click', setCheck);
         return () => document.removeEventListener('click', setCheck);
     }, [state.alarm]);
+    const counting = useMemo(()=>{
+        let count = 0;
+        if(!data) return count;
+        data?.pages.map((li)=>(
+            li.data.alarms.map((i:AlarmType)=>{
+                count++
+            })
+        ));
+        return count
+    },[data])
     return(
         <div ref={box}>
             <label className={'relative'}>
@@ -119,7 +136,7 @@ export default function AlarmBlock(){
                         <img src={'/svg/spinner.png'} alt={'progress'} className={'w-auto h-[100%]'}/>
                     </span>
                     {
-                        data?.pages[0].data.alarms.length === 0 || !data
+                         !data && counting === 0
                             ?
                             <div className={'flex items-center justify-center p-4 text-gray-400 min-h-[200px]'}>
                                 알림이 없습니다.
@@ -138,12 +155,14 @@ export default function AlarmBlock(){
                                 ))
                             ))
                     }
-                    {
-                        hasNextPage &&
-                        <button className={`h-[50px] flex items-center justify-center text-sm text-primary`} ref={button}>
-                            <img src={'/svg/spinner.png'} alt={'progress'} className={'w-auto h-[100%]'}/>
+                        <button className={`${hasNextPage ? 'h-[50px]' : 'h-[0px]'} flex items-center justify-center text-sm text-primary`} ref={button}>
+                            {
+                                hasNextPage &&
+                                <span ref={bottomProgress}>
+                                    <img src={'/svg/spinner.png'} alt={'progress'} className={'w-auto h-[100%]'}/>
+                                </span>
+                            }
                         </button>
-                    }
                 </ul>
             )}
         </div>
