@@ -16,7 +16,11 @@ function Post() {
     return (
       <div className="flex flex-col gap-2">
         {posts.posts.map((post, idx) => (
-          <MyPageTableRow {...post} key={`${post.postId}${idx}`} />
+          <MyPageTableRow
+            {...post}
+            totalCommentCnt={post.commentCnt}
+            key={`${post.postId}${idx}`}
+          />
         ))}
 
         <Pagination listLength={posts.size} pageCount={posts.totalPageSize} />

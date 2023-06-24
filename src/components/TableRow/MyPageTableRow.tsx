@@ -3,7 +3,6 @@ import './style.css';
 import { setDateWritten } from '../../utils/TextProcessing';
 import { BiTimeFive } from 'react-icons/bi';
 import { AiOutlineEye, AiOutlineComment } from 'react-icons/ai';
-import ButtonComponent from '../Button/ButtonComponent';
 import { Link } from 'react-router-dom';
 
 interface MyPageTableRowProps {

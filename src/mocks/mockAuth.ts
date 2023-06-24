@@ -51,7 +51,7 @@ const handlers = [
         member: generateMockMember(idx),
         createdAt: generateRandomDate(),
         views: 1000,
-        totalCommentCnt: 0,
+        commentCnt: 0,
         postCategory: 'QUEUE_STACK_HASH',
         postContent: generateRandomString(2000),
         postDislikeCnt: generateRandomInt(1000),
