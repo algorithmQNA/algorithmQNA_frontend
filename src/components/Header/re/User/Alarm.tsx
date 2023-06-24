@@ -18,7 +18,7 @@ export default function AlarmBlock(){
     const {data,hasNextPage,fetchPreviousPage,fetchNextPage} =
         useInfiniteQuery(['old-alarm'],getOldAlarm,{
         getNextPageParam:(lastPage, allPages)=>{
-            return lastPage.data.alarms.length >= 10 ? lastPage.data.alarms[0].alarmId : undefined
+            return lastPage.data.alarms.length >= 10
         },
         getPreviousPageParam:(lastPage)=>{
             return true
@@ -105,11 +105,11 @@ export default function AlarmBlock(){
     const counting = useMemo(()=>{
         let count = 0;
         if(!data) return count;
-        data?.pages.map((li)=>(
-            li.data.alarms.map((i:AlarmType)=>{
+        data?.pages.forEach((li)=>(
+            li.data.alarms.focus((i:AlarmType)=>{
                 count++
             })
-        ));
+        ))
         return count
     },[data])
     return(
