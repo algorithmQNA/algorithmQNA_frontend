@@ -1,11 +1,13 @@
-import React, {ChangeEvent, CSSProperties} from "react";
-import {useRecoilState, useRecoilValue} from "recoil";
+import React, {ChangeEvent, useRef} from "react";
+import {useRecoilState} from "recoil";
 import {DashBoardState} from "../../../storage/Dash/DashBoard";
 import {PostCategory} from "../../../types/Post/Post";
 import '../../Board/SideBlockBar/style.css'
 export default function SelectCategory(){
     const [state,setState] = useRecoilState(DashBoardState)
-
+    const scrollElement = useRef<HTMLDivElement>(null)
+    const drag = useRef(false)
+    const clickX = useRef(0)
     const category = [
         {name:'브루트포스',value:'BRUTE_FORCE'},
         {name:'투포인터',value:'TWO_POINTER'},
@@ -23,12 +25,30 @@ export default function SelectCategory(){
             ...prev,category:value
         }))
     }
-    const test = (e:React.MouseEvent<HTMLDivElement>) =>{
-        
+    const mouseDown = (e:React.MouseEvent<HTMLDivElement>) =>{
+        if(!scrollElement.current) return
+        drag.current = true
+        clickX.current = e.clientX + scrollElement.current.scrollLeft;
+    }
+    const mouseMove = (e:React.MouseEvent<HTMLDivElement>) =>{
+        if(!scrollElement.current) return
+        if(drag.current){
+            scrollElement.current.scrollTo((clickX.current - e.clientX),0)
+        }
+    }
+    const mouseUp = (e:React.MouseEvent<HTMLDivElement>) =>{
+        if(drag.current){
+            e.stopPropagation()
+        }
+        drag.current = false
     }
     return(
-        <div className={'px-4'}>
-            <div className={'flex gap-8 items-center justify-start lg:justify-center flex-nowrap overflow-auto whitespace-nowrap scroll-none'} onClick={test}>
+        <div className={'px-4 overflow-hidden'}>
+            <div ref={scrollElement}
+                 className={'hover:cursor-pointer flex gap-8 items-center justify-start lg:justify-center flex-nowrap overflow-auto whitespace-nowrap scroll-none'}
+                 onMouseDown={mouseDown}
+                 onMouseMove={mouseMove}
+                 onMouseUp={mouseUp}>
                 {
                     category.map((li)=>(
                         <label className={'side-block-li text-content'} key={li.value}>
