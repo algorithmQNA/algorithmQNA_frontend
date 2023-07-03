@@ -1,9 +1,10 @@
 import {atom} from "recoil";
-import {PostType} from "../../types/Post/Post";
+import {DashBoardSelectType, PostType} from "../../types/Post/Post";
 
-export const DashBoardState = atom<{select:PostType}>({
+export const DashBoardState = atom<DashBoardSelectType>({
     key:'selectKind',
     default:{
-        select:"QNA"
+        select:"QNA",
+        category:"BRUTE_FORCE"
     }
 })
