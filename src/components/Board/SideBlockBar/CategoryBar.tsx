@@ -8,14 +8,14 @@ export default function CategoryBar() {
   const [state,setState] = useRecoilState(PostFilterState)
 
   const category = [
-      {name:'Brute Force',value:'BRUTE_FORCE'},
-      {name:'Two Pointer',value:'TWO_POINTER'},
-      {name:'DP',value:'DP'},
-      {name:'Queue / Stack / Hash',value:'QUEUE_STACK_HASH'},
-      {name:'Graph',value:'GRAPH'},
-      {name:'Greedy',value:'GREEDY'},
-      {name:'Binary Search',value:'BINARY_SEARCH'},
-      {name:'Sort',value:'SORT'},
+      {name:'브루트포스',value:'BRUTE_FORCE'},
+      {name:'투포인터',value:'TWO_POINTER'},
+      {name:'동적 프로그래밍',value:'DP'},
+      {name:'큐/스택/해시',value:'QUEUE_STACK_HASH'},
+      {name:'그래프',value:'GRAPH'},
+      {name:'그리디',value:'GREEDY'},
+      {name:'이진 탐색',value:'BINARY_SEARCH'},
+      {name:'정렬',value:'SORT'},
       {name:'DFS / BFS',value:'DFS_BFS'},
   ]
 
