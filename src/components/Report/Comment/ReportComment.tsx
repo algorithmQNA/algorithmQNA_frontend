@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import Pagination from '../../Pagination/Pagination';
 import { useQuery } from 'react-query';
 import { getReportedCommentListRequest } from '../../../apis/adminApi';
@@ -33,7 +33,9 @@ function ReportComment() {
   return (
     <>
       <ErrorBoundary>
-        <ReportCommentModal />
+        <Suspense fallback={<></>}>
+          <ReportCommentModal />
+        </Suspense>
       </ErrorBoundary>
       <div className="flex flex-col gap-2 ">
         {reportComments?.map((comment, idx) => {

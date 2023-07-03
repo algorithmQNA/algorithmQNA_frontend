@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
+import AdminTableRowSkeleton from '../../components/TableRow/AdminTableRowSkeleton';
+import ErrorBoundary from '../../components/ErrorBoundary';
 
 function Post() {
   return (
@@ -25,7 +27,11 @@ function Post() {
         </NavLink>
       </div>
       <div className="p-4">
-        <Outlet />
+        <ErrorBoundary>
+          <Suspense fallback={<AdminTableRowSkeleton />}>
+            <Outlet />
+          </Suspense>
+        </ErrorBoundary>
       </div>
     </div>
   );

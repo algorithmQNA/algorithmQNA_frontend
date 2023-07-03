@@ -9,7 +9,10 @@ import MessageBox from '../../MessageBox';
 function Comment() {
   const [searchParams] = useSearchParams();
   const page = searchParams.get('page') || 0;
-  const myComments = useQuery(['mycomment', page], () => getMyComments(+page));
+  const myComments = useQuery(['mycomment', page], () => getMyComments(+page), {
+    suspense: true,
+    useErrorBoundary: true,
+  });
   const comments = myComments.data?.data.data;
 
   if (!!comments?.comments?.length)

@@ -41,7 +41,7 @@ function ReportPost() {
           postTitle,
           postCategory,
           postType,
-          totalCommentCnt,
+          commentCnt,
         } = post;
         return (
           <div
@@ -62,7 +62,7 @@ function ReportPost() {
               member={member}
               postCategory={postCategory}
               postType={postType}
-              totalCommentCnt={totalCommentCnt}
+              totalCommentCnt={commentCnt}
               key={`comment${idx}`}
             />
           </div>

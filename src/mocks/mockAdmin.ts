@@ -32,7 +32,7 @@ const generateReportPostMockData: () => Array<PostWithContent> = () => {
       createdAt: generateRandomDate(),
       postLikeCnt: generateRandomInt(50),
       postDislikeCnt: generateRandomInt(100),
-      totalCommentCnt: generateRandomInt(50),
+      commentCnt: generateRandomInt(50),
       views: generateRandomInt(300),
     }));
 };
