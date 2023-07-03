@@ -38,6 +38,10 @@ export interface PostViewMember {
   memberLikeBadge: number;
   memberProfileUrl: string;
 }
+export interface DashBoardSelectType{
+  select:PostType
+  category:PostCategory
+}
 export type PostType = 'QNA' | 'TIP' | 'NOTICE';
 export type PostCategory =
   | 'BRUTE_FORCE'
