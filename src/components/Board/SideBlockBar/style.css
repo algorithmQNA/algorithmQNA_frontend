@@ -10,10 +10,10 @@
 .board-side-bar .side-block-ul{
     @apply flex flex-col gap-1 text-[#739093] text-sm;
 }
-.board-side-bar .side-block-li{
+.side-block-li{
     @apply cursor-pointer select-none;
 }
-.board-side-bar .side-block-li > input[type=checkbox]:checked + p{
+.side-block-li > input[type=checkbox]:checked + p{
     @apply text-primary;
 }
 .select-filter label{
