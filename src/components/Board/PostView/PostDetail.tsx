@@ -1,5 +1,7 @@
 import { setYMD } from '../../../utils/TextProcessing';
 import UserProfile from '../../UserProfile/UserProfile';
+import {POST_CATEGORY} from "../../../constants/PostCategory";
+import {PostCategory} from "../../../types/Post/Post";
 
 export default function PostViewDetailBlock({data}:{data:any}) {
     const checkType = () =>{
@@ -14,7 +16,7 @@ export default function PostViewDetailBlock({data}:{data:any}) {
       <section className={'page-section'}>
         <h1 className={'post-title'}>{data.data.postTitle}</h1>
         <div className={'post-info-block'}>
-          <p>{checkType()} / {data.data.postCategory}</p>
+          <p>{checkType()} / {POST_CATEGORY[data.data.postCategory as PostCategory]}</p>
           <p>{setYMD(data.data.createdAt.split('T')[0])} 작성</p>
         </div>
         {/* <div className={'writer-block'}>

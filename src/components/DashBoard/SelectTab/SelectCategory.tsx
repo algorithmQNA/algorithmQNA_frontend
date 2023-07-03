@@ -1,4 +1,4 @@
-import {ChangeEvent, CSSProperties} from "react";
+import React, {ChangeEvent, CSSProperties} from "react";
 import {useRecoilState, useRecoilValue} from "recoil";
 import {DashBoardState} from "../../../storage/Dash/DashBoard";
 import {PostCategory} from "../../../types/Post/Post";
@@ -7,14 +7,14 @@ export default function SelectCategory(){
     const [state,setState] = useRecoilState(DashBoardState)
 
     const category = [
-        {name:'Brute Force',value:'BRUTE_FORCE'},
-        {name:'Two Pointer',value:'TWO_POINTER'},
-        {name:'DP',value:'DP'},
-        {name:'Queue / Stack / Hash',value:'QUEUE_STACK_HASH'},
-        {name:'Graph',value:'GRAPH'},
-        {name:'Greedy',value:'GREEDY'},
-        {name:'Binary Search',value:'BINARY_SEARCH'},
-        {name:'Sort',value:'SORT'},
+        {name:'브루트포스',value:'BRUTE_FORCE'},
+        {name:'투포인터',value:'TWO_POINTER'},
+        {name:'동적 프로그래밍',value:'DP'},
+        {name:'큐/스택/해시',value:'QUEUE_STACK_HASH'},
+        {name:'그래프',value:'GRAPH'},
+        {name:'그리디',value:'GREEDY'},
+        {name:'이진 탐색',value:'BINARY_SEARCH'},
+        {name:'정렬',value:'SORT'},
         {name:'DFS / BFS',value:'DFS_BFS'},
     ]
     const change = (e:ChangeEvent<HTMLInputElement>) =>{
@@ -23,10 +23,12 @@ export default function SelectCategory(){
             ...prev,category:value
         }))
     }
-    console.log(state.category)
+    const test = (e:React.MouseEvent<HTMLDivElement>) =>{
+        
+    }
     return(
         <div className={'px-4'}>
-            <div className={'flex gap-8 items-center justify-start lg:justify-center flex-nowrap overflow-auto whitespace-nowrap scroll-none'}>
+            <div className={'flex gap-8 items-center justify-start lg:justify-center flex-nowrap overflow-auto whitespace-nowrap scroll-none'} onClick={test}>
                 {
                     category.map((li)=>(
                         <label className={'side-block-li text-content'} key={li.value}>
