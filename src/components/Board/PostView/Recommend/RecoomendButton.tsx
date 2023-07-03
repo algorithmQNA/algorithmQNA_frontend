@@ -12,9 +12,10 @@ interface MutationParam{
 }
 
 interface props{
+    count:number
     checked:boolean | undefined
 }
-export function RecommendBtn({checked}:props) {
+export function RecommendBtn({count,checked}:props) {
 
     const {pid} = useParams()
     const query = pid ? parseInt(pid) : 'a';
@@ -46,12 +47,12 @@ export function RecommendBtn({checked}:props) {
         }
       >
         <FiThumbsUp size={24} />
-        <span className={'font-bold text-center'}>12</span>
+        <span className={'font-bold text-center'}>{count}</span>
       </div>
     </label>
   );
 }
-export function UnRecommendBtn({checked}:props) {
+export function UnRecommendBtn({count,checked}:props) {
     const {pid} = useParams()
     const query = pid ? parseInt(pid) : 'a';
     const is = parseInt(query as string);
@@ -81,7 +82,7 @@ export function UnRecommendBtn({checked}:props) {
         }
       >
         <FiThumbsDown size={24} />
-        <span className={'font-bold text-center'}>12</span>
+        <span className={'font-bold text-center'}>{count}</span>
       </div>
     </label>
   );

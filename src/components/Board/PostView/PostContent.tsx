@@ -18,13 +18,13 @@ export default function PostViewContent({data}:{data:any}) {
 
                   {
                       data.data.isLiked === true
-                          ? <RecommendBtn checked={true}/>
-                          : <RecommendBtn checked={false}/>
+                          ? <RecommendBtn count={data.data.postLikeCnt} checked={true}/>
+                          : <RecommendBtn count={data.data.postLikeCnt} checked={false}/>
                   }
                   {
                       data.data.isLiked === false
-                          ? <UnRecommendBtn checked={true}/>
-                          : <UnRecommendBtn checked={false}/>
+                          ? <UnRecommendBtn count={data.data.postDislikeCnt} checked={true}/>
+                          : <UnRecommendBtn count={data.data.postDislikeCnt} checked={false}/>
                   }
               </div>
           }
