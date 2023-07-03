@@ -10,14 +10,15 @@ import {useRecoilValue} from "recoil";
 import {DashBoardState} from "../../storage/Dash/DashBoard";
 import PostTableRow from "../../components/TableRow/PostTableRow";
 import DataIsLoading from "../../components/isLoading/isLoading";
+import SelectCategory from "../../components/DashBoard/SelectTab/SelectCategory";
 
 export default function DashBoardPage() {
   const state = useRecoilValue(DashBoardState)
   const {data,isLoading} = useQuery(
-      ['dash-list',state.select],
+      ['dash-list',state.select,state.category],
       ()=>{
         return getCategoryPostsRequest(
-            "DP",
+            state.category,
             "LATESTDESC",
             0,
             state.select,
@@ -51,8 +52,9 @@ export default function DashBoardPage() {
             colorCode={'#c17a79'}
           />
         </div>
-        <div>
+        <div className={'min-h-[500px]'}>
           <SelectTabBlock/>
+            <SelectCategory/>
           {
             !isLoading && data &&
               <PostListBlock data={data.data} type={state.select}/>
@@ -75,7 +77,7 @@ function PostListBlock({data,type}:any){
                       }
                   </div>
                   :
-                  <div className={'w-full h-[350px] flex justify-center items-center text-content border border-content rounded'}>
+                  <div className={'w-full h-[350px] flex justify-center items-center text-content border border-content rounded mt-4'}>
                       조회된 게시물이 없습니다.
                   </div>
           }
