@@ -1,7 +1,7 @@
 # ALGO싶다 - ALgorithm Q&A Community
 
 <div align="center">
-<img width="329" alt="image" src="https://user-images.githubusercontent.com/50205887/207568862-cdc9e2c0-b03c-43ff-bf46-3ba79a110d0c.png">
+<img width="329" alt="image" src="https://github.com/algorithmQNA/algorithmQNA_frontend/assets/49019236/d1e0dd5a-28d5-4543-b475-888cf835d08f">
 
 [//]: # ([![Hits]&#40;https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FVoluntain-SKKU%2FVoluntain-2nd&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false&#41;]&#40;https://hits.seeyoufarm.com&#41;)
 
