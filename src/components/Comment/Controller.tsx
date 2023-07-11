@@ -10,7 +10,7 @@ import HighlightStatusAtom from '../../storage/Highlight/Highlight';
 
 function Controller() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [_, setHighlightingSetting] = useRecoilState(HighlightStatusAtom);
+  const [, setHighlightingSetting] = useRecoilState(HighlightStatusAtom);
 
   const { pid = -1 } = useParams();
   const navigate = useNavigate();
@@ -61,7 +61,7 @@ function Controller() {
     <div className="grow-0 m-4 w-fit float-right flex flex-row items-center sticky bottom-5 right-5 bg-box-bg border border-border rounded-full p-4 shadow-sm z-50">
       <IconButton Icon={<BiChevronLeft />} onClick={handlePrevBtnClick} />
       <div>
-        {+page + 1} / {MAX_PAGE}
+        {+page + 1} / {MAX_PAGE || 1}
       </div>
       <IconButton Icon={<BiChevronRight />} onClick={handleNextBtnClick} />
       <ButtonComponent onClick={handleGoToPinnedBtnClick}>
