@@ -4,9 +4,9 @@ import { useQuery } from 'react-query';
 import { getPostRequest } from '../../apis/postApi';
 import IconButton from '../Button/IconButton';
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
-import ButtonComponent from '../Button/ButtonComponent';
 import { useRecoilState } from 'recoil';
 import HighlightStatusAtom from '../../storage/Highlight/Highlight';
+import PinnedCommentList from './PinnedCommentList';
 
 function Controller() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -17,6 +17,7 @@ function Controller() {
 
   const page = searchParams.get('page') || 0;
   const get = useQuery(['post-view', +pid], () => getPostRequest(+page));
+  const pinnedCommentId = get.data?.data.data.pinnedComment?.commentId || -1;
 
   const handleGoToPinnedBtnClick = () => {
     const PIN_COMMENT_ID = get.data?.data.data.pinnedComment?.commentId;
@@ -58,15 +59,15 @@ function Controller() {
   };
 
   return (
-    <div className="grow-0 m-4 w-fit float-right flex flex-row items-center sticky bottom-5 right-5 bg-box-bg border border-border rounded-full p-4 shadow-sm z-50">
-      <IconButton Icon={<BiChevronLeft />} onClick={handlePrevBtnClick} />
-      <div>
-        {+page + 1} / {MAX_PAGE || 1}
+    <div className="grow-0 m-4 w-fit float-right sticky bottom-5 right-5 z-50">
+      <PinnedCommentList commentId={pinnedCommentId} pid={+pid} />
+      <div className="mt-2 flex flex-row items-center bg-box-bg border border-border rounded-full p-4 shadow-sm">
+        <IconButton Icon={<BiChevronLeft />} onClick={handlePrevBtnClick} />
+        <div>
+          {+page + 1} / {MAX_PAGE || 1}
+        </div>
+        <IconButton Icon={<BiChevronRight />} onClick={handleNextBtnClick} />
       </div>
-      <IconButton Icon={<BiChevronRight />} onClick={handleNextBtnClick} />
-      <ButtonComponent onClick={handleGoToPinnedBtnClick}>
-        채택된 답변보기
-      </ButtonComponent>
     </div>
   );
 }
