@@ -1,8 +1,6 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Google from '../../assets/images/Google.svg';
 
 export default function LandingPage() {
-  const { search } = useLocation();
   return (
     <div
       className={
@@ -11,10 +9,10 @@ export default function LandingPage() {
     >
       <div
         className={
-          'border border-basic w-full max-w-[500px] h-fit rounded-2xl p-4 grid gap-6'
+          'border border-basic w-full max-w-[500px] h-fit rounded-2xl p-4 grid gap-6 m-4'
         }
       >
-        <p className={'font-medium text-lg'}>
+        <p className={'font-medium text-sm text-center'}>
           페이지 이용을 위해서 로그인이 필요합니다!
         </p>
         <a

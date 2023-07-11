@@ -26,7 +26,7 @@ function CommentSection() {
   useEffect(() => {
     if (highlightSetting.highlightingMode && commentId) {
       const goToHightlight = () => {
-        const pinnedElement = document.getElementById(`${commentId}`);
+        const pinnedElement = document.getElementById(`GENERAL-${commentId}`);
         if (pinnedElement) {
           pinnedElement.scrollIntoView({ behavior: 'smooth' });
           pinnedElement.style.backgroundColor = '#fffec9';
@@ -42,7 +42,7 @@ function CommentSection() {
 
   const hasValidCommentId = !isNaN(+commentId);
 
-  const { data } = useQuery(
+  useQuery(
     ['highlight', +pid, +commentId],
     () => getHightlightCommentListRequest(+pid, +commentId),
     {
@@ -79,10 +79,6 @@ function CommentSection() {
                       pages: [
                         {
                           result: [...(comment.childCommentList as [])],
-                          // nextPage: comment?.page + 1,
-                          // prevPage: comment?.page - 1,
-                          // isLast: !comment.next,
-                          // isFirst: !comment.prev,
                           nextPage: 1,
                           prevPage: -1,
                           isLast: false,

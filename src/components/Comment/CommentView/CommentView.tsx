@@ -33,9 +33,12 @@ import ButtonComponent from '../../Button/ButtonComponent';
 import { MyCustomUploadAdapterPlugin } from '../CustomImageUpload';
 import useModal from '../../../hooks/useModal';
 import Modal from '../../Modal/Modal';
-import InputText from '../../Input/InputText';
 import ReplyComment from './ReplyComment';
 import { REPORT_MAP } from '../../../constants/Report';
+import {
+  GENERAL_COMMENT,
+  PINNED_COMMENT,
+} from '../../../constants/CommentType';
 import useGetParams from '../../../hooks/useGetParams';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
@@ -44,6 +47,7 @@ import { AxiosError } from 'axios';
 
 export type CommentViewProps = Comment & {
   parentId?: number;
+  commentType?: typeof GENERAL_COMMENT | typeof PINNED_COMMENT;
 };
 
 function CommentView({
@@ -58,17 +62,21 @@ function CommentView({
   isPinned,
   mentionerName,
   parentId,
+  commentType = 'GENERAL',
   ...props
 }: CommentViewProps) {
   const { pid = -1 } = useParams();
   const page = useGetParams('page') || 0;
   //깊이 0이면 1까지는 자동으로 열려있음
   const highlightSetting = useRecoilValue(HighlightStatusAtom);
-  const defaultOpenReply = highlightSetting.highlightingMode
-    ? true
-    : !depth
-    ? true
-    : false;
+
+  const defaultOpenReply =
+    highlightSetting.highlightingMode &&
+    highlightSetting.commentType === commentType
+      ? true
+      : !depth
+      ? true
+      : false;
 
   /**해당하는 댓글만 열리게 로직 변경 */
   useEffect(() => {
@@ -94,6 +102,13 @@ function CommentView({
 
   /**좋아요 싫어요 관리 */
   const [fakeLike, setFakeLike] = useState<boolean | null>(isLiked);
+  const [fakeCnt, setFakeCnt] = useState<{
+    likeCnt: number;
+    dislikeCnt: number;
+  }>({
+    likeCnt,
+    dislikeCnt,
+  });
   const handleReportMenuChange = (value: string) => {
     setReportType(value as keyof typeof REPORT_MAP);
   };
@@ -104,7 +119,11 @@ function CommentView({
     onSuccess: () => {
       if (depth >= 2)
         queryClient.invalidateQueries({ queryKey: ['reply', parentId] });
-      else queryClient.invalidateQueries({ queryKey: ['reply', commentId] });
+      else {
+        queryClient.invalidateQueries({
+          queryKey: ['reply', commentId],
+        });
+      }
       setOpenReplyEditor(false);
     },
     onError: (e: AxiosError<{ message: string }>) => {
@@ -124,8 +143,16 @@ function CommentView({
       const POST_QUERY_KEY = invalidateQueryKey;
       await queryClient.cancelQueries({ queryKey: POST_QUERY_KEY });
 
-      if (params.cancel) setFakeLike(null);
-      else setFakeLike(params.isLike);
+      if (params.cancel) {
+        setFakeLike(null);
+        setFakeCnt({ likeCnt, dislikeCnt });
+      } else {
+        setFakeLike(params.isLike);
+        setFakeCnt({
+          likeCnt: likeCnt + (params.isLike ? 1 : 0),
+          dislikeCnt: dislikeCnt + (params.isLike ? 0 : 1),
+        });
+      }
     },
   });
   //댓글 수정
@@ -173,6 +200,7 @@ function CommentView({
   //같은 버튼을 눌렀다 -> 좋아요/싫어요를 취소했다.
   const isSameBtnClicked = (like: boolean) => {
     if (fakeLike === like) {
+      recommendComment({ commentId, isLike: like, cancel: true });
       return true;
     }
     return false;
@@ -232,7 +260,7 @@ function CommentView({
           </div>
         </Modal>
       )}
-      <div className="grow" id={`${commentId}`}>
+      <div className="grow" id={`${commentType}-${commentId}`}>
         <div className="flex justify-between bg-box-bg p-2 border border-border">
           <UserProfile {...props.member} />
           <div className="flex flex-row items-end">
@@ -276,7 +304,9 @@ function CommentView({
                   onClick={() => handleBtnClick(true)}
                 />
               )}
-              <span className="text-xs text-gray-700 p-1">{likeCnt}</span>
+              <span className="text-xs text-gray-700 p-1">
+                {fakeCnt.likeCnt}
+              </span>
               {fakeLike === false ? (
                 <IconButton
                   Icon={<BsHandThumbsDownFill width="14" />}
@@ -289,7 +319,9 @@ function CommentView({
                 />
               )}
 
-              <span className="text-xs text-gray-700 p-1">{dislikeCnt}</span>
+              <span className="text-xs text-gray-700 p-1">
+                {fakeCnt.dislikeCnt}
+              </span>
               <IconButton Icon={<></>} onClick={toggleReplyEditor}>
                 {openReplyEditor ? '답글 달기 취소' : '답글 달기'}
               </IconButton>
@@ -359,7 +391,9 @@ function CommentView({
           >
             {openReply ? '접기' : '펴기'}
           </IconButton>
-          {openReply && <ReplyComment commentId={commentId} />}
+          {openReply && (
+            <ReplyComment commentId={commentId} commentType={commentType} />
+          )}
         </>
       )}
     </div>

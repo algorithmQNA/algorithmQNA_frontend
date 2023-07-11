@@ -30,7 +30,7 @@ function CommentList() {
     {
       onSuccess: (res) => {
         const commentList = res.data.data.commentList || [];
-        queryClient.setQueryData(['comment', +pid, +page], commentList);
+        queryClient.setQueryData(['comment', +pid, 0], commentList);
         // 대댓글도 캐싱
         commentList.forEach((comment) => {
           if (!!comment.childSize) {
@@ -54,7 +54,7 @@ function CommentList() {
     }
   );
 
-  const { data: commentList } = useQuery({
+  const { data: commentList, isLoading: commentLoading } = useQuery({
     queryKey: ['comment', +pid, +page],
     queryFn: async ({ queryKey }) => {
       const pid = queryKey[1] as number;
@@ -67,7 +67,7 @@ function CommentList() {
   });
 
   /** skeleton 적용 */
-  if (isLoading) return <></>;
+  if (isLoading || commentLoading) return <></>;
 
   if (!!commentList?.length)
     return (
@@ -83,7 +83,7 @@ function CommentList() {
   return (
     <section>
       <CommentWrite />
-      <MessageBox msg={`🥲 댓글이 없어요! 댓글을 달아 지식을 공유해주세요`} />
+      <MessageBox msg={`🥲 댓글이 없어요!\n 댓글을 달아 지식을 공유해주세요`} />
     </section>
   );
 }
