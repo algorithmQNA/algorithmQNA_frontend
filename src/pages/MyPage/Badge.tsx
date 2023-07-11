@@ -1,6 +1,4 @@
 import React from 'react';
-import { useQuery } from 'react-query';
-import { getMemberDetailInfo } from '../../apis/authApi';
 import Loading from '../../components/Loading/Loading';
 import BadgeDescFactory from '../../components/Badge/BadgeDescFactory';
 import NoBadges from '../../components/Badge/NoBadges';
@@ -15,8 +13,6 @@ function Badge() {
   if (data?.data) {
     const { memberCommentBadge, memberLikeBadge, memberPostBadge } =
       data?.data.data;
-
-    console.log(memberPostBadge, memberCommentBadge, memberCommentBadge);
 
     const isEmpty = !(memberCommentBadge || memberLikeBadge || memberPostBadge);
 
