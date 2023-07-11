@@ -33,7 +33,6 @@ import ButtonComponent from '../../Button/ButtonComponent';
 import { MyCustomUploadAdapterPlugin } from '../CustomImageUpload';
 import useModal from '../../../hooks/useModal';
 import Modal from '../../Modal/Modal';
-import InputText from '../../Input/InputText';
 import ReplyComment from './ReplyComment';
 import { REPORT_MAP } from '../../../constants/Report';
 import useGetParams from '../../../hooks/useGetParams';
@@ -94,6 +93,13 @@ function CommentView({
 
   /**좋아요 싫어요 관리 */
   const [fakeLike, setFakeLike] = useState<boolean | null>(isLiked);
+  const [fakeCnt, setFakeCnt] = useState<{
+    likeCnt: number;
+    dislikeCnt: number;
+  }>({
+    likeCnt,
+    dislikeCnt,
+  });
   const handleReportMenuChange = (value: string) => {
     setReportType(value as keyof typeof REPORT_MAP);
   };
@@ -124,8 +130,16 @@ function CommentView({
       const POST_QUERY_KEY = invalidateQueryKey;
       await queryClient.cancelQueries({ queryKey: POST_QUERY_KEY });
 
-      if (params.cancel) setFakeLike(null);
-      else setFakeLike(params.isLike);
+      if (params.cancel) {
+        setFakeLike(null);
+        setFakeCnt({ likeCnt, dislikeCnt });
+      } else {
+        setFakeLike(params.isLike);
+        setFakeCnt({
+          likeCnt: likeCnt + (params.isLike ? 1 : 0),
+          dislikeCnt: dislikeCnt + (params.isLike ? 0 : 1),
+        });
+      }
     },
   });
   //댓글 수정
@@ -173,6 +187,7 @@ function CommentView({
   //같은 버튼을 눌렀다 -> 좋아요/싫어요를 취소했다.
   const isSameBtnClicked = (like: boolean) => {
     if (fakeLike === like) {
+      recommendComment({ commentId, isLike: like, cancel: true });
       return true;
     }
     return false;
@@ -276,7 +291,9 @@ function CommentView({
                   onClick={() => handleBtnClick(true)}
                 />
               )}
-              <span className="text-xs text-gray-700 p-1">{likeCnt}</span>
+              <span className="text-xs text-gray-700 p-1">
+                {fakeCnt.likeCnt}
+              </span>
               {fakeLike === false ? (
                 <IconButton
                   Icon={<BsHandThumbsDownFill width="14" />}
@@ -289,7 +306,9 @@ function CommentView({
                 />
               )}
 
-              <span className="text-xs text-gray-700 p-1">{dislikeCnt}</span>
+              <span className="text-xs text-gray-700 p-1">
+                {fakeCnt.dislikeCnt}
+              </span>
               <IconButton Icon={<></>} onClick={toggleReplyEditor}>
                 {openReplyEditor ? '답글 달기 취소' : '답글 달기'}
               </IconButton>
