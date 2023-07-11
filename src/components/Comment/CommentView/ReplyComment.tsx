@@ -5,14 +5,22 @@ import CommentView from './CommentView';
 import CommentWrapper from '../CommentWrapper';
 import IconButton from '../../Button/IconButton';
 import CommentSkeleton from './CommentSkeleton';
+import {
+  GENERAL_COMMENT,
+  PINNED_COMMENT,
+} from '../../../constants/CommentType';
+
+type ReplyCommentType = {
+  commentId: number;
+  page?: number;
+  commentType?: typeof GENERAL_COMMENT | typeof PINNED_COMMENT;
+};
 
 function ReplyComment({
   commentId,
   page = 0,
-}: {
-  commentId: number;
-  page?: number;
-}) {
+  commentType = GENERAL_COMMENT,
+}: ReplyCommentType) {
   const {
     data,
     fetchNextPage,
@@ -61,7 +69,11 @@ function ReplyComment({
       {data?.pages.map((page) =>
         page.result.map((child) => (
           <CommentWrapper depth={child.depth} key={child.commentId}>
-            <CommentView {...child} parentId={commentId} />
+            <CommentView
+              {...child}
+              parentId={commentId}
+              commentType={commentType}
+            />
           </CommentWrapper>
         ))
       )}

@@ -35,6 +35,10 @@ import useModal from '../../../hooks/useModal';
 import Modal from '../../Modal/Modal';
 import ReplyComment from './ReplyComment';
 import { REPORT_MAP } from '../../../constants/Report';
+import {
+  GENERAL_COMMENT,
+  PINNED_COMMENT,
+} from '../../../constants/CommentType';
 import useGetParams from '../../../hooks/useGetParams';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
@@ -43,6 +47,7 @@ import { AxiosError } from 'axios';
 
 export type CommentViewProps = Comment & {
   parentId?: number;
+  commentType?: typeof GENERAL_COMMENT | typeof PINNED_COMMENT;
 };
 
 function CommentView({
@@ -57,17 +62,21 @@ function CommentView({
   isPinned,
   mentionerName,
   parentId,
+  commentType = 'GENERAL',
   ...props
 }: CommentViewProps) {
   const { pid = -1 } = useParams();
   const page = useGetParams('page') || 0;
   //깊이 0이면 1까지는 자동으로 열려있음
   const highlightSetting = useRecoilValue(HighlightStatusAtom);
-  const defaultOpenReply = highlightSetting.highlightingMode
-    ? true
-    : !depth
-    ? true
-    : false;
+
+  const defaultOpenReply =
+    highlightSetting.highlightingMode &&
+    highlightSetting.commentType === commentType
+      ? true
+      : !depth
+      ? true
+      : false;
 
   /**해당하는 댓글만 열리게 로직 변경 */
   useEffect(() => {
@@ -110,7 +119,11 @@ function CommentView({
     onSuccess: () => {
       if (depth >= 2)
         queryClient.invalidateQueries({ queryKey: ['reply', parentId] });
-      else queryClient.invalidateQueries({ queryKey: ['reply', commentId] });
+      else {
+        queryClient.invalidateQueries({
+          queryKey: ['reply', commentId],
+        });
+      }
       setOpenReplyEditor(false);
     },
     onError: (e: AxiosError<{ message: string }>) => {
@@ -247,7 +260,7 @@ function CommentView({
           </div>
         </Modal>
       )}
-      <div className="grow" id={`${commentId}`}>
+      <div className="grow" id={`${commentType}-${commentId}`}>
         <div className="flex justify-between bg-box-bg p-2 border border-border">
           <UserProfile {...props.member} />
           <div className="flex flex-row items-end">
@@ -378,7 +391,9 @@ function CommentView({
           >
             {openReply ? '접기' : '펴기'}
           </IconButton>
-          {openReply && <ReplyComment commentId={commentId} />}
+          {openReply && (
+            <ReplyComment commentId={commentId} commentType={commentType} />
+          )}
         </>
       )}
     </div>
